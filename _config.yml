@@ -9,8 +9,8 @@ exclude:
   - "/vendor/"
 
 # Site settings
-title: Bayesian Machine Learning 
-subtitle: "Studying Bayesian and Machine Learning"
+title: Bayesian Statistics
+subtitle: "Studying Bayesian Statistics"
 email: tjfdudh@gmail.com
 name: YoungHwan Seol
 description: >
