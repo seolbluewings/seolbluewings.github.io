@@ -30,6 +30,14 @@ Markov Chain 과정은 다음과 같은 특징을 가지고 있다.
 
 5, 상태 A를 떠나 '유한' 시간 안에 다시 A로 돌아오는 경우 이를 Markov Chain이 positive recurrent 하다고 표현한다.
 
+6, Aperiodic 하고 Positive recurrent한 상태를 ergodic 하다고 표현한다. Markov Chain의 모든 상태(all states)가 ergodic 하다면, Markov Chain은 positive recurrent, aperiodic, irreducible 할 것이며 Markov Chain이 ergodic 하다고 할 수 있다.
+
+7, $$ \pi(j)=\sum_{i \in \chi} \pi(i)P_{ij} $$를 만족한다면, $$\{\pi(x), x \in \chi \} $$ 는 {\bf stationary distribution} 이라 부른다. 
+
+만약 stochastic process $$\{x^{(t)},t=0,1,2,...\}가 ergodic Markov Chain with stationary distribution $$\pi(x)$$ 라면, 다음과 같은 관계를 얻을 수 있다.
+
+$$ \frac{1}{T}\sum_{t=1}^{T}h(x^{(t)}) \rightarrow \int h(x)\pi(x)dx $$ as $$ T \rightarrow \infty $$
+
 
 
 
