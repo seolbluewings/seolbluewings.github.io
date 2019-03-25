@@ -11,6 +11,7 @@ categories: Bayesian
 예를 들자면, $$x^{(t)}$$는 t번째 날짜의 날씨라고 할 수 있다.
 
 만약 이 날씨의 확률과정이 다음과 같은 식을 만족한다면, 우리는 이를 Markov Chain이라 부를 수 있다.
+
 $$ p(x^{(t+1)} | x^{(0)},...,x^{(t-1)},x^{(t)} )=p(x^{(t+1)}|x^{(t)}) $$
 
 다르게 표현하자면,  $$x^{(t+1)}$$ 은 $$x^{(t)}$$가 given일 때, $$\{ x^{(0)},...,x^{(t-1)} \}$$ 과 독립이라 할 수 있고 즉, (t+1)번째 날의 날씨는 t번째 날의 날씨에만 영향을 받으며 그 이전의 날씨에는 영향을 받지 않는다고 볼 수 있다. 이는 또 다르게 표현하자면 다음과 같이 표현가능할 것이다. 
@@ -34,14 +35,19 @@ Markov Chain 과정은 다음과 같은 특징을 가지고 있다.
 7, $$ \pi(j)=\sum_{i \in \chi} \pi(i)P_{ij} $$를 만족한다면, $$\{\pi(x), x \in \chi \} $$ 는 stationary distribution 이라 부른다. 
 
 8, 만약 stochastic process $$\{x^{(t)},t=0,1,2,...\}$$가 ergodic Markov Chain with stationary distribution $$\pi(x)$$ 라면, 다음과 같은 관계를 얻을 수 있다.
-$$ \frac{1}{T}\sum_{t=1}^{T}h(x^{(t)}) \rightarrow \int h(x)\pi(x)dx $$ as $$ T \rightarrow \infty $$ 
+
+$$ \frac{1}{T}\sum_{t=1}^{T}h(x^{(t)}) \rightarrow \int h(x)\pi(x)dx $$ 
+
+as $$ T \rightarrow \infty $$ 
 
 9, Markov Chain이 다음의 조건을 만족하면, time reversible 하다고 말한다. 모든 i,j에 대하여
+
 $$ P(x^{(t+1)}=j | x^{(t)}=i)=P(x^{(t)}=j|x^{(t+1)}=i) $$
 
 이 때 우리는 베이즈 정리(Bayes Theorm)를 사용하여
 
 $$ P(x^{(t)}=j | x^{(t+1)}=i) =  \frac{P(x^{(t)}=j)P(x^{(t+1)}=i|x^{(t)}=j)}{P(x^{(t+1)}=i)} $$
+
 $$ P_{ij} = \frac{\pi(j)P_{ji}}{\pi(i)} $$
 
 과 같은 식을 구할 수 있고, 위의 식을 정리하면 detailed balanced condition을 구할 수 있다.
