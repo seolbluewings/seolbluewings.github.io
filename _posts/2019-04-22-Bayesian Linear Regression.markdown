@@ -26,7 +26,7 @@ $$\log{\it p}({\bf y}|{\bf X},{\bf \beta},\sigma^{2}) = -\frac{N}{2}\log(2\pi)-\
 
 $$ \frac{\partial \log{\it p}({\bf y}|{\bf X},{\bf \beta},\sigma^{2})}{\partial \beta}= -\frac{1}{2\sigma^{2}}({\bf y}-{\bf X\beta})^{T}({\bf y}-{\bf X\beta}) $$
 
-$$ \beta = {\bf X^{T}X}^{-1}{\bf X}{\bf y} $$
+$$ \beta = ({\bf X^{T}X})^{-1}{\bf X}{\bf y} $$
 
 Likelihood를 최대화하는 방식으로 문제를 풀면 언제나 overfitting하는 복잡한 모델을 선택하게 되는데 베이지안 방법론으로 선형 회귀를 시행하면 Maximum Likelihood 방법에서 발생하는 overfitting 문제를 피할 수 있고, 훈련 데이터만 가지고 모델의 복잡도를 자동적으로 결정할 수 있다.
 
@@ -34,6 +34,12 @@ Likelihood를 최대화하는 방식으로 문제를 풀면 언제나 overfittin
 
 prior distribution을 위와 같이 설정하면, posterior distribution은 다음과 같이 계산된다.
 
-$${\it p}(\beta,\sigma^{2}|y) \propto (\sigma^{2})^{-n/2} \cdot exp\{ \frac{1}{2\sigma^{2}}(y-X\beta)^{T}(y-X\beta)\} \times exp\{ -\frac{1}{2}(\beta-\beta_0)^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\} \times \(sigma^{2})^{-a-1}\cdot exp\{-b/\sigma^{2}\} $$
+$${\it p}(\beta,\sigma^{2}|y) \propto (\sigma^{2})^{-n/2} \cdot exp\{ \frac{1}{2\sigma^{2}}(y-X\beta)^{T}(y-X\beta)\} \times exp\{ -\frac{1}{2}(\beta-\beta_0)^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\} \times (\sigma^{2})^{-a-1}\cdot exp\{-b/\sigma^{2}\} $$
 
-$${\it p}(\beta|\sigma^{2}|y) \propto exp \biggl[-\frac{1}{2}\biggl\{\frac{1}{\sigma^2}\beta^{T}X^{T}X\beta-\frac{2}{\sigma^2}\beta^{T}X^{T}y \biggr\}-\frac{1}{2}\biggl\{\beta^{T}\Sigma^{-1}_{0}\beta-2\beta^{T}\Sigma^{-1}_{0}\beta_{0}\biggr}\biggr] $$
+$${\it p}(\beta|\sigma^{2}|y) \propto exp \bigg[-\frac{1}{2}\bigg\{\frac{1}{\sigma^2}\beta^{T}X^{T}X\beta-\frac{2}{\sigma^2}\beta^{T}X^{T}y \bigg\}-\frac{1}{2}\biggl\{\beta^{T}\Sigma^{-1}_{0}\beta-2\beta^{T}\Sigma^{-1}_{0}\beta_{0}\bigg}\bigg]$$
+
+$${\it p}(\beta|\sigma^{2}|y) \propto exp \bigg[ -\frac{1}{2}\bigg{ \beta^{T}\bigg(\frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)\beta -2\beta^{T}\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)\bigg}\bigg] $$
+
+$${\it p}(\beta|\sigma^{2}|y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{mu})$$
+
+여기서 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigama^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 이며 $$ \mu_{\beta}=Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이다.
