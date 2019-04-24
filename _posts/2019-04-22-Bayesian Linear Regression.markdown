@@ -36,10 +36,10 @@ prior distribution을 위와 같이 설정하면, posterior distribution은 다�
 
 $${\it p}(\beta,\sigma^{2}|y) \propto (\sigma^{2})^{-n/2} \cdot exp\{ \frac{1}{2\sigma^{2}}(y-X\beta)^{T}(y-X\beta)\} \times exp\{ -\frac{1}{2}(\beta-\beta_0)^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\} \times (\sigma^{2})^{-a-1}\cdot exp\{-b/\sigma^{2}\} $$
 
-$${\it p}(\beta|\sigma^{2}|y) \propto exp \bigg[-\frac{1}{2}\bigg\{\frac{1}{\sigma^2}\beta^{T}X^{T}X\beta-\frac{2}{\sigma^2}\beta^{T}X^{T}y \bigg\}-\frac{1}{2}\biggl\{\beta^{T}\Sigma^{-1}_{0}\beta-2\beta^{T}\Sigma^{-1}_{0}\beta_{0}\bigg}\bigg]$$
+$${\it p}(\beta|\sigma^{2},y) \propto exp \bigg[-\frac{1}{2}\bigg\{\frac{1}{\sigma^2}\beta^{T}X^{T}X\beta-\frac{2}{\sigma^2}\beta^{T}X^{T}y \bigg\}-\frac{1}{2}\bigg\{\beta^{T}\Sigma^{-1}_{0}\beta-2\beta^{T}\Sigma^{-1}_{0}\beta_{0}\bigg}\bigg]$$
 
-$${\it p}(\beta|\sigma^{2}|y) \propto exp \bigg[ -\frac{1}{2}\bigg{ \beta^{T}\bigg(\frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)\beta -2\beta^{T}\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)\bigg}\bigg] $$
+$${\it p}(\beta|\sigma^{2},y) \propto exp \bigg[ -\frac{1}{2}\bigg{ \beta^{T}\bigg(\frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)\beta -2\beta^{T}\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)\bigg}\bigg] $$
 
-$${\it p}(\beta|\sigma^{2}|y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{mu})$$
+$${\it p}(\beta|\sigma^{2}|y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\mu})$$
 
-여기서 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigama^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 이며 $$ \mu_{\beta}=Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이다.
+여기서 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 이며 $$ \mu_{\beta}=Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이다.
