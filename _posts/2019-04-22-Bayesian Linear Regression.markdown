@@ -50,3 +50,9 @@ $${\it p}(\sigma^{2}|\beta,y) \propto (\sigma^{2})^{-n/2}\times(\sigma^{2})^{-a-
 
 $${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-X\beta)+b)$$
 
+과 같이 구할 수 있다.
+
+![Bayesian_Linear_Regression](/images/Figure3.7.png)
+
+
+
