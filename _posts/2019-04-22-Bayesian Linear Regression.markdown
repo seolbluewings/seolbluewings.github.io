@@ -36,9 +36,9 @@ prior distribution을 위와 같이 설정하면, posterior distribution은 다�
 
 $${\it p}(\beta,\sigma^{2}|y) \propto (\sigma^{2})^{-n/2} \cdot exp\{ \frac{1}{2\sigma^{2}}(y-X\beta)^{T}(y-X\beta)\} \times exp\{ -\frac{1}{2}(\beta-\beta_0)^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\} \times (\sigma^{2})^{-a-1}\cdot exp\{-b/\sigma^{2}\} $$
 
-$${\it p}(\beta|\sigma^{2},y) \propto exp \bigg[-\frac{1}{2}\bigg\{\frac{1}{\sigma^2}\beta^{T}X^{T}X\beta-\frac{2}{\sigma^2}\beta^{T}X^{T}y \bigg\}-\frac{1}{2}\bigg\{\beta^{T}\Sigma^{-1}_{0}\beta-2\beta^{T}\Sigma^{-1}_{0}\beta_{0}\bigg}\bigg]$$
+$${\it p}(\beta|\sigma^{2},y)\propto exp[-\frac{1}{2}\bigg\{\frac{1}{\sigma^{2}}\beta^{T}X^{T}X\beta-\frac{2}{\sigma^{2}}\beta^{T}X^{T}y \bigg\}-\frac{1}{2}\bigg\{\beta^{T}\Sigma^{-1}_{0}\beta-2\beta^{T}\Sigma^{-1}_{0}\beta_{0}\bigg}]$$
 
-$${\it p}(\beta|\sigma^{2},y) \propto exp \bigg[ -\frac{1}{2}\bigg{ \beta^{T}\bigg(\frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)\beta -2\beta^{T}\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)\bigg}\bigg] $$
+$${\it p}(\beta|\sigma^{2},y)\propto exp[-\frac{1}{2}\bigg{\beta^{T}\bigg(\frac{1}{\sigma^{2}}X^{T}X+\Sigma^{-1}_{0}\bigg)\beta -2\beta^{T}\bigg(\frac{1}{\sigma^{2}}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)\bigg}]$$
 
 $${\it p}(\beta|\sigma^{2}|y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\mu})$$
 
@@ -54,5 +54,9 @@ $${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-
 
 ![Bayesian_Linear_Regression](/images/Figure3.7.png)
 
+위의 그림은 1차원 데이터 x에 대한 회귀모델을 나타낸 것으로 $$y=\beta_{0}+\beta_{1}x$$ 형태이며 이 모델 상에서 데이터 집합의 크기가 커짐에 따른 베이지안 학습 결과를 보여준다. 현재의 posterior 분포는 새로운 데이터 포인트가 관측된 후, 새로운 prior distribution이 되는 베이지안 학습의 순차적인 모습을 보여준다.
 
+\begin{enumerate}
+	\item 첫번째 행은 데이터를 하나도 관측하지 못한 상황. 가운데 column에 있는 prior distribution 공간에 있는 
+\end{enumerate}
 
