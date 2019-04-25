@@ -36,9 +36,9 @@ prior distribution을 위와 같이 설정하면, posterior distribution은 다�
 
 $${\it p}(\beta,\sigma^{2}|y) \propto (\sigma^{2})^{-n/2} \cdot exp\{ \frac{1}{2\sigma^{2}}(y-X\beta)^{T}(y-X\beta)\} \times exp\{ -\frac{1}{2}(\beta-\beta_0)^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\} \times (\sigma^{2})^{-a-1}\cdot exp\{-b/\sigma^{2}\} $$
 
-$${\it p}(\beta|\sigma^{2},y)\propto exp[-\frac{1}{2}\bigg\{\frac{1}{\sigma^{2}}\beta^{T}X^{T}X\beta-\frac{2}{\sigma^{2}}\beta^{T}X^{T}y \bigg\}-\frac{1}{2}\bigg\{\beta^{T}\Sigma^{-1}_{0}\beta-2\beta^{T}\Sigma^{-1}_{0}\beta_{0}\bigg}]$$
+$${\it p}(\beta|\sigma^{2},y)\propto exp[-\frac{1}{2}\{\frac{1}{\sigma^{2}}\beta^{T}X^{T}X\beta-\frac{2}{\sigma^{2}}\beta^{T}X^{T}y\}-\frac{1}{2}\{\beta^{T}\Sigma^{-1}_{0}\beta-2\beta^{T}\Sigma^{-1}_{0}\beta_{0}\}]$$
 
-$${\it p}(\beta|\sigma^{2},y)\propto exp[-\frac{1}{2}\bigg{\beta^{T}\bigg(\frac{1}{\sigma^{2}}X^{T}X+\Sigma^{-1}_{0}\bigg)\beta -2\beta^{T}\bigg(\frac{1}{\sigma^{2}}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)\bigg}]$$
+$${\it p}(\beta|\sigma^{2},y)\propto exp[-\frac{1}{2}\{\beta^{T}(\frac{1}{\sigma^{2}}X^{T}X+\Sigma^{-1}_{0})\beta -2\beta^{T}(\frac{1}{\sigma^{2}}X^{T}y+\Sigma^{-1}_{0}\beta_{0})\}]$$
 
 $${\it p}(\beta|\sigma^{2}|y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\mu})$$
 
@@ -56,7 +56,13 @@ $${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-
 
 위의 그림은 1차원 데이터 x에 대한 회귀모델을 나타낸 것으로 $$y=\beta_{0}+\beta_{1}x$$ 형태이며 이 모델 상에서 데이터 집합의 크기가 커짐에 따른 베이지안 학습 결과를 보여준다. 현재의 posterior 분포는 새로운 데이터 포인트가 관측된 후, 새로운 prior distribution이 되는 베이지안 학습의 순차적인 모습을 보여준다.
 
-\begin{enumerate}
-	\item 첫번째 행은 데이터를 하나도 관측하지 못한 상황. 가운데 column에 있는 prior distribution 공간에 있는 
-\end{enumerate}
+1행은 데이터를 하나도 관측하지 못한 상황. 가운데 열에 있는 prior distribution 공간에 있는 $${\bf \beta}$$ 를 추출하여, 마지막열에 6개의 모델을 그려냈다.
+    
+2행은 첫번째 데이터(파란 원)를 관측한 이후의 상황. 가장 왼쪽열은 Likelihood $${\it p}(y|x,{\bf \beta})$$를 $${\bf \beta}$$에 대한 함수로 그린 것이다. 이 Likelihood를 1행의 2번째열인 prior distribution과 곱하면, 2행의 2번째 column 값인 posterior distribution을 구할 수 있다. 그리고 이 posterior distribution에서 추출한 $${\bf \beta}$$를 바탕으로 마지막열에 모델을 그려낸다.
+
+마찬가지로 3번째 행은 두번째 데이터를 관측한 이후의 상황이며, 두번째 데이터에 대한 Likelihood와 이전의 posterior가 prior의 역할을 하여 3행의 2번째 열에 있는 $${\bf \beta}$$의 posterior 분포를 얻는다. 이 posterior로부터 추출한 $${\bf \beta}$$를 바탕으로 한 모델이 3행 3열에 위치해있다. 
+
+이와같이 베이지안 방식으로 업데이트 모델을 만들어낼 수 있다. sample이 하나 추가 될 때, 기존의 posterior distribution은 prior distribution으로 활용될 수 있으며 sample이 추가 될수록 posterior 분포가 특정한 값에 가까워진다. 
+
+
 
