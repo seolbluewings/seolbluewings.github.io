@@ -42,4 +42,11 @@ $${\it p}(\beta|\sigma^{2},y) \propto exp \bigg[ -\frac{1}{2}\bigg{ \beta^{T}\bi
 
 $${\it p}(\beta|\sigma^{2}|y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\mu})$$
 
-여기서 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 이며 $$ \mu_{\beta}=Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이다.
+여기서 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 이며 $$ \mu_{\beta}=\Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이다.
+
+$$\sigma^{2}$$에 대한 posterior distribution을 구하면,
+
+$${\it p}(\sigma^{2}|\beta,y) \propto (\sigma^{2})^{-n/2}\times(\sigma^{2})^{-a-1}\cdot exp[-\frac{1}{\sigma^{2}}\{ \frac{1}{2}(y-X\beta)^{T}(y-X\beta)+b\}]$$
+
+$${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-X\beta)+b)$$
+
