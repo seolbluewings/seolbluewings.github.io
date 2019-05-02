@@ -58,17 +58,19 @@ $${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-
 
 1행은 데이터를 하나도 관측하지 못한 상황. 가운데 열에 있는 prior distribution 공간에 있는 $${\bf \beta}$$ 를 추출하여, 마지막열에 6개의 모델을 그려냈다.
 
-2행은 첫번째 데이터(파란 원)를 관측한 이후의 상황. 가장 왼쪽열은 Likelihood $${\it p}(y|x,\beta)$$ 를 $$\beta$$ 에 대한 함수로 그린 것이다. 이 Likelihood를 1행의 2번째열인 prior distribution과 곱하면, 2행의 2번째 열값인 posterior distribution을 구할 수 있다. 그리고 이 posterior distribution에서 추출한 $$\beta$$를 바탕으로 마지막열에 모델을 그려낸다.
+2행은 첫번째 데이터(파란 원)를 관측한 이후의 상황. 가장 왼쪽열은 Likelihood $${\it p}(y\|x,\beta)$$ 를 $$\beta$$ 에 대한 함수로 그린 것이다. 이 Likelihood를 1행의 2번째열인 prior distribution과 곱하면, 2행의 2번째 열값인 posterior distribution을 구할 수 있다. 그리고 이 posterior distribution에서 추출한 $$\beta$$를 바탕으로 마지막열에 모델을 그려낸다.
 
 마찬가지로 3번째 행은 두번째 데이터를 관측한 이후의 상황이며, 두번째 데이터에 대한 Likelihood와 이전의 posterior가 prior의 역할을 하여 3행의 2번째 열에 있는 $$\beta$$의 posterior 분포를 얻는다. 이 posterior로부터 추출한 $$\beta$$를 바탕으로 한 모델이 3행 3열에 위치해있다.
 
 이와같이 베이지안 방식으로 업데이트 모델을 만들어낼 수 있다. sample이 하나 추가 될 때, 기존의 posterior distribution은 prior distribution으로 활용될 수 있으며 sample이 추가 될수록 posterior 분포가 특정한 값에 가까워진다.
 
-앞서 우리는 2가지 conditional posterior, $${\it p}(\beta|\sigma^{2},y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\mu})$$ 와 $${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-X\beta)+b)$$를 구했고 다음의 과정을 통해 $$\beta, \sigma^{2}$$에 대한 근사적인 추론이 가능하다.
+앞서 우리는 2가지 conditional posterior, $${\it p}(\beta\|\sigma^{2},y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\mu})$$ 와 $${\it p}(\sigma^{2}\|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-X\beta)+b)$$를 구했고 다음의 과정을 통해 $$\beta, \sigma^{2}$$에 대한 근사적인 추론이 가능하다.
 
 k-1번째 step에서 $$(\beta^{(k-1)},\sigma^{2(k-1)})$$ 값이 주어지면, k번째 step은 다음과 같을 것이다.
 1. $$\beta^{(k)}$$에 대한 추출은 $$\Sigma_{\beta}=\bigg(\frac{1}{\sigma^{2(k-1)}}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$, $$\mu_{\beta}=\Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^{2(k-1)}}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이고 $$\beta^{(k)} \sim \mathcal{N}(\mu_{\beta},\Sigma_{\beta})$$ 의 과정을 따를 것이다.
-2. $$\sigma^{2(k)}$$에 대한 추출은 앞서 과정에서 update한 $$\beta^{(k)}$$를 바탕으로 $$(y-X\beta^{(k)})^{T}(y-X\beta^{(k)})$$를 구하고 $$\sigma^{2(k)} \sim IG(\frac{n}{2}+a, \frac{1}{2}(y-X\beta^{(k)})^{T}(y-X\beta^{(k)})+b)$$ 의 과정을 통해 $$\sigma^{2(k)}$$를 구한다. 
+2. $$\sigma^{2(k)}$$에 대한 추출은 앞서 과정에서 update한 $$\beta^{(k)}$$를 바탕으로 $$(y-X\beta^{(k)})^{T}(y-X\beta^{(k)})$$를 구하고 $$\sigma^{2(k)} \sim IG(\frac{n}{2}+a, \frac{1}{2}(y-X\beta^{(k)})^{T}(y-X\beta^{(k)})+b)$$ 의 과정을 통해 $$\sigma^{2(k)}$$를 구한다.
+
+
 
 
 
