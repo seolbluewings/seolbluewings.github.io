@@ -26,15 +26,29 @@ $$\mathit{p}(y|{\bf x},\mathcal{D})=\sum_{i=1}^{L} \mathit{p}(y|{\bf x},\mathcal
 
 매개변수 $${\bf \beta}$$에 의해 결정되는 모델의 경우 모델 증거,$$\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$는 다음과 같이 구할 수 있다.
 
-$$ $$\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$= \int \mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}\|\mathcal{M_{i}})d{\bf \beta}$$
+$$\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$= \int \mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}\|\mathcal{M_{i}})d{\bf \beta}$$
 
 그리고 이 모델 증거는 $${\bf \beta}$$에 대한 posterior distribution을 계산할 때, 베이즈 정리 분모 부분에 해당한다. 
 
 $$ \mathit{p}({\bf \beta}\|\mathcal{D},\mathcal{M_{i}})=\frac{\mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}\|\mathcal{M_{i}})}{\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})}$$
 
-우선 단일 매개변수 $$\beta$$를 갖는 모델을 생각해보자. 
+우선 단일 매개변수 $$\beta$$를 갖는 모델을 생각해보자. $$\beta$$의 posterior 분포는 다음과 같은 수식에 proportional 할 것이다.
 
+$$ \mathit{p}({\bf \beta}|\mathcal{D},\mathcal{M_{i}}) \propto \mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}\|\mathcal{M_{i}})$$
 
+다음과 같이 2가지 가정을 하자.
+1. posterior distribution이 $$\beta_{MAP}$$(가장 가능성이 높은 값)에서 뾰족하게 솟아 있고 그 폭이 $$\Delta_{posterior}$$라 표현한다.
+2. prior distribution의 폭은 $$\Delta_{prior}$$이며 평평한 형태를 가지고 있어 $$\mathit{p}(\beta)=1/\Delta_{prior}$$라 표현한다.
+
+![Bayesian_Model_Comparison](/images/Figure3.12.png)
+
+위에서 언급한 2가지 가정은 위의 그림 파일로 설명될 수 있으며 이를 적용하면 다음과 같은 식을 얻을 수 있다. 
+
+$$\mathit{p}(\mathcal{D})=\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$= \int \mathit{p}(\mathcal{D}|\beta,\mathcal{M_{i}})\mathit{p}(\beta\|\mathcal{M_{i}})d\beta \simeq \mathit{p}(\mathcal{D}|\btea_{MAP})\frac{\Delta_{posterior}}{\Delta_{prior}}$$
+
+여기에 로그를 취하면
+
+$$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|\btea_{MAP}) + \log(\frac{\Delta_{posterior}}{\Delta_{prior}})$$
 
 
 
