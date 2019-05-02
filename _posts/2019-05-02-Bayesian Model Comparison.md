@@ -26,11 +26,11 @@ $$\mathit{p}(y|{\bf x},\mathcal{D})=\sum_{i=1}^{L} \mathit{p}(y|{\bf x},\mathcal
 
 매개변수 $${\bf \beta}$$에 의해 결정되는 모델의 경우 모델 증거,$$\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$는 다음과 같이 구할 수 있다.
 
-$$ $$\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$= \int \mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}|\mathcal{M_{i}})d{\bf \beta}$$
+$$ $$\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$= \int \mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}\|\mathcal{M_{i}})d{\bf \beta}$$
 
 그리고 이 모델 증거는 $${\bf \beta}$$에 대한 posterior distribution을 계산할 때, 베이즈 정리 분모 부분에 해당한다. 
 
-$$ \mathit{p}({\bf \beta}\|\mathcal{D},\mathcal{M_{i}}=\frac{\mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}\|\mathcal{M_{i}})}{\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})}$$
+$$ \mathit{p}({\bf \beta}\|\mathcal{D},\mathcal{M_{i}})=\frac{\mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}\|\mathcal{M_{i}})}{\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})}$$
 
 우선 단일 매개변수 $$\beta$$를 갖는 모델을 생각해보자. 
 
