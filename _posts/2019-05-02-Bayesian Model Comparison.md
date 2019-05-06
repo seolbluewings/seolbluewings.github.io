@@ -24,7 +24,7 @@ $$\mathit{p}(y|{\bf x},\mathcal{D})=\sum_{i=1}^{L} \mathit{p}(y|{\bf x},\mathcal
 
 모델의 평균을 구하는 방법 중 가장 간단하게 근사하는 방법은 확률이 가장 높은 모델을 사용하여 그 1개의 모델만을 이용해 예측을 하는 것이며 이를 모델 선택(model selection)이라고 한다.
 
-매개변수 $${\bf \beta}$$에 의해 결정되는 모델의 경우 모델 증거,$$\mathit{p}(\mathcal{D}|\mathcal{M_{i}})$$는 다음과 같이 구할 수 있다.
+매개변수 $${\bf \beta}$$에 의해 결정되는 모델의 경우 모델 증거,$$\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$는 다음과 같이 구할 수 있다.
 
 $$\mathit{p}(\mathcal{D}|\mathcal{M_{i}}) = \int \mathit{p}(\mathcal{D}|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}|\mathcal{M_{i}})d{\bf \beta}$$
 
@@ -34,7 +34,7 @@ $$ \mathit{p}({\bf \beta}|\mathcal{D},\mathcal{M_{i}})=\frac{\mathit{p}(\mathcal
 
 우선 단일 매개변수 $$\beta$$를 갖는 모델을 생각해보자. $$\beta$$의 posterior 분포는 다음과 같은 수식에 proportional 할 것이다.
 
-$$ \mathit{p}({\bf \beta}|\mathcal{D},\mathcal{M_{i}}) \propto \mathit{p}(\mathcal{D}\|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}\|\mathcal{M_{i}})$$
+$$ \mathit{p}({\bf \beta}|\mathcal{D},\mathcal{M_{i}}) \propto \mathit{p}(\mathcal{D}|{\bf \beta},\mathcal{M_{i}})\mathit{p}({\bf \beta}|\mathcal{M_{i}})$$
 
 다음과 같이 2가지 가정을 하자.
 1. posterior distribution이 $$\beta_{MAP}$$(가장 가능성이 높은 값)에서 뾰족하게 솟아 있고 그 폭이 $$\Delta_{posterior}$$라 표현한다.
@@ -44,11 +44,16 @@ $$ \mathit{p}({\bf \beta}|\mathcal{D},\mathcal{M_{i}}) \propto \mathit{p}(\mathc
 
 위에서 언급한 2가지 가정은 위의 그림 파일로 설명될 수 있으며 이를 적용하면 다음과 같은 식을 얻을 수 있다.
 
-$$\mathit{p}(\mathcal{D})=\mathit{p}(\mathcal{D}|\mathcal{M_{i}} = \int \mathit{p}(\mathcal{D}|\beta,\mathcal{M_{i}})\mathit{p}(\beta|\mathcal{M_{i}})d\beta \simeq \mathit{p}(\mathcal{D}|\beta_{MAP})\frac{\Delta_{posterior}}{\Delta_{prior}}$$
+$$\mathit{p}(\mathcal{D})=\mathit{p}(\mathcal{D}|\mathcal{M_{i}} = \int \mathit{p}(\mathcal{D}|\beta,\mathcal{M_{i}})\mathit{p}(\beta|\mathcal{M_{i}})d\beta \simeq \mathit{p}(\mathcal{D}|\beta_{MAP})\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}$$
 
-여기에 로그를 취하면
+여기에 로그를 취하면 다음과 같은 식을 얻을 수 있다.
 
-$$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|\beta_{MAP}) + \log(\frac{\Delta_{posterior}}{\Delta_{prior}})$$
+$$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|\beta_{MAP}) + \log(\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}})$$
 
+이 식은 2가지 항으로 구성되어있으며 첫번째 항은 $$\beta_{MAP}$$를 바탕으로 데이터에 근사한 것으로 prior가 평평한 경우, log-likelihood에 해당한다. 두번째 항은 모델의 complexity에 대한 penalty항이다. 일반적으로 $$\Delta\beta_{posterior}<\Delta\beta_{prior}$$ 이므로 $$\log{\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}}$$ 의 값은 음수가 된다. $$\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}$$의 값이 작아질수록 log항의 절대값이 커지고 penalty가 커진다. 
 
+$${\bf \beta}$$가 p차원이라면, 각각의 $$\beta$$에 대하여 비슷한 근사를 시행할 수 있다. 여기서 모든 $$\beta$$들이 같은 $$\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}$$ 비율을 가졌다고 가정하자. 그러면 다음과 같은 식을 얻을 수 있다. 
 
+$$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|{\bf \beta_{MAP}}) + p\log(\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}})$$
+
+가장 단순한 형태의 근사를 할 경우에도 penalty항의 크기는 p에 의해 선형적으로 증가한다. 대다수의 경우 모델의 complexity가 증하감에 따라 첫번째 항의 크기는 증가하지만, 그에 따라 p의 크기가 증가할 것이므로 두번째 penalty항은 감소할 것이다. 최적 모델의 complexity는 이 2개 항의 trade-off 관계에 의해 결정된다. 
