@@ -46,7 +46,7 @@ $$ \mathit{p}({\bf \beta}|\mathcal{D},\mathcal{M_{i}}) \propto \mathit{p}(\mathc
 
 $$\mathit{p}(\mathcal{D}|\mathcal{M_{i}}) = \int \mathit{p}(\mathcal{D}|\beta,\mathcal{M_{i}})\mathit{p}(\beta|\mathcal{M_{i}})d\beta \simeq \mathit{p}(\mathcal{D}|\beta_{MAP})\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}$$
 
-그리고 이후 과정에서는 편의상 $$\mathit{p}(\mathcal{D}|\mathcal{M_{i}})$$를 $$\mathit{p}(\mathcal{D})$$로 표기하기로 한다.  여기에 로그를 취하면 다음과 같은 식을 얻을 수 있다.
+그리고 이후 과정에서는 편의상 $$\mathit{p}(\mathcal{D}\|\mathcal{M_{i}})$$를 $$\mathit{p}(\mathcal{D})$$로 표기하기로 한다. 여기에 로그를 취하면 다음과 같은 식을 얻을 수 있다.
 
 $$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|\beta_{MAP}) + \log(\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}})$$
 
@@ -60,13 +60,17 @@ $$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|{\bf \beta_{MAP
 
 ![Bayesian_Model_Comparison](/images/Figure3.13.PNG)
 
-다음의 그림을 통해 marginal likelihood, $$p(\mathcal{D}||\mathcal{M_{i}}$$가 어떻게 적당한 수준의 복잡도를 가진 모델을 선택하는지 알 수 있다. 
+다음의 그림을 통해 marginal likelihood, $$p(\mathcal{D}\|\mathcal{M_{i}}$$가 어떻게 적당한 수준의 복잡도를 가진 모델을 선택하는지 알 수 있다. 
 
 그래프에서 x축은 가능한 데이터 집합의 공간을 나타내며, 축 위의 각점은 특정 데이터 집합을 의미한다. 순차적으로 복잡도가 증가하는 3가지 모델$$\mathcal{M_{1}},\mathcal{M_{2}},\mathcal{M_{3}}$$ 이 있다고 하자. 
 
 주어진 모델은 서로 다른 데이터 집합을 생성할 수 있다. 단순한 모델은 variance가 적으므로 단순한 모델을 기반으로 생성된 데이터 집합 간의 차이는 작을 것이며 위 그래프에서 파란색 영역으로 대응된다. 복잡한 모델의 경우는 더욱 다양한 종류의 서로 다른 데이터 집합을 생성해낼 수 있고 그 분포 $$p(\mathcal{D})$$는 더 넓은 공간에 존재하며 위 그래프에서 초록색 영역으로 대응된다. 
 
-그래프에서처럼 특정 데이터 집합 $$\mathcal{D_{0}}$$의 경우 중간 정도의 복잡도를 가지는 모델 $$\mathcal{M_{2}}$$에서 가장 큰 marginal likelihood, $$p(\mathcal{D}||\mathcal{M_{i}}$$를 가지는걸 확인할 수 있다. 
+그래프에서처럼 특정 데이터 집합 $$\mathcal{D_{0}}$$의 경우 중간 정도의 복잡도를 가지는 모델 $$\mathcal{M_{2}}$$에서 가장 큰 marginal likelihood, $$p(\mathcal{D}\|\mathcal{M_{i}}$$를 가지는걸 확인할 수 있다. 
 
-1. 단순한 모델은 데이터에 잘 근사하지 못하며, 2. 복잡한 모델은 예측 확률을 너무 넓은 데이터 집합에 퍼뜨리기 때문에 각각의 데이터 집합들에 대해 작은 확률을 할당한다.
+단순한 모델은 데이터에 잘 근사하지 못하며, 복잡한 모델은 예측 확률을 너무 넓은 데이터 집합에 퍼뜨리기 때문에 각각의 데이터 집합들에 대해 작은 확률을 할당한다.
+
+베이지안 모델 비교 방법에서는 데이터가 생성된 원래 분포가 현재 고려하고 있는 모델 집합에 포함되어 있다는 것을 가정한다. 이 때 베이지안 모델 비교법은 평균적으로 올바른 모델을 선택한다.
+
+두개의 모델 $$\mathcal{M_{1}},\mathcal{M_{2}}$$가 있다고 가정하자. 그리고 true model은 $$\mathcal{M_{1}}$$라고 하자. 
 
