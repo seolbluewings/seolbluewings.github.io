@@ -44,16 +44,29 @@ $$ \mathit{p}({\bf \beta}|\mathcal{D},\mathcal{M_{i}}) \propto \mathit{p}(\mathc
 
 위에서 언급한 2가지 가정은 위의 그림 파일로 설명될 수 있으며 이를 적용하면 다음과 같은 식을 얻을 수 있다.
 
-$$\mathit{p}(\mathcal{D})=\mathit{p}(\mathcal{D}|\mathcal{M_{i}} = \int \mathit{p}(\mathcal{D}|\beta,\mathcal{M_{i}})\mathit{p}(\beta|\mathcal{M_{i}})d\beta \simeq \mathit{p}(\mathcal{D}|\beta_{MAP})\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}$$
+$$\mathit{p}(\mathcal{D}|\mathcal{M_{i}}) = \int \mathit{p}(\mathcal{D}|\beta,\mathcal{M_{i}})\mathit{p}(\beta|\mathcal{M_{i}})d\beta \simeq \mathit{p}(\mathcal{D}|\beta_{MAP})\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}$$
 
-여기에 로그를 취하면 다음과 같은 식을 얻을 수 있다.
+그리고 이후 과정에서는 편의상 $$\mathit{p}(\mathcal{D}|\mathcal{M_{i}})$$를 $$\mathit{p}(\mathcal{D})$$로 표기하기로 한다.  여기에 로그를 취하면 다음과 같은 식을 얻을 수 있다.
 
 $$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|\beta_{MAP}) + \log(\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}})$$
 
-이 식은 2가지 항으로 구성되어있으며 첫번째 항은 $$\beta_{MAP}$$를 바탕으로 데이터에 근사한 것으로 prior가 평평한 경우, log-likelihood에 해당한다. 두번째 항은 모델의 complexity에 대한 penalty항이다. 일반적으로 $$\Delta\beta_{posterior}<\Delta\beta_{prior}$$ 이므로 $$\log{\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}}$$ 의 값은 음수가 된다. $$\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}$$의 값이 작아질수록 log항의 절대값이 커지고 penalty가 커진다. 
+이 식은 2가지 항으로 구성되어있으며 첫번째 항은 $$\beta_{MAP}$$를 바탕으로 데이터에 근사한 것으로 prior가 평평한 경우, log-likelihood에 해당한다. 두번째 항은 모델의 복잡도에 대한 penalty항이다. 일반적으로 $$\Delta\beta_{posterior}<\Delta\beta_{prior}$$ 이므로 $$\log{\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}}$$ 의 값은 음수가 된다. $$\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}$$의 값이 작아질수록 log항의 절대값이 커지고 penalty가 커진다. 
 
-$${\bf \beta}$$가 p차원이라면, 각각의 $$\beta$$에 대하여 비슷한 근사를 시행할 수 있다. 여기서 모든 $$\beta$$들이 같은 $$\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}$$ 비율을 가졌다고 가정하자. 그러면 다음과 같은 식을 얻을 수 있다. 
+$${\bf \beta}$$가 p차원이라면, 각각의 $$\beta$$에 대하여 비슷한 근사를 시행할 수 있다. 여기서 모든 $$\beta$$들이 같은 $$\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}}$$ 비율을 가졌다고 가정하자. 그러면 다음과 같은 식을 얻을 수 있다. 
 
 $$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|{\bf \beta_{MAP}}) + p\log(\frac{\Delta\beta_{posterior}}{\Delta\beta_{prior}})$$
 
-가장 단순한 형태의 근사를 할 경우에도 penalty항의 크기는 p에 의해 선형적으로 증가한다. 대다수의 경우 모델의 complexity가 증하감에 따라 첫번째 항의 크기는 증가하지만, 그에 따라 p의 크기가 증가할 것이므로 두번째 penalty항은 감소할 것이다. 최적 모델의 complexity는 이 2개 항의 trade-off 관계에 의해 결정된다. 
+가장 단순한 형태의 근사를 할 경우에도 penalty항의 크기는 p에 의해 선형적으로 증가한다. 대다수의 경우 모델의 복잡도가 증하감에 따라 첫번째 항의 크기는 증가하지만, 그에 따라 p의 크기가 증가할 것이므로 두번째 penalty항은 감소할 것이다. 최적 모델의 복잡도는 이 2개 항의 trade-off 관계에 의해 결정된다. 
+
+![Bayesian_Model_Comparison](/images/Figure3.13.PNG)
+
+다음의 그림을 통해 marginal likelihood, $$p(\mathcal{D}||\mathcal{M_{i}}$$가 어떻게 적당한 수준의 복잡도를 가진 모델을 선택하는지 알 수 있다. 
+
+그래프에서 x축은 가능한 데이터 집합의 공간을 나타내며, 축 위의 각점은 특정 데이터 집합을 의미한다. 순차적으로 복잡도가 증가하는 3가지 모델$$\mathcal{M_{1}},\mathcal{M_{2}},\mathcal{M_{3}}$$ 이 있다고 하자. 
+
+주어진 모델은 서로 다른 데이터 집합을 생성할 수 있다. 단순한 모델은 variance가 적으므로 단순한 모델을 기반으로 생성된 데이터 집합 간의 차이는 작을 것이며 위 그래프에서 파란색 영역으로 대응된다. 복잡한 모델의 경우는 더욱 다양한 종류의 서로 다른 데이터 집합을 생성해낼 수 있고 그 분포 $$p(\mathcal{D})$$는 더 넓은 공간에 존재하며 위 그래프에서 초록색 영역으로 대응된다. 
+
+그래프에서처럼 특정 데이터 집합 $$\mathcal{D_{0}}$$의 경우 중간 정도의 복잡도를 가지는 모델 $$\mathcal{M_{2}}$$에서 가장 큰 marginal likelihood, $$p(\mathcal{D}||\mathcal{M_{i}}$$를 가지는걸 확인할 수 있다. 
+
+1. 단순한 모델은 데이터에 잘 근사하지 못하며, 2. 복잡한 모델은 예측 확률을 너무 넓은 데이터 집합에 퍼뜨리기 때문에 각각의 데이터 집합들에 대해 작은 확률을 할당한다.
+
