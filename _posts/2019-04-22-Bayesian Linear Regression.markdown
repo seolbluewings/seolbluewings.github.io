@@ -80,11 +80,11 @@ $$p({\tilde y}|y,{\tilde x},X,\sigma^{2},\Sigma_{0})=\int p({\tilde y}|\beta,{\t
 
 앞서 $$\mu_{\beta}=\Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 와 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 를 구했고
 
-$$ {\tilde y}|y \sim \mathcal{N}({\tilde x}^{T}\cdot\mu_{\beta},\sigma^{2}_{n}({\tilde x}))$$
+$$ {\tilde y}|y \sim \mathcal{N}({\tilde x}^{T}\mu_{\beta},\sigma^{2}_{n}({\tilde x}))$$
 
 $$\sigma^{2}_{n}({\tilde x})=\sigma^{2}+{\tilde x}^{T}\Sigma_{\beta}{\tilde x}$$
 
-이처럼 예측 분포의 분산은 2가지 항으로 구성되어 있고 첫번째 항은 데이터의 노이즈이며 두번째 항은 $$\beta$$에 의 posterior variance로 매개변수 $$\beta$$에 대한 불확실성을 표현한다. 이 둘은 각 독립적인 가우시안 분포이므로 분산을 합할 수 있고 추가적인 데이터 포인트들이 관측되면, posterior distribution은 더 좁아질 것이다. $$\sigma^{2}_{N+1}(x) \leq \simga^{2}_{N}(x)$$
+이처럼 예측 분포의 분산은 2가지 항으로 구성되어 있고 첫번째 항은 데이터의 노이즈이며 두번째 항은 $$\beta$$에 의 posterior variance로 매개변수 $$\beta$$에 대한 불확실성을 표현한다. 이 둘은 각 독립적인 가우시안 분포이므로 분산을 합할 수 있고 추가적인 데이터 포인트들이 관측되면, posterior distribution은 더 좁아질 것이다. $$\sigma^{2}_{N+1}(x) \leq \sigma^{2}_{N}(x)$$
 
 
 
