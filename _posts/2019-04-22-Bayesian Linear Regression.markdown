@@ -64,11 +64,29 @@ $${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-
 
 이와같이 베이지안 방식으로 업데이트 모델을 만들어낼 수 있다. sample이 하나 추가 될 때, 기존의 posterior distribution은 prior distribution으로 활용될 수 있으며 sample이 추가 될수록 posterior 분포가 특정한 값에 가까워진다.
 
-앞서 우리는 2가지 conditional posterior, $${\it p}(\beta\|\sigma^{2},y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\mu})$$ 와 $${\it p}(\sigma^{2}\|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-X\beta)+b)$$를 구했고 다음의 과정을 통해 $$\beta, \sigma^{2}$$에 대한 근사적인 추론이 가능하다.
+앞서 우리는 2가지 conditional posterior를 다음과 같이 구했다.
+$${\it p}(\beta|\sigma^{2},y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\mu})$$
+$${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-X\beta)+b)$$
+
+다음의 과정을 통해 $$\beta, \sigma^{2}$$에 대한 근사적인 추론이 가능하다.
 
 k-1번째 step에서 $$(\beta^{(k-1)},\sigma^{2(k-1)})$$ 값이 주어지면, k번째 step은 다음과 같을 것이다.
 1. $$\beta^{(k)}$$에 대한 추출은 $$\Sigma_{\beta}=\bigg(\frac{1}{\sigma^{2(k-1)}}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$, $$\mu_{\beta}=\Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^{2(k-1)}}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이고 $$\beta^{(k)} \sim \mathcal{N}(\mu_{\beta},\Sigma_{\beta})$$ 의 과정을 따를 것이다.
 2. $$\sigma^{2(k)}$$에 대한 추출은 앞서 과정에서 update한 $$\beta^{(k)}$$를 바탕으로 $$(y-X\beta^{(k)})^{T}(y-X\beta^{(k)})$$를 구하고 $$\sigma^{2(k)} \sim IG(\frac{n}{2}+a, \frac{1}{2}(y-X\beta^{(k)})^{T}(y-X\beta^{(k)})+b)$$ 의 과정을 통해 $$\sigma^{2(k)}$$를 구한다.
+
+$$\beta$$ 를 알아내는 것보다는 새로운 $${\bf x}$$에 대하여 y의 값을 예측하는 것이 더 중요할 수 있다. 새로운 독립적인 데이터 포인트 $${\tilde x}$$가 주어졌을 때, 이에 대응하는 예측된 $${\tilde y}$$에 대한 예측 분포(predictive distribution)은 다음과 같을 것이다. 
+
+$$p({\tilde y}|y,{\tilde x},X,\sigma^{2},\Sigma_{0})=\int p({\tilde y}|\beta,{\tilde x},\sigma^{2}) p(\beta|y,X,\sigma^{2},\Sigma_{0})d\beta $$
+
+앞서 $$\mu_{\beta}=\Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 와 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 를 구했고
+
+$$ {\tilde y}|y \sim \mathcal{N}({\tilde x}^{T}\cdot\mu_{\beta},\sigma^{2}_{n}({\tilde x}))$$
+
+$$\sigma^{2}_{n}({\tilde x})=\sigma^{2}+{\tilde x}^{T}\Sigma_{\beta}{\tilde x}$$
+
+이처럼 예측 분포의 분산은 2가지 항으로 구성되어 있고 첫번째 항은 데이터의 노이즈이며 두번째 항은 $$\beta$$에 의 posterior variance로 매개변수 $$\beta$$에 대한 불확실성을 표현한다. 이 둘은 각 독립적인 가우시안 분포이므로 분산을 합할 수 있고 추가적인 데이터 포인트들이 관측되면, posterior distribution은 더 좁아질 것이다. $$\sigma^{2}_{N+1}(x) \leq \simga^{2}_{N}(x)$$
+
+
 
 
 
