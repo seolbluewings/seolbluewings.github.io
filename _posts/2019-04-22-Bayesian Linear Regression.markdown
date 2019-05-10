@@ -86,7 +86,7 @@ $$p(\sigma^{2}|y) \sim IG(\frac{n}{2}+a,\frac{1}{2}y^{T}(I-H)y+b)$$
 
 1. $$\sigma^{2(k)}$$ 추출 : $$\sigma^{2(k)} \sim IG(\frac{n}{2}+a,\frac{1}{2}y^{T}(I-H)y+b)$$
 
-2. $$\beta^{(k)}$$ 추출 : $$\beta^{k}\|\sigma^{2(k)}$$ \sim \mathcal{N}({\hat \beta},\frac{c}{c+1}\sigma^{2(k)}({\bf X}^{T}{\bf X})^{-1})$$
+2. $$\beta^{(k)}$$ 추출 : $$\beta^{k}\|\sigma^{2(k)} \sim \mathcal{N}({\hat \beta},\frac{c}{c+1}\sigma^{2(k)}({\bf X}^{T}{\bf X})^{-1})$$
 
 $$\beta$$ 를 알아내는 것보다는 새로운 $${\bf x}$$에 대하여 y의 값을 예측하는 것이 더 중요할 수 있다. 새로운 독립적인 데이터 포인트 $${\tilde x}$$가 주어졌을 때, 이에 대응하는 예측된 $${\tilde y}$$에 대한 예측 분포(predictive distribution)은 다음과 같을 것이다. 
 
