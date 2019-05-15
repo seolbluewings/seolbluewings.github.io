@@ -22,7 +22,7 @@ $$\log{\it p}({\bf y}|{\bf X},{\bf \beta},\sigma^{2}) = \sum_{i=1}^{N}\log\mathc
 
 $$\log{\it p}({\bf y}|{\bf X},{\bf \beta},\sigma^{2}) = -\frac{N}{2}\log(2\pi)-\frac{N}{2}\log(\sigma^{2})-\frac{1}{2\sigma^{2}}({\bf y}-{\bf X\beta})^{T}({\bf y}-{\bf X\beta}) $$
 
-노이즈가 가우시안 분포를 따르면, 선형 모델에 대해 Maximum Likelihood 방식은 LSE 방식과 동일하다.
+노이즈가 가우시안 분포를 따르면, 선형 모델에 대해 Maximum Likelihood를 최대화하는 방식은 LSE 방식과 동일하다.
 
 $$ \frac{\partial \log{\it p}({\bf y}|{\bf X},{\bf \beta},\sigma^{2})}{\partial \beta}= -\frac{1}{2\sigma^{2}}({\bf y}-{\bf X\beta})^{T}({\bf y}-{\bf X\beta}) $$
 
