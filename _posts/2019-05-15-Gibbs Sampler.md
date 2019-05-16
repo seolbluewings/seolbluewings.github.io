@@ -78,5 +78,30 @@ MCMC의 특징은 $$\Theta^{(i)} = (\theta_{1}^{(i)},\theta_{2}^{(i)},\theta_{3}
 
 2. Gibbs Sampler를 충분히 많이 돌리고 m번째 iteration 이후에서는 크기 $$\mathit{l}$$ 만큼의 간격으로 표본을 추출해낸다. 즉, $$\Theta_{1}^{(m)},\Theta_{1}^{(m+l)},...,\Theta_{N}^{(m+(N-1)l)}$$ 을 구하는 것이다. $$\mathit{l}$$의 크기만 적당하다면, 각각은 서로의 연관성이 약해져 독립적인 표본이라 간주할 수 있다.  
 
+다음과 같은 예시를 생각해보자.
+
+$$X_{1},...,X_{10} \sim \mathcal{N}(\mu,\sigma^{2}), \mu \sim \mathcal{N}(\mu_{0},\sigma^{2}_{0}),\sigma^{2} \sim \mathcal{IG}(a,b)$$
+
+$$x_{1},...,x_{10}=(10,13,15,11,9,18,20,17,23,21)$$일 때, $$\theta=(\mu,\sigma^{2})$$ 에 대해 Gibbs Sampler를 적용해보자.
+
+우리는 다음과 같은 conditional posterior distribution을 구할 수 있다.
+
+$$p(\mu|\sigma^{2}) \sim \mathcal{N}(\mu_{\pi},\sigma^{2}_{\pi})$$
+
+$$\mu_{\pi}=\frac{\frac{n}{\sigma^{2}}{\bar x}+\frac{1}{\sigma^{2}_{0}}\mu_{0}}{\frac{n}{\sigma^{2}}+\frac{1}{\sigma^{2}_{0}}}$$
+
+$$ \sigma^{2}_{\pi} = \frac{1}{\frac{n}{\sigma^{2}}+\frac{1}{\sigma^{2}_{0}} $$
+
+$$ p(\sigma^{2}|X)=p(X|\sigma^{2})\cdot p(\sigma^{2}) $$
+
+$$ p(\sigma^{2}|X) \propto (\sigma^{2})^{-n/2-a-1}\cdot exp\{-\frac{1}{\sigma^{2}}(\beta+\frac{\sum(x_{i}-\mu)^{2}}{2})\}$$
+
+간단한 Gibbs Sampler 시행 결과는 다음과 같다. 
+
+![Gibbs Sampler](/images/gibbs_sampler_posterior.png)
+
+Gibbs Sampler에서 $$(\mu,\sigma^{2})$$ 표본의 경로는 아래의 그림과 같다. 아래의 그림은 $$(\mu,\sigma^{2})$$의 이동경로를 나타낸 그림으로 첫 5회, 15회, 100회의 이동 경로를 보여준다.
+
+![Gibbs Sampler](\images/gibbs_sampler_path.png)
 
 
