@@ -30,27 +30,27 @@ Gibbs Sampler의 과정은 다음과 같다.
 
 첫번째 step은 다음과 같다.
 
-$$\theta_{1}^{(1)} \sim p(\theta_{1}|\theta_{2}^{(0)},\theta_{3}^{(0)},|\bf{X})$$
+$$\theta_{1}^{(1)} \sim p(\theta_{1}|\theta_{2}^{(0)},\theta_{3}^{(0)}|\bf{X})$$
 
-$$\theta_{2}^{(1)} \sim p(\theta_{2}|\theta_{1}^{(1)},\theta_{3}^{(0)},|\bf{X})$$
+$$\theta_{2}^{(1)} \sim p(\theta_{2}|\theta_{1}^{(1)},\theta_{3}^{(0)}|\bf{X})$$
 
-$$\theta_{3}^{(1)} \sim p(\theta_{3}|\theta_{1}^{(1)},\theta_{2}^{(1)},|\bf{X})$$
+$$\theta_{3}^{(1)} \sim p(\theta_{3}|\theta_{1}^{(1)},\theta_{2}^{(1)}|\bf{X})$$
 
 두번째 step은 다음과 같다.
 
-$$\theta_{1}^{(2)} \sim p(\theta_{1}|\theta_{2}^{(1)},\theta_{3}^{(1)},|\bf{X})$$
+$$\theta_{1}^{(2)} \sim p(\theta_{1}|\theta_{2}^{(1)},\theta_{3}^{(1)}|\bf{X})$$
 
-$$\theta_{2}^{(2)} \sim p(\theta_{2}|\theta_{1}^{(2)},\theta_{3}^{(1)},|\bf{X})$$
+$$\theta_{2}^{(2)} \sim p(\theta_{2}|\theta_{1}^{(2)},\theta_{3}^{(1)}|\bf{X})$$
 
-$$\theta_{3}^{(2)} \sim p(\theta_{3}|\theta_{1}^{(2)},\theta_{2}^{(2)},|\bf{X})$$
+$$\theta_{3}^{(2)} \sim p(\theta_{3}|\theta_{1}^{(2)},\theta_{2}^{(2)}|\bf{X})$$
 
 이처럼 여러 step을 반복하면 m번째 step은 다음과 같을 것이다.
 
-$$\theta_{1}^{(m)} \sim p(\theta_{1}|\theta_{2}^{(m-1)},\theta_{3}^{(m-1)},|\bf{X})$$
+$$\theta_{1}^{(m)} \sim p(\theta_{1}|\theta_{2}^{(m-1)},\theta_{3}^{(m-1)}|\bf{X})$$
 
-$$\theta_{2}^{(m)} \sim p(\theta_{2}|\theta_{1}^{(m)},\theta_{3}^{(m-1)},|\bf{X})$$
+$$\theta_{2}^{(m)} \sim p(\theta_{2}|\theta_{1}^{(m)},\theta_{3}^{(m-1)}|\bf{X})$$
 
-$$\theta_{3}^{(m)} \sim p(\theta_{3}|\theta_{1}^{(m)},\theta_{2}^{(m)},|\bf{X})$$
+$$\theta_{3}^{(m)} \sim p(\theta_{3}|\theta_{1}^{(m)},\theta_{2}^{(m)}|\bf{X})$$
 
 이를 일반적인 방식으로 표현하면 다음과 같다. 관심모수가 다음과 같이 d 차원인 경우를 생각해보자.
 
@@ -64,6 +64,19 @@ $$\theta_{k}^{(t+1)} \sim p(\theta_{k}|\theta_{-k}^{(t)})$$
 
 충분히 큰 m과 N에 대하여
 
-$${\hat E}[\psi(\Theta)|x]=\frac{1}{N}\sum_{i=1}^{N}\psi(\theta^{(m+i)})$$
+$${\hat E}[\psi(\Theta)|x]=\frac{1}{N}\sum_{i=1}^{N}\psi(\Theta^{(m+i)})$$
 
-식을 얻을 수 있다. 
+식을 얻을 수 있다. 여기서 m은 $$\Theta^{(i)}$$의 분포가 $$p(\Theta|x)$$로 수렴하기까지 걸리는 iteration 횟수를 의미한다.
+
+지금까지의 내용을 통해 확인할 수 있는 사항은 다음과 같다.
+
+$$\theta_{1}^{(m)}$$은 가장 최근의 $$\theta_{2},\theta_{3}$$값인 $$(\theta_{2}^{(m-1)},\theta_{3}^{(m-1)})$$ 에만 의존할 뿐, 그 이전의 $$\theta_{2},\theta_{3}$$ 값에는 의존하지 않는다. 그러므로 $$\Theta^{(i)} = (\theta_{1}^{(i)},\theta_{2}^{(i)},\theta_{3}^{(i)})$$ 은 Markov Chain이며, 우리는 표본 $$\Theta^{(i)} = (\theta_{1}^{(i)},\theta_{2}^{(i)},\theta_{3}^{(i)})$$ 을 이용하여 posterior distribution을 구하므로 Gibbs Sampler는 Markov Chain Monte Carlo(MCMC) 방법이다.
+
+MCMC의 특징은 $$\Theta^{(i)} = (\theta_{1}^{(i)},\theta_{2}^{(i)},\theta_{3}^{(i)})$$ 가 Markov Chain이기 때문에 독립적인 표본이 아니라는 것이다. 독립적인 표본을 얻기 위해 다음과 같은 방법을 활용한다.
+
+1. Gibbs Sampler를 N번 독립적으로 시행하여 $$\Theta_{1}^{(m)},...,\Theta_{N}^{(m)}$$을 얻는다. 여기서 $\Theta_{k}^{(m)}$ 이란 k번째 독립된 Gibbs Sampler에서 만들어낸 $$\Theta^{(m)}$$ 이다. 이 방법을 통하서 독립적인 표본을 구할 수 있지만, 시간이 많이 걸린다는 단점이 있다.
+
+2. Gibbs Sampler를 충분히 많이 돌리고 m번째 iteration 이후에서는 $$\mathit{l}$$간격으로 표본을 추출해낸다. 즉, $$\Theta_{1}^{(m)},\Theta_{1}^{(m+l)},...,\Theta_{N}^{(m+(N-1)l)}$$ 을 구하는 것이다. $$\mathit{l}$$의 크기만 적당하다면, 각각은 서로의 연관성이 약해져 독립적인 표본이라 간주할 수 있다.  
+
+
+
