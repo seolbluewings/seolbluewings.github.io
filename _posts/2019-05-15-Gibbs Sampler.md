@@ -80,7 +80,11 @@ MCMC의 특징은 $$\Theta^{(i)} = (\theta_{1}^{(i)},\theta_{2}^{(i)},\theta_{3}
 
 다음과 같은 예시를 생각해보자.
 
-$$X_{1},...,X_{10} \sim \mathcal{N}(\mu,\sigma^{2}), \mu \sim \mathcal{N}(\mu_{0},\sigma^{2}_{0}),\sigma^{2} \sim \mathcal{IG}(a,b)$$
+$$X_{1},...,X_{10} \sim \mathcal{N}(\mu,\sigma^{2})$$
+
+$$\mu \sim \mathcal{N}(\mu_{0},\sigma^{2}_{0})$$
+
+$$\sigma^{2} \sim \mathcal{IG}(a,b)$$
 
 $$x_{1},...,x_{10}=(10,13,15,11,9,18,20,17,23,21)$$일 때, $$\theta=(\mu,\sigma^{2})$$ 에 대해 Gibbs Sampler를 적용해보자.
 
@@ -90,7 +94,7 @@ $$p(\mu|\sigma^{2}) \sim \mathcal{N}(\mu_{\pi},\sigma^{2}_{\pi})$$
 
 $$\mu_{\pi}=\frac{\frac{n}{\sigma^{2}}{\bar x}+\frac{1}{\sigma^{2}_{0}}\mu_{0}}{\frac{n}{\sigma^{2}}+\frac{1}{\sigma^{2}_{0}}}$$
 
-$$ \sigma^{2}_{\pi} = \frac{1}{\frac{n}{\sigma^{2}}+\frac{1}{\sigma^{2}_{0}} $$
+$$ \sigma^{2}_{\pi} = \frac{1}{\frac{n}{\sigma^{2}}+\frac{1}{\sigma^{2}_{0}}} $$
 
 $$ p(\sigma^{2}|X)=p(X|\sigma^{2})\cdot p(\sigma^{2}) $$
 
