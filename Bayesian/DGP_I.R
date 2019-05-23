@@ -2,7 +2,7 @@ rm(list=ls())
 set.seed(2018311133)
 library(mvtnorm)
 n=30; G=50; R=50
-gamma=c(-1.5,0.5,-1)
+gamma=c(-1.5,0.5,1)
 beta=c(0.5,0.5,0.5)
 lambda=0.05
 delta=0.3
@@ -81,7 +81,7 @@ Beta0=5*diag(1,3)
 rho0=5; eta0=1;
 sig0=c(0,0)
 
-iter=300
+iter=5500
 Z_mat=matrix(0,ncol=n,nrow=G) #save for Z
 gamma_mat=matrix(0,ncol=3,nrow=iter) #save for gamma
 lambda_mat=matrix(0,ncol=1,nrow=iter) #save for lambda
@@ -107,8 +107,8 @@ sige_mat[1,]=1; sigez_mat[1,]=0.5; siga_mat[1,]=0.3
 beta_mat[1,]=c(0.3,0.2,0.4)
 
 ### save 
-beta_list=list()
-gamma_list=list()
+beta1_list=list();beta2_list=list();beta3_list=list()
+gamma1_list=list();gamma2_list=list();gamma3_list=list()
 lambda_list=list()
 sige_list=list()
 siga_list=list()
@@ -116,7 +116,7 @@ sigez_list=list()
 
 for(r in 1:R){
   st_time=Sys.time()
-  cat(r,"repetition of MCMC start!","\n");cat("\n")
+  cat(r,"repetition of MCMC start!","\n")
   for(t in 2:iter){
     start_time=Sys.time()
     ### propose lambda*
@@ -297,41 +297,59 @@ for(r in 1:R){
     cat("sigma_e =",sige_mat[t,],"\n");cat("\n")
     cat("sigma_ez =",sigez_mat[t,],"\n");cat("\n")
     cat("siga_alpha =",siga_mat[t,],"\n");cat("\n")
-    cat("current iteration",t,"is end","\n");cat("\n")
+    cat("current iteration",t,"is end","\n")
     cat("At",r,"repetition",t,"iteration spend",end_time-start_time,"seconds","\n");cat("\n")
   }
-  beta_list[[r]]=beta_mat[200:300,]
-  gamma_list[[r]]=gamma_mat[200:300,]
-  lambda_list[[r]]=lambda_mat[200:300,]
-  sigez_list[[r]]=sigez_mat[200:300,]
-  sige_list[[r]]=sige_mat[200:300,]
-  siga_list[[r]]=siga_mat[200:300,]
+  beta1_list[[r]]=beta_mat[500:iter,1][seq(1,length(beta_mat[500:iter,1]),10)]
+  beta2_list[[r]]=beta_mat[500:iter,2][seq(1,length(beta_mat[500:iter,2]),10)]
+  beta3_list[[r]]=beta_mat[500:iter,3][seq(1,length(beta_mat[500:iter,3]),10)]
+  gamma1_list[[r]]=gamma_mat[500:iter,1][seq(1,length(gamma_mat[500:iter,1]),10)]
+  gamma2_list[[r]]=gamma_mat[500:iter,2][seq(1,length(gamma_mat[500:iter,2]),10)]
+  gamma3_list[[r]]=gamma_mat[500:iter,3][seq(1,length(gamma_mat[500:iter,3]),10)]
+  lambda_list[[r]]=lambda_mat[500:iter,][seq(1,length(lambda_mat[500:iter,]),10)]
+  sigez_list[[r]]=sigez_mat[500:iter,][seq(1,length(sigez_mat[500:iter,]),10)]
+  sige_list[[r]]=sige_mat[500:iter,][seq(1,length(sige_mat[500:iter,]),10)]
+  siga_list[[r]]=siga_mat[500:iter,][seq(1,length(siga_mat[500:iter,]),10)]
   ed_time=Sys.time()
-  cat(r,"repetition of MCMC end!","\n");cat("\n")
-  cat("total",iter,"iterations spend",ed_time-st_time,"!","\n");cat("\n")
+  cat(r,"repetition of MCMC end!","\n")
+  cat("total",iter,"iterations spend",ed_time-st_time,"!","\n")
 }
 
+beta1_vec=c();beta2_vec=c();beta3_vec=c()
+gamma1_vec=c();gamma2_vec=c();gamma3_vec=c()
+siga_vec=c();sigez_vec=c();sige_vec=c();lambda_vec=c()
 
 for(r in 1:R){
-  beta1=beta_list[[r]][,1]
-  beta2=beta_list[[r]][,2]
-  beta3=beta_list[[r]][,3]
-  lambda=lambda_list[[r]]
-  gamma1=gamma_list[[r]][,1]
-  gamma2=gamma_list[[r]][,2]
-  gamma3=gamma_list[[r]][,3]
-  sigmaa=siga_list[[r]]
-  sigmaez=sigez_list[[r]]
-  sigmae=sige_list[[r]]
+  beta1=beta1_list[[r]][-1]
+  beta1_vec=c(beta1_vec,beta1)
+  beta2=beta2_list[[r]][-1]
+  beta2_vec=c(beta2_vec,beta2)
+  beta3=beta3_list[[r]][-1]
+  beta3_vec=c(beta3_vec,beta3)
+  lambda=lambda_list[[r]][-1]
+  lambda_vec=c(lambda_vec,lambda)
+  gamma1=gamma1_list[[r]][-1]
+  gamma1_vec=c(gamma1_vec,gamma1)
+  gamma2=gamma2_list[[r]][-1]
+  gamma2_vec=c(gamma2_vec,gamma2)
+  gamma3=gamma3_list[[r]][-1]
+  gamma3_vec=c(gamma3_vec,gamma3)
+  sigmaa=siga_list[[r]][-1]
+  siga_vec=c(siga_vec,sigmaa)
+  sigmaez=sigez_list[[r]][-1]
+  sigez_vec=c(sigez_vec,sigmaez)
+  sigmae=sige_list[[r]][-1]
+  sige_vec=c(sige_vec,sigmae)
 }
 
-mean(beta1);sd(beta1)
-mean(beta2);sd(beta2)
-mean(beta3);sd(beta3)
-mean(gamma1);sd(gamma1)
-mean(gamma2);sd(gamma2)
-mean(gamma3);sd(gamma3)
-mean(lambda);sd(lambda)
-mean(sigmae);sd(sigmae)
-mean(sigmaez);sd(sigez_mat)
-mean(sigmaa);sd(sigmaa)
+mean(beta1_vec);sd(beta1_vec)
+mean(beta2_vec);sd(beta2_vec)
+mean(beta3_vec);sd(beta3_vec)
+mean(gamma1_vec);sd(gamma1_vec)
+mean(gamma2_vec);sd(gamma2_vec)
+mean(gamma3_vec);sd(gamma3_vec)
+mean(lambda_vec);sd(lambda_vec)
+mean(sige_vec);sd(sige_vec)
+mean(sigez_vec);sd(sigez_vec)
+mean(siga_vec);sd(siga_vec)
+
