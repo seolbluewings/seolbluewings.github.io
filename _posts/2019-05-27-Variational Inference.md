@@ -16,7 +16,7 @@ $$p(z|x) = \frac{p(z,x)}{\int_{z}p(z,x)dz}$$
 
 Variational Inference의 핵심적인 아이디어는 다음과 같다.
 
-1. variational parameter $$\nu$$를 갖는 latent variables \{z_{1},z_{2},...,z_{m}\}의 분포$$q(z_{1},z_{2},...,z_{m}\|\nu)$$를 찾는다.
+1. variational parameter $$\nu$$를 갖는 latent variables $$\{z_{1},z_{2},...,z_{m}\}$$의 분포$$q(z_{1},z_{2},...,z_{m}\|\nu)$$를 찾는다.
 2. 이 분포를 찾아가는 과정에서 posterior distribution에 가장 가까이 근사하는 모수 $$\nu$$를 찾아낸다.
 3. 이렇게 구한 분포 $$q$$를 posterior 대신 사용한다.
 
@@ -39,7 +39,7 @@ $$
 
 $$
 \begin{align}
-	D_{KL}(q(z)||p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)}\right] \\
+	D_{KL}(q(z)\|p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)}\right] \\
     &= E_{q}\left[\log{\frac{q(z)}{p(z)}}\right]+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)\right] \\
     &\backsimeq \frac{1}{K}\sum_{i=0}^{K}\left[\log{\frac{q(z_{i})}{p(z_{i})}}\right] +\log{p(x)}-\frac{1}{K}\sum_{i=0}^{K}\left[\log{p(x|z_{i})}\right] \\
     &= \frac{1}{K} \sum_{i=0}^{K}\left[\log{q(z_{i})}-\log{p(z_{i})}-\log{p(x|z_{i})} \right]+\log{p(x)}
@@ -48,4 +48,7 @@ $$
 
 여기서 $$z_{i} \sim q(z)$$ 이기 때문에 몬테 카를로 방법이라 할 수 있다. 또한 이렇게 Monte Carlo Method를 사용하기 때문에 $$q(z)$$를 설정하는 것이 자유로워진다. 
 
-posterior에 대한 정보가 없다고 할 때, $$q(z)$$를 정규 분포로 정했다면 
+posterior에 대한 정보가 없다고 할 때, $$q(z)$$를 정규 분포로 설정하자. 정규분포에서 K개의 z를 뽑아낸 후, KLD를 계산할 수 있다. 이후 정규분포의 parameter를 바꾸며 KLD를 최소화화는 정규분포를 발견해낼 수 있고 이렇게 구한 정규분포를 Variational Inference의 결과라 할 수 있다.
+
+바로 위를 통해서 우리는 Variational Inference를 위해선 근사한 분포 $$q(z)$$와 posterior $$p(z\|x)$$의 KLD를 최소화시켜야한다는걸 알 수 있다. 하지만 우리는 곧바로 KLD를 최소화시키는 것은 불가능하다. 대신 ELBO(Evidence lower bound)라는 개념을 통해 KLD를 최소화시키는 것을 진행할 수 있다.
+
