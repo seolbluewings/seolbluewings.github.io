@@ -6,7 +6,7 @@ author: YoungHwan Seol
 categories: Bayesian
 ---
 
-Variational Inference란 복잡한 형태의 posterior 분포 $$p(z||x)$$를 다루기 쉬운 형태의 $$q(z)$$로 근사하는 것을 말한다.
+Variational Inference란 복잡한 형태의 posterior 분포 $$p(z\|x)$$를 다루기 쉬운 형태의 $$q(z)$$로 근사하는 것을 말한다.
 
 다음과 같은 형태의 posterior distribution이 있다고 하자. 
 
@@ -28,20 +28,19 @@ KLD은 두 확률분포의 차이를 계산할 수 있는 방식으로 $$p(z\|x)
 
 $$
 \begin{align}
-
-	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}[\log{\frac{q(z)}{p(z|x)}}] = \int q(z)\log{\frac{q(z)}{p(z|x)}}dz 
-
+	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}[\log{\frac{q(z)}{p(z|x)}}] = \int q(z)\log{\frac{q(z)}{p(z|x)}}dz
 	&= \int q(z) \log{\frac{q(z)p(x)}{p(x|z)p(z)}} dz
-
 	&= \int q(z) \log{\frac{q(z)}{p(z)}}dz + \int q(z)\log{p(x)}dz - \int q(z)\log{p(x|z)}dz
-
 	&= D_{KL}(q(z)|p(z)) + \log{p(x)}-\mathbb{E}_{q}[\log{p(x|z)}]
-
 \end{align}
 $$
 
 몬테 카를로 방법(Monte Carlo Method)을 KLD에 적용하면 다음과 같다.
 
-D_{KL}(q(z)||p(z|x))
+$$
+\begin{align}
+	D_{KL}(q(z)||p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-E_{q}\left[\log{p(x|z)}\right]
+    &= 
 
-
+\end{align}
+$$
