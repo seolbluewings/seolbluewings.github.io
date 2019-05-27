@@ -28,7 +28,7 @@ KLD은 두 확률분포의 차이를 계산할 수 있는 방식으로 $$p(z\|x)
 
 $$
 \begin{align}
-	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}[\log{\frac{q(z)}{p(z|x)}}] = \int q(z)\log{\frac{q(z)}{p(z|x)}}dz \\
+	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z|x)}}\right] = \int q(z)\log{\frac{q(z)}{p(z|x)}}dz \\
 	&= \int q(z) \log{\frac{q(z)p(x)}{p(x|z)p(z)}} dz \\
 	&= \int q(z) \log{\frac{q(z)}{p(z)}}dz + \int q(z)\log{p(x)}dz - \int q(z)\log{p(x|z)}dz \\
 	&= D_{KL}(q(z)|p(z)) + \log{p(x)}-\mathbb{E}_{q}[\log{p(x|z)}]
@@ -41,6 +41,11 @@ $$
 \begin{align}
 	D_{KL}(q(z)||p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)}\right] \\
     &= E_{q}\left[\log{\frac{q(z)}{p(z)}}\right]+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)\right] \\
-    &\backsimeq \frac{1}{K}\sum_{i=0}^{K}\left[\log{\frac{q(z_{i})}{p(z_{i})}}\right] +\log{p(x)}-\frac{1}{K}
+    &\backsimeq \frac{1}{K}\sum_{i=0}^{K}\left[\log{\frac{q(z_{i})}{p(z_{i})}}\right] +\log{p(x)}-\frac{1}{K}\sum_{i=0}^{K}\left[\log{p(x|z_{i})}\right] \\
+    &= \frac{1}{K} \sum_{i=0}^{K}\left[\log{q(z_{i})}-\log{p(z_{i})}-\log{p(x|z_{i})} \right]+\log{p(x)}
 \end{align}
 $$
+
+여기서 $$z_{i} \sim q(z)$$ 이기 때문에 몬테 카를로 방법이라 할 수 있다. 또한 이렇게 Monte Carlo Method를 사용하기 때문에 $$q(z)$$를 설정하는 것이 자유로워진다. 
+
+posterior에 대한 정보가 없다고 할 때, $$q(z)$$를 정규 분포로 정했다면 
