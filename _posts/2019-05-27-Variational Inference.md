@@ -27,7 +27,7 @@ $$KL(q||p) = \int_{z}q(z)\log{\frac{q(z)}{p(z|x)}}=\mathbb{E}\bigg[\log{\frac{q(
 KLD은 두 확률분포의 차이를 계산할 수 있는 방식으로 $$p(z\|x)$$와 $$q(z)$$의 KLD 값을 계산한 이후, KLD이 줄어드는 방향으로 $$q(z)$$를 update하는 과정을 반복하면, posterior를 잘 근사하는 $$q^{*}(z)$$를 얻을 수 있다.
 
 $$
-	\begin{align}
+\begin{align}
 
 	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}[\log{\frac{q(z)}{p(z|x)}}] = \int q(z)\log{\frac{q(z)}{p(z|x)}}dz 
 
@@ -37,8 +37,11 @@ $$
 
 	&= D_{KL}(q(z)|p(z)) + \log{p(x)}-\mathbb{E}_{q}[\log{p(x|z)}]
 
-	\end{align}
+\end{align}
 $$
 
+몬테 카를로 방법(Monte Carlo Method)을 KLD에 적용하면 다음과 같다.
+
+D_{KL}(q(z)||p(z|x))
 
 
