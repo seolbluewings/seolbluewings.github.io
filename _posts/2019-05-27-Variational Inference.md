@@ -28,9 +28,9 @@ KLD은 두 확률분포의 차이를 계산할 수 있는 방식으로 $$p(z\|x)
 
 $$
 \begin{align}
-	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}[\log{\frac{q(z)}{p(z|x)}}] = \int q(z)\log{\frac{q(z)}{p(z|x)}}dz
-	&= \int q(z) \log{\frac{q(z)p(x)}{p(x|z)p(z)}} dz
-	&= \int q(z) \log{\frac{q(z)}{p(z)}}dz + \int q(z)\log{p(x)}dz - \int q(z)\log{p(x|z)}dz
+	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}[\log{\frac{q(z)}{p(z|x)}}] = \int q(z)\log{\frac{q(z)}{p(z|x)}}dz \\
+	&= \int q(z) \log{\frac{q(z)p(x)}{p(x|z)p(z)}} dz \\
+	&= \int q(z) \log{\frac{q(z)}{p(z)}}dz + \int q(z)\log{p(x)}dz - \int q(z)\log{p(x|z)}dz \\
 	&= D_{KL}(q(z)|p(z)) + \log{p(x)}-\mathbb{E}_{q}[\log{p(x|z)}]
 \end{align}
 $$
@@ -39,8 +39,8 @@ $$
 
 $$
 \begin{align}
-	D_{KL}(q(z)||p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-E_{q}\left[\log{p(x|z)}\right]
-    &= 
-
+	D_{KL}(q(z)||p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)}\right] \\
+    &= E_{q}\left[\log{\frac{q(z)}{p(z)}}\right]+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)\right] \\
+    &\backsimeq \frac{1}{K}\sum_{i=0}^{K}\left[\log{\frac{q(z_{i})}{p(z_{i})}}\right] +\log{p(x)}-\frac{1}{K}
 \end{align}
 $$
