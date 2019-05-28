@@ -31,10 +31,8 @@ $$
 
 $$
 \begin{align}
-	D_{KL}(q(z)|p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)}\right] \\
-    &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z)}}\right]+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)\right] \\
-    &\approx \frac{1}{K}\sum_{i=0}^{K}\left[\log{\frac{q(z_{i})}{p(z_{i})}}\right] +\log{p(x)}-\frac{1}{K}\sum_{i=0}^{K}\left[\log{p(x|z_{i})}\right] \\
-    &= \frac{1}{K}\sum_{i=0}^{K}\left[\log{q(z_{i})}-\log{p(z_{i})}-\log{p(x|z_{i})} \right]+\log{p(x)}
+	D_{KL}(q(z)|p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-				\mathbb{E}_{q}\left[\log{p(x|z)}\right] \\
+    &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z)}}\right]+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)\right] 
 \end{align}
 $$
 
@@ -61,10 +59,10 @@ KLD는 다음과 같이 다시 적힐 수 있다.
 
 $$
 \begin{align}
-	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}\left[\log{\frac{q(z)}{p(z|x)}}\right] \\
+	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}\left[\log\frac{q(z)}{p(z|x)}\right] \\
 	&= \mathbb{E}\left[\log{q(z)}\right]-\mathbb{E}\left[\log{p(z|x)}\right] \\
     &= \mathbb{E}\left[\log{q(z)}\right]-\mathbb{E}\left[\log{p(x,z)}\right]+\log{p(x)} \\
-    &= -\left{\mathbb{E}\left[\log{p(x,z)}\right]-\mathbb{E}\left[\log{q(z)}\right]\right}+\log{p(x)} \\
+    &= -\left{\mathbb{E}\left[\log{p(x,z)}\right]-\mathbb{E}\left[\log{q(z)}\right]\right}+\log{p(x)}
 \end{align}
 $$
 
