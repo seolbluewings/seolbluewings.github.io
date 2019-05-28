@@ -32,7 +32,9 @@ $$
 $$
 \begin{align}
 	D_{KL}(q(z)|p(z|x)) &= D_{KL}(q(z)|p(z))+\log{p(x)}-				\mathbb{E}_{q}\left[\log{p(x|z)}\right] \\
-    &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z)}}\right]+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)\right] 
+    &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z)}}\right]+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)\right] \\
+    &\approx \frac{1}{K}\sum_{i=0}^{K}\left[\log{\frac{q(z_{i})}{p(z_{i})}}\right] +\log{p(x)}-\frac{1}{K}\sum_{i=0}^{K}\left[\log{p(x|z_{i})}\right] \\
+    &= \frac{1}{K}\sum_{i=0}^{K}\left[\log{q(z_{i})}-\log{p(z_{i})}-\log{p(x|z_{i})} \right]+\log{p(x)}
 \end{align}
 $$
 
@@ -66,5 +68,29 @@ $$
 \end{align}
 $$
 
-이는 negative ELBO $$+$$ C 의 형태라고 할 수 있다. $$\log{p(x)}$$ 부분이 상수취급을 받는 것은 $$\log{p(x)}$$가 q에 dependent하지 않기 때문이다. 다음과 같은 관계로 인해 ELBO를 maximizing 하는 것은 KLD를 minimizing하는 것이라 간주할 수 있고 ELBO를 maximizing함으로써 KLD를 minimize할 수 있다. 
+이는 negative ELBO $$+$$ C 의 형태라고 할 수 있다. $$\log{p(x)}$$ 부분이 상수취급을 받는 것은 $$\log{p(x)}$$가 q에 dependent하지 않기 때문이다. 다음과 같은 관계로 인해 ELBO를 maximizing 하는 것은 KLD를 minimizing하는 것이라 간주할 수 있고 ELBO를 maximizing함으로써 KLD를 minimize할 수 있다.
+
+#### Mean Field Variational Inference
+
+latent variable에 대한 variational distribution이 다음과 같이 factorization 된다고 가정하자.
+
+$$q(z_{1},...,z_{m}) = \prod_{j=1}^{m}q(z_{j})$$
+
+단 1개의 latent variable에 대한 variational approximation인 $$q(z_{j})$$는 local variational approximation이다.
+
+Chain rule에 의해 다음과 같은 식을 얻을 수 있고
+
+$$p(z_{1},...,z_{m},x_{1},...,x_{n})=p(x_{1},...,x_{n})\prod_{j=1}^{m}p(z_{j}|z_{1:(j-1)},x_{1},...x_{n})$$
+
+ELBO의 엔트로피 부분은 다음과 같이 바꿀 수 있다.
+
+$$\mathbb{E}_{q}\left[\log{(q_{1},...,q_{m})}\right]=\sum_{j=1}^{m}\mathbb{E}_{q_{j}}\left[\log{(q_{j})}\right] $$
+
+
+
+
+
+
+
+
 
