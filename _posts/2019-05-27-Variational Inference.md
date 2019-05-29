@@ -61,10 +61,9 @@ KLD는 다음과 같이 다시 적힐 수 있다.
 
 $$
 \begin{align}
-	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}\left[\log\frac{q(z)}{p(z|x)}\right] \\
-	&= \mathbb{E}\left[\log{q(z)}\right]-\mathbb{E}\left[\log{p(z|x)}\right] \\
-    &= \mathbb{E}\left[\log{q(z)}\right]-\mathbb{E}\left[\log{p(x,z)}\right]+\log{p(x)} \\
-    &= -\left{\mathbb{E}\left[\log{p(x,z)}\right]-\mathbb{E}\left[\log{q(z)}\right]\right}+\log{p(x)}
+	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z|x)}}\right] \\
+    &= \mathbb{E}_{q}\left[\log{q(z)}\right]-\mathbb{E}_{q}\left[\log{p(z|x)}\right] \\
+    &= -\left(\mathbb{E}_{q}\left[\log{p(x,z)}\right]-\mathbb{E}_{q}\left[\log{q(Z)}\right]\right)+\log{p(x)}
 \end{align}
 $$
 
@@ -88,7 +87,7 @@ $$\mathbb{E}_{q}\left[\log{(q_{1},...,q_{m})}\right]=\sum_{j=1}^{m}\mathbb{E}_{j
 
 위에서 언급한 2가지 성질을 이용하여 ELBO($$\mathcal{L}$$)을 다음과 같이 적을 수 있다.
 
-$$\mathcal{L}=\log p(x_{1},...,x_{n})+\sum_{j=1}^{m}\left{\mathbb{E}\left[\log p(z_{j}|z_{1},...,z_{j-1},x_{1},...,x_{n})\right]-\mathbb{E}_{j}\left[\log q(z_{j})\right]\right}$$
+$$\mathcal{L} = \log{p(x_{1},...,x_{n})} + \sum_{j=1}^{m}\left{\mathbb{E}\left[\log{p(z_{j}|z_{1},...z_{j-1},x_{1},...,x_{n})}  \right]-\mathbb{E}_{j}\left[\log{q(z_{j})}\right]right\}$$
 
 ELBO를 $$q(z_{k})$$의 함수라 생각하고 variable $$z_{k}$$를 가장 마지막 variable이라 생각하고 Chain Rule를 사용하면 다음과 같은 objective function을 구할 수 있다.
 
@@ -98,6 +97,16 @@ $$
     \mathcal{L}_{k}&=\int q(z_{k})\mathbb{E}_{-k}\left[\log{p(z_{k}|z_{-k},\mathbf{x})}\right]dz_{k} - \int q(z_{k})\log{q(z_{k})}dz_{k}
 \end{align}
 $$
+
+$$q(z_{k})$$에 대한 derivative를 구하면 다음과 같다.
+
+$$\frac{d\mathcal{L}_{k}}{dq(z_{k})}=\mathbb{E}_{-k}\left[\log{p(z_{k}|z_{-k},\mathbf{x})}\right]-\log{q(z_{k})}-1=0$$
+
+이 결과를 바탕으로 $$q(z_{k})$$에 대한 coordinate ascent upate를 진행할 수 있다.
+
+$$ q^{*}(z_{k}) \propto exp\left{\mathbb{E}_{-k}\left[\log{p(z_{k}|z_{-k},\mathbf{x})}\right]\right} $$
+
+
 
 
 
