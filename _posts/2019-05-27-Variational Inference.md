@@ -68,7 +68,7 @@ $$
 \end{align}
 $$
 
-이는 negative ELBO $$+$$ C 의 형태라고 할 수 있다. $$\log{p(x)}$$ 부분이 상수취급을 받는 것은 $$\log{p(x)}$$가 q에 dependent하지 않기 때문이다. 다음과 같은 관계로 인해 ELBO를 maximizing 하는 것은 KLD를 minimizing하는 것이라 간주할 수 있고 ELBO를 maximizing함으로써 KLD를 minimize할 수 있다.
+이는 negative ELBO $$+$$ C 의 형태라고 할 수 있다. $$\log{p(x)}$$ 부분이 상수취급을 받는 것은 $$\log{p(x)}$$가 $$q$$에 dependent하지 않기 때문이다. 다음과 같은 관계로 인해 ELBO를 maximizing 하는 것은 KLD를 minimizing하는 것이라 간주할 수 있고 ELBO를 maximizing함으로써 KLD를 minimize할 수 있다.
 
 #### Mean Field Variational Inference
 
@@ -76,17 +76,28 @@ latent variable에 대한 variational distribution이 다음과 같이 factoriza
 
 $$q(z_{1},...,z_{m}) = \prod_{j=1}^{m}q(z_{j})$$
 
-단 1개의 latent variable에 대한 variational approximation인 $$q(z_{j})$$는 local variational approximation이다.
-
 Chain rule에 의해 다음과 같은 식을 얻을 수 있고
 
 $$p(z_{1},...,z_{m},x_{1},...,x_{n})=p(x_{1},...,x_{n})\prod_{j=1}^{m}p(z_{j}|z_{1:(j-1)},x_{1},...x_{n})$$
 
 ELBO의 엔트로피 부분은 다음과 같이 바꿀 수 있다.
 
-$$\mathbb{E}_{q}\left[\log{(q_{1},...,q_{m})}\right]=\sum_{j=1}^{m}\mathbb{E}_{q_{j}}\left[\log{(q_{j})}\right] $$
+$$\mathbb{E}_{q}\left[\log{(q_{1},...,q_{m})}\right]=\sum_{j=1}^{m}\mathbb{E}_{j}\left[\log{(q_{j})}\right] $$
 
+여기서 $$\mathbb{E}_{j}$$란 $$q(z_{j})$$에 대한 기대값을 의미한다.
 
+위에서 언급한 2가지 성질을 이용하여 ELBO($$\mathcal{L}$$)을 다음과 같이 적을 수 있다.
+
+$$\mathcal{L}=\log{p(x_{1},...,x_{n})}+\sum_{j=1}^{m}\left{\mathbb{E}\left[\log{p(z_{j}|z_{1},...,z_{j-1},x_{1},...x_{n})}\right]-\mathbb{E}_{j}\left[\log{q(z_{j})}\right]\right}$$
+
+ELBO를 $$q(z_{k})$$의 함수라 생각하고 variable $$z_{k}$$를 가장 마지막 variable이라 생각하고 Chain Rule를 사용하면 다음과 같은 objective function을 구할 수 있다.
+
+$$
+\begin{align}
+	\mathcal{L}=\mathbb{E}\left[\log{p(z_{k}|z_{-k},\mathbf{x})}\right]-\mathbb{E}_{j}\left[\log{q(z_{k})}\right]+C \\
+    \mathcal{L}_{k}=\int q(z_{k})\mathbb{E}_{-k}\left[\log{p(z_{k}|z_{-k},\mathbf{x})}\right]dz_{k} - \int q(z_{k})\log{q(z_{k})}dz_{k}
+\end{align}
+$$
 
 
 
