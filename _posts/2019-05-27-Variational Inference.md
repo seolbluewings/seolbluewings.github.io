@@ -75,8 +75,8 @@ $$\log{p(x)}=ELBO+D_{KL}(q(z)|p(z|x))$$
 
 $$
 \begin{align}
-	ELBO &= \mathcal{E}_{q}\left[\log{p(x,z)}\right]-\mathcal{E}_{q}\left[\log{q(z)}\right] \\
-    &= \mathcal{E}_{q}\left[\log{p(x|z)}\right]-D_{KL}(q(z)|p(z))
+	ELBO &= \mathbb{E}_{q}\left[\log{p(x,z)}\right]-\mathbb{E}_{q}\left[\log{q(z)}\right] \\
+    &= \mathbb{E}_{q}\left[\log{p(x|z)}\right]-D_{KL}(q(z)|p(z))
 \end{align}
 $$
 
@@ -133,10 +133,27 @@ Variational Inference의 coordinate ascent algorithm과 Gibbs Sampling은 비슷
 1. Gibbs Sampling은 conditional posterior로부터 sample하며
 2. Variational Inference의 coordinate ascent algorithm은 다음과 같은 형태를 갖는다. $$q(z_{k}) \propto exp\{\mathbb{E}\left[\log{(conditional)}\right]\}$$
 
+#### Exponential Family Conditionals
 
+각각의 conditional이 exponential family라고 가정하자.
 
+$$p(z_{j}|z_{-j},x) = h(z_{j})exp\{\eta(z_{-j},x)^{T}t(z_{j})-a(\eta(z_{-j},x))\}$$
 
+이 조건에서 mean field variational inference는 직관적이다.
 
+conditional에 log를 취하면
+
+$$\log{p(z_{j}|z_{-j},x)}=\log{h(z_{j})}+\eta(z_{-j},x)^{T}t(z_{j})-a(\eta(z_{-j},x))$$
+
+q(z_{-j})에 대하여 기대값을 취하면,
+
+$$\mathbb{E}\left[\log{p(z_{j}|z_{-j},x)}\right]=\log{h(z_{j})}+\mathbb{E}\left[\eta(z_{-j},x)\right]^{T}t(z_{j})-\mathbb{E}\left[a(\eta(z_{-j},x))\right]$$
+
+마지막 term은 $$q_{j}$$에 의존하지 않기 때문에
+
+$$q^{*}(z_{j}) \propto h(z_{j})exp\{\mathbb{E}\left[\eta(z_{-j},x)\right]^{T}t(z_{j})\}$$
+
+이고 이를 통해서 우리는 optimal $$q(z_{j})$$ 역시 conditional과 같은 exponential family임을 알 수 있다.
 
 
 
