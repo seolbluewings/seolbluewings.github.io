@@ -155,8 +155,28 @@ $$q^{*}(z_{j}) \propto h(z_{j})exp\{\mathbb{E}\left[\eta(z_{-j},x)\right]^{T}t(z
 
 이고 이를 통해서 우리는 optimal $$q(z_{j})$$ 역시 conditional과 같은 exponential family임을 알 수 있다.
 
+#### Variational EM Algorithm
 
+실제 문제에서 우리는 posterior $$p(z\|x)$$에 근사한 $$q(z)$$의 parameter $$\nu$$ 뿐만 아니라 $$p(x\|z)$$의 parameter $$\theta$$를 구해야 한다. 이 때 우리는 EM 알고리즘을 사용할 수 있다.
 
+$$
+\begin{align}
+	\log{p(y|\theta)} &\geq ELBO(\theta,\nu) \\
+    &= \int q_{\nu}(z)\log{\frac{p(x,z|\theta)}{q_{\nu}(z)}}dz
+\end{align}
+$$
+
+$$(\theta,\nu)$$에 대하여 ELBO를 iteratively하게 최대화하는 과정을 진행한다.
+
+1. E-step : given $$\theta$$일 때, $$\nu$$에 대하여 ELBO를 maximize 한다. 이는 곧 $$\nu$$를 parameter로 갖는 $$q_{\nu}(z)$$와 $$p(z\|x,\theta)$$의 KLD를 줄이는 것과 같다.
+
+$$q^{*}_{\nu}(z)=argmin_{\nu}D_{KL}(q_{\nu}(z)|p(z|x,\theta))$$
+
+2. M-step : 먼저 E-step에서 구한 $$\nu$$가 given일 때, $$\theta$$에 대하여 ELBO를 maximize 한다. 이는 complete-data log-likelihood의 조건부 기대값을 maximize하는 것과 동일하다.
+
+$$\theta^{*}=argmax_{\theta}\mathbb{E}_{q}\left[\log{p(z,x|\theta)}\right]$$
+
+#### Coordinate Ascent Variational Inference
 
 
 
