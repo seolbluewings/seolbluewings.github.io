@@ -67,7 +67,22 @@ $$
 \end{align}
 $$
 
-이는 negative ELBO $$+$$ C 의 형태라고 할 수 있다. $$\log{p(x)}$$ 부분이 상수취급을 받는 것은 $$\log{p(x)}$$가 $$q$$에 dependent하지 않기 때문이다. 다음과 같은 관계로 인해 ELBO를 maximizing 하는 것은 KLD를 minimizing하는 것이라 간주할 수 있고 ELBO를 maximizing함으로써 KLD를 minimize할 수 있다.
+즉 다음과 같이 evidence라고 불리기도 하는 $$\log{p(x)}$$는
+
+$$\log{p(x)}=ELBO+D_{KL}(q(z)|p(z|x))$$
+
+의 형태로 적힐 수 있고 KLD는 항상 0보다 크거나 같기 때문에 $$\log{p(x)} \geq ELBO$$ 이다. 등호는 $$q(z)=p(z\|x)$$ 일 때 성립한다. ELBO는 위에서 볼 수 있는 바와 같이 2가지 형태로 표현할 수 있다.
+
+$$
+\begin{align}
+	ELBO &= \mathcal{E}_{q}\left[\log{p(x,z)}\right]-\mathcal{E}_{q}\left[\log{q(z)}\right] \\
+    &= \mathcal{E}_{q}\left[\log{p(x|z)}\right]-D_{KL}(q(z)|p(z))
+\end{align}
+$$
+
+$$ELBO=\log{p(x)}-D_{KL}(q(z)|p(z|x))$$
+
+이기 때문에 ELBO를 maximize 하는 것은 KLD를 minimize하는 것과 동일하다.
 
 #### Mean Field Variational Inference
 
