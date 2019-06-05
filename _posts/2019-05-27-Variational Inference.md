@@ -168,15 +168,34 @@ $$
 
 $$(\theta,\nu)$$에 대하여 ELBO를 iteratively하게 최대화하는 과정을 진행한다.
 
-1. E-step : given $$\theta$$일 때, $$\nu$$에 대하여 ELBO를 maximize 한다. 이는 곧 $$\nu$$를 parameter로 갖는 $$q_{\nu}(z)$$와 $$p(z\|x,\theta)$$의 KLD를 줄이는 것과 같다.
+E-step : given $$\theta$$일 때, $$\nu$$에 대하여 ELBO를 maximize 한다. 이는 곧 $$\nu$$를 parameter로 갖는 $$q_{\nu}(z)$$와 $$p(z\|x,\theta)$$의 KLD를 줄이는 것과 같다.
 
 $$q^{*}_{\nu}(z)=argmin_{\nu}D_{KL}(q_{\nu}(z)|p(z|x,\theta))$$
 
-2. M-step : 먼저 E-step에서 구한 $$\nu$$가 given일 때, $$\theta$$에 대하여 ELBO를 maximize 한다. 이는 complete-data log-likelihood의 조건부 기대값을 maximize하는 것과 동일하다.
+M-step : 먼저 E-step에서 구한 $$\nu$$가 given일 때, $$\theta$$에 대하여 ELBO를 maximize 한다. 이는 complete-data log-likelihood의 조건부 기대값을 maximize하는 것과 동일하다.
 
 $$\theta^{*}=argmax_{\theta}\mathbb{E}_{q}\left[\log{p(z,x|\theta)}\right]$$
 
 #### Coordinate Ascent Variational Inference
+
+우리의 목적은 posterior에 근사하는 분포를 알아내는 것이며 이는 최적화(optimization)의 문제로 바라볼 수 있다. 그리고 최적화 문제는 종종 coordinate ascent algorithm을 통해 해결할 수 있다.
+
+우리는 다음의 함수($$\mathcal{L}$$)를 최대화하는 $$q_{\nu}(z)$$를 찾아야 한다.
+
+$$\mathcal{L} = \int q_{\nu}(z)\log{p(z,x)}dz-\int q_{\nu}(z)\log{q_{\nu}(z)}dz$$
+
+mean-field variational inference를 적용하면, 우리의 target function은 다음과 같이 표기할 수 있다. $$q(\mathbf{Z})=\prod_{j=1}^{m}q_{j}(z_{j})$$
+
+$$
+\begin{align}
+	\mathcal{L}&=\{\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mahtbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\} \\
+   &= \left(\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
+   &+\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{-k}|\mathbf{X})}d\mathbf{Z} \\
+   &+ \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(\mathbf{X})}d\mathbf{Z} \\
+   -\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\sum_{j=1}^{m}\log{q_{j}(z_{j})}d\mathbf{Z}\right)
+\end{align}
+$$
+
 
 
 
