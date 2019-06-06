@@ -191,10 +191,10 @@ $$q(\mathbf{Z})=\prod_{j=1}^{m}q_{j}(z_{j})$$
 $$
 \begin{align}
 	\mathcal{L}&=\[\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mahtbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\] \\
-   	&= \left(\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
+   	&= \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
    	&+\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{-k}|\mathbf{X})}d\mathbf{Z} \\
    	&+ \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(\mathbf{X})}d\mathbf{Z} \\
-  	&-\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\sum_{j=1}^{m}\log{q_{j}(z_{j})}d\mathbf{Z}\right)
+  	&-\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\sum_{j=1}^{m}\log{q_{j}(z_{j})}d\mathbf{Z}
 \end{align}
 $$
 
@@ -208,6 +208,21 @@ $$
     q_{k}^{*}(z_{k}) &\propto exp(\mathbb{E}_{-k}\[log{p(Z_{k},Z_{-k},x)}\])
 \end{align}
 $$
+
+우리는 모든 variational distributions에 대하여 위와 같은 iteration을 진행한다.
+
+아래와 같은 예시를 통해 Coordinate Ascent Variational Inference에 대해 논의를 진행해보자.
+
+관측치가 다음과 같은 계층적 모델의 형태로 주어졌다고 가정하자.
+
+$$
+\begin{align}
+	\theta_{k} \sim \mathcal{N}(0,\sigma^{2}), k=1,...,K \\
+    z_{i} \sim Categorical(1/K,...,1/K), i=1,...,n \\
+    y_{i}|(z_{i},\theta_{1:K}) \sim \mathcal{N}(\theta_{z_{i}},1), i=1,...,n
+\end{align}
+$$
+
 
 
 
