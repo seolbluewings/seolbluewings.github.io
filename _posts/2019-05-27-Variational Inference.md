@@ -184,11 +184,13 @@ $$\theta^{*}=argmax_{\theta}\mathbb{E}_{q}\left[\log{p(z,x|\theta)}\right]$$
 
 $$\mathcal{L} = \int q_{\nu}(z)\log{p(z,x)}dz-\int q_{\nu}(z)\log{q_{\nu}(z)}dz$$
 
-mean-field variational inference를 적용하면, 우리의 target function은 다음과 같이 표기할 수 있다. $$q(\mathbf{Z})=\prod_{j=1}^{m}q_{j}(z_{j})$$
+mean-field variational inference를 적용하면, 우리의 target function은 다음과 같이 표기할 수 있다.
+
+$$q(\mathbf{Z})=\prod_{j=1}^{m}q_{j}(z_{j})$$
 
 $$
 \begin{align}
-	\mathcal{L}&=\{\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mahtbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\} \\
+	\mathcal{L}&=\[\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mahtbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\] \\
    	&= \left(\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
    	&+\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{-k}|\mathbf{X})}d\mathbf{Z} \\
    	&+ \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(\mathbf{X})}d\mathbf{Z} \\
@@ -196,7 +198,16 @@ $$
 \end{align}
 $$
 
+여기서 $$\prod_{j \neq k} q_{j}(z_{j})$$는 $$q_{-k}(z_{k})$$를 의미한다.
 
+$$
+\begin{align}
+	\log{q_{k}(z_{k})} &= \mathbb{E}_{-k}\left[\log{p(Z_{k}|Z_{-k},x)}\right] + C \\
+    \Leftrightarrow q_{k}(z_{k}) \propto exp\[\mathbb{E}_{-k}(\log{p(Z_{k}|Z_{-k},x)})\] \\
+    q_{k}^{*}(z_{k}) &\propto exp\(\mathbb{E}_{-k}\[\log{p(Z_{k}|Z_{-k},x)}\]\) \times exp(\log{p(Z_{-k},x)}) \\
+    q_{k}^{*}(z_{k}) &\propto exp(\mathbb{E}_{-k}\[log{p(Z_{k},Z_{-k},x)}\])
+\end{align}
+$$
 
 
 
