@@ -190,7 +190,7 @@ $$q(\mathbf{Z})=\prod_{j=1}^{m}q_{j}(z_{j})$$
 
 $$
 \begin{align}
-	\mathcal{L}&=\[\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mahtbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\] \\
+	\mathcal{L}&=\left[\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mathtbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\right] \\
    	&= \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
    	&+\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{-k}|\mathbf{X})}d\mathbf{Z} \\
    	&+ \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(\mathbf{X})}d\mathbf{Z} \\
@@ -203,9 +203,9 @@ $$
 $$
 \begin{align}
 	\log{q_{k}(z_{k})} &= \mathbb{E}_{-k}\left[\log{p(Z_{k}|Z_{-k},x)}\right] + C \\
-    \Leftrightarrow q_{k}(z_{k}) \propto exp\[\mathbb{E}_{-k}(\log{p(Z_{k}|Z_{-k},x)})\] \\
-    q_{k}^{*}(z_{k}) &\propto exp\(\mathbb{E}_{-k}\[\log{p(Z_{k}|Z_{-k},x)}\]\) \times exp(\log{p(Z_{-k},x)}) \\
-    q_{k}^{*}(z_{k}) &\propto exp(\mathbb{E}_{-k}\[log{p(Z_{k},Z_{-k},x)}\])
+    &\Leftrightarrow q_{k}(z_{k}) \propto exp\left[\mathbb{E}_{-k}(\log{p(Z_{k}|Z_{-k},x)})\right] \\
+    q_{k}^{*}(z_{k}) &\propto exp(\mathbb{E}_{-k}\left[\log{p(Z_{k}|Z_{-k},x)}\right]) \times exp(\log{p(Z_{-k},x)}) \\
+    q_{k}^{*}(z_{k}) &\propto exp(\mathbb{E}_{-k}\left[log{p(Z_{k},Z_{-k},x)}\right])
 \end{align}
 $$
 
@@ -217,12 +217,32 @@ $$
 
 $$
 \begin{align}
-	\theta_{k} \sim \mathcal{N}(0,\sigma^{2}), k=1,...,K \\
-    z_{i} \sim Categorical(1/K,...,1/K), i=1,...,n \\
-    y_{i}|(z_{i},\theta_{1:K}) \sim \mathcal{N}(\theta_{z_{i}},1), i=1,...,n
+	\theta_{k} &\sim \mathcal{N}(0,\sigma^{2}), k=1,...,K \\
+    z_{i} &\sim Categorical(1/K,...,1/K), i=1,...,n \\
+    y_{i}|(z_{i},\theta_{1:K}) &\sim \mathcal{N}(\theta_{z_{i}},1), i=1,...,n
 \end{align}
 $$
 
+우리는 $$\sigma^{2}$$에 대해서 알고 있으며, $$\theta_{1:K}=(\theta_{1},...,\theta_{K}),z_{1:n} = (z_{1},...,z_{n}),y_{1:n}=(y_{1},...,y_{n})$$ 이라 하자.
+
+우리가 찾길 희망하는 target posterior distribution은 $$p(z_{1:n},\theta_{1:K}|y_{1:n})$$ 이며 이는 다음과 같은 관계를 가진다.
+
+$$p(z_{1:n},\theta_{1:K}|y_{1:n}) \propto p(z_{1:n},\theta_{1:K},y_{1:n})$$
+
+그리고 이 joint distribution은 다음과 같이 계산될 수 있다.
+
+$$
+\begin{align}
+	p(z_{1:n},\theta_{1:K},y_{1:n}) &= p(y_{1:n}|z_{1:n},\theta_{1:K})p(z_{1:n})p(\theta_{1:K}) \\
+    &= \prod_{i=1}^{n} p(y_{i}|z_{i},\theta_{1:K})p(z_{i})\prod_{k=1}^{K}p(\theta_{k})
+\end{align}
+$$
+
+우리는 target posterior distribution $$p(z_{1:n},\theta_{1:K}|y_{1:n})$$을 다음의 variational distribution $$q(z_{1:n},\theta_{1:K})$$를 통해 근사할 수 있으며, mean-field approximation을 활용하면 다음과 같이
+
+$$q(z_{1:n},\theta_{1:K}) = \prod_{i=1}^{n} q_{1}(z_{i}|\pi_{i})\prod_{k=1}^{K} q_{2}(\theta_{k}|\eta_{k},\tau^{2}_{k})$$
+
+로 표현될 수 있다. 이제 우리는 $$q(\mathbf{Z},\mathbf{\theta})$$를 알아내기 위하여, $$\pi,\eta,\tau$$를 추정해야 한다. 따라서 variational parameters는 $$\mathbf{\lambda}=(\pi_{1:n},\eta_{1:K},\tau^{2}_{1:K})$$ 이다.
 
 
 
