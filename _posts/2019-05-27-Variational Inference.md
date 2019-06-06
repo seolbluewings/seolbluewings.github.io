@@ -189,12 +189,13 @@ mean-field variational inference를 적용하면, 우리의 target function은 �
 $$
 \begin{align}
 	\mathcal{L}&=\{\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mahtbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\} \\
-   &= \left(\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
-   &+\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{-k}|\mathbf{X})}d\mathbf{Z} \\
-   &+ \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(\mathbf{X})}d\mathbf{Z} \\
-   &-\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\sum_{j=1}^{m}\log{q_{j}(z_{j})}d\mathbf{Z}\right)
+   	&= \left(\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
+   	&+\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{-k}|\mathbf{X})}d\mathbf{Z} \\
+   	&+ \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(\mathbf{X})}d\mathbf{Z} \\
+  	&-\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\sum_{j=1}^{m}\log{q_{j}(z_{j})}d\mathbf{Z}\right)
 \end{align}
 $$
+
 
 
 
