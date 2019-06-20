@@ -190,7 +190,7 @@ $$q(\mathbf{Z})=\prod_{j=1}^{m}q_{j}(z_{j})$$
 
 $$
 \begin{align}
-	\mathcal{L}&=\left[\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mathtbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\right] \\
+	\mathcal{L}&=\left[\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mathbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\right] \\
    	&= \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
    	&+\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{-k}|\mathbf{X})}d\mathbf{Z} \\
    	&+ \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(\mathbf{X})}d\mathbf{Z} \\
@@ -238,13 +238,41 @@ $$
 \end{align}
 $$
 
-우리는 target posterior distribution $$p(z_{1:n},\theta_{1:K}|y_{1:n})$$을 다음의 variational distribution $$q(z_{1:n},\theta_{1:K})$$를 통해 근사할 수 있으며, mean-field approximation을 활용하면 다음과 같이
+우리는 target posterior distribution $$p(z_{1:n},\theta_{1:K}\|y_{1:n})$$을 다음의 variational distribution $$q(z_{1:n},\theta_{1:K})$$를 통해 근사할 수 있으며, mean-field approximation을 활용하면 다음과 같이
 
 $$q(z_{1:n},\theta_{1:K}) = \prod_{i=1}^{n} q_{1}(z_{i}|\pi_{i})\prod_{k=1}^{K} q_{2}(\theta_{k}|\eta_{k},\tau^{2}_{k})$$
 
 로 표현될 수 있다. 이제 우리는 $$q(\mathbf{Z},\mathbf{\theta})$$를 알아내기 위하여, $$\pi,\eta,\tau$$를 추정해야 한다. 따라서 variational parameters는 $$\mathbf{\lambda}=(\pi_{1:n},\eta_{1:K},\tau^{2}_{1:K})$$ 이다.
 
+ELBO($\lambda$}를 maximizing하는 것은 KLD를 minimizing 하는 것과 동일하므로 다음과 같은 과정을 진행한다.
 
+$$ELBO(\lambda} = \mathbb{E}_{q}\[\log{p(z_{1:n},\theta_{1:K},\y_{1:n})}|\lambda\]-\mathbb{E}_{q}\[\log{q(z_{1:n},\theta_{1:K})|\lambda}\]$$
 
+$$
+\begin{align}
+	p(z_{1:n},\theta_{1:K}|y_{1:n}) &\propto p(z_{1:n},\theta_{1:K},\y_{1:n}) \\
+    &\propto p(y_{1:n}|z_{1:n},\theta_{1:K})p(z_{1:n})p(\theta_{1:K}) \\
+    &\propto \prod_{i=1}^{n}p(y_{i}|z_{i},\theta_{1:K})p(z_{i})\prod_{k=1}^{K}p(\theta_{k})
+\end{align}
+$$
 
+$$
+\begin{align}
+	ELBO(\lambda) &= \mathbb{E}_{q}\[\log{p(z_{1:n},\theta_{1:K},\y_{1:n})}|\lambda\]-\mathbb{E}_{q}\[\log{q(z_{1:n},\theta_{1:K})|\lambda}\] \\
+    &= \sum_{i=1}^{n}\mathbb{E}_{q}\[\log{p(y_{i}|z_{i},\theta_{1:K})}|\lambda\] +\sum_{i=1}^{n}\mathbb{E}_{q}\[\log{p(z_{i})}|\phi_{i}\]+\sum_{k=1}^{K}\mathbb{E}_{q}\[\log{p(\theta_{k})}|\eta_{k},\tau^{2}_{k}\] \\
+    &-\sum_{i=1}^{n}\mathbb{E}_{q1}\[\l(og{q_{1}(z_{i})}|\phi_{i}\] - \sum_{k=1}^{K}\mathbb{E}_{q2}\[\log{q_{2}(\theta_{k})}|\eta_{k},\tau^{2}_{k}\]
+\end{align}
+$$
+
+given $$(\eta_{1:K},\tau^{2}_{1:K})$$일 때,
+
+앞선 과정에서 $$\log_{q_{1}^{*}(z_{i})} \propto \mathbb{E}_{-z_{i})\[\log{(z_{i},z_{-i},y)}\]$$ 임을 알게 되었으므로 다음과 같은 과정을 통해 $$z_{1:n}$$ 과 $$\theta_{1:K}$$의 분포에 대한 추론을 할 수 있다.
+
+$$
+\begin{align}
+	q_{1}^{*}(z_{i}) &\propto exp\[\mathbb{E}_{-z_{i}}\log{p(z_{1:n},\theta_{1:K},\y_{1:n})}\] \\
+    &\propto exp\(\mathbb{E}_{-z_{i}}\[\log{y_{1:n}|z_{1:n},\theta_{1:K}}\]+\mathbb{E}_{-z_{i}}\[\log{p(z_{1:n)})}\]\) \\
+    &\propto exp\(\mathbb{E}_{-z_{i}}\[\log{p(y_{i}|z_{i},\theta_{1:K})}\]+\mathbb{E}_{-z_{i}}\[\log{p(z_{i})}\]\)
+\end{align}
+$$
 
