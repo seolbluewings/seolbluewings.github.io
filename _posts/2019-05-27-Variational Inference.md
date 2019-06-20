@@ -225,7 +225,7 @@ $$
 
 우리는 $$\sigma^{2}$$에 대해서 알고 있으며, $$\theta_{1:K}=(\theta_{1},...,\theta_{K}),z_{1:n} = (z_{1},...,z_{n}),y_{1:n}=(y_{1},...,y_{n})$$ 이라 하자.
 
-우리가 찾길 희망하는 target posterior distribution은 $$p(z_{1:n},\theta_{1:K}|y_{1:n})$$ 이며 이는 다음과 같은 관계를 가진다.
+우리가 찾길 희망하는 target posterior distribution은 $$p(z_{1:n},\theta_{1:K}\|y_{1:n})$$ 이며 이는 다음과 같은 관계를 가진다.
 
 $$p(z_{1:n},\theta_{1:K}|y_{1:n}) \propto p(z_{1:n},\theta_{1:K},y_{1:n})$$
 
@@ -246,7 +246,7 @@ $$q(z_{1:n},\theta_{1:K}) = \prod_{i=1}^{n} q_{1}(z_{i}|\pi_{i})\prod_{k=1}^{K} 
 
 ELBO($$\lambda$$}를 maximizing하는 것은 KLD를 minimizing 하는 것과 동일하므로 다음과 같은 과정을 진행한다.
 
-$$ ELBO(\lambda} = \mathbb{E}_{q}[\log{p(z_{1:n},\theta_{1:K},\y_{1:n})}|\lambda]-\mathbb{E}_{q}[\log{q(z_{1:n},\theta_{1:K})|\lambda}] $$
+$$ ELBO(\lambda) = \mathbb{E}_{q}[\log{p(z_{1:n},\theta_{1:K},\y_{1:n})}|\lambda]-\mathbb{E}_{q}[\log{q(z_{1:n},\theta_{1:K})|\lambda}] $$
 
 $$
 \begin{align}
@@ -258,23 +258,21 @@ $$
 
 $$
 \begin{align}
-	ELBO(\lambda) &= \mathbb{E}_{q}\[\log{p(z_{1:n},\theta_{1:K},y_{1:n})}|\lambda\]-\mathbb{E}_{q}[\log{q(z_{1:n},\theta_{1:K})|\lambda}] \\
+	ELBO(\lambda) &= \mathbb{E}_{q}[\log{p(z_{1:n},\theta_{1:K},y_{1:n})}|\lambda]-\mathbb{E}_{q}[\log{q(z_{1:n},\theta_{1:K})|\lambda}] \\
     &= \sum_{i=1}^{n}\mathbb{E}_{q}[\log{p(y_{i}|z_{i},\theta_{1:K})}|\lambda] +\sum_{i=1}^{n}\mathbb{E}_{q}[\log{p(z_{i})}|\phi_{i}]+\sum_{k=1}^{K}\mathbb{E}_{q}[\log{p(\theta_{k})}|\eta_{k},\tau^{2}_{k}] \\
     &-\sum_{i=1}^{n}\mathbb{E}_{q1}[\log{q_{1}(z_{i})}|\phi_{i}] - \sum_{k=1}^{K}\mathbb{E}_{q2}[\log{q_{2}(\theta_{k})}|\eta_{k},\tau^{2}_{k}]
 \end{align}
 $$
 
-given $$(\eta_{1:K},\tau^{2}_{1:K})$$일 때,
-
-앞선 과정에서 $$\log_{q_{1}^{*}(z_{i})} \propto \mathbb{E}_{-z_{i})[\log{(z_{i},z_{-i},y)}]$$ 임을 알게 되었으므로 다음과 같은 과정을 통해 $$z_{1:n}$$ 과 $$\theta_{1:K}$$의 분포에 대한 추론을 할 수 있다.
+given $$(\eta_{1:K},\tau^{2}_{1:K})$$일 때, 다음과 같은 과정을 통해 $$z_{1:n}$$ 과 $$\theta_{1:K}$$의 분포에 대한 추론을 할 수 있다.
 
 $$
 \begin{align}
 	q_{1}^{*}(z_{i}) &\propto exp[\mathbb{E}_{-z_{i}}\log{p(z_{1:n},\theta_{1:K},y_{1:n})}] \\
     &\propto exp(\mathbb{E}_{-z_{i}}[\log{y_{1:n}|z_{1:n},\theta_{1:K}}]+\mathbb{E}_{-z_{i}}[\log{p(z_{1:n)})}]) \\
-    &\propto exp(\mathbb{E}_{-z_{i}}[\log{p(y_{i}|z_{i},\theta_{1:K})}]+\mathbb{E}_{-z_{i}}[\log{p(z_{i})}]\) \\
+    &\propto exp(\mathbb{E}_{-z_{i}}[\log{p(y_{i}|z_{i},\theta_{1:K})}]+\mathbb{E}_{-z_{i}}[\log{p(z_{i})}]) \\
     &\propto exp(\mathbb{E}_{-z_{i}}[\sum_{k=1}^{K}I(Z_{i}=k)\log{p(y_{i}|\theta_{k})}]-\log{K}) \\
-    &propto exp(\int\int\cdot\int\sum_{Z_{-k}}[\sum_{k=1}^{K}I(z_{i}=k)\log{p(y_{i}|\theta_{k})}]q_{1}(z_{-k})q_{2}(\theta_{1:K})d\theta -\log{K}) \\
+    &\propto exp(\int\int\cdot\int\sum_{Z_{-k}}[\sum_{k=1}^{K}I(z_{i}=k)\log{p(y_{i}|\theta_{k})}]q_{1}(z_{-k})q_{2}(\theta_{1:K})d\theta -\log{K}) \\
     &\propto exp(\sum_{k=1}^{K}I(z_{i}=k)\int(-\frac{1}{2}(x_{i}-\theta_{k})^{2})q_{2}(\theta_{k}|\eta_{k},\tau^{2}_{k})d\theta_{k}) \\
     q_{1}^{*}(z_{i}=k) &\propto exp(\sum_{k=1}^{K}I(z_{i}=k)(y_{i}\eta_{k}-\frac{\eta_{k}^{2}+\tau_{k}^{2}}{2}))
 \end{align}
@@ -286,11 +284,28 @@ $$
 \begin{align}
 	q_{1}^{*}(z_{i}=1) &\propto A_{1} \\
     q_{1}^{*}(z_{i}=2) &\propto A_{2} \\
-    \\
+    ...\\
     q_{1}^{*}(z_{i}=K) &\propto A_{K} \\
     \therefore q_{1}^{*}(z_{i}=k) &=\frac{A_{k}}{A_{1}+A_{2}+...+A_{K}} 
 \end{align}
 $$
 
+$$
+\begin{align}
+	q_{2}^{*}(\theta_{k}) &\propto exp(\mathbb{E}_{-\theta_{k}}[\log{p(y_{1:n},\theta_{1:K},z_{1:n})}]) \\
+    &\propto exp(\mathbb{E}_{-\theta_{k}}[\log\{\prod_{i=1}^{n}\prod_{k=1}^{K}p(y_{1:n}|\theta_{k})^{I(z_{i}=k)}\prod_{k=1}^{K}p(\theta_{k}\}]) \\
+    q_{2}^{*}(\theta_{k}) &\propto exp(\mathbb{E}_{-\theta_{k}}[\sum_{i=1}^{n}\sum_{k=1}^{K}I(z_{i}=k)\log{p(y_{i}|\theta_{k})}+\sum_{k=1}^{K}\log{p(\theta_{k})}]) \\
+    &\propto (\sum_{i=1}^{n}\phi_{ik}\log{p(y_{i}|\theta_{k})}+\log{p(\theta_{k})}) \\
+    &\propto exp\left(\sum_{i=1}^{n}\phi_{ik}\left(-\frac{(y_{i}-\theta_{k})^{2}}{2}\right)+\left(-\frac{\theta_{k}^{2}}{2\sigma^{2}}\right)\right) \\
+	&exp \left(-\frac{1}{2}\left(\sum_{i=1}^{n}\phi_{ik}+\frac{1}{\sigma^{2}}\right)\left(\theta_{k}-\frac{\sum_{i=1}^{n}\phi_{ik}y_{i}}{\sum_{i=1}^{n}\phi_{ik}+\frac{1}{\sigma^{2}}}\right)\right)
+\end{align}
+$$
 
+따라서 k번째 mixture component의 평균과 분산은 다음과 같다.
 
+$$
+\begin{align}
+	\eta_{k} &= \frac{\sum_{i=1}^{n}\phi_{ik}y_{i}}{\sum_{i=1}^{n}\phi_{ik}+\frac{1}{\sigma^{2}}} \\
+	\tau^{2}_{k} &= \frac{1}{\sum_{i=1}^{n}\phi_{ik}+\frac{1}{\sigma^{2}}}
+\end{align}
+$$
