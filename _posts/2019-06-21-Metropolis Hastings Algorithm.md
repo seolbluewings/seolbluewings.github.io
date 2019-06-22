@@ -44,10 +44,40 @@ $$\mathbf{\theta}=(\theta_{1},\theta_{2})$$로 나누어질 때, (t+1)번째 ste
 
 \theta_{1}^{(t+1)} 추출
 
-1. \theta_{1}^{*} \sim T(\theta_{1}|x,\theta^{(t)}_{1},\theta_{2}^{(t)})
+1. $$\theta_{1}^{*} \sim T(\theta_{1}|x,\theta^{(t)}_{1},\theta_{2}^{(t)})$$
 
-2.
+2. $$ \alpha = \frac{\pi(\theta_{1}^{*},\theta_{2}^{(t)}|x)/T(\theta_{1}^{*}|\theta_{1}^{(t)},\theta_{2}^{(t)})}{\pi(\theta_{1}^{(t)},\theta_{2}^{(t)}|x)/T(\theta_{1}^{(t)}|\theta_{1}^{*},\theta_{2}^{(t)})} $$
 
+3. set $$\theta^{(t+1)}_{1}=\theta^{*}_{1}$$ with probability $$p=min(\alpha,1)$$, $$\theta^{(t+1)}_{1}=\theta^{(t)}_{1}$$ with probability $$1-p$$
+
+\theta_{2}^{(t+1)} 추출
+
+1. $$\theta_{2}^{*} \sim T(\theta_{2}|x,\theta^{(t+1)}_{1},\theta_{2}^{(t)})$$
+
+2. $$ \alpha = \frac{\pi(\theta_{2}^{*},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{*}|\theta_{1}^{(t+1)},\theta_{2}^{(t)})}{\pi(\theta_{2}^{(t)},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{(t)}|\theta_{2}^{*},\theta_{1}^{(t+1)})} $$
+
+3. set $$\theta^{(t+1)}_{2}=\theta^{*}_{2}$$ with probability $$p=min(\alpha,1)$$, $$\theta^{(t+1)}_{2}=\theta^{(t)}_{2}$$ with probability $$1-p$$
+
+Gibbs Sampler는 Metropolis-Hastings Algorithm의 특수한 경우이며, 이 때 transition kernel이 각 원소(원소 벡터)의 full-condtional posterior이다.
+
+$$
+\begin{align}
+	T(\theta_{1}|x,\theta_{1}^{(t)},\theta_{2}^{(t)}) &= \pi(\theta_{1}|x,\theta_{2}^{(t)}) \\
+    T(\theta_{2}|x,\theta_{1}^{(t+1)},\theta_{2}^{(t)}) &= \pi(\theta_{2}|x,\theta_{1}^{(t+1)})
+\end{align}
+$$
+
+이 경우 $$\alpha$$의 값은 다음과 같다.
+
+$$
+\begin{align}
+	\alpha &= \frac{\pi(\theta_{1}^{*},\theta_{2}^{(t)}|x)/\pi(\theta_{1}^{*}|x,\theta_{2}^{(t)})}{\pi(\theta_{1}^{(t)},\theta_{2}^{(t)}|x)/\pi(\theta_{1}^{(t)}|x,\theta_{2}^{(t)})} \\
+    &= \frac{\pi(\theta_{1}^{*}|\theta_{2}^{(t)},x)\pi(\theta_{2}^{(t)}|x)}{\pi(\theta_{1}^{(t)}|\theta_{2}^{(t)},x)\pi(\theta_{2}^{(t)}|x)} \times \frac{\pi(\theta_{1}^{(t)}|x,\theta_{2}^{(t)})}{\pi(\theta_{1}^{*}|x,\theta_{2}^{(t)})} \\
+    &= 1
+\end{align}
+$$
+
+이는 매번 $$\theta^{*}$$를 $$\theta^{(t+1)}$$로 받아들이는 Algorithm으로 Gibbs Sampler는 항상 Accept하는 Metropolis-Hasting Algorithm이라 할 수 있다. 
 
 
 
