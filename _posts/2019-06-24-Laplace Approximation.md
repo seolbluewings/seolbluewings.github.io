@@ -92,14 +92,14 @@ $$
 $$
 
 이제 다음과 같이 $$\mathbb{E}(\theta_{i})$$와 $$\hat{\theta}_{i}$$를 정의하자.
+
 $$
 \begin{align}
 	\mathbb{E}(\theta_{i}) &= -\log{p(\theta_{i}|\mathcal{M}_{i})}-\log{p(\mathcal{D}|\mathcal{M}_{i},\theta_{i})} \\
-    \hat{\theta}_{i} &= argmin_{\theta_{i}} \mathbb{E}(\theta_{i})
+    \hat{\theta}_{i} &= argmin_{\theta_{i}} \mathbb{E}(\theta_{i}) \\  
+    \int p(\mathcal{D}|\mathcal{M}_{i},\theta_{i})p(\theta_{i}|\mathcal{M}_{i})d\theta_{i} &\simeq \int exp(-\mathbb{E}(\theta_{i}))d\theta_{i}
 \end{align}
 $$
-
-$$\int p(\mathcal{D}|\mathcal{M}_{i},\theta_{i})p(\theta_{i}|\mathcal{M}_{i})d\theta_{i} \simeq \int exp(-\mathbb{E}(\theta_{i}))d\theta_{i}$$
 
 이제 $$exp(-\mathbb{E}(\theta_{i}))$$를 라플라스 근사법을 사용해 근사할 것이다.
 
