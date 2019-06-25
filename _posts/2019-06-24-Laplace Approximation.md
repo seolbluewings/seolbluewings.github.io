@@ -107,7 +107,7 @@ let $$-\mathbb{E}(\theta_{i})=g(\theta_{i})$$
 
 $$
 \begin{align}
-	g(\theta_{i}) \simeq g(\hat{\theta}_{i})-\frac{1}{2}(\theta_{i}-\hat{\theta}_{i})^{T}\mathbf{A}(\theta_{i}-\hat{\theta}_{i}) \\
+	g(\theta_{i}) &\simeq g(\hat{\theta}_{i})-\frac{1}{2}(\theta_{i}-\hat{\theta}_{i})^{T}\mathbf{A}(\theta_{i}-\hat{\theta}_{i}) \\
     A &= -\bigtriangledown\bigtriangledown g(\theta_{i})|_{\theta_{i}=\hat{\theta}_{i}}
 \end{align}
 $$
@@ -116,8 +116,8 @@ $$
 
 $$
 \begin{align}
-	\int exp(-\mathbb{E}(\theta_{i}))d\theta_{i} \simeq exp(-\mathbb{E}(\hat{\theta}_{i}))\int exp(-\frac{1}{2}(\theta_{i}-\hat{\theta}_{i})^{T}\mathbf{A}(\theta_{i}-\hat{\theta}_{i}))d\theta_{i} \\
-    &= exp(-\mathbb{E}(\hat{\theta_{i}}))\times \frac{|2\pi|^{M/2}{|A|^{1/2}} \\
+	\int exp(-\mathbb{E}(\theta_{i}))d\theta_{i} &\simeq exp(-\mathbb{E}(\hat{\theta}_{i})) \int exp(-\frac{1}{2}(\theta_{i}-\hat{\theta}_{i})^{T}\mathbf{A}(\theta_{i}-\hat{\theta}_{i}))d\theta_{i} \\
+    &= exp(-\mathbb{E}(\hat{\theta_{i}}))\times \frac{|2\pi|^{M/2}}{|A|^{1/2}} \\
     &= exp(\log{p(\hat{\theta}_{i}|\mathcal{M}_{i})+\log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})})\times \frac{|2\pi|^{M/2}{|A|^{1/2}}
 \end{align}
 $$
@@ -130,12 +130,12 @@ $$\theta_{i}$$가 다음과 같은 piror distribution을 가지고 있다고 하
 
 $$
 \begin{align}
-	\log{p(\mathcal{D}|\mathcal{M}_{i})} &\simeq \log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})-\frac{M}{2}\log{2pi}+\frac{1}{2}\log{|A_{0|}}-\frac{1}{2}(\hat{\theta_{i}}-\theta_{0})^{T}\mathbf{A}_{0}(\hat{\theta}_{i}-\theta_{0}) +\frac{M}{2}\log{|2\pi|}-\frac{1}{2}\log{|\mathbf{A}|} \\
+	\log{p(\mathcal{D}|\mathcal{M}_{i})} &\simeq \log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})}-\frac{M}{2}\log{2pi}+\frac{1}{2}\log{|A_{0|}}-\frac{1}{2}(\hat{\theta_{i}}-\theta_{0})^{T}\mathbf{A}_{0}(\hat{\theta}_{i}-\theta_{0}) +\frac{M}{2}\log{|2\pi|}-\frac{1}{2}\log{|\mathbf{A}|} \\
     &= \log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})}-\frac{1}{2}(\hat{\theta}_{i}-\theta_{0})^{T}\mathbf{A}_{0}(\hat{\theta}_{i}-\theta_{0})+\frac{1}{2}\frac{|A_{0}|}{|A|}
 \end{align}
 $$
 
-prior distribution이 non-informative하다면 $$A_{0}^{-1} \to \infty$$
+prior distribution이 non-informative하다면, 즉 $$A_{0}^{-1} \to \infty$$ 라면
 
 $$ \log{p(\mathcal{D}|\mathcal{M}_{i})} \simeq \log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta_{i}})}-\frac{1}{2}\log{\frac{|A|}{|A_{0}|}}$$
 
