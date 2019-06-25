@@ -78,7 +78,7 @@ $$
 \end{align}
 $$
 
-데이터 집합 $$\mathcal{D}$$와 모델집합 $$\{\mathbcal{M}_{i}\}$$를 고려하자. 이 모델들은 매개변수 $$\{\theta_{i}\}$$를 갖는다. 다양한 모델들 중에서 하나를 선택하는 것이 관심사라 할 때, 그 기준으로 모델 증거(model evidence) $$p(\mathbcal{D}\|\mathcal_{i})$$를 활용할 수 있다. 모델 증거에 대한 식은 다음과 같이 표현할 수 있다.
+데이터 집합 $$\mathcal{D}$$와 모델집합 $$\{\mathcal{M}_{i}\}$$를 고려하자. 이 모델들은 매개변수 $$\{\theta_{i}\}$$를 갖는다. 다양한 모델들 중에서 하나를 선택하는 것이 관심사라 할 때, 그 기준으로 모델 증거(model evidence) $$p(\mathbcal{D}\|\mathcal{M}_{i})$$를 활용할 수 있다. 모델 증거에 대한 식은 다음과 같이 표현할 수 있다.
 
 $$p(\mathcal{D}|\mathcal{M}_{i})=\int p(\mathcal{D}|\theta_{i},\mathcal{M}_{i})p(\theta_{i}|\mathcal{M}_{i})d\theta_{i}$$
 
@@ -99,7 +99,49 @@ $$
 \end{align}
 $$
 
-$$\int p(\mathcal{D}|\mathcal{M}_{i},\theta_{i})p(\theta_{i}|\mathcal{M}_{i})d\theta_{i} = \int exp(-\mathbb{E}(\theta_{i}))d\theta_{i}$$
+$$\int p(\mathcal{D}|\mathcal{M}_{i},\theta_{i})p(\theta_{i}|\mathcal{M}_{i})d\theta_{i} \simeq \int exp(-\mathbb{E}(\theta_{i}))d\theta_{i}$$
 
 이제 $$exp(-\mathbb{E}(\theta_{i}))$$를 라플라스 근사법을 사용해 근사할 것이다.
+
+let $$-\mathbb{E}(\theta_{i})=g(\theta_{i})$$
+
+$$
+\begin{align}
+	g(\theta_{i}) \simeq g(\hat{\theta}_{i})-\frac{1}{2}(\theta_{i}-\hat{\theta}_{i})^{T}\mathbf{A}(\theta_{i}-\hat{\theta}_{i}) \\
+    A &= -\bigtriangledown\bigtriangledown g(\theta_{i})|_{\theta_{i}=\hat{\theta}_{i}}
+\end{align}
+$$
+
+따라서 $$\int exp(-\mathbb{E}(\theta_{i}))d\theta_{i}$$ 에 대한 라플라스 근사는 다음과 같다.
+
+$$
+\begin{align}
+	\int exp(-\mathbb{E}(\theta_{i}))d\theta_{i} \simeq exp(-\mathbb{E}(\hat{\theta}_{i}))\int exp(-\frac{1}{2}(\theta_{i}-\hat{\theta}_{i})^{T}\mathbf{A}(\theta_{i}-\hat{\theta}_{i}))d\theta_{i} \\
+    &= exp(-\mathbb{E}(\hat{\theta_{i}}))\times \frac{|2\pi|^{M/2}{|A|^{1/2}} \\
+    &= exp(\log{p(\hat{\theta}_{i}|\mathcal{M}_{i})+\log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})})\times \frac{|2\pi|^{M/2}{|A|^{1/2}}
+\end{align}
+$$
+
+여기에 로그를 취하면 다음과 같은 결과를 얻을 수 있다.
+
+$$ \log{p(\mathcal{D}|\mathcal{M}_{i})}=\log{p(\hat{\theta}_{i}|\mathcal{M}_{i})}+\log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})+\frac{M}{2}\log{|2\pi|}-\frac{1}{2}\log{|A|}} $$
+
+$$\theta_{i}$$가 다음과 같은 piror distribution을 가지고 있다고 하자. $$\theta_{i} \sim \mathcal{N}(\theta_{0},A^{-1}_{0})$$
+
+$$
+\begin{align}
+	\log{p(\mathcal{D}|\mathcal{M}_{i})} &\simeq \log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})-\frac{M}{2}\log{2pi}+\frac{1}{2}\log{|A_{0|}}-\frac{1}{2}(\hat{\theta_{i}}-\theta_{0})^{T}\mathbf{A}_{0}(\hat{\theta}_{i}-\theta_{0}) +\frac{M}{2}\log{|2\pi|}-\frac{1}{2}\log{|\mathbf{A}|} \\
+    &= \log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})}-\frac{1}{2}(\hat{\theta}_{i}-\theta_{0})^{T}\mathbf{A}_{0}(\hat{\theta}_{i}-\theta_{0})+\frac{1}{2}\frac{|A_{0}|}{|A|}
+\end{align}
+$$
+
+prior distribution이 non-informative하다면 $$A_{0}^{-1} \to \infty$$
+
+$$ \log{p(\mathcal{D}|\mathcal{M}_{i})} \simeq \log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta_{i}})}-\frac{1}{2}\log{\frac{|A|}{|A_{0}|}}$$
+
+이를 정리하면 다음과 같은 결과를 얻을 수 있다. 여기서 $$\mathcal{M}$$은 $$\mathbf{\theta}$$의 숫자이며 N은 데이터의 수이다.
+
+$$\log{p(\mathcal{D}|\mathcal{M}_{i})} \simeq \log{p(\mathcal{D}|\mathcal{M}_{i},\hat{\theta}_{i})} -\frac{M}{2}\log{N} $$
+
+이 식은 베이지안 정보기준(Bayesian Information Criterion, BIC)라고 부르며, 이는 AIC보다 모델의 복잡도에 더 큰 페널티를 부여하는 방식이다.
 
