@@ -51,8 +51,8 @@ $$\mathbf{z}_{0}$$에서의 기울기는 $$\bigtriangledown f(\mathbf{z})=0$$ �
 
 $$
 \begin{align}
-	\log{f(\mathbf{z})} &\simeq \log{f(\mathbf{z}_{0})}-\frac{1}{2}(\mathbf{z}-\mathbf{z}_{0})^{T}\mathbf{A}(\mathbf{z}-\mahtbf{z}_{0}) \\
-    A &= -\bigtriangledown\bigtriangledwon\log{f(\mathbf{z})}|_{\mathbf{z}=\mathbf{z}_{0}} \\
+	\log{f(\mathbf{z})} &\simeq \log{f(\mathbf{z}_{0})}-\frac{1}{2}(\mathbf{z}-\mathbf{z}_{0})^{T}\mathbf{A}(\mathbf{z}-\mathbf{z}_{0}) \\
+    A &= -\bigtriangledown\bigtriangledown\log{f(\mathbf{z})}|_{\mathbf{z}=\mathbf{z}_{0}} \\
     f(\mathbf{z}) &= f(\mathbf{z}_{0})exp\left[-\frac{1}{2}(\mathbf{Z}-\mathbf{Z}_{0})^{T}\mathbf{A}(\mathbf{Z}-\mathbf{Z}_{0})\right]
 \end{align}
 $$
@@ -61,8 +61,8 @@ $$
 
 $$
 \begin{align}
-	q(\mathbf{z}) &= \frac{|A|^{1/2}}{(2\pi)^{M/2}} exp\left[-\frac{1}{2}(\mahtbf{Z}-\mahtbf{Z}_{0})^{T}\mahtbf{A}(\mathbf{Z}-\mathbf{Z_{0}})\right] \\
-    &= \mathcal{N}(\mahtbf{Z}|\mathbf{Z}_{0},\mahtbf{A}^{-1})
+	q(\mathbf{z}) &= \frac{|A|^{1/2}}{(2\pi)^{M/2}} exp\left[-\frac{1}{2}(\mathbf{Z}-\mathbf{Z}_{0})^{T}\mathbf{A}(\mathbf{Z}-\mathbf{Z_{0}})\right] \\
+    &= \mathcal{N}(\mathbf{Z}|\mathbf{Z}_{0},\mathbf{A}^{-1})
 \end{align}
 $$
 
@@ -70,7 +70,36 @@ $$
 
 위의 라플라스 근사법은 모델 선택과정 방법 중 하나인 BIC에 적용될 수 있다. 
 
+$$
+\begin{align}
+	\mathbf{Z} &= \int f(\mathbf{z})d\mathbf{z} \\
+    &\simeq f(\mathbf{z}_{0})\int exp\left[-\frac{1}{2}(\mathbf{z}-\mathbf{z}_{0})^{T}\mathbf{A}(\mathbf{z}-\mathbf{z}_{0})\right]d\mathbf{z} \\
+    &= f(\mathbf{z}_{0})\times\frac{|2\pi|^{M/2}}{|A|^{1/2}}
+\end{align}
+$$
 
+데이터 집합 $$\mathcal{D}$$와 모델집합 $$\{\mathbcal{M}_{i}\}$$를 고려하자. 이 모델들은 매개변수 $$\{\theta_{i}\}$$를 갖는다. 다양한 모델들 중에서 하나를 선택하는 것이 관심사라 할 때, 그 기준으로 모델 증거(model evidence) $$p(\mathbcal{D}\|\mathcal_{i})$$를 활용할 수 있다. 모델 증거에 대한 식은 다음과 같이 표현할 수 있다.
 
+$$p(\mathcal{D}|\mathcal{M}_{i})=\int p(\mathcal{D}|\theta_{i},\mathcal{M}_{i})p(\theta_{i}|\mathcal{M}_{i})d\theta_{i}$$
 
+베이즈 정리에 의하여 $$\int$$의 뒤에 위치한 부분은 다음과 같이 표현될 수 있다.
+
+$$
+\begin{align}
+	p(\theta_{i}|\mathcal{D},\mathcal{M}_{i}) &\propto p(\theta_{i}|\mathcal{M}_{i})\times p(\mathcal{D}|\mathcal{M}_{i},\theta_{i}) \\
+    \log{p(\theta_{i}|\mathcal{D},\mathcal{M}_{i})} &= \log{p(\theta_{i}|\mathcal{M}_{i})}+ \log{p(\mathcal{D}|\mathcal{M}_{i},\theta_{i})}+C
+\end{align}
+$$
+
+이제 다음과 같이 $$\mathbb{E}(\theta_{i})$$와 $$\hat{\theta}_{i}$$를 정의하자.
+$$
+\begin{align}
+	\mathbb{E}(\theta_{i}) &= -\log{p(\theta_{i}|\mathcal{M}_{i})}-\log{p(\mathcal{D}|\mathcal{M}_{i},\theta_{i})} \\
+    \hat{\theta}_{i} &= argmin_{\theta_{i}} \mathbb{E}(\theta_{i})
+\end{align}
+$$
+
+$$\int p(\mathcal{D}|\mathcal{M}_{i},\theta_{i})p(\theta_{i}|\mathcal{M}_{i})d\theta_{i} = \int exp(-\mathbb{E}(\theta_{i}))d\theta_{i}$$
+
+이제 $$exp(-\mathbb{E}(\theta_{i}))$$를 라플라스 근사법을 사용해 근사할 것이다.
 
