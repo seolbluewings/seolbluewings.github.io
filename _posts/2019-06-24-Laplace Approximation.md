@@ -78,7 +78,7 @@ $$
 \end{align}
 $$
 
-데이터 집합 $$\mathcal{D}$$와 모델집합 $$\{\mathcal{M}_{i}\}$$를 고려하자. 이 모델들은 매개변수 $$\{\theta_{i}\}$$를 갖는다. 다양한 모델들 중에서 하나를 선택하는 것이 관심사라 할 때, 그 기준으로 모델 증거(model evidence) $$p(\mathbcal{D}\|\mathcal{M}_{i})$$를 활용할 수 있다. 모델 증거에 대한 식은 다음과 같이 표현할 수 있다.
+데이터 집합 $$\mathcal{D}$$와 모델집합 $$\{\mathcal{M}_{i}\}$$를 고려하자. 이 모델들은 매개변수 $$\{\theta_{i}\}$$를 갖는다. 다양한 모델들 중에서 하나를 선택하는 것이 관심사라 할 때, 그 기준으로 모델 증거(model evidence) $$p(\mathcal{D}\|\mathcal{M}_{i})$$를 활용할 수 있다. 모델 증거에 대한 식은 다음과 같이 표현할 수 있다.
 
 $$p(\mathcal{D}|\mathcal{M}_{i})=\int p(\mathcal{D}|\theta_{i},\mathcal{M}_{i})p(\theta_{i}|\mathcal{M}_{i})d\theta_{i}$$
 
