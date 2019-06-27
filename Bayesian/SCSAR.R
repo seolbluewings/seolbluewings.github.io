@@ -5,10 +5,7 @@ n=30; G=50; R=50
 gamma=c(-1.5,0.5,1)
 beta=c(0.5,0.5,0.5)
 lambda=0.05
-delta=c(0.5,0.5)
-sigma=matrix(c(1,0.5,0.5,1.25),ncol=2)
 sig_alpha=0.5
-mu=0.5
 
 z=matrix(0,ncol=n,nrow=G)
 e=matrix(0,ncol=n,nrow=G)
@@ -59,7 +56,6 @@ for(g in 1:G){
   Wg[[g]]=w
 }
 
-ag=matrix(0,ncol=n,nrow=G)
 Xg=list();yg=list()
 
 for(g in 1:G){
@@ -67,30 +63,11 @@ for(g in 1:G){
   x=rnorm(n,0,1)
   Xg[[g]]=x
   alpha=rnorm(1,0,sqrt(sig_alpha))
-  #ZZ=cbind(z[g,],Wg[[g]]%*%z[g,])
   XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
-  #MM=cbind(rep(1,n)*mu,Wg[[g]]%*%(rep(1,n)*mu))
   yg[[g]]=solve(SS)%*%(XX%*%(beta)+rep(1,n)*alpha+e[g,])
 }
 
-### assign parameter in prior distribution ###
-gamma0=rep(0,3)
-beta0=rep(0,3)
-Gamma0=5*diag(1,3)
-Beta0=5*diag(1,3)
-rho0=5; eta0=1;
-sig0=c(0,0)
-
 iter=5500
-Z_mat=matrix(0,ncol=n,nrow=G) #save for Z
-gamma_mat=matrix(0,ncol=3,nrow=iter) #save for gamma
-lambda_mat=matrix(0,ncol=1,nrow=iter) #save for lambda
-beta_mat=matrix(0,ncol=3,nrow=iter) #save for beta
-sige_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_e^2
-siga_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_a^2
-sigez_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_ez^2
-alpha_mat=matrix(0,nrow=iter,ncol=G)
-
 mini=c();maxi=c();Tau_g=c()
 for(g in 1:G){
   for(i in 1:n){
@@ -102,9 +79,9 @@ for(g in 1:G){
 }
 
 ### starting value of draw ###
-gamma_mat[1,]=c(-1,0.5,1);lambda_mat[1,]=0.04
-sige_mat[1,]=1; sigez_mat[1,]=0.5; siga_mat[1,]=0.3
-beta_mat[1,]=c(0.3,0.2,0.4)
+#gamma_mat[1,]=c(-1,0.5,1);lambda_mat[1,]=0.04
+#sige_mat[1,]=1; sigez_mat[1,]=0.5; siga_mat[1,]=0.3
+#beta_mat[1,]=c(0.3,0.2,0.4)
 
 ### save 
 beta1_list=list();beta2_list=list();beta3_list=list()
@@ -116,6 +93,33 @@ sigez_list=list()
 
 st_time=Sys.time()
 for(r in 1:R){
+  c_1=1;c_2=1;c_3=1;c_4=1
+  acc_1=0;acc_2=0;acc_3=0;acc_4=matrix(0,nrow=G,ncol=1)
+  
+  ### assign parameter in prior distribution ###
+  gamma0=rep(0,3); Gamma0=5*diag(1,3)
+  beta0=rep(0,3); Beta0=5*diag(1,3)
+  rho0=5; eta0=1;
+  sig0=c(0,0)
+  
+  Z_mat=matrix(0,ncol=n,nrow=G) #save for Z
+  gamma_mat=matrix(0,ncol=3,nrow=iter) #save for gamma
+  lambda_mat=matrix(0,ncol=1,nrow=iter) #save for lambda
+  beta_mat=matrix(0,ncol=3,nrow=iter) #save for beta
+  sige_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_e^2
+  siga_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_a^2
+  sigez_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_ez^2
+  alpha_mat=matrix(0,nrow=iter,ncol=G) #save for alpha
+  acc_rate1=matrix(0,nrow=iter,1)
+  acc_rate2=matrix(0,nrow=iter,1)
+  acc_rate3=matrix(0,nrow=iter,1)
+  acc_rate4=matrix(0,nrow=G,ncol=iter)
+  
+  ### starting value of draw ###
+  gamma_mat[1,]=c(-1,0.5,0.7);#lambda_mat[1,]=0.03
+  sige_mat[1,]=1; sigez_mat[1,]=0.5; siga_mat[1,]=0.3
+  beta_mat[1,]=c(0.3,0.2,0.4)
+  
   cat(r,"repetition of MCMC start!","\n")
   for(t in 2:iter){
     start_time=Sys.time()
@@ -133,22 +137,24 @@ for(r in 1:R){
         accept=1
       }
     }
-    
+    pp_l=1
     ### propose gamma*
+    
     if(t<6){
       gamma_1=rmvnorm(1,gamma_mat[t-1,],diag(1,3)*0.1^2/3)
     } else{
       gamma_1=rmvnorm(1,gamma_mat[t-1,],cov(as.matrix(gamma_mat[1:t-1,])))*0.95+
         rmvnorm(1,gamma_mat[t-1,],diag(1,3)*0.1^2/3)*0.05
     }
-    pp_l=1;pp_G=1
+    pp_G=1
     
     ### M-H algorithm for sampling Z ###
     V=(sige_mat[t-1,]-sigez_mat[t-1,]^2)*diag(1,n)+siga_mat[t-1,]*rep(1,n)%*%t(rep(1,n))
     for(g in 1:G){
       zz_1=Z_mat[g,]
+      acc_4v=0
       for(v in 1:n){
-        zz_1[v]=rnorm(1,0,1)+Z_mat[g,v]
+        zz_1[v]=rnorm(1,0,1)*c_4+Z_mat[g,v]
         pp=1
         for(i in 1:n){
           if(i==v){
@@ -181,9 +187,14 @@ for(r in 1:R){
         pp=min(pp,1)
         if(runif(1,0,1)<=pp){
           Z_mat[g,v]=zz_1[v]
+          acc_4v=acc_4v+1
         }
           zz_1=Z_mat[g,]
       }
+      if(acc_4v>=n/2){
+        acc_4[g,]=acc_4[g,]+1
+      } 
+      acc_rate4[g,t]=acc_4[g,]/t
       
       ### M-H algorithm for sampling gamma and lambda
       pp=1
@@ -194,7 +205,8 @@ for(r in 1:R){
           p_1=exp(psi_1*Wg[[g]][i,j])/(1+exp(psi_1))
           p_2=exp(psi_2*Wg[[g]][i,j])/(1+exp(psi_2))
           if(i==j){
-            p_1=1;p_2=1
+            p_1=1
+            p_2=1
           }
           pp=pp*(p_1/p_2)
         }
@@ -213,36 +225,48 @@ for(r in 1:R){
     
     pp_G=pp_G*(dmvnorm(gamma_1,gamma0,Gamma0)/dmvnorm(gamma_mat[t-1,],gamma0,Gamma0))
     pp_G=min(pp_G,1)
-    pp_l=min(pp_l,1)
     
     if(runif(1,0,1)<=pp_G){
       gamma_mat[t,]=gamma_1
+      acc_1=acc_1+1
     } else{
       gamma_mat[t,]=gamma_mat[t-1,]
     }
+    acc_rate1[t,]=acc_1/t
+    
+    pp_l=min(pp_l,1)
     if(runif(1,0,1)<=pp_l){
       lambda_mat[t,]=lambda_1
+      acc_2=acc_2+1
     } else{
       lambda_mat[t,]=lambda_mat[t-1,]
     }
+    acc_rate2[t,]=acc_2/t
+    
+    if(mean(acc_rate4[,t])<0.4){
+      c_4=c_4/1.1
+    }
+    if(mean(acc_rate4[,t])>0.6){
+      c_4=c_4*1.1
+    }
     
     ### sample of beta from posterior distribution
+    
     XVX=matrix(0,ncol=length(beta0),nrow=length(beta0))
     XVY=matrix(0,nrow=length(beta0),ncol=1)
-    Vg=list()
     for(g in 1:G){
       SS=diag(1,n)-lambda_mat[t,]*Wg[[g]]
-      YY=SS%*%yg[[g]]-sigez_mat[t-1,]*Z_mat[g,]#-rep(1,n)*alpha_mat[t-1,g]
+      YY=SS%*%yg[[g]]-sigez_mat[t-1,]*Z_mat[g,]
       XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
-      Vg[[g]]=(sige_mat[t-1,]-(sigez_mat[t-1,])^2)*diag(1,n)+siga_mat[t-1,]*rep(1,n)%*%t(rep(1,n))
-      XVX=XVX+t(XX)%*%solve(Vg[[g]])%*%XX
-      XVY=XVY+t(XX)%*%solve(Vg[[g]])%*%YY
+      XVX=XVX+t(XX)%*%solve(V)%*%XX
+      XVY=XVY+t(XX)%*%solve(V)%*%YY
     }
     B=solve(solve(Beta0)+XVX)
     nbeta=B%*%(solve(Beta0)%*%beta0+XVY)
     beta_mat[t,]=rmvnorm(1,nbeta,B)
     
     ### sampling of sigmae^2 & sigmaez^2 from posterior 
+    
     accept=0
     while(accept==0){
       if(t<=4){
@@ -261,9 +285,11 @@ for(r in 1:R){
         accept=1
       }
     }
+    
     V1=(sige_1-sigez_1^2)*diag(1,n)+siga_mat[t-1,]*rep(1,n)%*%t(rep(1,n))
     V2=(sige_mat[t-1,]-sigez_mat[t-1,]^2)*diag(1,n)+siga_mat[t-1,]*rep(1,n)%*%t(rep(1,n))
     pp_sig=1
+    
     for(g in 1:G){
       SS=diag(1,n)-lambda_mat[t,]*Wg[[g]]
       XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
@@ -272,15 +298,19 @@ for(r in 1:R){
       like_2=det(V2)^(-0.5)*exp(-0.5*t(ep-sigez_mat[t-1,]*Z_mat[g,])%*%solve(V2)%*%(ep-sigez_mat[t-1,]*Z_mat[g,]))
       pp_sig=pp_sig*(like_1/like_2)
     }
+    
     pp_sig=pp_sig*(dmvnorm(sig,sig0,diag(1,2))/dmvnorm(c(sige_mat[t-1,],sigez_mat[t-1,]),sig0,diag(1,2)))
     pp_sig=min(pp_sig,1)
+    
     if(runif(1,0,1)<=pp_sig){
       sige_mat[t,]=sige_1
       sigez_mat[t,]=sigez_1
+      acc_3=acc_3+1
     } else{
       sige_mat[t,]=sige_mat[t-1,]
       sigez_mat[t,]=sigez_mat[t-1,]
     }
+    acc_rate3[t,]=acc_3/t
     
     ### sampling of alpha_g from posterior distribution
     dd=(siga_mat[t-1,]^(-1)+(sige_mat[t,]-sigez_mat[t,]^2)^(-1)*t(rep(1,n))%*%rep(1,n))^(-1)
@@ -290,10 +320,12 @@ for(r in 1:R){
       XX=rep(1,n)*beta_mat[t,1]+Xg[[g]]*beta_mat[t,2]+Wg[[g]]%*%Xg[[g]]%*%beta_mat[t,3]
       alpha_mat[t,g]=rnorm(1,(sige_mat[t,]-sigez_mat[t,]^2)^(-1)*dd*(rep(1,n)%*%(YY-XX)),sqrt(dd))
     }
+    
     ### sampling of sigma_alpha from posterior distribution
     inv_alpha=(rho0+G)/2
     inv_beta=(eta0+sum((alpha_mat[t,])^2))/2
     siga_mat[t,]=1/rgamma(1,shape=inv_alpha,rate=inv_beta)
+    
     end_time=Sys.time()
     ###print result
     cat("gamma =", round(gamma_mat[t,],4),"\n")
@@ -302,6 +334,9 @@ for(r in 1:R){
     cat("sigma_e =",round(sige_mat[t,],4),"\n")
     cat("sigma_ez =",round(sigez_mat[t,],4),"\n")
     cat("siga_alpha =",round(siga_mat[t,],4),"\n")
+    cat("gamma acceptance rate=",round(acc_rate1[t,],2),"\n")
+    cat("lambda acceptance rate=",round(acc_rate2[t,],2),"\n")
+    cat("sigma acceptance rate=",round(acc_rate3[t,],2),"\n")
     cat("current iteration",t,"is end","\n")
     cat("At",r,"repetition",t,"iteration spend",end_time-start_time,"seconds","\n");cat("\n")
   }
