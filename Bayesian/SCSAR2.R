@@ -1,14 +1,11 @@
 rm(list=ls())
 set.seed(2018311133)
 library(mvtnorm)
-n=30; G=50; R=50
+n=30; G=50; R=30
 gamma=c(-1.5,0.5,1)
 beta=c(0.5,0.5,0.5)
 lambda=0.05
-delta=0.3
-sigma=matrix(c(1,0.5,0.5,1.25),ncol=2)
 sig_alpha=0.5
-mu=c(0,0)
 
 z=matrix(0,ncol=n,nrow=G)
 e=matrix(0,ncol=n,nrow=G)
@@ -16,13 +13,13 @@ C_g=matrix(0,ncol=n,nrow=n)
 C_glist=list()
 
 for(g in 1:G){
-  mat=rmvnorm(n,mu,sigma)
+  mat=rmvnorm(n,c(0,0),diag(1,2))
   u1=runif(n,0,1); u2=runif(n,0,1)
   for(i in 1:n){
     for(j in 1:n){
-      if(u1[i]>=0.7 && u2[j]>=0.7){
+      if(u1[i]>0.5 && u2[j]>0.5){
         C_g[i,j]=1
-      } else if(u1[i]<=0.3 && u2[j]<=0.3){
+      } else if(u1[i]<0.5 && u2[j]<0.5){
         C_g[i,j]=1
       } else{
         C_g[i,j]=0
@@ -43,7 +40,7 @@ w=matrix(0,ncol=n,nrow=n);Wg=list()
 for(g in 1:G){
   for(i in 1:n){
     for(j in 1:n){
-      psi=gamma[1]+gamma[2]*C_glist[[g]][i,j]+gamma[3]*abs(z[g,i]-z[g,j])
+      psi=gamma[1]+gamma[2]*C_glist[[g]][i,j]-gamma[3]*abs(z[g,i]-z[g,j])
       p[i,j]=exp(psi)/(1+exp(psi))
       if(runif(1,0,1)<=p[i,j]){
         w[i,j]=1
@@ -60,18 +57,19 @@ for(g in 1:G){
 }
 
 ag=matrix(0,ncol=n,nrow=G)
-lg=matrix(0,ncol=n,nrow=G)
 Xg=list();yg=list()
 
 for(g in 1:G){
+  SS=diag(1,n)-lambda*Wg[[g]]
   x=rnorm(n,0,1)
-  alpha=rnorm(1,0,sqrt(sig_alpha))
-  lmg=rep(1,n)
   Xg[[g]]=x
-  ag[g,]=alpha
-  lg[g,]=lmg
-  yg[[g]]=solve(diag(1,n)-lambda*Wg[[g]])%*%(lg[g,]*beta[1]+Xg[[g]]*beta[2]+Wg[[g]]%*%Xg[[g]]%*%beta[3]+lg[g,]*ag[g,]+e[g,])
+  alpha=rnorm(1,0,sqrt(sig_alpha))
+  #ZZ=cbind(z[g,],Wg[[g]]%*%z[g,])
+  XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
+  #MM=cbind(rep(1,n)*mu,Wg[[g]]%*%(rep(1,n)*mu))
+  yg[[g]]=solve(SS)%*%(XX%*%(beta)+rep(1,n)*alpha+e[g,])
 }
+
 
 ### assign parameter in prior distribution ###
 gamma0=rep(0,3)
@@ -81,7 +79,7 @@ Beta0=5*diag(1,3)
 rho0=5; eta0=1;
 sig0=c(0,0)
 delta0=c(0,0)
-Delta0=5*diag(1,2)
+Delta0=10*diag(1,2)
 M0=2
 nu0=5;omega0=1
 
@@ -109,15 +107,16 @@ for(g in 1:G){
 
 ### starting value of draw ###
 gamma_mat[1,]=c(-1,0.5,1);lambda_mat[1,]=0.04
-sige_mat[1,]=1; sigu_mat[1,]=0.5; siga_mat[1,]=0.3
-beta_mat[1,]=c(0.3,0.2,0.4);mu_mat[1,]=rep(0.03,n)
-delta_mat[1,]=c(0.3,0.3)
+sigu_mat[1,]=0.5; siga_mat[1,]=0.4
+beta_mat[1,]=c(0.3,0.3,0.4);mu_mat[1,]=rep(0.3,n)
+delta_mat[1,]=c(0.4,0.4)
 
 ### save 
 beta1_list=list();beta2_list=list();beta3_list=list()
 gamma1_list=list();gamma2_list=list();gamma3_list=list()
 lambda_list=list();siga_list=list();sigu_list=list()
 delta1_list=list();delta_2_list=list()
+
 st_time=Sys.time()
 for(r in 1:R){
   cat(r,"repetition of MCMC start!","\n")
@@ -125,9 +124,10 @@ for(r in 1:R){
     start_time=Sys.time()
     
     ### propose lambda*
+    
     accept=0
     while(accept==0){
-      if(t<3){
+      if(t<6){
         lambda_1=rnorm(1,lambda_mat[t-1,],0.1)
       } else{
         lambda_1=rnorm(1,lambda_mat[t-1,],cov(as.matrix(lambda_mat[1:t-1,]))*2.38^2)*0.95+
@@ -140,30 +140,33 @@ for(r in 1:R){
     }
     
     ### propose gamma*
+    
     if(t<6){
       gamma_1=rmvnorm(1,gamma_mat[t-1,],diag(1,3)*0.1^2/3)
     } else{
-      gamma_1=rmvnorm(1,gamma_mat[t-1,],cov(as.matrix(gamma_mat[1:t-1,])))*0.95+
+      gamma_1=rmvnorm(1,gamma_mat[t-1,],cov(as.matrix(gamma_mat[1:t-1,]))*2.38^2/3)*0.95+
         rmvnorm(1,gamma_mat[t-1,],diag(1,3)*0.1^2/3)*0.05
     }
     pp_l=1;pp_G=1
     
     ### propose delta*
+    
     accept=0
     while(accept==0){
-      if(t<3){
-        delta_1=rmvnorm(1,delta0,Delta0)
+      if(t<6){
+        delta_1=rmvnorm(1,delta_mat[t-1,],diag(1,2)*0.1^2/2)
       } else{
-        delta_1=rmvnorm(1,delta_mat[t-1,],cov(as.matrix(delta_mat[1:t-1,]))*2.38^2)*0.95+
-          rmvnorm(1,delta_mat[t-1,],Delta0)*0.05
+        delta_1=rmvnorm(1,delta_mat[t-1,],cov(as.matrix(delta_mat[1:t-1,]))*2.38^2/2)*0.95+
+          rmvnorm(1,delta_mat[t-1,],diag(1,2)*0.1^2/2)*0.05
       }
       if(delta_1[1]>0 && delta_1[2]>0){
         accept=1
       }
-    }
+    }    
     
     ### M-H algorithm for sampling Z ###
     V=(sigu_mat[t-1,])*diag(1,n)+siga_mat[t-1,]*rep(1,n)%*%t(rep(1,n))
+    
     for(g in 1:G){
       zz_1=Z_mat[g,]
       for(v in 1:n){
@@ -176,41 +179,45 @@ for(r in 1:R){
                 p_1=1
                 p_2=1
               } else{
-                psi_1=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,j]+gamma_mat[t-1,3]*abs(zz_1[i]-zz_1[j])
-                psi_2=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,j]+gamma_mat[t-1,3]*abs(Z_mat[g,i]-Z_mat[g,j])
+                psi_1=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,j]-gamma_mat[t-1,3]*abs(zz_1[i]-zz_1[j])
+                psi_2=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,j]-gamma_mat[t-1,3]*abs(Z_mat[g,i]-Z_mat[g,j])
                 p_1=exp(psi_1*Wg[[g]][i,j])/(1+exp(psi_1))
                 p_2=exp(psi_2*Wg[[g]][i,j])/(1+exp(psi_2))
               }
               pp=pp*(p_1/p_2)
             }
-          } else{
-            psi_1=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,v]+gamma_mat[t-1,3]*abs(zz_1[i]-zz_1[v])
-            psi_2=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,v]+gamma_mat[t-1,3]*abs(Z_mat[g,i]-Z_mat[g,v])
+          }
+           else{
+            psi_1=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,v]-gamma_mat[t-1,3]*abs(zz_1[i]-zz_1[v])
+            psi_2=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,v]-gamma_mat[t-1,3]*abs(Z_mat[g,i]-Z_mat[g,v])
             p_1=exp(psi_1*Wg[[g]][i,v])/(1+exp(psi_1))
             p_2=exp(psi_2*Wg[[g]][i,v])/(1+exp(psi_2))
             pp=pp*(p_1/p_2)
-          }
+           }
         }
         SS=diag(1,n)-lambda_mat[t-1,]*Wg[[g]]
-        ep=SS%*%(yg[[g]])-(rep(1,n)*beta_mat[t-1,1]+Xg[[g]]*beta_mat[t-1,2]+Wg[[g]]%*%Xg[[g]]%*%beta_mat[t-1,3])
+        XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
+        ep=SS%*%(yg[[g]])-XX%*%beta_mat[t-1,]
         d1=zz_1*delta_mat[t-1,1]-Wg[[g]]%*%zz_1*delta_mat[t-1,2]
         d2=Z_mat[g,]*delta_mat[t-1,1]-Wg[[g]]%*%Z_mat[g,]*delta_mat[t-1,2]
-        like_Y1=exp(-0.5*t(ep-d1-sigu_mat[t-1,]*zz_1)%*%solve(V)%*%(ep-d1-sigu_mat[t-1,]*zz_1))
-        like_Y2=exp(-0.5*t(ep-d2-sigu_mat[t-1,]*Z_mat[g,])%*%solve(V)%*%(ep-d2-sigu_mat[t-1,]*Z_mat[g,]))
-        pp=pp*(like_Y1/like_Y2)*(dnorm(zz_1[v],mu_mat[t-1,v],1)/dnorm(Z_mat[g,v],mu_mat[t-1,v],1))
+        d3=mu_mat[t-1,]*delta_mat[t-1,1]+Wg[[g]]%*%mu_mat[t-1,]*delta_mat[t-1,2]
+        like_Y1=exp(-0.5*t(ep-d1-d3)%*%solve(V)%*%(ep-d1-d3))
+        like_Y2=exp(-0.5*t(ep-d2-d3)%*%solve(V)%*%(ep-d2-d3))
+        pp=pp*(like_Y1/like_Y2)*(dnorm(zz_1[v])/dnorm(Z_mat[g,v]))
         pp=min(pp,1)
+        
         if(runif(1,0,1)<=pp){
           Z_mat[g,v]=zz_1[v]
-        } else{
-          zz_1=Z_mat[g,]
-        }
+        } 
+        zz_1=Z_mat[g,]
       }
       ### M-H algorithm for sampling gamma and lambda
+      
       pp=1
       for(i in 1:n){
         for(j in 1:n){
-          psi_1=gamma_1[1]+gamma_1[2]*C_glist[[g]][i,j]+gamma_1[3]*abs(Z_mat[g,i]-Z_mat[g,j])
-          psi_2=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,j]+gamma_mat[t-1,3]*abs(Z_mat[g,i]-Z_mat[g,j])
+          psi_1=gamma_1[1]+gamma_1[2]*C_glist[[g]][i,j]-gamma_1[3]*abs(Z_mat[g,i]-Z_mat[g,j])
+          psi_2=gamma_mat[t-1,1]+gamma_mat[t-1,2]*C_glist[[g]][i,j]-gamma_mat[t-1,3]*abs(Z_mat[g,i]-Z_mat[g,j])
           p_1=exp(psi_1*Wg[[g]][i,j])/(1+exp(psi_1))
           p_2=exp(psi_2*Wg[[g]][i,j])/(1+exp(psi_2))
           if(i==j){
@@ -220,38 +227,45 @@ for(r in 1:R){
         }
       }
       pp_G=pp_G*pp
-      pp_G=pp_G*(dmvnorm(gamma_1,gamma0,Gamma0)/dmvnorm(gamma_mat[t-1,],gamma0,Gamma0))
-      pp_G=min(pp_G,1)
       
       S_1=diag(1,n)-lambda_1*Wg[[g]]
       S_2=diag(1,n)-lambda_mat[t-1,]*Wg[[g]]
-      ep_1=S_1%*%yg[[g]]-(rep(1,n)*beta_mat[t-1,1]+Xg[[g]]*beta_mat[t-1,2]+Wg[[g]]%*%Xg[[g]]%*%beta_mat[t-1,3])
-      ep_2=S_2%*%yg[[g]]-(rep(1,n)*beta_mat[t-1,1]+Xg[[g]]*beta_mat[t-1,2]+Wg[[g]]%*%Xg[[g]]%*%beta_mat[t-1,3])
-      d=Z_mat[g,]*delta_mat[t-1,1]+Wg[[g]]%*%Z_mat[g,]*delta_mat[t-1,2]
-      like_1=det(S_1)*exp(-0.5*t(ep_1-d-sigu_mat[t-1,]*Z_mat[g,])%*%solve(V)%*%(ep_1-d-sigu_mat[t-1,]*Z_mat[g,]))
-      like_2=det(S_2)*exp(-0.5*t(ep_2-d-sigu_mat[t-1,]*Z_mat[g,])%*%solve(V)%*%(ep_2-d-sigu_mat[t-1,]*Z_mat[g,]))
+      XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
+      ZZ=cbind(Z_mat[g,],Wg[[g]]%*%Z_mat[g,])
+      MM=cbind(mu_mat[t-1,],Wg[[g]]%*%mu_mat[t-1,])
+      ep_1=S_1%*%yg[[g]]-XX%*%beta_mat[t-1,]
+      ep_2=S_2%*%yg[[g]]-XX%*%beta_mat[t-1,]
+      del=ZZ%*%delta_mat[t-1,]
+      mu=MM%*%delta_mat[t-1,]
+      like_1=det(S_1)*exp(-0.5*t(ep_1-del-mu)%*%solve(V)%*%(ep_1-del-mu))
+      like_2=det(S_2)*exp(-0.5*t(ep_2-del-mu)%*%solve(V)%*%(ep_2-del-mu))
       pp_l=pp_l*(like_1/like_2)
     }
-    pp_l=min(pp_l,1)
+    pp_G=pp_G*(dmvnorm(gamma_1,gamma0,Gamma0)/dmvnorm(gamma_mat[t-1,],gamma0,Gamma0))
+    
+    pp_G=min(pp_G,1)
     if(runif(1,0,1)<=pp_G){
       gamma_mat[t,]=gamma_1
     } else{
       gamma_mat[t,]=gamma_mat[t-1,]
     }
+    
+    pp_l=min(pp_l,1)
     if(runif(1,0,1)<=pp_l){
       lambda_mat[t,]=lambda_1
     } else{
       lambda_mat[t,]=lambda_mat[t-1,]
     }
-    
     ### sample of beta from posterior distribution
+    
     XVX=matrix(0,ncol=length(beta0),nrow=length(beta0))
     XVY=matrix(0,nrow=length(beta0),ncol=1)
     Vg=list()
     for(g in 1:G){
       SS=diag(1,n)-lambda_mat[t,]*Wg[[g]]
+      MM=cbind(mu_mat[t-1,],Wg[[g]]%*%mu_mat[t-1,])
       ZZ=cbind(Z_mat[g,],Wg[[g]]%*%Z_mat[g,])
-      YY=SS%*%yg[[g]]-ZZ%*%(delta_mat[t-1,])
+      YY=SS%*%yg[[g]]-ZZ%*%delta_mat[t-1,]-MM%*%delta_mat[t-1,]
       XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
       Vg[[g]]=(sigu_mat[t-1,])*diag(1,n)+siga_mat[t-1,]*rep(1,n)%*%t(rep(1,n))
       XVX=XVX+t(XX)%*%solve(Vg[[g]])%*%XX
@@ -262,17 +276,23 @@ for(r in 1:R){
     beta_mat[t,]=rmvnorm(1,nbeta,B)
     
     ### sampling of delta from posterior
+    
     pp_d=1
     for(g in 1:G){
       S=diag(1,n)-lambda_mat[t,]*Wg[[g]]
-      ep=S%*%yg[[g]]-(rep(1,n)*beta_mat[t,1]+Xg[[g]]*beta_mat[t,2]+Wg[[g]]%*%Xg[[g]]%*%beta_mat[t,3])
-      d1=Z_mat[g,]*delta_mat[t-1,1]+Wg[[g]]%*%Z_mat[g,]*delta_mat[t-1,2]
-      d2=Z_mat[g,]*delta_1[1]+Wg[[g]]%*%Z_mat[g,]*delta_1[2]
-      like_1=det(S)*exp(-0.5*0.01*t(ep-d1-sigu_mat[t-1,]*Z_mat[g,])%*%solve(V)%*%(ep-d1-sigu_mat[t-1,]*Z_mat[g,]))
-      like_2=det(S)*exp(-0.5*0.01*t(ep-d2-sigu_mat[t-1,]*Z_mat[g,])%*%solve(V)%*%(ep-d2-sigu_mat[t-1,]*Z_mat[g,]))
+      XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
+      ZZ=cbind(Z_mat[g,],Wg[[g]]%*%Z_mat[g,])
+      MM=cbind(mu_mat[t-1,],Wg[[g]]%*%mu_mat[t-1,])
+      ep=S%*%yg[[g]]-XX%*%beta_mat[t,]
+      del1=ZZ%*%t(delta_1)
+      del2=ZZ%*%delta_mat[t-1,]
+      mu1=MM%*%t(delta_1)
+      mu2=MM%*%delta_mat[t-1,]
+      like_1=det(S)*exp(-0.5*t(ep-del1-mu1)%*%solve(V)%*%(ep-del1-mu1))
+      like_2=det(S)*exp(-0.5*t(ep-del2-mu2)%*%solve(V)%*%(ep-del2-mu2))
       pp_d=pp_d*(like_1/like_2)
-      pp_d=pp_d*(dmvnorm(delta_1,delta0,Delta0)/dmvnorm(delta_mat[t-1,],delta0,Delta0))
     }
+    pp_d=pp_d*(dmvnorm(delta_1,delta0,Delta0)/dmvnorm(delta_mat[t-1,],delta0,Delta0))
     pp_d=min(pp_d,1)
     if(runif(1,0,1)<=pp_d){
       delta_mat[t,]=delta_1
@@ -281,17 +301,24 @@ for(r in 1:R){
     }
     
     ### sampling of mu_z from posterior
-    new_mean=sum(Z_mat)/(n*G+(1/M0))
+    
+    new_mean=sum(Z_mat+mu_mat[t-1,1])/(n*G+(1/M0))
+    #new_mean=sum(Z_mat)/(n*G+(1/M0))
     new_var=1/(n*G+(1/M0))
     mu_mat[t,]=rnorm(1,new_mean,sqrt(new_var))
     
     ### sampling of sigmau^2 from posterior
+    
     UG=0
     for(g in 1:G){
       SS=diag(1,n)-lambda_mat[t,]*Wg[[g]]
-      ep=SS%*%yg[[g]]-(rep(1,n)*beta_mat[t,1]+Xg[[g]]*beta_mat[t,2]+Wg[[g]]%*%Xg[[g]]%*%beta_mat[t,3])
-      d=Z_mat[g,]*delta_mat[t,1]+(Wg[[g]]%*%Z_mat[g,])*delta_mat[t,2]
-      ug=ep-d
+      XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
+      ZZ=cbind(Z_mat[g,],Wg[[g]]%*%Z_mat[g,])
+      MM=cbind(mu_mat[t,],Wg[[g]]%*%mu_mat[t,])
+      ep=SS%*%yg[[g]]-XX%*%beta_mat[t,]
+      del=ZZ%*%delta_mat[t,]
+      mu=MM%*%delta_mat[t,]
+      ug=ep-del-mu
       UG=UG+t(ug)%*%ug
     }
     sigu_alpha=(nu0+n*G)/2
@@ -299,13 +326,15 @@ for(r in 1:R){
     sigu_mat[t,]=1/rgamma(1,shape=sigu_alpha,rate=sigu_beta)
     
     ### sampling of alpha_g from posterior distribution
-    dd=(siga_mat[t-1,]^(-1)+(sigu_mat[t,])^(-1)*t(rep(1,n))%*%rep(1,n))^(-1)
+    
+    Dg=(siga_mat[t-1,]^(-1)+(sigu_mat[t,])^(-1)*t(rep(1,n))%*%rep(1,n))^(-1)
     for(g in 1:G){
       SS=diag(1,n)-lambda_mat[t,]*Wg[[g]]
       ZZ=cbind(Z_mat[g,],Wg[[g]]%*%Z_mat[g,])
-      YY=SS%*%yg[[g]]-ZZ%*%(delta_mat[t,])
-      XX=rep(1,n)*beta_mat[t,1]+Xg[[g]]*beta_mat[t,2]+Wg[[g]]%*%Xg[[g]]%*%beta_mat[t,3]
-      alpha_mat[t,g]=rnorm(1,(sigu_mat[t,])^(-1)*dd*(rep(1,n)%*%(YY-XX)),sqrt(dd))
+      MM=cbind(mu_mat[t,],Wg[[g]]%*%mu_mat[t,])
+      YY=SS%*%yg[[g]]-ZZ%*%(delta_mat[t,])-MM%*%delta_mat[t,]
+      XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
+      alpha_mat[t,g]=rnorm(1,(sigu_mat[t,])^(-1)*Dg*(rep(1,n)%*%(YY-XX%*%beta_mat[t,])),sqrt(Dg))
     }
     
     ### sampling of sigma_alpha from posterior distribution
@@ -315,13 +344,13 @@ for(r in 1:R){
     
     end_time=Sys.time()
     ###print result
-    cat("gamma =", gamma_mat[t,],"\n");cat("\n")
-    cat("beta =", beta_mat[t,],"\n");cat("\n")
-    cat("lambda =", lambda_mat[t,],"\n");cat("\n")
-    cat("delta =",delta_mat[t,],"\n");cat("\n")
-    cat("sigma_u =",sigu_mat[t,],"\n");cat("\n")
-    cat("mu_z =",mu_mat[t,1],"\n");cat("\n")
-    cat("siga_alpha =",siga_mat[t,],"\n");cat("\n")
+    cat("gamma =", round(gamma_mat[t,],4),"\n")
+    cat("beta =", round(beta_mat[t,],4),"\n")
+    cat("lambda =", round(lambda_mat[t,],4),"\n")
+    cat("delta =",round(delta_mat[t,],4),"\n")
+    cat("sigma_u =",round(sigu_mat[t,],4),"\n")
+    cat("mu_z =",round(mu_mat[t,1],4),"\n")
+    cat("siga_alpha =",round(siga_mat[t,],4),"\n")
     cat("current iteration",t,"is end","\n")
     cat("At",r,"repetition",t,"iteration spend",end_time-start_time,"seconds","\n");cat("\n")
   }
