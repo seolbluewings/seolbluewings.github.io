@@ -5,10 +5,7 @@ n=30; G=50; R=50
 gamma=c(-1.5,0.5,1)
 beta=c(0.5,0.5,0.5)
 lambda=0.05
-delta=0.3
-sigma=matrix(c(1,0.5,0.5,1.25),ncol=2)
 sig_alpha=0.5
-mu=c(0,0)
 
 z=matrix(0,ncol=n,nrow=G)
 e=matrix(0,ncol=n,nrow=G)
@@ -16,13 +13,13 @@ C_g=matrix(0,ncol=n,nrow=n)
 C_glist=list()
 
 for(g in 1:G){
-  mat=rmvnorm(n,mu,sigma)
+  mat=rmvnorm(n,c(0,0),diag(1,2))
   u1=runif(n,0,1); u2=runif(n,0,1)
   for(i in 1:n){
     for(j in 1:n){
-      if(u1[i]>=0.7 && u2[j]>=0.7){
+      if(u1[i]>0.5 && u2[j]>0.5){
         C_g[i,j]=1
-      } else if(u1[i]<=0.3 && u2[j]<=0.3){
+      } else if(u1[i]<0.5 && u2[j]<0.5){
         C_g[i,j]=1
       } else{
         C_g[i,j]=0
@@ -43,7 +40,7 @@ w=matrix(0,ncol=n,nrow=n);Wg=list()
 for(g in 1:G){
   for(i in 1:n){
     for(j in 1:n){
-      psi=gamma[1]+gamma[2]*C_glist[[g]][i,j]+gamma[3]*abs(z[g,i]-z[g,j])
+      psi=gamma[1]+gamma[2]*C_glist[[g]][i,j]-gamma[3]*abs(z[g,i]-z[g,j])
       p[i,j]=exp(psi)/(1+exp(psi))
       if(runif(1,0,1)<=p[i,j]){
         w[i,j]=1
@@ -59,75 +56,61 @@ for(g in 1:G){
   Wg[[g]]=w
 }
 
-ag=matrix(0,ncol=n,nrow=G)
-lg=matrix(0,ncol=n,nrow=G)
 Xg=list();yg=list()
 
 for(g in 1:G){
+  SS=diag(1,n)-lambda*Wg[[g]]
   x=rnorm(n,0,1)
-  alpha=rnorm(1,0,sqrt(sig_alpha))
-  lmg=rep(1,n)
   Xg[[g]]=x
-  ag[g,]=alpha
-  lg[g,]=lmg
-  yg[[g]]=solve(diag(1,n)-lambda*Wg[[g]])%*%(lg[g,]*beta[1]+Xg[[g]]*beta[2]+Wg[[g]]%*%Xg[[g]]%*%beta[3]+lg[g,]*ag[g,]+e[g,])
+  alpha=rnorm(1,0,sqrt(sig_alpha))
+  XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
+  yg[[g]]=solve(SS)%*%(XX%*%(beta)+rep(1,n)*alpha+e[g,])
 }
-
-### assign parameter in prior distribution ###
-
-beta0=rep(0,3)
-Beta0=5*diag(1,3)
-rho0=5; eta0=1;
-sig0=c(1,0.5)
 
 iter=5500
-lambda_mat=matrix(0,ncol=1,nrow=iter) #save for lambda
-beta_mat=matrix(0,ncol=3,nrow=iter) #save for beta
-sige_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_e^2
-siga_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_a^2
-alpha_mat=matrix(0,nrow=iter,ncol=G) #save for alpha
-
-mini=c();maxi=c();Tau_g=c()
-for(g in 1:G){
-  for(i in 1:n){
-    mini[i]=sum(Wg[[g]][i,])
-    maxi[i]=sum(Wg[[g]][,i])
-    Tau_g=min(mini[which.max(mini)],maxi[which.max(maxi)])
-    tau=Tau_g[which.max(Tau_g)]
-  }
-}
-
-### starting value of draw ###
-lambda_mat[1,]=0.04
-sige_mat[1,]=1; siga_mat[1,]=0.3
-beta_mat[1,]=c(0.3,0.2,0.4)
 
 ### save 
 beta1_list=list();beta2_list=list();beta3_list=list()
-lambda_list=list();sige_list=list();siga_list=list()
+gamma1_list=list();gamma2_list=list();gamma3_list=list()
+lambda_list=list()
+sige_list=list();siga_list=list();sigez_list=list()
 
+iter=5500
 
 st_time=Sys.time()
 for(r in 1:R){
+  c_1=1;acc_1=0
+  
+  ### assign parameter in prior distribution ###
+  beta0=rep(0,3); Beta0=5*diag(1,3)
+  rho0=5; eta0=1;
+  sig0=c(0,0)
+  
+  lambda_mat=matrix(0,ncol=1,nrow=iter) #save for lambda
+  beta_mat=matrix(0,ncol=3,nrow=iter) #save for beta
+  sige_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_e^2
+  siga_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_a^2
+  alpha_mat=matrix(0,nrow=iter,ncol=G) #save for alpha
+  acc_rate1=matrix(0,nrow=iter,1) #acceptance rate lambda
+
+  ### starting value of draw ###
+  sige_mat[1,]=0.5; siga_mat[1,]=0.3
+  beta_mat[1,]=c(0.3,0.2,0.2)
+  
   cat(r,"repetition of MCMC start!","\n")
   for(t in 2:iter){
     start_time=Sys.time()
-    ### propose lambda*
-    #accept=0
-    #while(accept==0){
+    
       if(t<3){
         lambda_1=rnorm(1,lambda_mat[t-1,],0.1)
       } else{
         lambda_1=rnorm(1,lambda_mat[t-1,],cov(as.matrix(lambda_mat[1:t-1,]))*2.38^2)*0.95+
           rnorm(1,lambda_mat[t-1,],0.1)*0.05
       }
-      #lambda_1=as.numeric(lambda_1)
-      #if(lambda_1>-1/tau && lambda_1<1/tau){
-        #accept=1
-      #}
-    #}
+      
     pp_l=1
     V=(sige_mat[t-1,])*diag(1,n)+siga_mat[t-1,]*rep(1,n)%*%t(rep(1,n))
+    
     for(g in 1:G){
       ### M-H algorithm for sampling lambda
       S_1=diag(1,n)-lambda_1*Wg[[g]]
@@ -142,21 +125,21 @@ for(r in 1:R){
     
     if(runif(1,0,1)<=pp_l){
       lambda_mat[t,]=lambda_1
+      acc_1=acc_1+1
     } else{
       lambda_mat[t,]=lambda_mat[t-1,]
     }
+    acc_rate1[t,]=acc_1/t
     
     ### sample of beta from posterior distribution
     XVX=matrix(0,ncol=length(beta0),nrow=length(beta0))
     XVY=matrix(0,nrow=length(beta0),ncol=1)
-    Vg=list()
     for(g in 1:G){
       SS=diag(1,n)-lambda_mat[t,]*Wg[[g]]
       YY=SS%*%yg[[g]]
       XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
-      Vg[[g]]=(sigu_mat[t-1,])*diag(1,n)+siga_mat[t-1,]*rep(1,n)%*%t(rep(1,n))
-      XVX=XVX+t(XX)%*%solve(Vg[[g]])%*%XX
-      XVY=XVY+t(XX)%*%solve(Vg[[g]])%*%YY
+      XVX=XVX+t(XX)%*%solve(V)%*%XX
+      XVY=XVY+t(XX)%*%solve(V)%*%YY
     }
     B=solve(solve(Beta0)+XVX)
     nbeta=B%*%(solve(Beta0)%*%beta0+XVY)
@@ -181,6 +164,7 @@ for(r in 1:R){
       XX=rep(1,n)*beta_mat[t,1]+Xg[[g]]*beta_mat[t,2]+Wg[[g]]%*%Xg[[g]]%*%beta_mat[t,3]
       alpha_mat[t,g]=rnorm(1,(sige_mat[t,])^(-1)*dd*(rep(1,n)%*%(YY-XX)),sqrt(dd))
     }
+    
     ### sampling of sigma_alpha from posterior distribution
     inv_alpha=(rho0+G)/2
     inv_beta=(eta0+sum((alpha_mat[t,])^2))/2
@@ -189,10 +173,11 @@ for(r in 1:R){
     end_time=Sys.time()
     ###print result
     if(t%%10==0){
-      cat("beta =", beta_mat[t,],"\n");cat("\n")
-      cat("lambda =", lambda_mat[t,],"\n");cat("\n")
-      cat("sigma_e =",sige_mat[t,],"\n");cat("\n")
-      cat("siga_alpha =",siga_mat[t,],"\n");cat("\n")
+      cat("beta =", round(beta_mat[t,],4),"\n")
+      cat("lambda =", round(lambda_mat[t,],4),"\n")
+      cat("sigma_e =",round(sige_mat[t,],4),"\n")
+      cat("siga_alpha =",round(siga_mat[t,],4),"\n")
+      cat("lambda acceptance rate=",round(acc_rate1[t,],4),"\n")
       cat("current iteration",t,"is end","\n")
       cat("At",r,"repetition",t,"iteration spend",end_time-start_time,"seconds","\n");cat("\n")
     }

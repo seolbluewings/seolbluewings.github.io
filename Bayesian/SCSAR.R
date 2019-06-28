@@ -78,18 +78,11 @@ for(g in 1:G){
   }
 }
 
-### starting value of draw ###
-#gamma_mat[1,]=c(-1,0.5,1);lambda_mat[1,]=0.04
-#sige_mat[1,]=1; sigez_mat[1,]=0.5; siga_mat[1,]=0.3
-#beta_mat[1,]=c(0.3,0.2,0.4)
-
 ### save 
 beta1_list=list();beta2_list=list();beta3_list=list()
 gamma1_list=list();gamma2_list=list();gamma3_list=list()
 lambda_list=list()
-sige_list=list()
-siga_list=list()
-sigez_list=list()
+sige_list=list();siga_list=list();sigez_list=list()
 
 st_time=Sys.time()
 for(r in 1:R){
@@ -110,9 +103,9 @@ for(r in 1:R){
   siga_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_a^2
   sigez_mat=matrix(0,ncol=1,nrow=iter) #save for sigma_ez^2
   alpha_mat=matrix(0,nrow=iter,ncol=G) #save for alpha
-  acc_rate1=matrix(0,nrow=iter,1)
-  acc_rate2=matrix(0,nrow=iter,1)
-  acc_rate3=matrix(0,nrow=iter,1)
+  acc_rate1=matrix(0,nrow=iter,1) #acceptance rate gamma
+  acc_rate2=matrix(0,nrow=iter,1) #accpetance rate lambda
+  acc_rate3=matrix(0,nrow=iter,1) #acceptance rate sigma
   acc_rate4=matrix(0,nrow=G,ncol=iter)
   
   ### starting value of draw ###
