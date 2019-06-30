@@ -4,16 +4,16 @@ library(mvtnorm)
 n=30; G=50; R=50
 gamma=c(-1.5,0.5,1)
 beta=c(0.5,0.5,0.5)
+sigma=matrix(c(1,0.5,0.5,1.25),ncol=2)
 lambda=0.05
-sig_alpha=0.5
-
+sig_alpha=0.5;mu=c(0,0)
 z=matrix(0,ncol=n,nrow=G)
 e=matrix(0,ncol=n,nrow=G)
 C_g=matrix(0,ncol=n,nrow=n)
 C_glist=list()
 
 for(g in 1:G){
-  mat=rmvnorm(n,c(0,0),diag(1,2))
+  mat=rmvnorm(n,mu,sigma)
   u1=runif(n,0,1); u2=runif(n,0,1)
   for(i in 1:n){
     for(j in 1:n){
