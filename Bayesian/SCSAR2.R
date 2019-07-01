@@ -199,8 +199,8 @@ for(r in 1:R){
         SS=diag(1,n)-lambda_mat[t-1,]*Wg[[g]]
         XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
         ep=SS%*%(yg[[g]])-XX%*%beta_mat[t-1,]
-        d1=zz_1*delta_mat[t-1,1]-Wg[[g]]%*%zz_1*delta_mat[t-1,2]
-        d2=Z_mat[g,]*delta_mat[t-1,1]-Wg[[g]]%*%Z_mat[g,]*delta_mat[t-1,2]
+        d1=zz_1*delta_mat[t-1,1]+Wg[[g]]%*%zz_1*delta_mat[t-1,2]
+        d2=Z_mat[g,]*delta_mat[t-1,1]+Wg[[g]]%*%Z_mat[g,]*delta_mat[t-1,2]
         d3=mu_mat[t-1,]*delta_mat[t-1,1]+Wg[[g]]%*%mu_mat[t-1,]*delta_mat[t-1,2]
         like_Y1=exp(-0.5*t(ep-d1-d3)%*%solve(V)%*%(ep-d1-d3))
         like_Y2=exp(-0.5*t(ep-d2-d3)%*%solve(V)%*%(ep-d2-d3))
@@ -353,23 +353,25 @@ for(r in 1:R){
       MM=cbind(mu_mat[t,],Wg[[g]]%*%mu_mat[t,])
       YY=SS%*%yg[[g]]-ZZ%*%(delta_mat[t,])-MM%*%delta_mat[t,]
       XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
-      alpha_mat[t,g]=rnorm(1,(sigu_mat[t,])^(-1)*Dg*(rep(1,n)%*%(YY-XX%*%beta_mat[t,])),sqrt(Dg))
+      al_hat=(sigu_mat[t,]^(-1))*Dg*(rep(1,n)%*%(YY-XX%*%beta_mat[t,]))
+      alpha_mat[t,g]=rnorm(1,al_hat,sqrt(Dg))
     }
     
     ### sampling of sigma_alpha from posterior distribution
+    
     inv_alpha=(rho0+G)/2
     inv_beta=(eta0+sum((alpha_mat[t,])^2))/2
     siga_mat[t,]=1/rgamma(1,shape=inv_alpha,rate=inv_beta)
     
     end_time=Sys.time()
     ###print result
-    cat("gamma =", round(gamma_mat[t,],4),"\n")
-    cat("beta =", round(beta_mat[t,],4),"\n")
-    cat("lambda =", round(lambda_mat[t,],4),"\n")
-    cat("delta =",round(delta_mat[t,],4),"\n")
-    cat("sigma_u =",round(sigu_mat[t,],4),"\n")
-    cat("mu_z =",round(mu_mat[t,1],4),"\n")
-    cat("siga_alpha =",round(siga_mat[t,],4),"\n")
+    cat("gamma =", round(gamma_mat[t,],3),"\n")
+    cat("beta =", round(beta_mat[t,],3),"\n")
+    cat("lambda =", round(lambda_mat[t,],3),"\n")
+    cat("delta =",round(delta_mat[t,],3),"\n")
+    cat("sigma_u =",round(sigu_mat[t,],3),"\n")
+    cat("mu_z =",round(mu_mat[t,1],3),"\n")
+    cat("siga_alpha =",round(siga_mat[t,],3),"\n")
     cat("gamma acceptance rate=",round(acc_rate1[t,],2),"\n")
     cat("lambda acceptance rate=",round(acc_rate2[t,],2),"\n")
     cat("delta acceptance rate=",round(acc_rate3[t,],2),"\n")
