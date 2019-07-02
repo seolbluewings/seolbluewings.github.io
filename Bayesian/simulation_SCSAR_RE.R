@@ -2,8 +2,8 @@ rm(list=ls())
 set.seed(2081311133)
 library(mvtnorm)
 WC=read.csv("C://seolbluewings.github.io/Bayesian/WC_data.csv",header=T)
-y=WC[,4:5]; x=WC[,c(4,7:13,15,18)]
-Xg=list();yg=list()
+y=WC[,4:5]; x=WC[,c(4:5,7:13,15,18)]
+Xg=list();yg=list();zg=list()
 G=128
 
 ### allocate group ###
@@ -11,14 +11,15 @@ G=128
 mg=c()
 for(g in 1:G){
     yg[[g]]=as.vector(y[WC$group==g,2])
-    Xg[[g]]=as.data.frame(x[WC$group==g,-1])
+    Xg[[g]]=as.data.frame(x[WC$group==g,-c(1:2)])
     mg[g]=length(yg[[g]])
+    zg[[g]]=as.vector(x[WC$group==g,2])
 }
 
 Z_list=list()
 Cg1_list=list(); Cg2_list=list(); Cg3_list=list(); Cg4_list=list()
 for(g in 1:G){
-  z_mat=rnorm(mg[g],0,1)
+  z_mat=zg[[g]]
   C_g1=matrix(0,ncol=mg[g],nrow=mg[g])
   C_g2=matrix(0,ncol=mg[g],nrow=mg[g])
   C_g3=matrix(0,ncol=mg[g],nrow=mg[g])
@@ -374,8 +375,9 @@ for(r in 1:R){
     acc_rate3[t,]=acc_3/t
     
     ### sampling of alpha_g from posterior distribution
-    dd=(siga_mat[t-1,]^(-1)+(sige_mat[t,]-sigez_mat[t,]^2)^(-1)*t(rep(1,mg[g]))%*%rep(1,mg[g]))^(-1)
+    
     for(g in 1:G){
+      dd=(siga_mat[t-1,]^(-1)+(sige_mat[t,]-sigez_mat[t,]^2)^(-1)*t(rep(1,mg[g]))%*%rep(1,mg[g]))^(-1)
       SS=diag(1,mg[g])-lambda_mat[t,]*Wg[[g]]
       YY=SS%*%yg[[g]]-sigez_mat[t,]*Zlist[[g]]
       XX=cbind(rep(1,mg[g]),Xg[[g]],Wg[[g]]%*%Xg[[g]])
@@ -434,23 +436,111 @@ for(r in 1:R){
 ed_time=Sys.time()
 cat("total",iter,"iterations spend",ed_time-st_time,"!","\n")
 
+beta1_vec=c();beta2_vec=c();beta3_vec=c()
+beta4_vec=c();beta5_vec=c();beta6_vec=c()
+beta7_vec=c();beta8_vec=c();beta9_vec=c()
+beta10_vec=c();beta11_vec=c();beta12_vec=c()
+beta13_vec=c();beta14_vec=c();beta15_vec=c()
+beta16_vec=c();beta17_vec=c();beta18_vec=c();beta19_vec=c()
 
+gamma1_vec=c();gamma2_vec=c();gamma3_vec=c()
+gamma4_vec=c();gamma5_vec=c();gamma6_vec=c()
+sigez_vec=c();sige_vec=c();lambda_vec=c();siga_vec=c()
 
-
-
-
+for(r in 1:R){
+  beta1=beta1_list[[r]][-1]
+  beta1_vec=c(beta1_vec,beta1)
+  beta2=beta2_list[[r]][-1]
+  beta2_vec=c(beta2_vec,beta2)
+  beta3=beta3_list[[r]][-1]
+  beta3_vec=c(beta3_vec,beta3)
+  beta4=beta4_list[[r]][-1]
+  beta4_vec=c(beta4_vec,beta4)
+  beta5=beta5_list[[r]][-1]
+  beta5_vec=c(beta5_vec,beta5)
+  beta6=beta6_list[[r]][-1]
+  beta6_vec=c(beta6_vec,beta6)
+  
+  beta7=beta7_list[[r]][-1]
+  beta7_vec=c(beta7_vec,beta7)
+  beta8=beta8_list[[r]][-1]
+  beta8_vec=c(beta8_vec,beta8)
+  beta9=beta9_list[[r]][-1]
+  beta9_vec=c(beta9_vec,beta9)
+  beta10=beta10_list[[r]][-1]
+  beta10_vec=c(beta10_vec,beta10)
+  beta11=beta11_list[[r]][-1]
+  beta11_vec=c(beta11_vec,beta11)
+  beta12=beta12_list[[r]][-1]
+  beta12_vec=c(beta12_vec,beta12)
+  
+  beta13=beta13_list[[r]][-1]
+  beta13_vec=c(beta13_vec,beta13)
+  beta14=beta14_list[[r]][-1]
+  beta14_vec=c(beta14_vec,beta14)
+  beta15=beta15_list[[r]][-1]
+  beta15_vec=c(beta15_vec,beta15)
+  beta16=beta16_list[[r]][-1]
+  beta16_vec=c(beta16_vec,beta16)
+  beta17=beta17_list[[r]][-1]
+  beta17_vec=c(beta17_vec,beta17)
+  beta18=beta18_list[[r]][-1]
+  beta18_vec=c(beta18_vec,beta18)
+  
+  lambda=lambda_list[[r]][-1]
+  lambda_vec=c(lambda_vec,lambda)
+  
+  gamma1=gamma1_list[[r]][-1]
+  gamma1_vec=c(gamma1_vec,gamma1)
+  gamma2=gamma2_list[[r]][-1]
+  gamma2_vec=c(gamma2_vec,gamma2)
+  gamma3=gamma3_list[[r]][-1]
+  gamma3_vec=c(gamma3_vec,gamma3)
+  gamma4=gamma4_list[[r]][-1]
+  gamma4_vec=c(gamma4_vec,gamma4)
+  gamma5=gamma5_list[[r]][-1]
+  gamma5_vec=c(gamma5_vec,gamma5)
+  gamma6=gamma6_list[[r]][-1]
+  gamma6_vec=c(gamma6_vec,gamma6)
+  
+  sigmaez=sigez_list[[r]][-1]
+  sigez_vec=c(sigez_vec,sigmaez)
+  sigmae=sige_list[[r]][-1]
+  sige_vec=c(sige_vec,sigmae)
+  sigmaa=siga_list[[r]][-1]
+  siga_vec=c(siga_vec,sigmaa)
+}
 
 round(mean(beta1_vec),3);round(sd(beta1_vec),3)
 round(mean(beta2_vec),3);round(sd(beta2_vec),3)
 round(mean(beta3_vec),3);round(sd(beta3_vec),3)
+round(mean(beta4_vec),3);round(sd(beta4_vec),3)
+round(mean(beta5_vec),3);round(sd(beta5_vec),3)
+round(mean(beta6_vec),3);round(sd(beta6_vec),3)
+round(mean(beta7_vec),3);round(sd(beta7_vec),3)
+round(mean(beta8_vec),3);round(sd(beta8_vec),3)
+round(mean(beta9_vec),3);round(sd(beta9_vec),3)
+round(mean(beta10_vec),3);round(sd(beta10_vec),3)
+round(mean(beta11_vec),3);round(sd(beta11_vec),3)
+round(mean(beta12_vec),3);round(sd(beta12_vec),3)
+round(mean(beta13_vec),3);round(sd(beta13_vec),3)
+round(mean(beta14_vec),3);round(sd(beta14_vec),3)
+round(mean(beta15_vec),3);round(sd(beta15_vec),3)
+round(mean(beta16_vec),3);round(sd(beta16_vec),3)
+round(mean(beta17_vec),3);round(sd(beta17_vec),3)
+round(mean(beta18_vec),3);round(sd(beta18_vec),3)
+
 round(mean(gamma1_vec),3);round(sd(gamma1_vec),3)
 round(mean(gamma2_vec),3);round(sd(gamma2_vec),3)
 round(mean(gamma3_vec),3);round(sd(gamma3_vec),3)
+round(mean(gamma4_vec),3);round(sd(gamma4_vec),3)
+round(mean(gamma5_vec),3);round(sd(gamma5_vec),3)
+round(mean(gamma6_vec),3);round(sd(gamma6_vec),3)
+
 round(mean(lambda_vec),3);round(sd(lambda_vec),3)
 round(mean(sige_vec),3);round(sd(sige_vec),3)
 round(mean(sigez_vec),3);round(sd(sigez_vec),3)
 round(mean(siga_vec),3);round(sd(siga_vec),3)
-
 
 par(mfrow=c(2,5))
 
