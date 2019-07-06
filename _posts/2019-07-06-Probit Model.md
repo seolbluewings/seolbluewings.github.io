@@ -50,7 +50,7 @@ $$\mathbf{y}=(y_{1},...,y_{n}), \mathbf{y}^{*}=(y^{*}_{1},...,y^{*}_{n}), \mathb
 
 $$
 \begin{align}
-	\pi(\beta|\mathbf{y},\mathbf{y}^{*}) &\propto exp[-\frac{1}{2}\{(\mathbf{y}^{*}-\mathbf{X}\beta)^{T}(\mathbf{y}^{*}-\mathbf{X}\beta)+(\beta-\beta_{0})^{T}\Sigma^{-1}_{0}(beta-\beta_{0})\}] \\
+	\pi(\beta|\mathbf{y},\mathbf{y}^{*}) &\propto exp[-\frac{1}{2}\{(\mathbf{y}^{*}-\mathbf{X}\beta)^{T}(\mathbf{y}^{*}-\mathbf{X}\beta)+(\beta-\beta_{0})^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\}] \\
     &\propto exp[-\frac{1}{2}\{\beta^{T}(\mathbf{X}^{T}\mathbf{X}+\Sigma^{-1}_{0})\beta-2\beta^{T}(\mathbf{X}^{T}\mathbf{y}^{*}+\Sigma^{-1}_{0}\beta_{0})\}]
 \end{align}
 $$
