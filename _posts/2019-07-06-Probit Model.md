@@ -35,7 +35,8 @@ $$\beta \sim \mathcal{N}(\beta_{0},\Sigma_{0})$$
 $$ Y_{i}^{*} &\sim \mathcal{N}(x_{i}^{T}\beta,1) $$
 
 $$
-	Y_{i} =	\begin{cases}
+	Y_{i} =
+    \begin{cases}
     1 & \text{ if $$Y_{i}^{*}>0$$} \\
     0 & \text{ if $$Y_{i}^{*}\leq 0$$}
     \end{cases}
@@ -50,9 +51,26 @@ $$Y_{i}^{*}$$는 관측변수가 아니므로 모수로 취급하여 새로운 l
 
 $$l(y^{*}|\beta,y) = \prod_{i=1}^{n} \pi(y_{i}^{*}|x_{i}^{T}\beta,1)[I(y_{i}^{*}>0,y_{i}=1)+I(y_{i}^{*}\leq 0,y_{i}=0)]$$
 
+다음과 같이 정의하면, $$\beta$$에 대한 conditional posterior distribution을 구할 수 있다.
 
+$$\mathbf{y}=(y_{1},...,y_{n}), \mathbf{y}^{*}=(y^{*}_{1},...,y^{*}_{n}), \mathbf{X}=(x_{1},...,x_{n})$$ 일 때,
 
+$$
+\begin{align}
+	\pi(\beta|\mathbf{y},\mathbf{y}^{*}) &\propto exp[-\frac{1}{2}\{(\mahtbf{y}^{*}-\mathbf{X}\beta)^{T}(\mahtbf{y}^{*}-\mathbf{X}\beta)+(\beta-\beta_{0})^{T}\Sigma^{-1}_{0}(beta-\beta_{0})\}] \\
+    &\propto exp[-\frac{1}{2}\{\beta^{T}(\mahtbf{X}^{T}\mathbf{X}+\Sigma^{-1}_{0})\beta-2\beta^{T}(\mathbf{X}^{T}\mathbf{y}^{*}+\Sigma^{-1}_{0}\beta_{0})\}]
+\end{align}
+$$
 
+다음과 같이 $$\beta$$에 대한 conditional posterior를 구할 수 있고 그 결과는 아래와 같다.
+
+$$
+\begin{align}
+	\beta|\mathbf{y},\mathbf{y}^{*} &\sim \mathcal{N}(\mu_{\pi},\Sigma_{\pi}) \\
+    \Sigma_{\pi} &= (\mathbf{X}^{T}\mathbf{X}+\Sigma^{-1}_{0})^{-1} \\
+    \mu_{\pi} &= \Sigma_{\pi}(\mathbf{X}^{T}y^{*}+\Sigma^{-1}_{0}\beta_{0})
+\end{align}
+$$
 
 
 
