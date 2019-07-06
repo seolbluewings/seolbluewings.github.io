@@ -32,15 +32,24 @@ $$\beta \sim \mathcal{N}(\beta_{0},\Sigma_{0})$$
 
 그러나 다음과 같이 잠재변수($$Y_{i}^{*}$$)를 고려하면 Gibbs Sampler를 이용하여 베이지안 추론을 비교적 간단하게 이끌어낼 수 있다. 잠재변수 $$Y_{i}^{*}$$는 다음과 같다.
 
+$$ Y_{i}^{*} &\sim \mathcal{N}(x_{i}^{T}\beta,1) $$
+
 $$
-\begin{align}
-	Y_{i}^{*} &\sim \mathcal{N}(x_{i}^{T}\beta,1) \\
-    Y_{i} &= \begin{cases}
+	Y_{i} =	\begin{cases}
     1 & \text{ if $$Y_{i}^{*}>0$$} \\
     0 & \text{ if $$Y_{i}^{*}\leq 0$$}
     \end{cases}
-\end{align}
 $$
+
+
+따라서 이항변수 $$Y_{i}=1$$인 사건은 연속형 변수 $$Y_{i}^{*}>0$$인 사건과 동일하며, 다음과 같이 정리할 수 있다.
+
+$$P(Y_{i}=1)=P(Y_{i}^{*}>0)=1-\Phi(-x_{i}^{T}\beta)=\Phi(x_{i}^{T}\beta)$$
+
+$$Y_{i}^{*}$$는 관측변수가 아니므로 모수로 취급하여 새로운 likelihood를 구할 수 있으며 이를 표현하면 다음과 같을 것이다.
+
+$$l(y^{*}|\beta,y) = \prod_{i=1}^{n} \pi(y_{i}^{*}|x_{i}^{T}\beta,1)[I(y_{i}^{*}>0,y_{i}=1)+I(y_{i}^{*}\leq 0,y_{i}=0)]$$
+
 
 
 
