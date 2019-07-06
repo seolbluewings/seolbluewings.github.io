@@ -32,16 +32,9 @@ $$\beta \sim \mathcal{N}(\beta_{0},\Sigma_{0})$$
 
 그러나 다음과 같이 잠재변수($$Y_{i}^{*}$$)를 고려하면 Gibbs Sampler를 이용하여 베이지안 추론을 비교적 간단하게 이끌어낼 수 있다. 잠재변수 $$Y_{i}^{*}$$는 다음과 같다.
 
-$$ Y_{i}^{*} &\sim \mathcal{N}(x_{i}^{T}\beta,1) $$
+$$ Y_{i}^{*} \sim \mathcal{N}(x_{i}^{T}\beta,1) $$
 
-$$
-	Y_{i} =
-    \begin{cases}
-    1 & \text{ if $$Y_{i}^{*}>0$$} \\
-    0 & \text{ if $$Y_{i}^{*}\leq 0$$}
-    \end{cases}
-$$
-
+만약 $$Y_{i}^{*}>0$$이라면 $$Y_{i}=1$$이며, $$Y_{i}^{*}\leq 0$$이라면 $$Y_{i}=0$$이다.
 
 따라서 이항변수 $$Y_{i}=1$$인 사건은 연속형 변수 $$Y_{i}^{*}>0$$인 사건과 동일하며, 다음과 같이 정리할 수 있다.
 
@@ -57,8 +50,8 @@ $$\mathbf{y}=(y_{1},...,y_{n}), \mathbf{y}^{*}=(y^{*}_{1},...,y^{*}_{n}), \mathb
 
 $$
 \begin{align}
-	\pi(\beta|\mathbf{y},\mathbf{y}^{*}) &\propto exp[-\frac{1}{2}\{(\mahtbf{y}^{*}-\mathbf{X}\beta)^{T}(\mahtbf{y}^{*}-\mathbf{X}\beta)+(\beta-\beta_{0})^{T}\Sigma^{-1}_{0}(beta-\beta_{0})\}] \\
-    &\propto exp[-\frac{1}{2}\{\beta^{T}(\mahtbf{X}^{T}\mathbf{X}+\Sigma^{-1}_{0})\beta-2\beta^{T}(\mathbf{X}^{T}\mathbf{y}^{*}+\Sigma^{-1}_{0}\beta_{0})\}]
+	\pi(\beta|\mathbf{y},\mathbf{y}^{*}) &\propto exp[-\frac{1}{2}\{(\mathbf{y}^{*}-\mathbf{X}\beta)^{T}(\mathbf{y}^{*}-\mathbf{X}\beta)+(\beta-\beta_{0})^{T}\Sigma^{-1}_{0}(beta-\beta_{0})\}] \\
+    &\propto exp[-\frac{1}{2}\{\beta^{T}(\mathbf{X}^{T}\mathbf{X}+\Sigma^{-1}_{0})\beta-2\beta^{T}(\mathbf{X}^{T}\mathbf{y}^{*}+\Sigma^{-1}_{0}\beta_{0})\}]
 \end{align}
 $$
 
