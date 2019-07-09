@@ -6,7 +6,7 @@ gamma=c(-1.5,0.5,1)
 beta=c(0.5,0.5,0.5)
 sigma=matrix(c(1,0.5,0.5,1.25),ncol=2)
 lambda=0.05
-sig_alpha=0.5;mu=c(0,0)
+mu=c(0,0)
 z=matrix(0,ncol=n,nrow=G)
 e=matrix(0,ncol=n,nrow=G)
 C_g=matrix(0,ncol=n,nrow=n)
@@ -62,9 +62,8 @@ for(g in 1:G){
   SS=diag(1,n)-lambda*Wg[[g]]
   x=rnorm(n,0,1)
   Xg[[g]]=x
-  alpha=rnorm(1,0,sqrt(sig_alpha))
   XX=cbind(rep(1,n),Xg[[g]],Wg[[g]]%*%Xg[[g]])
-  yg[[g]]=solve(SS)%*%(XX%*%(beta)+rep(1,n)*alpha+e[g,])
+  yg[[g]]=solve(SS)%*%(XX%*%(beta)+e[g,])
 }
 
 iter=5500
@@ -120,7 +119,7 @@ for(r in 1:R){
       if(t<3){
         lambda_1=rnorm(1,lambda_mat[t-1,],0.1)
       } else{
-        lambda_1=rnorm(1,lambda_mat[t-1,],cov(as.matrix(lambda_mat[1:t-1,]))*2.38^2)*0.95+
+        lambda_1=rnorm(1,lambda_mat[t-1,],cov(as.matrix(lambda_mat[1:t-1,])))*0.95+
           rnorm(1,lambda_mat[t-1,],0.1)*0.05
       }
       lambda_1=as.numeric(lambda_1)
@@ -317,16 +316,18 @@ for(r in 1:R){
     
     end_time=Sys.time()
     ###print result
-    cat("gamma =", round(gamma_mat[t,],4),"\n")
-    cat("beta =", round(beta_mat[t,],4),"\n")
-    cat("lambda =", round(lambda_mat[t,],4),"\n")
-    cat("sigma_e^2 =",round(sige_mat[t,],4),"\n")
-    cat("sigma_ez =",round(sigez_mat[t,],4),"\n")
-    cat("gamma acceptance rate=",round(acc_rate1[t,],2),"\n")
-    cat("lambda acceptance rate=",round(acc_rate2[t,],2),"\n")
-    cat("sigma acceptance rate=",round(acc_rate3[t,],2),"\n")
-    cat("current iteration",t,"is end","\n")
-    cat("At",r,"repetition",t,"iteration spend",end_time-start_time,"seconds","\n");cat("\n")
+    if(t%%10==0){
+      cat("gamma =", round(gamma_mat[t,],3),"\n")
+      cat("beta =", round(beta_mat[t,],3),"\n")
+      cat("lambda =", round(lambda_mat[t,],3),"\n")
+      cat("sigma_e^2 =",round(sige_mat[t,],3),"\n")
+      cat("sigma_ez =",round(sigez_mat[t,],3),"\n")
+      cat("gamma acceptance rate=",round(acc_rate1[t,],2),"\n")
+      cat("lambda acceptance rate=",round(acc_rate2[t,],2),"\n")
+      cat("sigma acceptance rate=",round(acc_rate3[t,],2),"\n")
+      cat("current iteration",t,"is end","\n")
+      cat("At",r,"repetition",t,"iteration spend",end_time-start_time,"seconds","\n");cat("\n")
+    }
   }
   beta1_list[[r]]=beta_mat[500:iter,1][seq(1,length(beta_mat[500:iter,1]),10)]
   beta2_list[[r]]=beta_mat[500:iter,2][seq(1,length(beta_mat[500:iter,2]),10)]
@@ -337,7 +338,6 @@ for(r in 1:R){
   lambda_list[[r]]=lambda_mat[500:iter,][seq(1,length(lambda_mat[500:iter,]),10)]
   sigez_list[[r]]=sigez_mat[500:iter,][seq(1,length(sigez_mat[500:iter,]),10)]
   sige_list[[r]]=sige_mat[500:iter,][seq(1,length(sige_mat[500:iter,]),10)]
-  #siga_list[[r]]=siga_mat[500:iter,][seq(1,length(siga_mat[500:iter,]),10)]
   ed_time=Sys.time()
 }
 ed_time=Sys.time()
