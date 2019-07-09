@@ -67,8 +67,8 @@ for(g in 1:G){
   Cg3_list[[g]]=C_g3; Cg4_list[[g]]=C_g4
 }
 
-iter=5500
-R=50
+iter=5000
+R=30
 for(g in 1:G){
   Xg[[g]]=as.matrix(Xg[[g]])
 }
@@ -161,7 +161,7 @@ for(r in 1:R){
       if(t<3){
         lambda_1=rnorm(1,lambda_mat[t-1,],0.1)
       } else{
-        lambda_1=rnorm(1,lambda_mat[t-1,],cov(as.matrix(lambda_mat[1:t-1,])))*0.95+
+        lambda_1=rnorm(1,lambda_mat[t-1,],cov(as.matrix(lambda_mat[1:t-1,]))*2.38^2)*0.95+
           rnorm(1,lambda_mat[t-1,],0.1)*0.05
       }
       lambda_1=as.numeric(lambda_1)
@@ -175,7 +175,7 @@ for(r in 1:R){
     if(t<6){
       gamma_1=rmvnorm(1,gamma_mat[t-1,],diag(1,6)*0.1^2/3)
     } else{
-      gamma_1=rmvnorm(1,gamma_mat[t-1,],cov(as.matrix(gamma_mat[1:t-1,])))*0.95+
+      gamma_1=rmvnorm(1,gamma_mat[t-1,],cov(as.matrix(gamma_mat[1:t-1,]))*2.38^2/3)*0.95+
         rmvnorm(1,gamma_mat[t-1,],diag(1,6)*0.1^2/3)*0.05
     }
     pp_G=1
@@ -392,41 +392,64 @@ for(r in 1:R){
     
     end_time=Sys.time()
     ###print result
-    cat("Constant=",round(beta_mat[t,1],3),"\n")
-    cat("Own Xg =", round(beta_mat[t,2],3),"\n")
-    cat("Own Goal =", round(beta_mat[t,3],3),"\n")
-    cat("Own Shot =", round(beta_mat[t,4],3),"\n")
-    cat("Own Shot Assitst =", round(beta_mat[t,5],3),"\n")
-    cat("Own Cross =", round(beta_mat[t,6],3),"\n")
-    cat("Own Clearance =", round(beta_mat[t,7],3),"\n")
-    cat("Own Dribble =", round(beta_mat[t,8],3),"\n")
-    cat("Own Duel =", round(beta_mat[t,9],3),"\n")
-    cat("Own Pressure =", round(beta_mat[t,10],3),"\n")
-    cat("Peer Xg =", round(beta_mat[t,11],3),"\n")
-    cat("Peer Goal =", round(beta_mat[t,12],3),"\n")
-    cat("Peer Shot =", round(beta_mat[t,13],3),"\n")
-    cat("Peer Shot Assist =", round(beta_mat[t,14],3),"\n")
-    cat("Peer Cross =", round(beta_mat[t,15],3),"\n")
-    cat("Peer Clearance =", round(beta_mat[t,16],3),"\n")
-    cat("Peer Dribble =", round(beta_mat[t,17],3),"\n")
-    cat("Peer Duel =", round(beta_mat[t,18],3),"\n")
-    cat("Peer Pressure =", round(beta_mat[t,19],3),"\n")
-    cat("sigma_e =",round(sige_mat[t,],3),"\n")
-    cat("sigma_ez =",round(sigez_mat[t,],3),"\n")
-    cat("siga_alpha =",round(siga_mat[t,],3),"\n")
-    cat("gamma acceptance rate=",round(acc_rate1[t,],2),"\n")
-    cat("lambda acceptance rate=",round(acc_rate2[t,],2),"\n")
-    cat("sigma acceptance rate=",round(acc_rate3[t,],2),"\n")
-    cat("lambda =", round(lambda_mat[t,],3),"\n")
-    cat("current iteration",t,"is end","\n")
-    cat("At",r,"repetition",t,"iteration spend",end_time-start_time,"seconds","\n");cat("\n")
+    if(t%%10==0){
+      cat("Intercept =",round(beta_mat[t,1],3),"\n")
+      cat("Own Xg =", round(beta_mat[t,2],3),"\n")
+      cat("Own Goal =", round(beta_mat[t,3],3),"\n")
+      cat("Own Shot =", round(beta_mat[t,4],3),"\n")
+      cat("Own Shot Assitst =", round(beta_mat[t,5],3),"\n")
+      cat("Own Cross =", round(beta_mat[t,6],3),"\n")
+      cat("Own Clearance =", round(beta_mat[t,7],3),"\n")
+      cat("Own Dribble =", round(beta_mat[t,8],3),"\n")
+      cat("Own Duel =", round(beta_mat[t,9],3),"\n")
+      cat("Own Pressure =", round(beta_mat[t,10],3),"\n")
+      cat("Peer Xg =", round(beta_mat[t,11],3),"\n")
+      cat("Peer Goal =", round(beta_mat[t,12],3),"\n")
+      cat("Peer Shot =", round(beta_mat[t,13],3),"\n")
+      cat("Peer Shot Assist =", round(beta_mat[t,14],3),"\n")
+      cat("Peer Cross =", round(beta_mat[t,15],3),"\n")
+      cat("Peer Clearance =", round(beta_mat[t,16],3),"\n")
+      cat("Peer Dribble =", round(beta_mat[t,17],3),"\n")
+      cat("Peer Duel =", round(beta_mat[t,18],3),"\n")
+      cat("Peer Pressure =", round(beta_mat[t,19],3),"\n")
+      cat("sigma_e =",round(sige_mat[t,],3),"\n")
+      cat("sigma_ez =",round(sigez_mat[t,],3),"\n")
+      cat("gamma acceptance rate=",round(acc_rate1[t,],2),"\n")
+      cat("lambda acceptance rate=",round(acc_rate2[t,],2),"\n")
+      cat("sigma acceptance rate=",round(acc_rate3[t,],2),"\n")
+      cat("lambda =", round(lambda_mat[t,],3),"\n")
+      cat("current iteration",t,"is end","\n")
+      cat("At",r,"repetition",t,"iteration spend",end_time-start_time,"seconds","\n");cat("\n")
+    }
+    
   }
   beta1_list[[r]]=beta_mat[500:iter,1][seq(1,length(beta_mat[500:iter,1]),10)]
   beta2_list[[r]]=beta_mat[500:iter,2][seq(1,length(beta_mat[500:iter,2]),10)]
   beta3_list[[r]]=beta_mat[500:iter,3][seq(1,length(beta_mat[500:iter,3]),10)]
+  beta4_list[[r]]=beta_mat[500:iter,4][seq(1,length(beta_mat[500:iter,4]),10)]
+  beta5_list[[r]]=beta_mat[500:iter,5][seq(1,length(beta_mat[500:iter,5]),10)]
+  beta6_list[[r]]=beta_mat[500:iter,6][seq(1,length(beta_mat[500:iter,6]),10)]
+  beta7_list[[r]]=beta_mat[500:iter,7][seq(1,length(beta_mat[500:iter,7]),10)]
+  beta8_list[[r]]=beta_mat[500:iter,8][seq(1,length(beta_mat[500:iter,8]),10)]
+  beta9_list[[r]]=beta_mat[500:iter,9][seq(1,length(beta_mat[500:iter,9]),10)]
+  beta10_list[[r]]=beta_mat[500:iter,10][seq(1,length(beta_mat[500:iter,10]),10)]
+  beta12_list[[r]]=beta_mat[500:iter,11][seq(1,length(beta_mat[500:iter,11]),10)]
+  beta12_list[[r]]=beta_mat[500:iter,12][seq(1,length(beta_mat[500:iter,12]),10)]
+  beta13_list[[r]]=beta_mat[500:iter,13][seq(1,length(beta_mat[500:iter,13]),10)]
+  beta14_list[[r]]=beta_mat[500:iter,14][seq(1,length(beta_mat[500:iter,14]),10)]
+  beta15_list[[r]]=beta_mat[500:iter,15][seq(1,length(beta_mat[500:iter,15]),10)]
+  beta16_list[[r]]=beta_mat[500:iter,16][seq(1,length(beta_mat[500:iter,16]),10)]
+  beta17_list[[r]]=beta_mat[500:iter,17][seq(1,length(beta_mat[500:iter,17]),10)]
+  beta18_list[[r]]=beta_mat[500:iter,18][seq(1,length(beta_mat[500:iter,18]),10)]
+  beta19_list[[r]]=beta_mat[500:iter,19][seq(1,length(beta_mat[500:iter,19]),10)]
+  
   gamma1_list[[r]]=gamma_mat[500:iter,1][seq(1,length(gamma_mat[500:iter,1]),10)]
   gamma2_list[[r]]=gamma_mat[500:iter,2][seq(1,length(gamma_mat[500:iter,2]),10)]
   gamma3_list[[r]]=gamma_mat[500:iter,3][seq(1,length(gamma_mat[500:iter,3]),10)]
+  gamma4_list[[r]]=gamma_mat[500:iter,4][seq(1,length(gamma_mat[500:iter,4]),10)]
+  gamma5_list[[r]]=gamma_mat[500:iter,5][seq(1,length(gamma_mat[500:iter,5]),10)]
+  gamma6_list[[r]]=gamma_mat[500:iter,6][seq(1,length(gamma_mat[500:iter,6]),10)]
+  
   lambda_list[[r]]=lambda_mat[500:iter,][seq(1,length(lambda_mat[500:iter,]),10)]
   sigez_list[[r]]=sigez_mat[500:iter,][seq(1,length(sigez_mat[500:iter,]),10)]
   sige_list[[r]]=sige_mat[500:iter,][seq(1,length(sige_mat[500:iter,]),10)]
@@ -486,6 +509,8 @@ for(r in 1:R){
   beta17_vec=c(beta17_vec,beta17)
   beta18=beta18_list[[r]][-1]
   beta18_vec=c(beta18_vec,beta18)
+  beta19=beta19_list[[r]][-1]
+  beta19_vec=c(beta19_vec,beta19)
   
   lambda=lambda_list[[r]][-1]
   lambda_vec=c(lambda_vec,lambda)
@@ -529,6 +554,7 @@ round(mean(beta15_vec),3);round(sd(beta15_vec),3)
 round(mean(beta16_vec),3);round(sd(beta16_vec),3)
 round(mean(beta17_vec),3);round(sd(beta17_vec),3)
 round(mean(beta18_vec),3);round(sd(beta18_vec),3)
+round(mean(beta19_vec),3);round(sd(beta19_vec),3)
 
 round(mean(gamma1_vec),3);round(sd(gamma1_vec),3)
 round(mean(gamma2_vec),3);round(sd(gamma2_vec),3)
