@@ -47,7 +47,7 @@ $$
 	Pr(Y=1|X) &= Pr(Y^{*}>0) \\
     &= Pr(X^{T}\beta+\epsilon > 0) \\
     &= Pr(\epsilon > - X^{T}\beta) \\
-    &= Pr(\epsilon < X^{T}\beta) \text{by Symmetry of the normal-dist}\\
+    &= Pr(\epsilon < X^{T}\beta) \text{  by Symmetry of the normal-dist}\\
     & =\Phi(X^{T}\beta) \\
     & =1-\Phi(-X^{T}\beta)
 \end{align}
@@ -85,17 +85,38 @@ $$
 $$
 y^{*}_{i}|y_{i},x_{i},\beta \sim
 \begin{cases}
-	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} \leq 0) \text{if y_{i}=0} \\
-	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} > 0) \text{if y_{i}=1}
+	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} \leq 0) \text{if $$y_{i}=0$$} \\
+	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} > 0) \text{if $$y_{i}=1$$}
 \end{cases}
 $$
 
-Truncated Normal distribution에서의 Sampling은 distribution이 얼마나 truncated 되어있는가에 따라 다르다. 그러나 역누적분포기법(Inverse CDF)을 사용할 수 있다.
+Truncated Normal distribution에서의 Sampling은 distribution이 얼마나 truncated 되어있는가에 따라 다르며 제한없는 $$\mathcal{N}(\mu,\sigam^{2})$$로부터 난수를 생성한 다음, 구간 (a,b)에 속하는 난수만 취하고 나머지는 버리는 rejection-method를 사용하므로 구간(a,b)의 확률이 작을 경우 비효율적일 수 있다. 그러나 역누적분포기법(Inverse CDF)을 사용하여 그러한 비효율을 막을 수 있다.
 
+임의의 누적분포함수 F에 대하여
 
+$$F(X) \sim U(0,1)$$
 
+임을 이용하여, $$U \sim U(0,1)$$을 생성한 다음, $$X=F^{-1}(U)$$ 변환을 이용해 누적분포함수 F를 갖는 난수 X를 얻는 방법이다. 이를 truncated-Normal distribution, $$\mathcal{N}(\mu,\sigma^{2})\mathcal{I}(a,b)$$에 적용하면, 다음과 같다.
 
+$$
+\begin{align}
+	\frac{\Phi\left(\frac{X-\mu}{\sigma}\right)-\Phi\left(\frac{a-\mu}{\sigma}\right)}{\Phi\left(\frac{b-\mu}{\sigma}\right)-\Phi\left(\frac{a-\mu}{\sigma}\right)} &= U \\
+    U &\sim U(0,1) \\
+    X &= \Phi^{-1}\left(U\times\Phi\left(\frac{b-\mu}{\sigma}\right)+(1-U)\times \Phi\left(\frac{a-\mu}{\sigma}\right) \right)
+\end{align}
+$$
 
+#### 예시
+
+30개의 실험대상에 대하여 관측한 결과, X값으로 첫 10개 대상은 0, 다음 10개 대상은 1, 나머지 10개 대상은 2값을 갖는다. y는 0 또는 1값을 갖고 $$ y_{1}~y_{3}=1, y_{4}~y_{10}=0, y_{11}~y_{15}=1, y_{16}~y_{20}=0, y_{21}~y_{22}=1, y_{23}~y_{30}=0 $$이다. 이 자료에 대해 Probit 모형을 적용하고, $$\beta_{0},\beta_{1}$$의 사전 분포로 각 $$\mathcal{N}(0,100)$$을 주자.
+$$
+\begin{align}
+	Y_{i} &\sim Ber(p_{i}) \\
+    \Phi^{-1}(p_{i}) &= \beta_{0}+\beta_{1}(x_{i}-\bar{x})
+\end{align}
+$$
+
+다음의 주소 (https://github.com/seolbluewings/R-Python-Code/blob/master/Github%20Blog/probit.R)에서 해당 코드를 확인할 수 있다. 
 
 
 
