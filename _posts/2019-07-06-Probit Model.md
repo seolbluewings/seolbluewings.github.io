@@ -40,9 +40,24 @@ $$ Y_{i}^{*} \sim \mathcal{N}(x_{i}^{T}\beta,1) $$
 
 $$P(Y_{i}=1)=P(Y_{i}^{*}>0)=1-\Phi(-x_{i}^{T}\beta)=\Phi(x_{i}^{T}\beta)$$
 
+이 식이 성립하는 이유는 다음과 같다.
+
+$$
+\begin{align}
+	Pr(Y=1|X) &= Pr(Y^{*}>0) \\
+    &= Pr(X^{T}\beta+\epsilon > 0) \\
+    &= Pr(\epsilon > - X^{T}\beta) \\
+    &= Pr(\epsilon < X^{T}\beta) \text{by Symmetry of the normal-dist}\\
+    & =\Phi(X^{T}\beta) \\
+    & =1-\Phi(-X^{T}\beta)
+\end{align}
+$$
+
 $$Y_{i}^{*}$$는 관측변수가 아니므로 모수로 취급하여 새로운 likelihood를 구할 수 있으며 이를 표현하면 다음과 같을 것이다.
 
-$$l(y^{*}|\beta,y) = \prod_{i=1}^{n} \pi(y_{i}^{*}|x_{i}^{T}\beta,1)[I(y_{i}^{*}>0,y_{i}=1)+I(y_{i}^{*}\leq 0,y_{i}=0)]$$
+$$l(y^{*}|\beta,y) = \prod_{i=1}^{n} \phi(y_{i}^{*}|x_{i}^{T}\beta,1)[I(y_{i}^{*}>0,y_{i}=1)+I(y_{i}^{*}\leq 0,y_{i}=0)]$$
+
+여기서 $$\phi(y_{i}^{*}\|x_{i}^{*}\beta,1)$$ 은 $$\mathcal{N}(x_{i}^{T}\beta,1)$$ 분포의 $$y_{i}^{*}$$에서의 pdf 값이다.
 
 다음과 같이 정의하면, $$\beta$$에 대한 conditional posterior distribution을 구할 수 있다.
 
@@ -64,6 +79,20 @@ $$
     \mu_{\pi} &= \Sigma_{\pi}(\mathbf{X}^{T}y^{*}+\Sigma^{-1}_{0}\beta_{0})
 \end{align}
 $$
+
+따라서 잠재변수(Latent Variable) $$Y_{i}^{*}$$의 conditional posterior distribution은 다음과 같이 truncated Normal distribution을 따른다.
+
+$$
+y^{*}_{i}|y_{i},x_{i},\beta \sim
+\begin{cases}
+	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} \leq 0) \text{if y_{i}=0} \\
+	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} > 0) \text{if y_{i}=1}
+\end{cases}
+$$
+
+Truncated Normal distribution에서의 Sampling은 distribution이 얼마나 truncated 되어있는가에 따라 다르다. 그러나 역누적분포기법(Inverse CDF)을 사용할 수 있다.
+
+
 
 
 
