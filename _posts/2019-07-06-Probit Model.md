@@ -119,7 +119,67 @@ $$
 \end{align}
 $$
 
-다음의 주소 (https://github.com/seolbluewings/R-Python-Code/blob/master/Github%20Blog/probit.R)에서 해당 코드를 확인할 수 있다.
+```
+library(mvtnorm)
+y=rep(c(1,0,1,0,1,0),c(3,7,5,5,2,8))
+x=rep(c(0,1,2),c(10,10,10))
+x=x-mean(x)
+X=cbind(rep(1,30),x)
+p=2; n=30
+beta0=rep(0,2)
+Beta0=diag(100,2)
+
+### initialize
+
+beta=beta0
+iter=3000; warm=1000
+beta_mat=matrix(0,nrow=iter,ncol=p)
+beta_Sig=solve(t(X)%*%X+Beta0)
+ystar=rep(0,n)
+
+### truncated normal random generator
+
+trunc_norm=function(mu,sigma,l,u){
+  unif=runif(1,0,1)
+  trunc_norm=qnorm(unif*pnorm((u-mu)/sigma)+
+                    (1-unif)*pnorm((l-mu)/sigma))*sigma+mu
+}
+
+
+### MCMC
+
+for(i in 1:iter+warm){
+  ## generate y_star
+  for(j in 1:n){
+    if(y[j]==1){
+      ystar[j]=trunc_norm((X[j,])%*%beta,1,0,Inf)
+    } else{
+      ystar[j]=trunc_norm((X[j,])%*%beta,1,-Inf,0)
+    }
+  }
+  ## generate beta
+  beta_mu=beta_Sig%*%(t(X)%*%ystar+solve(Beta0)%*%beta0)
+  beta=rmvnorm(1,beta_mu,beta_Sig)
+  if(i>warm){
+    beta_mat[i-warm,]=beta
+  }
+}
+
+beta_hat=c(0,0)
+for(i in 1:p){
+  beta_hat[i]=mean(beta_mat[,i])
+}
+
+par(mfrow=c(2,2))
+plot(beta_mat[,1],type="l",xlab="",ylab=expression(paste(beta[0])))
+plot(beta_mat[,2],type="l",xlab="",ylab=expression(paste(beta[1])))
+
+plot(density(beta_mat[,1]),xlab=expression(paste(beta[0])),ylab="posterior",main="")
+abline(v=beta_hat[1],lty=2)
+plot(density(beta_mat[,2]),xlab=expression(paste(beta[1])),ylab="posterior",main="")
+abline(v=beta_hat[2],lty=2)
+```
+
 
 
 
