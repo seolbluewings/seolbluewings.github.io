@@ -3,187 +3,149 @@ layout: post
 title:  "Drawing a Football Picth Map"
 date: 2019-07-24
 author: YoungHwan Seol
-categories: Football Data
+categories: Football
 ---
 
-###### 모든 내용은 https://fcpython.com을 참고하였음을 밝힙니다.
+모든 내용은 https://fcpython.com을 참고하였음을 먼저 밝힙니다.
 
 히트맵(Heatmap)을 그리기 이전에 피치(Pitch)를 먼저 그릴 수 있어야 한다.
 
-피치를 그리는 과정은 다음과 같이 골라인(Goal Line)과 터치 라인(Touch Line)을 그리는 것에서 시작한다.
+피치를 그리는 과정은 다음과 같이 골라인(Goal Line)과 터치 라인(Touch Line)을 그리는 것에서 시작한다. 순차적으로 1. 골라인과 터치라인 그리기 2. 센터서클 그리기 3. 페널티박스와 페널티아크 그리기 4. 모든 과정을 하나의 함수로 만들기 과정으로 진행된다.
 
 ~~~
-	import matplotlib.pyplot as plt
-	from matplotlib.patches import Arc
+import matplotlib.pyplot as plt
+from matplotlib.patches import Arc
 ~~~
 
-먼저 FIFA의 경기장 국제 규격에 따라서 터치라인 길이를 120m로 골라인 길이를 90m로 하여 피치를 그리기로 한다. 
+먼저 FIFA의 경기장 국제 규격에 따라서 터치라인 길이를 120m로 골라인 길이를 90m로 하여 피치를 그리기로 한다.
 ~~~
-	fig=plt.figure(figsize=[8,6])
-	ax=fig.add_subplot(1,1,1)
+fig=plt.figure(figsize=[8,6])
+ax=fig.add_subplot(1,1,1)
 
-	plt.plot([0,0],[0,90], color="blue")
-	plt.plot([0,120],[90,90], color="orange")
-	plt.plot([120,120],[90,0], color="green")
-	plt.plot([120,0],[0,0], color="red")
-	plt.plot([60,60],[0,90], color="pink")
-
-	plt.show()
+plt.plot([0,0],[0,90], color="blue")
+plt.plot([0,120],[90,90], color="orange")
+plt.plot([120,120],[90,0], color="green")
+plt.plot([120,0],[0,0], color="red")
+plt.plot([60,60],[0,90], color="pink")
+plt.axis('off')
+plt.savefig(r'C:\seolbluewings.github.io\images\picth_image1.jpg')
 ~~~
 
 ![Pitch Draw](/images/picth_image1.jpg)
 
+다음은 센터서클을 그리는 과정이다. centreCircle, centreSpot으로 표기된 부분이 센터서클과 센터스팟을 찍는 코드이다.
 
+~~~
+fig=plt.figure(figsize=[8,6])
+ax=fig.add_subplot(1,1,1)
 
-$$ Y_{i}^{*} \sim \mathcal{N}(x_{i}^{T}\beta,1) $$
+plt.plot([0,0],[0,90], color="black")
+plt.plot([0,120],[90,90], color="black")
+plt.plot([120,120],[90,0], color="black")
+plt.plot([120,0],[0,0], color="black")
+plt.plot([60,60],[0,90], color="black")
 
-만약 $$Y_{i}^{*}>0$$이라면 $$Y_{i}=1$$이며, $$Y_{i}^{*}\leq 0$$이라면 $$Y_{i}=0$$이다.
+centreCircle = plt.Circle((60,45),9.15,color="red",fill=False)
+centreSpot = plt.Circle((60,45),0.8,color="blue")
 
-따라서 이항변수 $$Y_{i}=1$$인 사건은 연속형 변수 $$Y_{i}^{*}>0$$인 사건과 동일하며, 다음과 같이 정리할 수 있다.
+ax.add_patch(centreCircle)
+ax.add_patch(centreSpot)
+plt.axis('off')
+plt.savefig(r'C:\seolbluewings.github.io\images\picth_image2.jpg')
+~~~
 
-$$P(Y_{i}=1)=P(Y_{i}^{*}>0)=1-\Phi(-x_{i}^{T}\beta)=\Phi(x_{i}^{T}\beta)$$
+![Pitch Draw](/images/picth_image2.jpg)
 
-이 식이 성립하는 이유는 다음과 같다.
+다음으로는 페널티박스와 페널티아크를 그려야 한다.
 
-$$
-\begin{align}
-	Pr(Y=1|X) &= Pr(Y^{*}>0) \\
-    &= Pr(X^{T}\beta+\epsilon > 0) \\
-    &= Pr(\epsilon > - X^{T}\beta) \\
-    &= Pr(\epsilon < X^{T}\beta) \text{  by Symmetry of the normal-dist}\\
-    & =\Phi(X^{T}\beta) \\
-    & =1-\Phi(-X^{T}\beta)
-\end{align}
-$$
+~~~
+fig=plt.figure(figsize=[8,6])
+ax=fig.add_subplot(1,1,1)
 
-$$Y_{i}^{*}$$는 관측변수가 아니므로 모수로 취급하여 새로운 likelihood를 구할 수 있으며 이를 표현하면 다음과 같을 것이다.
+plt.plot([0,0],[0,90], color="black")
+plt.plot([0,120],[90,90], color="black")
+plt.plot([120,120],[90,0], color="black")
+plt.plot([120,0],[0,0], color="black")
+plt.plot([60,60],[0,90], color="black")
 
-$$l(y^{*}|\beta,y) = \prod_{i=1}^{n} \phi(y_{i}^{*}|x_{i}^{T}\beta,1)[I(y_{i}^{*}>0,y_{i}=1)+I(y_{i}^{*}\leq 0,y_{i}=0)]$$
+#Penalty Area 그리기
+plt.plot([16.5,16.5],[65,25],color="black")
+plt.plot([0,16.5],[65,65],color="black")
+plt.plot([16.5,0],[25,25],color="black")
 
-여기서 $$\phi(y_{i}^{*}\|x_{i}^{*}\beta,1)$$ 은 $$\mathcal{N}(x_{i}^{T}\beta,1)$$ 분포의 $$y_{i}^{*}$$에서의 pdf 값이다.
+centreCircle = plt.Circle((60,45),9.15,fill=False)
+centreSpot = plt.Circle((60,45),0.8)
+ax.add_patch(centreCircle)
+ax.add_patch(centreSpot)
 
-다음과 같이 정의하면, $$\beta$$에 대한 conditional posterior distribution을 구할 수 있다.
+#Penalty Arc 그리기
+leftArc = Arc((11,45),height=18.3,width=18.3,angle=0,theta1=310,theta2=50,color="red")
 
-$$\mathbf{y}=(y_{1},...,y_{n}), \mathbf{y}^{*}=(y^{*}_{1},...,y^{*}_{n}), \mathbf{X}=(x_{1},...,x_{n})$$ 일 때,
+ax.add_patch(leftArc)
+plt.axis('off')
+plt.savefig(r'C:\seolbluewings.github.io\images\picth_image3.jpg')
+~~~
 
-$$
-\begin{align}
-	\pi(\beta|\mathbf{y},\mathbf{y}^{*}) &\propto exp[-\frac{1}{2}\{(\mathbf{y}^{*}-\mathbf{X}\beta)^{T}(\mathbf{y}^{*}-\mathbf{X}\beta)+(\beta-\beta_{0})^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\}] \\
-    &\propto exp[-\frac{1}{2}\{\beta^{T}(\mathbf{X}^{T}\mathbf{X}+\Sigma^{-1}_{0})\beta-2\beta^{T}(\mathbf{X}^{T}\mathbf{y}^{*}+\Sigma^{-1}_{0}\beta_{0})\}]
-\end{align}
-$$
+![Pitch Draw](/images/picth_image3.jpg)
 
-다음과 같이 $$\beta$$에 대한 conditional posterior를 구할 수 있고 그 결과는 아래와 같다.
+지금까지의 과정에 반대편 페널티 박스와 6-yard 박스를 추가하여 하나의 함수로 만들면 다음과 같다.
 
-$$
-\begin{align}
-	\beta|\mathbf{y},\mathbf{y}^{*} &\sim \mathcal{N}(\mu_{\pi},\Sigma_{\pi}) \\
-    \Sigma_{\pi} &= (\mathbf{X}^{T}\mathbf{X}+\Sigma^{-1}_{0})^{-1} \\
-    \mu_{\pi} &= \Sigma_{\pi}(\mathbf{X}^{T}y^{*}+\Sigma^{-1}_{0}\beta_{0})
-\end{align}
-$$
+~~~
+def createPitch():
+    
+    #Create figure
+    fig=plt.figure(figsize=[8,6])
+    ax=fig.add_subplot(1,1,1)
 
-따라서 잠재변수(Latent Variable) $$Y_{i}^{*}$$의 conditional posterior distribution은 다음과 같이 truncated Normal distribution을 따른다.
+    #Pitch Outline & Centre Line
+    plt.plot([0,0],[0,90], color="black")
+    plt.plot([0,120],[90,90], color="black")
+    plt.plot([120,120],[90,0], color="black")
+    plt.plot([120,0],[0,0], color="black")
+    plt.plot([60,60],[0,90], color="black")
+    
+    #Left Penalty Area
+    plt.plot([16.5,16.5],[65,25],color="black")
+    plt.plot([0,16.5],[65,65],color="black")
+    plt.plot([16.5,0],[25,25],color="black")
+    
+    #Right Penalty Area
+    plt.plot([120,103.5],[65,65],color="black")
+    plt.plot([103.5,103.5],[65,25],color="black")
+    plt.plot([103.5,120],[25,25],color="black")
+    
+    #Left 6-yard Box
+    plt.plot([0,5.5],[54,54],color="black")
+    plt.plot([5.5,5.5],[54,36],color="black")
+    plt.plot([5.5,0.5],[36,36],color="black")
+    
+    #Right 6-yard Box
+    plt.plot([120,114.5],[54,54],color="black")
+    plt.plot([114.5,114.5],[54,36],color="black")
+    plt.plot([114.5,120],[36,36],color="black")
+    
+    #Prepare Circles
+    centreCircle = plt.Circle((60,45),9.15,color="black",fill=False)
+    centreSpot = plt.Circle((60,45),0.8,color="black")
+    leftPenSpot = plt.Circle((11,45),0.8,color="black")
+    rightPenSpot = plt.Circle((109,45),0.8,color="black")
+    
+    #Draw Circles
+    ax.add_patch(centreCircle)
+    ax.add_patch(centreSpot)
+    ax.add_patch(leftPenSpot)
+    ax.add_patch(rightPenSpot)
+    
+    leftArc = Arc((11,45),height=18.3,width=18.3,angle=0,theta1=310,theta2=50,color="black")
+    rightArc = Arc((109,45),height=18.3,width=18.3,angle=0,theta1=130,theta2=230,color="black")
+    ax.add_patch(leftArc)
+    ax.add_patch(rightArc)
+    
+    plt.axis('off')
+    
+    plt.show()
+    
+createPitch()
+~~~
 
-$$
-y^{*}_{i}|y_{i},x_{i},\beta \sim
-\begin{cases}
-	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} \leq 0) \\
-	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} > 0)
-\end{cases}
-$$
-
-Truncated Normal distribution에서의 Sampling은 distribution이 얼마나 truncated 되어있는가에 따라 다르며 제한없는 $$\mathcal{N}(\mu,\sigma^{2})$$로부터 난수를 생성한 다음, 구간 (a,b)에 속하는 난수만 취하고 나머지는 버리는 rejection-method를 사용하므로 구간(a,b)의 확률이 작을 경우 비효율적일 수 있다. 그러나 역누적분포기법(Inverse CDF)을 사용하여 그러한 비효율을 막을 수 있다.
-
-임의의 누적분포함수 F에 대하여
-
-$$F(X) \sim U(0,1)$$
-
-임을 이용하여, $$U \sim U(0,1)$$을 생성한 다음, $$X=F^{-1}(U)$$ 변환을 이용해 누적분포함수 F를 갖는 난수 X를 얻는 방법이다. 이를 truncated-Normal distribution, $$\mathcal{N}(\mu,\sigma^{2})\mathcal{I}(a,b)$$에 적용하면, 다음과 같다.
-
-$$
-\begin{align}
-	\frac{\Phi\left(\frac{X-\mu}{\sigma}\right)-\Phi\left(\frac{a-\mu}{\sigma}\right)}{\Phi\left(\frac{b-\mu}{\sigma}\right)-\Phi\left(\frac{a-\mu}{\sigma}\right)} &= U \\
-    U &\sim U(0,1)
-\end{align}
-$$
-
-$$ X = \Phi^{-1}\left(U\times\Phi\left(\frac{b-\mu}{\sigma}\right)+(1-U)\times \Phi\left(\frac{a-\mu}{\sigma}\right) \right)
-$$
-
-#### 예시
-
-30개의 실험대상에 대하여 관측한 결과, X값으로 첫 10개 대상은 0, 다음 10개 대상은 1, 나머지 10개 대상은 2값을 갖는다. y는 0 또는 1값을 갖고 $$ y_{1} \sim y_{3}=1, y_{4}\sim y_{10}=0, y_{11}\sim y_{15}=1, y_{16}\sim y_{20}=0, y_{21}\sim y_{22}=1, y_{23}\sim y_{30}=0 $$이다. 이 자료에 대해 Probit 모형을 적용하고, $$\beta_{0},\beta_{1}$$의 사전 분포로 각 $$\mathcal{N}(0,100)$$을 주자.
-
-$$
-\begin{align}
-	Y_{i} &\sim Ber(p_{i}) \\
-    \Phi^{-1}(p_{i}) &= \beta_{0}+\beta_{1}(x_{i}-\bar{x})
-\end{align}
-$$
-
-```
-library(mvtnorm)
-y=rep(c(1,0,1,0,1,0),c(3,7,5,5,2,8))
-x=rep(c(0,1,2),c(10,10,10))
-x=x-mean(x)
-X=cbind(rep(1,30),x)
-p=2; n=30
-beta0=rep(0,2)
-Beta0=diag(100,2)
-
-### initialize
-
-beta=beta0
-iter=3000; warm=1000
-beta_mat=matrix(0,nrow=iter,ncol=p)
-beta_Sig=solve(t(X)%*%X+Beta0)
-ystar=rep(0,n)
-
-### truncated normal random generator
-
-trunc_norm=function(mu,sigma,l,u){
-  unif=runif(1,0,1)
-  trunc_norm=qnorm(unif*pnorm((u-mu)/sigma)+
-                    (1-unif)*pnorm((l-mu)/sigma))*sigma+mu
-}
-
-
-### MCMC
-
-for(i in 1:iter+warm){
-  ## generate y_star
-  for(j in 1:n){
-    if(y[j]==1){
-      ystar[j]=trunc_norm((X[j,])%*%beta,1,0,Inf)
-    } else{
-      ystar[j]=trunc_norm((X[j,])%*%beta,1,-Inf,0)
-    }
-  }
-  ## generate beta
-  beta_mu=beta_Sig%*%(t(X)%*%ystar+solve(Beta0)%*%beta0)
-  beta=rmvnorm(1,beta_mu,beta_Sig)
-  if(i>warm){
-    beta_mat[i-warm,]=beta
-  }
-}
-
-beta_hat=c(0,0)
-for(i in 1:p){
-  beta_hat[i]=mean(beta_mat[,i])
-}
-
-par(mfrow=c(2,2))
-plot(beta_mat[,1],type="l",xlab="",ylab=expression(paste(beta[0])))
-plot(beta_mat[,2],type="l",xlab="",ylab=expression(paste(beta[1])))
-
-plot(density(beta_mat[,1]),xlab=expression(paste(beta[0])),ylab="posterior",main="")
-abline(v=beta_hat[1],lty=2)
-plot(density(beta_mat[,2]),xlab=expression(paste(beta[1])),ylab="posterior",main="")
-abline(v=beta_hat[2],lty=2)
-```
-
-
-
-
-
+![Pitch Draw](/images/picth_image4.jpg)
