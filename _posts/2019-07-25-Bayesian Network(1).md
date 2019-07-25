@@ -56,7 +56,7 @@ $$
 
 - Common Parent (노드가 공통 parent를 가질 때)
 
-![BN]("/images/common_parent.png"){width=50%}
+![BN]("/images/common_parent.png")
 
 위의 예시에 대한 joint distribution은 다음과 같이 적을 수 있다.
 
@@ -68,7 +68,7 @@ $$ p(a,b)= \sum_{c}p(a \mid c)p(b \mid c)p(c) \neq p(a)p(b) $$
 
 따라서 다음과 같은 결론 $$(a  \not\!\perp\!\!\!\perp b \mid \phi)$$ 을 내릴 수 있다.
 
-![BN]("/images/common_parent2.png"){width=50%}
+![BN]("/images/common_parent2.png")
 
 그러나 다음과 같이 이번에는 parent node인 c에 대해서 관측되어 알고 있다고 하자. 이 경우에는 a,b에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
 
@@ -84,7 +84,7 @@ $$
 
 - Cascading (선형적 관계)
 
-![BN]("/images/cascading1.png"){width=50%}
+![BN]("/images/cascading1.png")
 
 다음과 같이 각 노드가 선형적인 관계를 가지는 경우, 이 관계를 Cascading이라 부른다. 이 때 a,b,c의 joint distribution은 다음과 같이 $$p(a,b,c) = p(b \mid c)p(c \mid a)p(a) $$로 표현할 수 있다.
 
@@ -102,7 +102,7 @@ $$
 
 앞선 경우와 마찬가지로 이번에도 아래 그림과 같이 c에 대한 정보가 given되었다고 하자. 이 경우에는 a,b에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
 
-![BN]("/images/cascading2.png"){width=50%}
+![BN]("/images/cascading2.png")
 
 $$
 \begin{align}
@@ -119,9 +119,43 @@ $$
 
 V-structure는 아래의 그림과 같다.
 
-![BN]("/images/VS1.png"){width=50%}
+![BN]("/images/VS1.png")
 
 V-structure는 앞서 소개한 2가지 구조와 다른 특징을 갖는다. 앞서 소개한 Common Parent와 Cascading의 경우에는 a,b,c 중 어떤 1개의 정보가 주어지지 않은 상황에서 서로 dependence하고 하나의 정보가 주어지면 independent한 관계를 갖는다.
 
 반면 V-structure의 경우 a,b,c 중 어떠한 노드의 정보를 알지 못할 때, 서로 independent하며 오히려 a,b,c 중 어느 하나의 정보를 알게되는 순간 서로 dependence한 구조를 갖는다.
+
+현재의 구조에서 a,b,c에 대한 joint distribution은 다음과 같이 표현될 수 있다.
+
+$$ p(a,b,c) &= p(a)p(b)p(c \mid a,b) $$
+
+a,b에 대한 joint distribution은 위의 식을 c에 대하여 marginalized하여 얻을 수 있다.
+
+$$
+\begin{align}
+	p(a,b) &= \sum_{c}p(a,b,c) \\
+    &= \sum_{c}p(a)p(b)p(c \mid a,b) \\
+    &= p(a)p(b)\sum_{c}p(c \mid a,b) = p(a)p(b)
+\end{align}
+$$
+
+먼저 언급한 바와 같이 a,b,c 중 어떠한 것도 given이 아닌 상태에서 a와 b는 서로 독립적이다.
+
+반면 아래의 그림과 같이 c가 given된 상황에서 어떻게 달라지는지 알아보자.
+
+![BN]("/images/VS2.png")
+
+$$
+\begin{align}
+	p(a,b \mid c) &= \frac{p(a,b,c)}{p(c)} \\
+    &= \frac{p(a)p(b)p(c \mid a,b)}{p(c)} \\
+    &\neq p(a \mid c)p(b \mid c)
+\end{align}
+$$
+
+이 경우에는 a와 b가 conditional independent하지 않는다. $$ a \not\!\perp\!\!\!\perp b \mid \phi $$ 먼저 언급한 바와 같이 a,b,c 중 하나의 정보가 주어질 때, 오히려 독립성이 깨진다.
+
+앞선(Common parent, Cascading)경우에는 특정 정보를 알면 두 변수 사이의 독립성이 생겼으나 V-Structure의 경우에는 특정 정보를 알면 두 변수 사이의 독립성이 사라지게 되었다.
+
+
 
