@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bayesian Network(1)"
-date: 2019-07-06
+date: 2019-07-25
 author: YoungHwan Seol
 categories: Bayesian
 ---
@@ -23,15 +23,20 @@ categories: Bayesian
 우리는 Conditional Independence보다 다음의 Marginal Independence에 익숙하다.
 $$
 \begin{align}
-	X &\independent Y \; \text{iff} \\
-    P(X) &= P(X|Y) = \frac{P(X,Y)}{P(Y)} \\
-    P(X,Y) = P(X)P(Y)
+	X &\CI Y \; \text{iff} \\
+    P(X) &= P(X\mid Y) = \frac{P(X,Y)}{P(Y)} \\
+    P(X,Y) &= P(X)P(Y)
 \end{align}
 $$
 
 Conditional Independence는 다음과 같이 설명할 수 있다. 3개의 변수 a,b,c가 있다고 하자. 그리고 b,c가 given일 때, a의 조건부 분포(이하 Condtional distribution)은 b에 대해 종속적이지 않다고(independent)하자. 이는 다음과 같이 표현될 것이다.
 
-$$ p(a|b,c) = p(a|c) $$
+$$ p(a\mid b,c) = p(a\mid c) $$
+
+이 경우 a는 c가 given인 상태에서 b에 대하여 Conditional Independent 하다고 표현하며 이 경우 다음과 같이 a와 b의 독립을 표시한다.
+
+$$ a \CI b \mid c$$
+
 
 
 
