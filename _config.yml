@@ -21,7 +21,7 @@ description: >
 baseurl: ""
 url: "http://seolbluewings.github.io" # the base hostname & protocol for your site
 cover: "/assets/header_image.jpg"
-logo: "/assets/logo.png"
+#logo: "/assets/logo.png"
 
 # Build settings
 markdown: kramdown
@@ -70,117 +70,13 @@ descriptions:
 #     desc: Follow me on Twitter            # Description to display as link title, etc
 #     share: true                           # Include in the "Share" section of posts
 social:
-  - name: Twitter
-    icon: twitter
-    username: TheBenCentra
-    url: https://twitter.com/TheBenCentra
-    desc: Follow me on Twitter
-    share: False
-
-  - name: Facebook
-    icon: facebook
-    username: thebencentra
-    url:
-    desc: Friend me on Facebook
-    share: False
 
   - name: GitHub
     icon: github
-    username: bencentra
-    url: https://github.com/bencentra
+    username: seolbluewings
+    url: https://github.com/seolbluewings
     desc: Fork me on GitHub
-    share: False
-
-  - name: LinkedIn
-    icon: linkedin
-    username: Ben Centra
-    url: https://www.linkedin.com/pub/ben-centra/47/769/60a
-    desc: Connect with me on LinkedIn
-    share: False
-
-  - name: Google+
-    icon: google-plus
-    username:
-    url:
-    desc: Add me to your Circles
-    share: False
-
-  - name: YouTube
-    icon: youtube
-    username:
-    url:
-    desc: Subscribe on YouTube
-    share: False
-
-  - name: Instagram
-    icon: instagram
-    username:
-    url:
-    desc: Follow me on Instagram
-    share: False
-
-  - name: Pinterest
-    icon: pinterest
-    username:
-    url:
-    desc: Follow me on Pinterest
-    share: true
-
-  - name: SoundCloud
-    icon: soundcloud
-    username:
-    url:
-    desc: Follow me on SoundCloud
-    share: false
-
-  - name: Tumblr
-    icon: tumblr
-    username:
-    url:
-    desc: Follow me on Tumblr
-    share: false
-
-  - name: Steam
-    icon: steam
-    username:
-    url:
-    desc: Friend me on Steam
-    share: false
-
-  - name: Dribbble
-    icon: dribbble
-    username:
-    url:
-    desc: Follow me on Dribble
-    share: false
-
-  - name: Vimeo
-    icon: vimeo-square
-    username:
-    url:
-    desc: Follow me on Vimeo
-    share: false
-
-  - name: Vine
-    icon: vine
-    username:
-    url:
-    desc: Follow me on Vine
-    share: false
-
-  - name: Reddit
-    icon: reddit
-    username:
-    url:
-    desc: Share to Reddit
-    share: true
-
-  - name: "Hacker News"
-    icon: hacker-news
-    username:
-    url:
-    desc: Share to Hacker News
-    share: false
+    share: True
 
 # Social sharing protocols
 # These are for automatically generating sharing metadata for FB and Twitter
