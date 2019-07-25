@@ -22,9 +22,10 @@ categories: Bayesian
 여러 확률변수에 대한 문제를 해결하는 과정에서 결합 확률분포(이하 Joint distribution)을 구해야하는 일이 있는데 확률변수의 수가 많을수록 Joint distribution을 구하기가 어려워지며, 이 때 조건부 독립(이하 Conditional Independence)을 사용하여 문제를 해결할 수 있다.
 
 우리는 Conditional Independence보다 다음의 Marginal Independence에 익숙하다.
+
 $$
 \begin{align}
-	X &\perp Y \; \text{iff} \\
+	X &\independent Y \par \; \text{iff} \\
     P(X) &= P(X\mid Y) = \frac{P(X,Y)}{P(Y)} \\
     P(X,Y) &= P(X)P(Y)
 \end{align}
@@ -36,7 +37,7 @@ $$ p(a\mid b,c) = p(a\mid c) $$
 
 이 경우 a는 c가 given인 상태에서 b에 대하여 Conditional Independent 하다고 표현하며 이 경우 다음과 같이 a와 b의 조건부 독립을 표시한다.
 
-$$ a \perp b \mid c$$
+$$ a \independent b \mid c$$
 
 c가 given인 상태에서의 a,b의 joint distribution은 다음과 같이 표현될 수 있다.
 
@@ -55,7 +56,7 @@ $$
 
 - Common Parent (노드가 공통 parent를 가질 때)
 
-![BN](/images/common_parent.png)
+![BN](/images/common_parent.PNG)
 
 위의 예시에 대한 joint distribution은 다음과 같이 적을 수 있다.
 
@@ -65,9 +66,9 @@ $$ p(a,b,c) = p(a \mid c)p(b \mid c)p(c) $$
 
 $$ p(a,b)= \sum_{c}p(a \mid c)p(b \mid c)p(c) \neq p(a)p(b) $$
 
-따라서 다음과 같은 결론 $$(a \notperp b | \phi)$$ 을 내릴 수 있다.
+따라서 다음과 같은 결론 $$(a  \not\!\perp\!\!\!\perp b \mid \phi)$$ 을 내릴 수 있다.
 
-![BN](/images/common_parent2.png)
+![BN](/images/common_parent2.PNG)
 
 그러나 다음과 같이 이번에는 parent node인 c에 대해서 관측되어 알고 있다고 하자.
 
