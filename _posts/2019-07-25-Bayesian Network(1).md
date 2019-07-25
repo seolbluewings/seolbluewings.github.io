@@ -25,7 +25,7 @@ categories: Bayesian
 
 $$
 \begin{align}
-	X &\independent Y \par \; \text{iff} \\
+	X &\perp\!\!\!\perp Y \par \; \text{iff} \\
     P(X) &= P(X\mid Y) = \frac{P(X,Y)}{P(Y)} \\
     P(X,Y) &= P(X)P(Y)
 \end{align}
@@ -37,7 +37,7 @@ $$ p(a\mid b,c) = p(a\mid c) $$
 
 이 경우 a는 c가 given인 상태에서 b에 대하여 Conditional Independent 하다고 표현하며 이 경우 다음과 같이 a와 b의 조건부 독립을 표시한다.
 
-$$ a \independent b \mid c$$
+$$ a \perp\!\!\!\perp b \mid c$$
 
 c가 given인 상태에서의 a,b의 joint distribution은 다음과 같이 표현될 수 있다.
 
@@ -56,7 +56,7 @@ $$
 
 - Common Parent (노드가 공통 parent를 가질 때)
 
-![BN](/images/common_parent.PNG)
+![BN](/images/common_parent.PNG){: width="60%" height="60%"}
 
 위의 예시에 대한 joint distribution은 다음과 같이 적을 수 있다.
 
@@ -68,7 +68,7 @@ $$ p(a,b)= \sum_{c}p(a \mid c)p(b \mid c)p(c) \neq p(a)p(b) $$
 
 따라서 다음과 같은 결론 $$(a  \not\!\perp\!\!\!\perp b \mid \phi)$$ 을 내릴 수 있다.
 
-![BN](/images/common_parent2.PNG)
+![BN](/images/common_parent2.PNG){: width="60%" height="60%"}
 
 그러나 다음과 같이 이번에는 parent node인 c에 대해서 관측되어 알고 있다고 하자.
 
@@ -82,7 +82,7 @@ $$
 \end{align}
 $$
 
-따라서 c에 대해 알고 있으면 a와 b는 conditional independent $$(a \perp b \mid c)$$ 하다.
+따라서 c에 대해 알고 있으면 a와 b는 conditional independent $$(a \perp\!\!\!\perp b \mid c)$$ 하다.
 
 
 
