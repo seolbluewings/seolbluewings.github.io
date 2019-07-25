@@ -25,7 +25,7 @@ categories: Bayesian
 
 $$
 \begin{align}
-	X &\perp\!\!\!\perp Y \par \; \text{iff} \\
+	X &\perp\!\!\!\perp Y \; \text{iff} \\
     P(X) &= P(X\mid Y) = \frac{P(X,Y)}{P(Y)} \\
     P(X,Y) &= P(X)P(Y)
 \end{align}
@@ -56,7 +56,7 @@ $$
 
 - Common Parent (노드가 공통 parent를 가질 때)
 
-![BN](/images/common_parent.PNG){: width="60%" height="60%"}
+<img src="/images/common_parent.png" width="60%">
 
 위의 예시에 대한 joint distribution은 다음과 같이 적을 수 있다.
 
@@ -68,11 +68,9 @@ $$ p(a,b)= \sum_{c}p(a \mid c)p(b \mid c)p(c) \neq p(a)p(b) $$
 
 따라서 다음과 같은 결론 $$(a  \not\!\perp\!\!\!\perp b \mid \phi)$$ 을 내릴 수 있다.
 
-![BN](/images/common_parent2.PNG){: width="60%" height="60%"}
+<img src="/images/common_parent2.png" width="60%">
 
-그러나 다음과 같이 이번에는 parent node인 c에 대해서 관측되어 알고 있다고 하자.
-
-이 경우에는 a,b에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
+그러나 다음과 같이 이번에는 parent node인 c에 대해서 관측되어 알고 있다고 하자. 이 경우에는 a,b에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
 
 $$
 \begin{align}
@@ -84,8 +82,35 @@ $$
 
 따라서 c에 대해 알고 있으면 a와 b는 conditional independent $$(a \perp\!\!\!\perp b \mid c)$$ 하다.
 
+- Cascading (선형적 관계)
 
+<img src="/images/cascading1.png" width="60%">
 
+다음과 같이 각 노드가 선형적인 관계를 가지는 경우, 이 관계를 Cascading이라 부른다. 이 때 a,b,c의 joint distribution은 다음과 같이 $$p(a,b,c) = p(b \mid c)p(c \mid a)p(a) $$로 표현할 수 있다.
 
+어떠한 변수도 관측되지 않았다고 할 때, c에 대해 a,b,c의 joint distribution을 marginalized하면, a와 b가 서로 독립인지 알 수 있다.
 
+$$
+\begin{align}
+	p(a,b) &= \sum_{c}p(a,b,c) = sum_{c}p(b \mid c)p(c \mid a)p(a) \\
+    &= p(a) \sum_{c} p(c \mid a)p(b \mid c) \\
+    &= p(a)p(b \mid a) \neq p(a)p(b)
+\end{align}
+$$
 
+따라서 다음과 같은 결론 $$(a  \not\!\perp\!\!\!\perp b \mid \phi)$$ 을 내릴 수 있다.
+
+앞선 경우와 마찬가지로 이번에도 아래 그림과 같이 c에 대한 정보가 given되었다고 하자. 이 경우에는 a,b에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
+
+<img src="/images/cascading2.png" width="60%">
+
+$$
+\begin{align}
+	p(a,b \mid c) &= \frac{p(a,b,c)}{p(c)} \\
+    &= \frac{p(a)p(c \mid a)p(b \mid c)}{p(c)} \\
+    p(c \mid a) &= \frac{p(a \mid c)p(c)}{p(a)} \quad \text{이므로} \\
+    &= p(a \mid c)p(b \mid c)
+\end{align}
+$$
+
+따라서 c에 대해 알고 있으면 a와 b는 conditional independent $$(a \perp\!\!\!\perp b \mid c)$$ 하다.
