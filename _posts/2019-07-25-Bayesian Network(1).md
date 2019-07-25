@@ -18,7 +18,20 @@ categories: Bayesian
 
 방향성 그래프를 통해 확률변수 사이의 관계를 표현하는 것이 편리하며, 비방향성 그래프 모델(undirected graphical model)의 경우는 확률변수들 사이의 제약을 표현하는데 편리하다. 비방향성 그래프 모델로는 마르코프 랜덤 필드(Markov Random Field)가 있다.
 
-여러 확률변수에 대한 문제를 해결하는 과정에서 결합 확률분포(Joint distribution)을 구해야하는 일이 있는데 확률변수의 수가 많을수록 Joint distribution을 구하기가 어려워지며, 이 때 조건부 독립(Conditional Independence)을 사용하여 문제를 해결할 수 있다.
+여러 확률변수에 대한 문제를 해결하는 과정에서 결합 확률분포(이하 Joint distribution)을 구해야하는 일이 있는데 확률변수의 수가 많을수록 Joint distribution을 구하기가 어려워지며, 이 때 조건부 독립(이하 Conditional Independence)을 사용하여 문제를 해결할 수 있다.
+
+우리는 Conditional Independence보다 다음의 Marginal Independence에 익숙하다.
+$$
+\begin{align}
+	X &\independent Y \; \text{iff} \\
+    P(X) &= P(X|Y) = \frac{P(X,Y)}{P(Y)} \\
+    P(X,Y) = P(X)P(Y)
+\end{align}
+$$
+
+Conditional Independence는 다음과 같이 설명할 수 있다. 3개의 변수 a,b,c가 있다고 하자. 그리고 b,c가 given일 때, a의 조건부 분포(이하 Condtional distribution)은 b에 대해 종속적이지 않다고(independent)하자. 이는 다음과 같이 표현될 것이다.
+
+$$ p(a|b,c) = p(a|c) $$
 
 
 
