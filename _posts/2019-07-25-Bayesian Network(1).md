@@ -23,7 +23,7 @@ categories: Bayesian
 우리는 Conditional Independence보다 다음의 Marginal Independence에 익숙하다.
 $$
 \begin{align}
-	X &\CI Y \; \text{iff} \\
+	X &\Perp Y \; \text{iff} \\
     P(X) &= P(X\mid Y) = \frac{P(X,Y)}{P(Y)} \\
     P(X,Y) &= P(X)P(Y)
 \end{align}
@@ -33,10 +33,20 @@ Conditional Independence는 다음과 같이 설명할 수 있다. 3개의 변�
 
 $$ p(a\mid b,c) = p(a\mid c) $$
 
-이 경우 a는 c가 given인 상태에서 b에 대하여 Conditional Independent 하다고 표현하며 이 경우 다음과 같이 a와 b의 독립을 표시한다.
+이 경우 a는 c가 given인 상태에서 b에 대하여 Conditional Independent 하다고 표현하며 이 경우 다음과 같이 a와 b의 조건부 독립을 표시한다.
 
-$$ a \CI b \mid c$$
+$$ a \Perp b \mid c$$
 
+c가 given인 상태에서의 a,b의 joint distribution은 다음과 같이 표현될 수 있다.
+
+$$
+\begin{align}
+	p(a,b \mid c) &= p(a \mid b,c)p(b \mid c) \\
+    &= p(a \mid c)p(b \mid c)
+\end{align}
+$$
+
+따라서 c가 given인 상황에서 a와 b의 joint distribution은 c가 given인 상황에서의 a의 marginal, b의 marginal distribution으로 분해할 수 있다. 
 
 
 
