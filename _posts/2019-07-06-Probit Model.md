@@ -85,8 +85,8 @@ $$
 $$
 y^{*}_{i}|y_{i},x_{i},\beta \sim
 \begin{cases}
-	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} \leq 0) \\
-	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} > 0)
+	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} \leq 0)\quad \text{if\$$y_{i}=1$$} \\
+	\mathcal{N}(x_{i}^{T}\beta,1)\mathcal{I}(y_{i}^{*} > 0) \quad \text{if\$$y_{i}=0$$}
 \end{cases}
 $$
 

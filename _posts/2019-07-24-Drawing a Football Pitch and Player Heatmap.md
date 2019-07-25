@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Drawing a Football Picth and Player Heatmap"
+title:  "Drawing a Football Pitch and Player Heatmap"
 date: 2019-07-24
 author: YoungHwan Seol
 categories: Football
