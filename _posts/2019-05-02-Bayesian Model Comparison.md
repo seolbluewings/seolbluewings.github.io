@@ -42,7 +42,7 @@ $$ \mathit{p}({\bf \beta}|\mathcal{D},\mathcal{M_{i}}) \propto \mathit{p}(\mathc
 1. posterior distribution이 $$\beta_{MAP}$$(가장 가능성이 높은 값)에서 뾰족하게 솟아 있고 그 폭이 $$\Delta\beta_{posterior}$$라 표현한다.
 2. prior distribution의 폭은 $$\Delta\beta_{prior}$$이며 평평한 형태를 가지고 있어 $$\mathit{p}(\beta)=1/\Delta\beta_{prior}$$라 표현한다.
 
-![Bayesian_Model_Comparison](/images/Figure3.12.PNG)
+![Bayesian_Model_Comparison](C://seolbluewings.github.io/assets/images/Figure3.12.PNG)
 
 위에서 언급한 2가지 가정은 위의 그림 파일로 설명될 수 있으며 이를 적용하면 다음과 같은 식을 얻을 수 있다.
 
@@ -65,7 +65,7 @@ $$ \log\mathit{p}(\mathcal{D}) \simeq \log\mathit{p}(\mathcal{D}|{\bf \beta_{MAP
 3. penalty term이 p에 의해 증가하므로 $$p(\mathcal{D})$$ 를 감소시킨다.
 4. p의 수를 결정하는 것이 핵심적인 사항이 된다. 
 
-![Bayesian_Model_Comparison](/images/Figure3.13.PNG)
+![Bayesian_Model_Comparison](C://seolbluewings.github.io/assets/images/Figure3.13.PNG)
 
 다음의 그림을 통해 marginal likelihood, $$p(\mathcal{D}\|\mathcal{M_{i}})$$가 어떻게 적당한 수준의 복잡도를 가진 모델을 선택하는지 알 수 있다. 
 

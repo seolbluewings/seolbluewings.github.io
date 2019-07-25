@@ -56,7 +56,7 @@ $$
 
 - Common Parent (노드가 공통 parent를 가질 때)
 
-![BayesianNet](/images/common_parent.png)
+![BayesianNet](C://seolbluewings.github.io/assets/images/common_parent.png)
 
 위의 예시에 대한 joint distribution은 다음과 같이 적을 수 있다.
 
@@ -68,7 +68,7 @@ $$ p(a,b)= \sum_{c}p(a \mid c)p(b \mid c)p(c) \neq p(a)p(b) $$
 
 따라서 다음과 같은 결론 $$(a  \not\!\perp\!\!\!\perp b \mid \phi)$$ 을 내릴 수 있다.
 
-![BayesianNet](/images/common_parent2.png)
+![BayesianNet](C://seolbluewings.github.io/assets/images/common_parent2.png)
 
 그러나 다음과 같이 이번에는 parent node인 c에 대해서 관측되어 알고 있다고 하자. 이 경우에는 a,b에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
 
@@ -84,7 +84,7 @@ $$
 
 - Cascading (선형적 관계)
 
-![BayesianNet](/images/cascading1.png)
+![BayesianNet](C://seolbluewings.github.io/assets/images/cascading1.png)
 
 다음과 같이 각 노드가 선형적인 관계를 가지는 경우, 이 관계를 Cascading이라 부른다. 이 때 a,b,c의 joint distribution은 다음과 같이 $$p(a,b,c) = p(b \mid c)p(c \mid a)p(a) $$로 표현할 수 있다.
 
@@ -102,7 +102,7 @@ $$
 
 앞선 경우와 마찬가지로 이번에도 아래 그림과 같이 c에 대한 정보가 given되었다고 하자. 이 경우에는 a,b에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
 
-![BayesianNet](/images/cascading2.png)
+![BayesianNet](C://seolbluewings.github.io/assets/images/cascading2.png)
 
 $$
 \begin{align}
@@ -119,7 +119,7 @@ $$
 
 V-structure는 아래의 그림과 같다.
 
-![BayesianNet](/images/VS1.png)
+![BayesianNet](C://seolbluewings.github.io/assets/images/VS1.png)
 
 V-structure는 앞서 소개한 2가지 구조와 다른 특징을 갖는다. 앞서 소개한 Common Parent와 Cascading의 경우에는 a,b,c 중 어떤 1개의 정보가 주어지지 않은 상황에서 서로 dependence하고 하나의 정보가 주어지면 independent한 관계를 갖는다.
 
@@ -143,7 +143,7 @@ $$
 
 반면 아래의 그림과 같이 c가 given된 상황에서 어떻게 달라지는지 알아보자.
 
-![BayesianNet](/images/VS2.png)
+![BayesianNet](C://seolbluewings.github.io/assets/images/VS2.png)
 
 $$
 \begin{align}
@@ -159,7 +159,7 @@ $$
 
 #### Bayes Ball Example
 
-![BayesianNet](/images/bayes_ball.png)
+![BayesianNet](C://seolbluewings.github.io/assets/images/bayes_ball.png)
 
 다음 4가지 경우에 대해 체크해보도록 한다.
 
@@ -178,6 +178,10 @@ $$X_{1}$$ 에서 $$X_{6}$$로 가는 길은 각 Cascading 형태를 가지는데
 - $$ X_{2} \perp\!\!\!\perp X_{3} \mid \{X_{1},X_{6}\} $$
 
 $$X_{1}$$가 given이면 좌측의 parent node가 given이 된 경우다. 경로가 이 하나만 존재한다면, 독립적이겠지만, $$X_{6}$$가 given인 상황을 고려할 필요가 있다. $$X_{6}$$가 given일 때 우측의 V-structure가 독립성을 잃어버리며 이후의 $$X_{3}$$부터 $$X_{6}$$의 관계는 Cascading 형태이고 결국 이 경우에는 $$X_{2}$$와 $$X_{3}$$는 독립이 아니게 된다.
+
+지금까지의 논의를 거치면 Bayes Ball Algorithm에 대해서는 어느 정도 익숙해졌을 것이다.
+
+마지막으로 2가지 사항에 대해 추가적으로 논의하고 Part1을 마무리 짓고자 한다.
 
 
 
