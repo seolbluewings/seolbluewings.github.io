@@ -6,15 +6,20 @@ author: YoungHwan Seol
 categories: Bayesian
 ---
 
+앞서 계속 conditional independence를 언급해왔는데 어떤 면에서 condtional independence가 중요한 것일까? 
+
+
 베이지안 네트워크(Bayesian Network)에서 사용되는 가장 전형적인 예시를 통해 앞서 논의한 내용들에 대해 다시 한 번 점검하도록 하자.
 
-다음의 그림과 같은 관계가 있다고 하자. 강도 침입을 대비하여 알람을 설치하였는데 지진이 발생하는 경우에도 알람이 작동할 가능성이 있다. 강도가 침입할 확률은 그림에 주어진 바와 같이 0.001이고 지진이 발생할 확률은 0.002다. 알람이 작동할 확률은 $$p(A \mid B,E)$$로 값이 그림과 같이 주어져있다.
+다음의 그림과 같은 관계가 있다고 하자. 도둑의 침입을 대비하여 알람을 설치하였는데 지진이 발생하는 경우에도 알람이 작동할 가능성이 있다. 도둑이 침입할 확률은 그림에 주어진 바와 같이 0.001이고 지진이 발생할 확률은 0.002다. 알람이 작동할 확률은 $$p(A \mid B,E)$$로 값이 그림과 같이 주어져있다.
 
-알람이 울릴 때, John과 Mary는 서로에게 전화를 해주기로 합의하였고 알람이 울렸을 때, John이 전화할 확률 $$p(J \mid A)$$와 Mary가 전화할 확률 $$P(M \mid A)$$는 그림과 같다.
+알람이 울리면 John과 Mary는 전화를 해주기로 합의하였고 알람이 울렸을 때, John이 전화할 확률 $$p(J \mid A)$$와 알람이 울렸을 때, Mary가 전화할 확률 $$P(M \mid A)$$는 그림과 같다.
 
+![burglary](/assets/images/burglary_example.png)
 
-![burglary](C:/seolbluewings.github.io/assets/images/burglary_example.png)
+위의 그림을 통해 다음과 같은 질문유형을 해결할 수 있다.
 
+- Mary가 나에게 전화를 한 상황에서 정말로 도둑이 들었을 확률?
 
 
 
