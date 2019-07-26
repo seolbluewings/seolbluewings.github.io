@@ -52,7 +52,7 @@ $${\it p}(\sigma^{2}|\beta,y) \sim IG(\frac{n}{2}+a,\frac{1}{2}(y-X\beta)^{T}(y-
 
 과 같이 구할 수 있다.
 
-![Bayesian_Linear_Regression](C://seolbluewings.github.io/assets/images/Figure3.7.png)
+![Bayesian_Linear_Regression](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Figure3.7.png?raw=true)
 
 위의 그림은 1차원 데이터 x에 대한 회귀모델을 나타낸 것으로 $$y=\beta_{0}+\beta_{1}x$$ 형태이며 이 모델 상에서 데이터 집합의 크기가 커짐에 따른 베이지안 학습 결과를 보여준다. 현재의 posterior 분포는 새로운 데이터 포인트가 관측된 후, 새로운 prior distribution이 되는 베이지안 학습의 순차적인 모습을 보여준다.
 

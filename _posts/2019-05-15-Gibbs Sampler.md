@@ -102,10 +102,10 @@ $$ p(\sigma^{2}|X) \propto (\sigma^{2})^{-n/2-a-1}\cdot exp\{-\frac{1}{\sigma^{2
 
 간단한 Gibbs Sampler 시행 결과는 다음과 같다. 
 
-![Gibbs Sampler](C://seolbluewings.github.io/assets/images/gibbs_sampler_posterior.png)
+![Gibbs Sampler](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/gibbs_sampler_posterior.png?raw=true)
 
 Gibbs Sampler에서 $$(\mu,\sigma^{2})$$ 표본의 경로는 아래의 그림과 같다. 아래의 그림은 $$(\mu,\sigma^{2})$$의 이동경로를 나타낸 그림으로 첫 5회, 15회, 100회의 이동 경로를 보여준다.
 
-![Gibbs Sampler](C://seolbluewings.github.io/assets\images/gibbs_sampler_path.png)
+![Gibbs Sampler](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/gibbs_sampler_path.png?raw=true)
 
 

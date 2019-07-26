@@ -10,7 +10,7 @@ categories: Football
 
 아래와 같은 히트맵(Heatmap)을 그리기 이전에 피치(Pitch)를 먼저 그릴 수 있어야 한다.
 
-![Pitch Draw](C://seolbluewings.github.io/assets/images/heatmap_son.jpg)
+![Pitch Draw](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/heatmap_son.jpg?raw=true)
 
 피치를 그리는 과정은 다음과 같이 골라인(Goal Line)과 터치 라인(Touch Line)을 그리는 것에서 시작한다. 순차적으로 1. 골라인과 터치라인 그리기 2. 센터 서클(Centre Circle) 그리기 3. 페널티 박스(Penalty Box)와 페널티 아크(Penalty Arc) 그리기 4. 모든 과정을 하나의 함수로 만들기 과정으로 진행된다.
 
@@ -37,7 +37,7 @@ plt.axis('off')
 plt.savefig(r'C:\seolbluewings.github.io\images\picth_image1.jpg')
 ~~~
 
-![Pitch Draw](C://seolbluewings.github.io/assets/images/picth_image1.jpg)
+![Pitch Draw](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/picth_image1.jpg?raw=true)
 
 다음은 센터서클을 그리는 과정이다. centreCircle, centreSpot으로 표기된 부분이 센터서클과 센터스팟을 찍는 코드이다.
 
@@ -60,7 +60,7 @@ plt.axis('off')
 plt.savefig(r'C:\seolbluewings.github.io\images\picth_image2.jpg')
 ~~~
 
-![Pitch Draw](C://seolbluewings.github.io/assets/images/picth_image2.jpg)
+![Pitch Draw](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/picth_image2.jpg?raw=true)
 
 다음으로는 페널티박스와 페널티아크를 그려야 한다.
 
@@ -92,7 +92,7 @@ plt.axis('off')
 plt.savefig(r'C:\seolbluewings.github.io\images\picth_image3.jpg')
 ~~~
 
-![Pitch Draw](C://seolbluewings.github.io/assets/images/picth_image3.jpg)
+![Pitch Draw](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/picth_image3.jpg?raw=true)
 
 지금까지의 과정에 반대편 페널티 박스와 6-yard 박스를 추가하여 하나의 함수로 만들면 다음과 같다.
 
@@ -154,7 +154,7 @@ def createPitch():
 createPitch()
 ~~~
 
-![Pitch Draw](C://seolbluewings.github.io/assets/images/picth_image4.jpg)
+![Pitch Draw](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/picth_image4.jpg?raw=true)
 
 이제 지난 2018 FIFA 러시아 월드컵 대한민국 vs 독일 경기의 데이터를 가져와 앞서 확인한 손흥민의 히트맵을 그린다. 데이터는 Statsbomb open resource를 활용하여 구하였고 경기 이벤트 데이터에서 손흥민에 해당하는 X좌표와 Y좌표를 이용하여 히트맵을 그린다.
 
@@ -229,5 +229,5 @@ createPitch()
 
 이렇게 하면 다음과 같이 손흥민의 히트맵을 얻을 수 있고 다른 선수들의 경우도 마찬가지 방식으로 진행하여 얻을 수 있다.
 
-![Pitch Draw](C://seolbluewings.github.io/assets/images/heatmap_son.jpg)
+![Pitch Draw](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/heatmap_son.jpg?raw=true)
 
