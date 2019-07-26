@@ -22,8 +22,8 @@ $$
 
 그러나 아래 그림과 같이 일부 링크가 없는 네트워크가 보다 일반적이다. 아래의 그래프는 fully connected가 아니며, $$x_{1}$$에서 $$x_{2}$$로의 링크, $$x_{3}$$에서 $$x_{7}$$으로 가는 링크가 존재하지 않는다.
 
-<img src="https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true" width="30%">
 
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){: width="180" height="232"}
 
 7개의 확률변수 $$p(x_{1},x_{2},...,x_{7})$$은 다음과 같은 형태로 표현될 수 있다.
 
@@ -42,26 +42,6 @@ $$ p(x_{1},x_{2},...,x_{7})=p(x_{1})p(x_{2})p(x_{3})p(x_{4} \mid x_{1},x_{2},x_{
 
 - Mary가 나에게 전화를 한 상황에서 정말로 도둑이 들었을 확률?
 
-
-
-
-어떠한 변수도 관측되지 않았다고 할 때, c에 대해 a,b,c의 joint distribution을 marginalized하면, a와 b가 서로 독립인지 알 수 있다.
-
-
-
-$$
-
-\begin{align}
-
-	p(a,b) &= \sum_{c}p(a,b,c) = sum_{c}p(b \mid c)p(c \mid a)p(a) \\
-
-    &= p(a) \sum_{c} p(c \mid a)p(b \mid c) \\
-
-    &= p(a)p(b \mid a) \neq p(a)p(b)
-
-\end{align}
-
-$$
 
 
 
