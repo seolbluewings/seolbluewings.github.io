@@ -12,7 +12,7 @@ categories: Bayesian
 
 알람이 울릴 때, John과 Mary는 서로에게 전화를 해주기로 합의하였고 알람이 울렸을 때, John이 전화할 확률 $$p(J \mid A)$$와 Mary가 전화할 확률 $$P(M \mid A)$$는 그림과 같다.
 
-![BayesianNet](C://seolbluewings.github.io/assets/images/burglary_example.png)
+![BN](C://seolbluewings.github.io/assets/images/burglary_example.pnghttps://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/images/burglary_example.PNG)
 
 
 그러나 다음과 같이 이번에는 parent node인 c에 대해서 관측되어 알고 있다고 하자. 이 경우에는 a,b에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
