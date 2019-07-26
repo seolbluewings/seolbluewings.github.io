@@ -18,7 +18,7 @@ categories: Bayesian
 
 알람이 울리면 John과 Mary는 전화를 해주기로 합의하였고 알람이 울렸을 때, John이 전화할 확률 $$p(J \mid A)$$와 알람이 울렸을 때, Mary가 전화할 확률 $$P(M \mid A)$$는 그림과 같다.
 
-![burglary](./assets/images/burglary_example.png)
+![burglary](/images/burglary_example.png){: width="60%", height="60%"}
 
 위의 그림을 통해 다음과 같은 질문유형을 해결할 수 있다.
 
