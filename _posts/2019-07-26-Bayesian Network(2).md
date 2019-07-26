@@ -22,7 +22,8 @@ $$
 
 그러나 아래 그림과 같이 일부 링크가 없는 네트워크가 보다 일반적이다. 아래의 그래프는 fully connected가 아니며, $$x_{1}$$에서 $$x_{2}$$로의 링크, $$x_{3}$$에서 $$x_{7}$$으로 가는 링크가 존재하지 않는다.
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){: width="300" height="300"}
+<img src="https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true" width="30%">
+
 
 7개의 확률변수 $$p(x_{1},x_{2},...,x_{7})$$은 다음과 같은 형태로 표현될 수 있다.
 
@@ -41,38 +42,6 @@ $$ p(x_{1},x_{2},...,x_{7})=p(x_{1})p(x_{2})p(x_{3})p(x_{4} \mid x_{1},x_{2},x_{
 
 - Mary가 나에게 전화를 한 상황에서 정말로 도둑이 들었을 확률?
 
-
-
-
-$$
-
-\begin{align}
-
-	p(a,b \mid c) &= \frac{p(a,b,c)}{p(c)} \\
-
-    &= \frac{p(a \mid c)p(b \mid c)p(c)}{p(c)} \\
-
-    &= p(a \mid c)p(b \mid c)
-
-\end{align}
-
-$$
-
-
-
-따라서 c에 대해 알고 있으면 a와 b는 conditional independent $$(a \perp\!\!\!\perp b \mid c)$$ 하다.
-
-
-
-- Cascading (선형적 관계)
-
-
-
-![BayesianNet](C:/seolbluewings.github.io/assets/images/cascading1.png)
-
-
-
-다음과 같이 각 노드가 선형적인 관계를 가지는 경우, 이 관계를 Cascading이라 부른다. 이 때 a,b,c의 joint distribution은 다음과 같이 $$p(a,b,c) = p(b \mid c)p(c \mid a)p(a) $$로 표현할 수 있다.
 
 
 
