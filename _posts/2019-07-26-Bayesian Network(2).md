@@ -85,9 +85,19 @@ $$
 
 - Bayesian Linear Regression
 
-타깃 변수$$(\mathbf{t})$$는 다음과 같이 $$\mathbf{t}=(t_{1},...,t_{N})^{T}$$이며 회귀계수는 $$\mathbf{w}$$로 표기한다. 입력 데이터는 $$\mathbf{x} = (x_{1},...,x_{N})^{T}$$이며 오차항은 $$\mathcal{N}(0,\sigma^{2})$$를 따른다.
+타깃 변수$$(\mathbf{t})$$는 다음과 같이 $$\mathbf{t}=(t_{1},...,t_{N})^{T}$$이며 회귀계수는 $$\mathbf{w}$$로 표기한다. 입력 데이터는 $$\mathbf{x} = (x_{1},...,x_{N})^{T}$$이며 오차항은 $$\mathcal{N}(0,\sigma^{2})$$를 따른다. 그래프 모델은 아래의 그림과 같이 표현할 수 있으며 $$\mathbf{t}$$와 $$\mathbf{w}$$의 joint probability는 아래와 같이 구할 수 있다.
 
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet.JPG?raw=true){:width="30%" height="30%"}{: .center}
 
+$$ p(\mathbf{t},\mathbf{w}) = p(\mathbf{w})\prod_{n=1}^{N}p(t_{i} \mid \mathbf{w}) $$
+
+위의 그림과 같이 $$t_{1}$$부터 $$t_{N}$$까지 모두 표기하는 방식은 깔끔하지 못하다. 여기서 plate라는 개념을 소개하는데, plate는 보통 하나의 그룹으로 표현되는 노드들을 박스 형태로 표기하는 방식이다. 따라서 N개의 $$t_{}$$들은 다음과 같이 하나의 박스로 표기가 가능하다.
+
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet2.JPG?raw=true){:width="30%" height="30%"}{: .center}
+
+여기에 이미 값이 주어진 것으로 간주하는 변수들에 대한 정보를 추가할 수 있다. 이 경우에는 다른 노드들처럼 큰 원을 그리는 것이 아니라 작은 원(혹은 점)의 형태로 표기한다. $$\alpha$$는 베이지안 회귀분석에서 $$\mathbf{w}$$에 대해 $$\mathcal{N}(0,\alpha^{-1}I)$$라는 prior가 주어진 것을 의미한다.
+
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet3.JPG?raw=true){:width="30%" height="30%"}{: .center}
 
 - Naive Bayes
 
