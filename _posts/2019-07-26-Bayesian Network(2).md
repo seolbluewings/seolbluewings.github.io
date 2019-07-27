@@ -6,8 +6,6 @@ author: YoungHwan Seol
 categories: Bayesian
 ---
 
-앞서 계속 conditional independence를 언급해왔는데 어떤 면에서 condtional independence가 중요한 것일까? 여러가지 확률변수가 있는 상황에서 최선은 각 확률변수들의 joint distribution을 아는 것이나 joint distribution의모수(parameter)의 수가 급격하게 많아지는 문제를 갖는다. 이러한 문제를 해결하기 위해서 서로 독립적인 조건을 알게 되면, 모수의 수를 줄일 수 있다.
-
 일반적으로 K개의 변수를 갖는 joint distribution, $$ p(x_{1},...,x_{K}) $$은 다음과 같이 전개(factorization)이 가능하다.
 
 $$
@@ -101,3 +99,38 @@ $$ p(\mathbf{t},\mathbf{w}) = p(\mathbf{w})\prod_{n=1}^{N}p(t_{i} \mid \mathbf{w
 
 - Naive Bayes
 
+앞선 글에서 먼저 소개했던 Common Parent 구조는 Naive Bayes의 가장 전형적인 예시라고 할 수 있다. Naive Bayes는 conditional probability를 이용하여 k개의 가능한 확률적 결과(분류)를 다음과 같이 할당한다.
+
+$$ p(C_{k} \mid x_{1},...,x_{n}) = p(C_{k}\mid \mathbf{x}) = \frac{p(C_{k})p(\mathbf{x}\mid C_{k})}{p(\mathbf{x})} $$
+
+분자 부분은 factorization하여 다음과 같이 표현할 수 있다.
+
+$$
+\begin{align}
+	p(C_{k}, \mathbf{x}) &= p(C_{k})p(x_{1},...,x_{k} \mid C_{k}) \\
+	&= p(C_{k})p(x_{1} \mid C_{k})p(x_{2} \mid C_{k},x_{1})\cdot\cdot\cdot p(x_{n}\mid C_{k},x_{1},....,x_{n-1})
+\end{align}
+$$
+
+Naive Bayes에서는 $$C_{k}$$가 주어진 경우, $$x_{i}$$와 $$x_{j}$$가 독립이라는 가정을 한다. 즉 조건부 독립에 대한 가정이 있는 셈이다.
+
+따라서 다음과 같이 표기할 수 있다.
+
+$$
+\begin{align}
+	p(x_{i} \mid C_{k}, x_{j}) &= p(x_{i} \mid C_{k}) \\
+	p(x_{i} \mid C_{k}, x_{j},x_{k}) &= p(x_{i} \mid C_{k})
+\end{align}
+$$
+
+따라서 결국 Naive Bayes 모델은 다음과 같이 표현될 수 있다.
+
+$$
+\begin{align}
+	p(C_{k}\mid \mathbf{x}) &\propto p(C_{k},\mathbf{x}) \\
+    &\propto p(C_{k})p(x_{1}\mid C_{k})p(x_{2}\mid C_{k}) \cdot\cdot\cdot p(x_{n}\mid C_{k}) \\
+    &\propto p(C_{k})\prod_{i=1}^{n}p(x_{i}\mid C_{k})
+\end{align}
+$$
+
+결국 Naive Bayes 모델은 가장 가능성 높은 class를 찾아내는 것으로 다음과 같이 $$\hat{y} = argmax_{k \in \{1,...,K\}}$$ p(C_{k}\prod_{i=1}^{n}p(x_{i}\mid C_{k}))$$ 로 표현할 수 있다.

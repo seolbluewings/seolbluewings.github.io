@@ -53,6 +53,8 @@ $$
 
 따라서 c가 given인 상황에서 a와 b의 joint distribution은 c가 given인 상황에서의 a의 marginal, b의 marginal distribution으로 분해할 수 있다.
 
+앞서 계속 conditional independence를 언급해왔는데 어떤 면에서 condtional independence가 중요한 것일까? 여러가지 확률변수가 있는 상황에서 최선은 각 확률변수들의 joint distribution을 아는 것이나 joint distribution의모수(parameter)의 수가 급격하게 많아지는 문제를 갖는다. 이러한 문제를 해결하기 위해서 서로 독립적인 조건을 알게 되면, 모수의 수를 줄일 수 있다.
+
 #### Bayes Ball Algorithm
 
 방향성 그래프에서 conditional independence 성질에 대한 논의를 위해 몇가지 정형화된 형태의 그래프를 살펴보도록 한다.
@@ -162,7 +164,7 @@ $$
 
 #### Bayes Ball Example
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayes_ball.PNG?raw=true){:width="30%" height="30%"}{: .center}
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayes_ball.PNG?raw=true)
 
 다음 4가지 경우에 대해 체크해보도록 한다.
 
