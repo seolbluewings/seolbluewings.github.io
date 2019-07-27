@@ -23,7 +23,7 @@ $$
 그러나 아래 그림과 같이 일부 링크가 없는 네트워크가 보다 일반적이다. 아래의 그래프는 fully connected가 아니며, $$x_{1}$$에서 $$x_{2}$$로의 링크, $$x_{3}$$에서 $$x_{7}$$으로 가는 링크가 존재하지 않는다.
 
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:width="50%" height="50%"}{: .center}
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:width="30%" height="30%"}{: .center}
 
 7개의 확률변수 $$p(x_{1},x_{2},...,x_{7})$$은 다음과 같은 형태로 표현될 수 있다.
 
@@ -80,9 +80,14 @@ $$
 \end{align}
 $$
 
-지금까지 논의한 베이지안 네트워크(방향성 그래프)를 이용하여 회귀분석 예제를 그래프 모델로 표현할 수 있다.
+
+#### Example of directed Graphical models
+
+- Bayesian Linear Regression
+
+타깃 변수$$(\mathbf{t})$$는 다음과 같이 $$\mathbf{t}=(t_{1},...,t_{N})^{T}$$이며 회귀계수는 $$\mathbf{w}$$로 표기한다. 입력 데이터는 $$\mathbf{x} = (x_{1},...,x_{N})^{T}$$이며 오차항은 $$\mathcal{N}(0,\sigma^{2})$$를 따른다.
 
 
 
-
+- Naive Bayes
 
