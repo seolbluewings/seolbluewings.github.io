@@ -23,7 +23,7 @@ $$
 그러나 아래 그림과 같이 일부 링크가 없는 네트워크가 보다 일반적이다. 아래의 그래프는 fully connected가 아니며, $$x_{1}$$에서 $$x_{2}$$로의 링크, $$x_{3}$$에서 $$x_{7}$$으로 가는 링크가 존재하지 않는다.
 
 
-![BN](C:/seolbluewings.github.io/assets/conditional.jpg){: width="20%" height="20%"}
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:height="438px" width="373px"}
 
 7개의 확률변수 $$p(x_{1},x_{2},...,x_{7})$$은 다음과 같은 형태로 표현될 수 있다.
 
@@ -59,7 +59,7 @@ $$
 
 다음의 partial joint probability는 어떻게 구할 수 있을까?
 
-$$ p(A=TRUE, B=TRUE, MC= True)$$
+$$ p(A=True, B=True, MC= True)$$
 
 먼저 full joint probability를 구하고 이를 marginalized한다.
 
