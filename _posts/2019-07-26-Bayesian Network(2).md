@@ -23,7 +23,7 @@ $$
 그러나 아래 그림과 같이 일부 링크가 없는 네트워크가 보다 일반적이다. 아래의 그래프는 fully connected가 아니며, $$x_{1}$$에서 $$x_{2}$$로의 링크, $$x_{3}$$에서 $$x_{7}$$으로 가는 링크가 존재하지 않는다.
 
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:width="50%" height="50%"}
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:width="50%" height="50%"}{: .center}
 
 7개의 확률변수 $$p(x_{1},x_{2},...,x_{7})$$은 다음과 같은 형태로 표현될 수 있다.
 
@@ -53,7 +53,7 @@ $$
 
 알람이 울리면 John과 Mary는 전화를 해주기로 합의하였고 알람이 울렸을 때, John이 전화할 확률 $$p(J \mid A)$$와 알람이 울렸을 때, Mary가 전화할 확률 $$P(M \mid A)$$는 그림과 같다.
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/burglary_example.PNG?raw=true)
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/burglary_example.PNG?raw=true){: .center}
 
 앞서 언급한 바처럼, 우리는 먼저 full joint probability를 계산하고 이제 marginalized하여 일부 변수에 대한 partial joint probability를 얻는다. 이후 관심변수에 대한 conditional probability를 계산하여 값을 결정한다.
 
@@ -79,6 +79,8 @@ $$
     &= \frac{p(B)p(MC \mid a) \sum_{JC}p(JC \mid A) \sum_{E}p(A \mid B,E)p(E)}{p(MC\mid A)p(A)}
 \end{align}
 $$
+
+지금까지 논의한 베이지안 네트워크(방향성 그래프)를 이용하여 회귀분석 예제를 그래프 모델로 표현할 수 있다.
 
 
 
