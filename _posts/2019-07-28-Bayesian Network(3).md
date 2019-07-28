@@ -1,24 +1,25 @@
 ---
 layout: post
-title:  "Bayesian Network(2)"
-date: 2019-07-26
+title:  "Bayesian Network(3)"
+date: 2019-07-28
 author: YoungHwan Seol
 categories: Bayesian
 ---
 
-일반적으로 K개의 변수를 갖는 joint distribution, $$ p(x_{1},...,x_{K}) $$은 다음과 같이 전개(factorization)이 가능하다.
+분류에 사용되는 모델은 크게 2가지로 나눌 수 있다.
 
-$$
-\begin{align}
-	p(x_{1},...,x_{K}) &= p(x_{K}\mid x_{1},...x_{k-1})p(x_{1},...,x_{k-1}) \\
-    &= p(x_{K}\mid x_{1},...x_{k-1})p(x_{K-1}\mid x_{1},...,x_{K-2})p(x_{1},...,x_{K-2}) \\
-    &= p(x_{K}\mid x_{1},...,x_{K-1})\cdot\cdot\cdot p(x_{2}\mid x_{1})p(x_{1})
-\end{align}
-$$
+- 생성 모델(Generative Model)
+- 판별 모델(Discriminative model)
 
-다음과 같은 경우의 베이지안 네트워크를 fully connected 되었다고 하며, 이는 임의의 두쌍의 노드가 서로 연결되어 있음을 의미한다.
+로지스틱 회귀분석과 같이 우리가 잘 알고있는 분류 문제 해결방법은 판별 모델(discriminative model)이며, 이러한 판별 모델들은 데이터 X와 label Y가 주어진 상황에서 sample data를 생성하지 않고 직접 $$p(y \mid x)$$를 구하여 클래스 분류에 집중한다.
 
-그러나 아래 그림과 같이 일부 링크가 없는 네트워크가 보다 일반적이다. 아래의 그래프는 fully connected가 아니며, $$x_{1}$$에서 $$x_{2}$$로의 링크, $$x_{3}$$에서 $$x_{7}$$으로 가는 링크가 존재하지 않는다.
+반면 생성 모델은 $$p(x\mid y)$$와 $$p(y)$$ 의 분포를 학습하고 이를 바탕으로 $$p(y \mid x) \propto p(y)p(x \mid y)$$를 계산해 sample data set을 생성할 수 있다. likelihood와 posterior probability를 이용하여 클래스를 결정짓는 decision boundary를 생성하는 것이다.
+
+따라서 우리는 어떤 확률 분포로부터 임의의 sample을 만들어내는 방법을 알아야 하며, 지금부터 방향성 그래프 모델과 관련이 있는 ancestral sampling이라는 방법에 대해 소개해보고자 한다.
+
+
+
+
 
 
 ![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:width="30%" height="30%"}{: .center}
