@@ -17,12 +17,22 @@ categories: Bayesian
 
 따라서 우리는 어떤 확률 분포로부터 임의의 sample을 만들어내는 방법을 알아야 하며, 지금부터 방향성 그래프 모델과 관련이 있는 ancestral sampling이라는 방법에 대해 소개해보고자 한다.
 
+k개의 확률변수로 이루어진 joint probability $$p(x_{1},...,x_{k})$$가 있다고 하자.
 
-
-
-
+모델에 대한 그래프가 다음과 같이 주어진 상황에서 각 노드에 번호를 붙인다. 이 때, 자식 노드에는 부모 노드보다 더 큰 번호를 부여한다.
 
 ![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:width="30%" height="30%"}{: .center}
+
+ancestral sampling 기법은 가장 작은 노드에서 시작하여 그래프 아래 노드로 이동하며 sampling하는 방식을 취한다. 먼저 $$p(x_{1})$$에서 sample 하나를 생성해 $$\hat{x_{1}}$$이라 하며, 노드 순서대로 sample을 생성한다.
+
+위 그림에서 $$x_{4}$$의 경우, $$p(x_{4} \mid x_{1},x_{2},x_{3})$$ 로부터 sample을 생성하며 이렇게 k번째 노드에서 sample을 생성할 때는 $$p(x_{k} \mid pa_{k})$$ 분포를 활용한다. 부모 노드에 대한 sample은 이미 주어지기 때문에 conditional probability를 바탕으로 sample을 얻을 수 있다.
+
+이렇게 $$x_{k}$$까지 sample을 생성하면 joint probability로부터 하나의 샘플 $$(x_{1},...,x_{k})$$을 얻게 된다. 만약 일부 확률변수 $$x_{1},x_{3}$$에 대한 결합 분포에서 sampling하길 희망한다면, 전체 sampling 후 $$\hat{x_{1}},\hat{x_{3}}$$ 값만 사용하면 된다.
+
+
+
+
+
 
 7개의 확률변수 $$p(x_{1},x_{2},...,x_{7})$$은 다음과 같은 형태로 표현될 수 있다.
 
