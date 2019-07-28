@@ -169,22 +169,27 @@ $$
 다음 4가지 경우에 대해 체크해보도록 한다.
 
 - $$ X_{1} \perp\!\!\!\perp X_{4} \mid \{X_{2}\} $$
+
 $$X_{2}$$가 given이면, $$X_{1}$$와 $$X_{4}$$의 관계는 Cascading에서 소개한 케이스와 같다. 따라서 두 변수는 서로 독립이다.
 
 - $$ X_{2} \perp\!\!\!\perp X_{5} \mid \{X_{1}\} $$
+
+
 주어진 네트워크에서 $$X_{2}$$와 $$X_{5}$$ 그리고 $$X_{6}$$ 부분을 확인해보자. 이는 V-Structure이다. V-structure를 구성하는 변수들에 대해 어떠한 것도 given이 아니므로 $$X_{2}$$ 와 $$X_{5}$$는 서로 독립이다.
 
 - $$ X_{1} \perp\!\!\!\perp X_{6} \mid \{X_{2},X_{3}\} $$
+
+
 $$X_{1}$$ 에서 $$X_{6}$$로 가는 길은 각 Cascading 형태를 가지는데 $$X_{2}$$와 $$X_{3}$$가 모두 given이므로 $$X_{1}$$과 $$X_{6}$$는 서로 독립이다.
 
 - $$ X_{2} \perp\!\!\!\perp X_{3} \mid \{X_{1},X_{6}\} $$
+
+
 $$X_{1}$$가 given이면 좌측의 parent node가 given이 된 경우다. 경로가 이 하나만 존재한다면, 독립적이겠지만, $$X_{6}$$가 given인 상황을 고려할 필요가 있다. $$X_{6}$$가 given일 때 우측의 V-structure가 독립성을 잃어버리며 이후의 $$X_{3}$$부터 $$X_{6}$$의 관계는 Cascading 형태이고 결국 이 경우에는 $$X_{2}$$와 $$X_{3}$$는 독립이 아니게 된다.
 
 지금까지의 논의를 거치면 Bayes Ball Algorithm에 대해서는 어느 정도 익숙해졌을 것이다.
 
-
-
-마지막으로 다음의 2가지 사항에 대해 추가적으로 논의하고 Part1을 마무리 짓고자 한다.
+2가지 개념을 더 소개하고자 한다.
 
 - D-seperation
 - Markov-Blanket
@@ -212,6 +217,23 @@ blanket은 다음의 3가지 파트로 구성된다.
 
 다음과 같은 6가지 확률변수에 대해 conditional 할 수 있다면, A는 Markov-Blanket 바깥에 위치한 확률변수들과는 condtional independent하다.
 
+#### Example of directed Graphical models
+
+- Bayesian Linear Regression
+
+타깃 변수$$(\mathbf{t})$$는 다음과 같이 $$\mathbf{t}=(t_{1},...,t_{N})^{T}$$이며 회귀계수는 $$\mathbf{w}$$로 표기한다. 입력 데이터는 $$\mathbf{x} = (x_{1},...,x_{N})^{T}$$이며 오차항은 $$\mathcal{N}(0,\sigma^{2})$$를 따른다. 그래프 모델은 아래의 그림과 같이 표현할 수 있으며 $$\mathbf{t}$$와 $$\mathbf{w}$$의 joint probability는 아래와 같이 구할 수 있다.
+
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet.JPG?raw=true){:width="30%" height="30%"}{: .center}
+
+$$ p(\mathbf{t},\mathbf{w}) = p(\mathbf{w})\prod_{n=1}^{N}p(t_{i} \mid \mathbf{w}) $$
+
+위의 그림과 같이 $$t_{1}$$부터 $$t_{N}$$까지 모두 표기하는 방식은 깔끔하지 못하다. 여기서 plate라는 개념을 소개하는데, plate는 보통 하나의 그룹으로 표현되는 노드들을 박스 형태로 표기하는 방식이다. 따라서 N개의 $$t_{}$$들은 다음과 같이 하나의 박스로 표기가 가능하다.
+
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet2.JPG?raw=true){:width="30%" height="30%"}{: .center}
+
+여기에 이미 값이 주어진 것으로 간주하는 변수들에 대한 정보를 추가할 수 있다. 이 경우에는 다른 노드들처럼 큰 원을 그리는 것이 아니라 작은 원(혹은 점)의 형태로 표기한다. $$\alpha$$는 베이지안 회귀분석에서 $$\mathbf{w}$$에 대해 $$\mathcal{N}(0,\alpha^{-1}I)$$라는 prior가 주어진 것을 의미한다.
+
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet3.JPG?raw=true){:width="30%" height="30%"}{: .center}
 
 
 

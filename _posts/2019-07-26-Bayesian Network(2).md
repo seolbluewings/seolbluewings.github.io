@@ -16,9 +16,9 @@ $$
 \end{align}
 $$
 
-다음과 같은 경우의 베이지안 네트워크를 fully connected 되었다고 하며, 이는 임의의 두쌍의 노드가 서로 연결되어 있음을 의미한다.
+위와 같은 경우의 베이지안 네트워크를 fully connected 되었다고 하며, 이는 임의의 두쌍의 노드가 서로 연결되어 있음을 의미한다.
 
-그러나 아래 그림과 같이 일부 링크가 없는 네트워크가 보다 일반적이다. 아래의 그래프는 fully connected가 아니며, $$x_{1}$$에서 $$x_{2}$$로의 링크, $$x_{3}$$에서 $$x_{7}$$으로 가는 링크가 존재하지 않는다.
+그러나 아래 그림과 같이 일부 링크가 없는 네트워크가 보다 일반적이다. 아래의 그래프는 fully connected가 아니며, $$x_{1}$$에서 $$x_{2}$$로의 링크, $$x_{3}$$에서 $$x_{7}$$으로 가는 링크가 존재하지 않는다. 노드 x의 부모를 y라할 때, y의 값이 주어지면 x는 비후손(child node를 제외한 나머지)과 모두 conditional independence하다는 Markov Assumption에 의해 간략하게 표현할 수 있다. 
 
 
 ![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:width="30%" height="30%"}{: .center}
@@ -79,56 +79,6 @@ $$
 $$
 
 
-#### Example of directed Graphical models
 
-- Bayesian Linear Regression
 
-타깃 변수$$(\mathbf{t})$$는 다음과 같이 $$\mathbf{t}=(t_{1},...,t_{N})^{T}$$이며 회귀계수는 $$\mathbf{w}$$로 표기한다. 입력 데이터는 $$\mathbf{x} = (x_{1},...,x_{N})^{T}$$이며 오차항은 $$\mathcal{N}(0,\sigma^{2})$$를 따른다. 그래프 모델은 아래의 그림과 같이 표현할 수 있으며 $$\mathbf{t}$$와 $$\mathbf{w}$$의 joint probability는 아래와 같이 구할 수 있다.
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet.JPG?raw=true){:width="30%" height="30%"}{: .center}
-
-$$ p(\mathbf{t},\mathbf{w}) = p(\mathbf{w})\prod_{n=1}^{N}p(t_{i} \mid \mathbf{w}) $$
-
-위의 그림과 같이 $$t_{1}$$부터 $$t_{N}$$까지 모두 표기하는 방식은 깔끔하지 못하다. 여기서 plate라는 개념을 소개하는데, plate는 보통 하나의 그룹으로 표현되는 노드들을 박스 형태로 표기하는 방식이다. 따라서 N개의 $$t_{}$$들은 다음과 같이 하나의 박스로 표기가 가능하다.
-
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet2.JPG?raw=true){:width="30%" height="30%"}{: .center}
-
-여기에 이미 값이 주어진 것으로 간주하는 변수들에 대한 정보를 추가할 수 있다. 이 경우에는 다른 노드들처럼 큰 원을 그리는 것이 아니라 작은 원(혹은 점)의 형태로 표기한다. $$\alpha$$는 베이지안 회귀분석에서 $$\mathbf{w}$$에 대해 $$\mathcal{N}(0,\alpha^{-1}I)$$라는 prior가 주어진 것을 의미한다.
-
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesian_linearnet3.JPG?raw=true){:width="30%" height="30%"}{: .center}
-
-- Naive Bayes
-
-앞선 글에서 먼저 소개했던 Common Parent 구조는 Naive Bayes의 가장 전형적인 예시라고 할 수 있다. Naive Bayes는 conditional probability를 이용하여 k개의 가능한 확률적 결과(분류)를 다음과 같이 할당한다.
-
-$$ p(C_{k} \mid x_{1},...,x_{n}) = p(C_{k}\mid \mathbf{x}) = \frac{p(C_{k})p(\mathbf{x}\mid C_{k})}{p(\mathbf{x})} $$
-
-분자 부분은 factorization하여 다음과 같이 표현할 수 있다.
-
-$$
-\begin{align}
-	p(C_{k}, \mathbf{x}) &= p(C_{k})p(x_{1},...,x_{k} \mid C_{k}) \\
-	&= p(C_{k})p(x_{1} \mid C_{k})p(x_{2} \mid C_{k},x_{1})\cdot\cdot\cdot p(x_{n}\mid C_{k},x_{1},....,x_{n-1})
-\end{align}
-$$
-
-Naive Bayes에서는 $$C_{k}$$가 주어진 경우, $$x_{i}$$와 $$x_{j}$$가 독립이라는 가정을 한다. 즉 조건부 독립에 대한 가정이 있는 셈이다. Naive Bayes에서 조건부 독립은 다음과 같이 표기할 수 있다.
-
-$$
-\begin{align}
-	p(x_{i} \mid C_{k}, x_{j}) &= p(x_{i} \mid C_{k}) \\
-	p(x_{i} \mid C_{k}, x_{j},x_{k}) &= p(x_{i} \mid C_{k})
-\end{align}
-$$
-
-따라서 결국 Naive Bayes 모델은 다음과 같이 표현될 수 있다.
-
-$$
-\begin{align}
-	p(C_{k}\mid \mathbf{x}) &\propto p(C_{k},\mathbf{x}) \\
-    &\propto p(C_{k})p(x_{1}\mid C_{k})p(x_{2}\mid C_{k}) \cdot\cdot\cdot p(x_{n}\mid C_{k}) \\
-    &\propto p(C_{k})\prod_{i=1}^{n}p(x_{i}\mid C_{k})
-\end{align}
-$$
-
-결국 Naive Bayes 모델은 가장 가능성 높은 class를 찾아내는 것으로 다음과 같이 $$\hat{y} = argmax_{k \in \{1,...,K\}} p(C_{k})\prod_{i=1}^{n}p(x_{i}\mid C_{k})$$ 로 표현할 수 있다.
