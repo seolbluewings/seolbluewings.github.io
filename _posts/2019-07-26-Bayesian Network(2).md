@@ -82,13 +82,44 @@ $$
 
 ![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayes%20net.png?raw=true){:width="80%" height="80%"}
 
-위와 같은 그림이 있다고 하자. 그림에서 parent node의 결과를 알면, child node의 값은 숫자을 확인함으로써 구할 수 있다. 폐렴이나 폐암은 아닌 상태에서 피로를 느낄 확률은 $$p(fatigue \mid bronchitis,not_lung_cander)=0.1$$이다.
+위와 같은 그림이 있다고 하자. 그림에서 parent node의 결과를 알면, child node의 값은 숫자을 확인함으로써 구할 수 있다. 폐렴이나 폐암은 아닌 상태에서 피로를 느낄 확률은 $$p(fatigue \mid bronchitis,not-lung-cancer)=0.1$$이다.
 
 그러나 보통 X레이 결과가 양성일 때, 폐암일 확률과 같은 케이스에 더 많은 관심을 갖는다. child node일수록 parent node보다 더 관측가능하기 때문에 실질적으로 필요한 추론은 아래서 위로 거꾸로 올라가는 방향이다.
 
-앞서 소개했던 D-seperation이 중요한 이유는 이러한 계산을 진행하는 과정에서 계산량을 줄여준다는 장점이 있기 때문이다. 만약 우리가 $$p(fatigue, positive \mid not_lung_cancer)$$에 대해 알고 싶어한다고 하자.
+앞서 소개했던 D-seperation이 중요한 이유는 이러한 계산을 진행하는 과정에서 계산량을 줄여준다는 장점이 있기 때문이다. 만약 우리가 $$p(fatigue, positive \mid not-lung-cancer)$$에 대해 알고 싶어한다고 하자.
 
-폐암에 대한 정보가 주어진 상황에서 Common-parent 모델은 conditional independent하므로 원하는 분포를 $$p(fatigue \mid not_lung_cancer)$$와 $$p(positive \mid not_lung_cancer)$$의 곱으로 나눌 수 있다.
+폐암에 대한 정보가 주어진 상황에서 Common-parent 모델은 conditional independent하므로 원하는 분포를 $$p(fatigue \mid not-lung-cancer)$$와 $$p(positive \mid not-lung-cancer)$$의 곱으로 나눌 수 있다.
+
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesnet%20example.png?raw=true)){:width="60%" height="90%"}
+
+다음의 예시에서 $$\mathbf{x}=x_{1}$$일 때, $$\mathbf{w}=w_{1}$$일 확률은 다음과 같이 구할 수 있다.
+
+$$
+\begin{align}
+	p(z_{1} \mid x_{1}) &= p(z_{1} \mid y_{1})p(y_{1} \mid x_{1}) + p(z_{1} \mid y_{2})p(y_{2} \mid x_{1}) \\
+    &= 0.7*0.9 + 0.4*0.1 = 0.67 \\
+    p(z_{2} \mid )x_{1} &= 0.33 \\
+    p(w_{1} \mid x_{1}) &= p(w_{1} \mid z_{1})p(z_{1}\mid x_{1}) + p(w_{1} \mid z_{2})p(z_{2}\mid x_{1}) \\
+    &= 0.5*0.67 + 0.6*0.33 = 0.533
+\end{align}
+$$
+
+반대로 $$\mathbf{w}=w_{1}$$ 임을 아는 상황에서 $$\mathbf{x}=x_{1}$$일 확률 $$p(x_{1}\mid w_{1})$$을 구하는 과정은 다음과 같다.
+
+$$
+\begin{align}
+	p(x_{1}\mid w_{1}) &= \frac{p(w_{1} \mid x_{1})p(x_{1})}{p(w_{1})} \\
+    p(y_{1}) &= p(y_{1}\mid x_{1})p(x_{1}) + p(y_{1}\mid x_{2})p(x_{2}) \\
+    &= 0.9*0.4 + 0.8*0.6 \\
+    p(y_{1}) &= 0.84 \\
+    p(z_{1}) &= p(z_{1} \mid y_{1})p(y_{1}) + p(z_{1}\mid y_{2})p(y_{2}) \\
+    &= 0.7*0.84 + 0.4 * 0.16 \\
+    p(z_{1}) &= 0.652 \\
+    p(w_{1}) &= p(w_{1} \mid z_{1})p(z_{1}) + p(w_{1}\mid z_{2})p(z_{2}) \\
+    &= 0.5 * 0.652 + 0.6 *0.348 = 0.5348 \\
+    \frac{p(w_{1} \mid x_{1})p(x_{1})}{p(w_{1})} &= \frac{0.533*0.4}{0.5348} = 0.3987
+\end{align}
+$$
 
 
 
