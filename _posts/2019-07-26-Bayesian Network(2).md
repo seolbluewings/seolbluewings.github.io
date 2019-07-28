@@ -78,7 +78,17 @@ $$
 \end{align}
 $$
 
+#### 확률 추론
 
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayes%20net.png?raw=true){:width="80%" height="80%"}
+
+위와 같은 그림이 있다고 하자. 그림에서 parent node의 결과를 알면, child node의 값은 숫자을 확인함으로써 구할 수 있다. 폐렴이나 폐암은 아닌 상태에서 피로를 느낄 확률은 $$p(fatigue \mid bronchitis,not_lung_cander)=0.1$$이다.
+
+그러나 보통 X레이 결과가 양성일 때, 폐암일 확률과 같은 케이스에 더 많은 관심을 갖는다. child node일수록 parent node보다 더 관측가능하기 때문에 실질적으로 필요한 추론은 아래서 위로 거꾸로 올라가는 방향이다.
+
+앞서 소개했던 D-seperation이 중요한 이유는 이러한 계산을 진행하는 과정에서 계산량을 줄여준다는 장점이 있기 때문이다. 만약 우리가 $$p(fatigue, positive \mid not_lung_cancer)$$에 대해 알고 싶어한다고 하자.
+
+폐암에 대한 정보가 주어진 상황에서 Common-parent 모델은 conditional independent하므로 원하는 분포를 $$p(fatigue \mid not_lung_cancer)$$와 $$p(positive \mid not_lung_cancer)$$의 곱으로 나눌 수 있다.
 
 
 
