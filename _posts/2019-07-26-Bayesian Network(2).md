@@ -121,5 +121,50 @@ $$
 \end{align}
 $$
 
+위와 같은 해결방식은 NP-hard 하여 대안으로 정확성은 다소 낮지만 근사적인 해를 구하는 방향으로 진행할 수 있다.
+
+만약 $$p(y_{1})$$에 대해 알고 싶다면 이 값을 근사하는 알고리즘은 다음과 같을 것이다.
+
+
+m : iteration 횟수
+h = 0
+for(iter in 1:m):
+	$$\tilda{x} \sim p(x)$$ \\
+    $$\tilda{y} \sim p(y \mid \tilda{x})$$ \\
+    if ($$\tilda{y}=y_{1}$$):
+  		h = h+1 \\
+
+$$p(y=y_{1}) = \frac{h}{m}$$
+
+
+~~~
+import numpy as np
+import pandas as pd
+
+h=0
+m=1000
+x1=np.zeros(m); x2=np.zeros(m); y1=np.zeros(m); y2=np.zeros(m)
+for iter in range(0,m):
+    x=np.random.rand(1)
+    if x <= 0.4:
+        x1[iter]=x
+        y=np.random.rand(1)
+        if y<= 0.9:
+            y1[iter]=y
+        else:
+            y2[iter]=y
+    else:
+        x2[iter]=x
+        y=np.random.rand(1)
+        if y<=0.8:
+            y1[iter]=y
+        else:
+            y2[iter]=y
+    if y1[iter] != 0:
+        h=h+1
+
+print(h/m)
+~~~
+이 결과는 m값의 크기에 따라 변동하며, m값이 커질수록 직접 계산해낸 값인 $$p(y=y_{1})=0.84$$에 가까워진다.
 
 
