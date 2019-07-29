@@ -80,7 +80,7 @@ $$
 
 #### 확률 추론
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayes%20net.png?raw=true){:width="80%" height="80%"}
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayes%20net.png?raw=true){:width="60%" height="60%"}
 
 위와 같은 그림이 있다고 하자. 그림에서 parent node의 결과를 알면, child node의 값은 숫자을 확인함으로써 구할 수 있다. 폐렴이나 폐암은 아닌 상태에서 피로를 느낄 확률은 $$p(fatigue \mid bronchitis,not-lung-cancer)=0.1$$이다.
 
@@ -90,7 +90,7 @@ $$
 
 폐암에 대한 정보가 주어진 상황에서 Common-parent 모델은 conditional independent하므로 원하는 분포를 $$p(fatigue \mid not-lung-cancer)$$와 $$p(positive \mid not-lung-cancer)$$의 곱으로 나눌 수 있다.
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesnet%20example.png?raw=true){:width="60%" height="90%"}
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesnet%20example.png?raw=true){:width="60%" height="60%"}
 
 다음의 예시에서 $$\mathbf{x}=x_{1}$$일 때, $$\mathbf{w}=w_{1}$$일 확률은 다음과 같이 구할 수 있다.
 
@@ -125,17 +125,17 @@ $$
 
 만약 $$p(y_{1})$$에 대해 알고 싶다면 이 값을 근사하는 알고리즘은 다음과 같을 것이다.
 
-
+```
 m : iteration 횟수
 h = 0
 for(iter in 1:m):
-	$$\tilda{x} \sim p(x)$$ \\
-    $$\tilda{y} \sim p(y \mid \tilda{x})$$ \\
-    if ($$\tilda{y}=y_{1}$$):
+	$$\tilde{x} \sim p(x)$$ \\
+    $$\tilde{y} \sim p(y \mid \tilde{x})$$ \\
+    if ($$\tilde{y}=y_{1}$$):
   		h = h+1 \\
 
 $$p(y=y_{1}) = \frac{h}{m}$$
-
+```
 
 ~~~
 import numpy as np
@@ -166,5 +166,6 @@ for iter in range(0,m):
 print(h/m)
 ~~~
 이 결과는 m값의 크기에 따라 변동하며, m값이 커질수록 직접 계산해낸 값인 $$p(y=y_{1})=0.84$$에 가까워진다.
+
 
 
