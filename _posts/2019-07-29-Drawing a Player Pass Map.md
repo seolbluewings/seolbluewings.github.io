@@ -1,14 +1,25 @@
 ---
 layout: post
-title:  "Drawing a Football Pitch and Player Heatmap"
-date: 2019-07-24
+title:  "Drawing a Player Pass Map"
+date: 2019-07-29
 author: YoungHwan Seol
 categories: Football
 ---
 
-모든 내용은 https://fcpython.com을 참고하였음을 먼저 밝힙니다.
+앞선 글과 마찬가지로 지난 2018 FIFA 러시아 월드컵 대한민국 vs 독일 경기의 데이터를 가져온다. 데이터는 [Statsbomb open resource](https://github.com/statsbomb/open-data)를 활용하였다.
 
-아래와 같은 히트맵(Heatmap)을 그리기 이전에 피치(Pitch)를 먼저 그릴 수 있어야 한다.
+~~~
+	with open('E://7567.json') as data_file:
+    	data = json.load(data_file)
+~~~
+
+우선 데이터가 json 파일이므로 보기가 불편해 우리에게 익숙한 데이터 프레임으로 바꾸는 과정이 필요하다.
+
+~~~
+	df = json_normalize(data, sep = "_")
+~~~
+
+
 
 ![Pitch Draw](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/heatmap_son.jpg?raw=true)
 
@@ -156,7 +167,7 @@ createPitch()
 
 ![Pitch Draw](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/picth_image4.jpg?raw=true)
 
-이제 지난 2018 FIFA 러시아 월드컵 대한민국 vs 독일 경기의 데이터를 가져와 앞서 확인한 손흥민의 히트맵을 그린다. 데이터는 [Statsbomb open resource](https://github.com/statsbomb/open-data)를 활용했고 경기 이벤트 데이터에서 손흥민에 해당하는 X좌표와 Y좌표를 이용하여 히트맵을 그린다.
+이제 지난 2018 FIFA 러시아 월드컵 대한민국 vs 독일 경기의 데이터를 가져와 앞서 확인한 손흥민의 히트맵을 그린다. 데이터는 Statsbomb open resource[Statsbomb](https://github.com/statsbomb/open-data)를 활용하여 구하였고 경기 이벤트 데이터에서 손흥민에 해당하는 X좌표와 Y좌표를 이용하여 히트맵을 그린다.
 
 
 ~~~

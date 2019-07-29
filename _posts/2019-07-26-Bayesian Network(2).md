@@ -90,7 +90,7 @@ $$
 
 폐암에 대한 정보가 주어진 상황에서 Common-parent 모델은 conditional independent하므로 원하는 분포를 $$p(fatigue \mid not-lung-cancer)$$와 $$p(positive \mid not-lung-cancer)$$의 곱으로 나눌 수 있다.
 
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesnet%20example.png?raw=true)){:width="60%" height="90%"}
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesnet%20example.png?raw=true){:width="60%" height="90%"}
 
 다음의 예시에서 $$\mathbf{x}=x_{1}$$일 때, $$\mathbf{w}=w_{1}$$일 확률은 다음과 같이 구할 수 있다.
 
