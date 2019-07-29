@@ -125,35 +125,6 @@ $$
 
 만약 $$p(y_{1})$$에 대해 알고 싶다면 이 값을 근사하는 알고리즘은 다음과 같을 것이다.
 
-\begin{algorithmic}
-	m : iteration 횟수
-    $$ h = 0 $$
-    \STATE $$ tilde{x} \sim p(x) $$
-    \STATE $$ tilde{y} \sim p(y \mid \tilde{x}) $$
-    \IF {$$ \tilde{y}=y_{1} $$}
-    	\STATE $$h = h+1 $$
-	\ENDIF
-\end{algorithmic}
-
-
-m : iteration 횟수
-
-h = 0
-
-for(iter in 1:m):
-
-$$
-\begin{align}
-	\tilde{x} &\sim p(x) \\
-    \tilde{y} &\sim p(y \mid \tilde{x}) \\
-    if (\tilde{y}&=y_{1}): \\
-  		h &= h+1 \\
-\end{align}
-$$
-
-$$p(y=y_{1}) = \frac{h}{m}$$
-
-
 ~~~
 import numpy as np
 import pandas as pd
