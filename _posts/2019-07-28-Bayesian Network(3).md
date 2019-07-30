@@ -73,8 +73,8 @@ $$
 
 다음의 notation을 따르기로 하자.
 
-- x : input data
-- y : data label
+- $$x$$ : input data
+- $$y$$ : data label
 - $$p(x \mid y)$$ : label y가 given일 때, x의 확률
 - $$p(x \mid y=1)$$ : label $$y=1$$일 때, x의 확률
 - $$p(y \mid x)$$ : data x가 주어진 상황에서 y의 확률 (분류 문제의 목표이기도 하다)
@@ -83,7 +83,7 @@ $$
 
 문제를 간단하게 만들기 위해 지금부터 다루는 input data가 모두 가우시안 분포를 따를 것이라고 가정하며 우리는 y의 label이 주어진 상황에서 $$p(x \mid y=y_{i})$$가 어떤 가우시안 분포를 따르는지 알아내고자 한다.
 
-$$p(x \ mid y=y_{i})$$의 분포를 알아내기 위한 과정은 다음과 같다.
+$$p(x \mid y=y_{i})$$의 분포를 알아내기 위한 과정은 다음과 같다.
 
 1. class $$y_{i}$$에 해당하는 모든 data point $$x_{i}$$를 찾아낸다.
 2. 이 때의 $$x_{i}$$ 값들을 가지고 $$\mu_{y_{i}}$$와 $$\sigma_{y_{i}}^{2}$$를 계산한다.
@@ -112,5 +112,87 @@ def get_mnist():
     return X, Y
 ~~~
 
-BayesClassifier란 class를 만든다. 
+BayesClassifier란 class를 만든다. 이 class는 3가지 단계로 구성되어 있다. 첫째, fit함수는 모델을 데이터에 fit하는 것이다. 둘째, y의 class가 주어진 상황에서 sampling 한다. 셋째, y를 sampling한다.
 
+~~~
+class BayesClassifier:
+    def fit(self, X, Y):
+        # assume classes ∈ {0, ..., K-1}
+        self.K = len(set(Y))
+
+        self.gaussians = list()
+
+        for k in range(self.K):
+            Xk   = X[Y == k]         # class k일 때의 모든 X_{k}를 불러온다.
+            mean = Xk.mean(axis=0)   # 불러온 X_{k}의 평균을 계산
+            cov  = np.cov(Xk.T)      # 불러온 X_{k}의 분산을 계산
+
+            self.gaussians.append({
+                "m": mean,
+                "c": cov
+            })
+
+    def sample_given_y(self, y):
+        g = self.gaussians[y]
+        return mvn(mean=g["m"], cov=g["c"], tol=1e-12)
+
+    def sample(self):
+        y = np.random.randint(self.K)
+        return self.sample_given_y(y)
+~~~
+
+이제 데이터를 불러오고 각 y class에 대한 X의 평균과 분산을 계산할 수 있다. y가 given인 상황에서 random sample과 mean에 대한 image는 아래의 시행 결과와 같다.
+
+~~~
+X, Y = get_mnist()
+clf = BayesClassifier()
+clf.fit(X, Y)
+
+for k in range(clf.K):
+    # show one sample for each class and the mean image learned in the process
+
+    sample = clf.sample_given_y(k).reshape(28, 28) # MNIST images are 28px * 28px
+    mean   = clf.gaussians[k]["m"].reshape(28, 28)
+
+    plt.subplot(1, 2, 1)
+    plt.imshow(sample, cmap="gray", interpolation="none") # interpolation is added to prevent smoothing
+    plt.title("Sample")
+
+    plt.subplot(1, 2, 2)
+    plt.imshow(mean, cmap="gray", interpolation="none")
+    plt.title("Mean")
+
+    plt.show()
+~~~
+
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/image.png?raw=true){:width="40%" height="40%"}{: .center}
+
+데이터를 생성하는 과정은 다음과 같으며 이를 통해 생성된 데이터는 아래의 그림과 같다.
+
+~~~
+# generate a random sample
+samples = list()
+
+col_number = 4
+row_number = 5
+
+img_size   = 2.0
+
+fig_size = plt.rcParams["figure.figsize"] # Current size: [6.0, 4.0]
+
+fig_size[0] = img_size * col_number # width
+fig_size[1] = img_size * row_number # heigh
+
+fig, axes = plt.subplots(row_number, col_number)
+fig.subplots_adjust(hspace=0.1)
+
+for _ in range(col_number*row_number):
+    row = _ // col_number
+    col = (_ - row*col_number)
+    axes[row, col].imshow(clf.sample().reshape(28, 28), cmap="gray", interpolation="none")
+    axes[row, col].axis('off')
+
+plt.rcParams["figure.figsize"] = fig_size
+~~~
+
+![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/image.png2?raw=true){:width="70%"}{: .center}
