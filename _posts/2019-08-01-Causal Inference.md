@@ -50,42 +50,38 @@ categories: Bayesian
 
 변수 B가 변수 A에 의존하면 변수 A는 변수 B의 원인(cause)이다. B가 A에 따라 값을 결정하면, A는 B의 원인이 된다. (A is a cause of B if B listens to A and decides its value in response to what it hears.)
 
-구조적 인과 모형(structural causal model)은 확률변수 집합(U,V)와 이에 대한 함수($$f$$)로 구성된다. 
+구조적 인과 모형(structural causal model)은 확률변수 집합(U,V)와 이에 대한 함수($$f$$)로 구성된다.
+
+앞서 변수 B가 변수 A에 의존하면 변수 A는 변수 B의 원인이라 하였는데, 구조적 인과 모형의 구성 요소를 통해 이야기하자면, B의 값을 결정짓는 함수 $$f$$에 A가 변수로 들어갈 때 변수 A는 변수 B의 직접적 원인(direct cause)가 된다.
+
+확률변수의 집합을 U와 V, 2개로 구분한 이유는 2가지 변수가 갖는 성격이 다르기 때문이다. U는 외생 변수(exogenous variable)이며 외생 변수는 어떤 이유로 해당 데이터가 발생했는지 설명하지 못한다. V는 내생 변수(endogenous variable)로 내생 변수는 적어도 하나의 외생 변수의 자손(child)이다.
+
+다음과 같은 예시를 통해 설명할 수 있다.
+
+![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/VS1.PNG?raw=true){width="30%" height="30%}
+
+a는 교육년수, b는 근무년수 c는 급여를 나타낸다. 이때, $$U=\{a,b\}$$, $$V=\{c\}$$ $$f_{c} : c=a + 2b$$ 라고 할 수 있다. a,b가 모두 $$f_{c}$$에 나타나므로 a,b는 모두 c의 direct cause라 할 수 있다.
+
+이처럼 그래프 모형은 변수 U와 변수 V를 나타내는 노드와 함수 $$f$$를 표현하는 링크(화살표)로 구성된다. 
+
+##### 개입(intervention)
+
+인과관계를 알 수 있는 가장 좋은 방법은 무작위 통제(Randomized Controlled) 실험을 진행하는 것이다. 어떤 처치(treatment) 혹은 개입(intervention)이 효과가 있는지 확인하기 위해 우리는 먼저 treatment group과 controlled group으로 분리를 한다.
+
+결과에 영향을 주는 단 1개의 변수를 제외한 나머지 모든 요인이 동등하다고 했을 때, 단 1개의 요인만을 변하게 함으로써 결과가 어떻게 바뀌는지 확인할 수 있고 변화가 있던 단 1개의 요인으로 인해 결과가 바뀐 것을 확인할 수 있다. 이 때 controlled group과 treatment group 집단의 평균적 동질성이 보장되어야 한다.
+
+그러나 단 1개의 요인을 제외한 나머지 요인을 모두 통제하는 실험을 진행하는 것은 아주 어려운 일이다.대신 데이터를 기록하는 관측 연구(observational study)를 수행할 수 있는데 관측 연구의 경우 인과 관계를 단순한 상관 관계로부터 풀어내기가 어렵다.
+
+다음의 관계를 살펴보자.
+
+![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/causal1.jpg?raw=true){width="30%" height="30%}
+
+X는 아이스크림 판매량, Y는 범죄율, Z는 기온이다.
 
 
 
-분류에 사용되는 모델은 크게 2가지로 나눌 수 있다.
 
-- 생성 모델(Generative Model)
-- 판별 모델(Discriminative model)
 
-로지스틱 회귀분석과 같이 우리가 잘 알고있는 분류 문제 해결방법은 판별 모델(discriminative model)이며, 이러한 판별 모델들은 데이터 X와 label Y가 주어진 상황에서 sample data를 생성하지 않고 직접 $$p(y \mid x)$$를 구하여 클래스 분류에 집중한다.
-
-반면 생성 모델은 $$p(x\mid y)$$와 $$p(y)$$ 의 분포를 학습하고 이를 바탕으로 $$p(y \mid x) \propto p(y)p(x \mid y)$$를 간접적으로 계산해낸다. likelihood와 posterior probability를 이용하여 클래스를 결정짓는 decision boundary를 생성하는 것이다. 생성 모델의 경우 $$p(x \mid y)$$를 구축하기 때문에 이 모델을 활용하여 x에 대한 sampling을 진행할 수 있다.
-
-따라서 우리는 어떤 확률 분포로부터 임의의 sample을 만들어내는 방법을 알아야 하며, 지금부터 방향성 그래프 모델과 관련이 있는 ancestral sampling이라는 방법에 대해 소개해보고자 한다.
-
-k개의 확률변수로 이루어진 joint probability $$p(x_{1},...,x_{k})$$가 있다고 하자.
-
-모델에 대한 그래프가 다음과 같이 주어진 상황에서 각 노드에 번호를 붙인다. 이 때, 자식 노드에는 부모 노드보다 더 큰 번호를 부여한다.
-
-![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/conditonal.JPG?raw=true){:width="30%" height="30%"}{: .center}
-
-ancestral sampling 기법은 가장 작은 노드에서 시작하여 그래프 아래 노드로 이동하며 sampling하는 방식을 취한다. 먼저 $$p(x_{1})$$에서 sample 하나를 생성해 $$\hat{x_{1}}$$이라 하며, 노드 순서대로 sample을 생성한다.
-
-위 그림에서 $$x_{4}$$의 경우, $$p(x_{4} \mid x_{1},x_{2},x_{3})$$ 로부터 sample을 생성하며 이렇게 k번째 노드에서 sample을 생성할 때는 $$p(x_{k} \mid pa_{k})$$ 분포를 활용한다. 부모 노드에 대한 sample은 이미 주어지기 때문에 conditional probability를 바탕으로 sample을 얻을 수 있다.
-
-이렇게 $$x_{k}$$까지 sample을 생성하면 joint probability로부터 하나의 샘플 $$(x_{1},...,x_{k})$$을 얻게 된다. 만약 일부 확률변수 $$x_{1},x_{3}$$에 대한 결합 분포에서 sampling하길 희망한다면, 전체 sampling 후 $$\hat{x_{1}},\hat{x_{3}}$$ 값만 사용하면 된다.
-
-그래프 모델을 통해 우리는 데이터가 발생하게 된 인과 과정을 알아볼 수 있다. 관찰 데이터가 왜 발생하였는지를 모델을 통해 설명할 수 있어 이러한 이유로 데이터를 생성할 수 있는 인과 모델을 생성 모델(generative model)이라 부른다.
-
-#### Naive Bayes
-
-앞선 글에서 먼저 소개했던 Common Parent 구조는 Naive Bayes의 가장 전형적인 예시이며 동시에 바로 위에서 언급한 생성 모델이기도 하다. Naive Bayes는 conditional probability를 이용하여 k개의 가능한 확률적 결과(분류)를 다음과 같이 할당한다.
-
-$$ p(C_{k} \mid x_{1},...,x_{n}) = p(C_{k}\mid \mathbf{x}) = \frac{p(C_{k})p(\mathbf{x}\mid C_{k})}{p(\mathbf{x})} $$
-
-분자 부분은 factorization하여 다음과 같이 표현할 수 있다.
 
 $$
 \begin{align}
