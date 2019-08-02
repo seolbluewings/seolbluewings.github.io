@@ -76,7 +76,7 @@ a는 교육년수, b는 근무년수 c는 급여를 나타낸다. 이때, $$U=\{
 
 ![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/causal1.JPG?raw=true)
 
-X는 아이스크림 판매량, Y는 범죄율, Z는 기온이다. 특정 변수의 값을 고정(fix)하는 개입을 진행하면, 우리는 그 변수가 다른 변수에 의해 변하는 자연스러운 현상을 막을 수 있다. 이러한 행동은 개입이 이루어지는 해당 변수로 향하는 링크를 제거하는 결과를 불러온다. 이러한 변화를 그래프 수술(graph surgery)라 한다.
+X는 아이스크림 판매량, Y는 범죄율, Z는 기온이다. 특정 변수의 값을 고정(fix)하는 개입을 진행하면, 우리는 그 변수가 다른 변수에 의해 변하는 자연스러운 현상을 막을 수 있다. 이러한 행동은 개입이 이루어지는 해당 변수로 향하는 링크를 제거하는 결과를 불러온다. 이러한 변화를 조작된 모형(manipulated model)이라 한다. 
 
 위의 그림에서 확인할 수 있듯이, X를 고정하면 Z에서 X로 향하는 링크가 제거 된다. 이제 아이스크림 판매량(X)와 기온(Z)은 관련이 없고 아이스크림 판매량(X)가 범죄율(Y)와 독립이라 말할 수 있다.
 
@@ -84,6 +84,63 @@ X는 아이스크림 판매량, Y는 범죄율, Z는 기온이다. 특정 변수
 
 - $$P(Y=y \mid X=x)$$ : $$X=x$$인 조건에서 $$Y=y$$일 조건부 확률. $$X=x$$인 집단에서 Y의 분포를 반영
 - $$P(Y=y \mid do(X=x))$$ : 의도적으로 $$X=x$$로 만들어 개입할 때, $$Y=y$$일 확률. 모집단의 모든 원소를 의도적으로 $$X=x$$로 만들었을 때, Y의 확률
+
+![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/causal2.JPG?raw=true)
+
+다음과 같이 X에서 Y로의 경로가 있는 케이스를 생각해보자. 가장 먼저 언급했던 사례로 X는 신약 복용, Y는 회복 여부, Z는 성별을 나타낸다고 하자. 그리고 다음과 같은 2가지 개입에 대해 생각해보자.
+
+- 신약의 효과를 알아보기 위해 모든 사람에게 약물을 균일하게 투여. $$do(X=1)$$. 이를 가설적 개입(hypothetical intervention)이라 한다.
+- 모든 사람에게 약물을 투여하지 않는 개입. $$do(X=0)$$. 이를 반대적 개입(complementary intervention)이라 한다.
+
+두가지 개입에 의한 차이를 추정하고자 하는데 이를 인과 효과 차이(causal effect difference) 또는 평균 인자 효과(average causal effect, ACE)라 한다.
+
+$$P(Y=1 \mid do(X=1))-p(Y=1 \mid do(X=0))$$
+
+일반적인 형태로는 $$P(Y=y \mid do(X=x))$$로 표현할 수 있을 것이다. 이는 manipulated model의 조건부 확률 $$P_{m}(Y=y \mid X=x)$$과 같다.
+
+인과 효과를 계산할 때, 조작된 확률 $$P_{m}$$이 원래의 확률 $$P$$과 두가지 속성을 공유한다는 것을 고려해야 한다.
+
+1. $$Z$$에서 $$X$$로 가는 링크를 제거하는 것이 $$Z$$의 결정 과정에 영향을 미치지 않아 $$P(Z=z)$$는 변하지 않는다. 지금의 예시에서는 개입 전후 남성, 여성의 비율이 동일하다는 것이다.
+2. $$X$$가 자연스럽게 변하거나, 개입되는 것과 관계없이 Y가 X와 Z에 반응하는 과정, 즉 $$Y = f(x,z)$$가 동일하기 때문에 conditional probability $$P(Y=y \mid Z=z, X=x)$$는 변하지 않는다.
+
+$$
+\begin{align}
+	P_{m}(Z=z) &= P(Z=z) \\
+	P_{m}(Y=y \mid Z=z, X=x) &= P(Y=y \mid Z=z, X=x)
+\end{align}
+$$
+
+manipulated model에서 $$X$$와$$Z$$는 d-seperated 되어있어 개입 상황에서 다음의 식이 성립된다. 
+
+$$P_{m}(Z=z \mid X=x)= P_{m}(Z=z) = P(Z=z)$$
+
+따라서 우리는 개입 상황에 대해 다음과 같은 식을 얻을 수 있으며 이를 조정 공식(adjustment formula)라고 부른다.
+
+$$
+\begin{align}
+	P(Y=y \mid do(X=x)) &= P_{m}(Y=y \mid X=x) \\
+    &= \sum_{z}P_{m}(Y=y \mid X=x, Z=z)P_{m}(Z=z \mid X=x) \\
+    &= \sum_{z}P_{m}(Y=y \mid X=x, Z=z)P_{m}(Z=z) \\
+    &= \sum_{z}P(Y=y \mid X=x, Z=z)P(Z=z)
+\end{align}
+$$
+
+이를 직접 계산해보면 다음과 같을 것이다. X=1은 신약 복용, Y=1 환자의 회복여부, Z=1은 남성을 의미한다고 하자.
+
+$$
+\begin{align}
+P(Y=1 \mid do(X=1)) &= P(Y=1 \mid X=1,Z=1)P(Z=1) + P(Y=1 \mid X=1,Z=0)P(Z=0) \\
+&= 0.93 \times \frac{(87+270)}{700} + 0.73 \times \frac{(263+80)}{700} = 0.8320 \\
+P(Y=1 \mid do(X=0)) &= P(Y=1 \mid X=0,Z=1)P(Z=1) + P(Y=1 \mid X=0,Z=0)P(Z=0) \\
+&= 0.87 \times \frac{(87+270)}{700} + 0.69 \times \frac{(263+80)}{700} = 0.7818
+\end{align}
+$$
+
+따라서 신약 복용$$(X=1)$$과 신약을 복용하지 않았을 때$$(X=0)$$의 효과 차이는 0.0502다. 이는 신약 복용으로 인한 효과가 있음을 의미 한다.
+
+
+
+
 
 
 
