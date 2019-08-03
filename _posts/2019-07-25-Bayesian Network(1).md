@@ -97,7 +97,7 @@ $$
 
 $$
 \begin{align}
-	p(a,b) &= \sum_{c}p(a,b,c) = sum_{c}p(b \mid c)p(c \mid a)p(a) \\
+	p(a,b) &= \sum_{c}p(a,b,c) = \sum_{c}p(b \mid c)p(c \mid a)p(a) \\
     &= p(a) \sum_{c} p(c \mid a)p(b \mid c) \\
     &= p(a)p(b \mid a) \neq p(a)p(b)
 \end{align}
