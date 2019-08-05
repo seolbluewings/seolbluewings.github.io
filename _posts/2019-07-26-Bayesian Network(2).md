@@ -82,13 +82,27 @@ $$
 
 ![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayes%20net.png?raw=true){:width="80%" height="80%"}
 
-위와 같은 그림이 있다고 하자. 그림에서 parent node의 결과를 알면, child node의 값은 숫자을 확인함으로써 구할 수 있다. 폐렴이나 폐암은 아닌 상태에서 피로를 느낄 확률은 $$p(fatigue \mid bronchitis,not lung cancer)=0.1$$이다.
+위와 같은 그림이 있다고 하자. 그림에서 parent node의 결과를 알면, child node의 값은 숫자을 확인함으로써 구할 수 있다. 폐렴이나 폐암은 아닌 상태에서 피로를 느낄 확률은 $$p(fatigue \mid bronchitis,no-cancer)=0.1$$이다.
+
+앞서 소개했던 D-seperation이 중요한 이유는 이러한 계산을 진행하는 과정에서 계산량을 줄여준다는 장점이 있기 때문이다. 만약 우리가 $$p(fatigue, positive \mid no-cancer)$$에 대해 알고 싶어한다고 하자.
+
+폐암에 대한 정보가 주어진 상황에서 Common-parent 모델은 conditional independent하므로 원하는 분포를 $$p(fatigue \mid no-cancer)$$와 $$p(positive \mid no-cancer)$$의 곱으로 나눌 수 있다.
 
 그러나 보통 X레이 결과가 양성일 때, 폐암일 확률과 같은 케이스에 더 많은 관심을 갖는다. child node일수록 parent node보다 더 관측가능하기 때문에 실질적으로 필요한 추론은 아래서 위로 거꾸로 올라가는 방향이다.
 
-앞서 소개했던 D-seperation이 중요한 이유는 이러한 계산을 진행하는 과정에서 계산량을 줄여준다는 장점이 있기 때문이다. 만약 우리가 $$p(fatigue, positive \mid not lung cancer)$$에 대해 알고 싶어한다고 하자.
+X-레이 결과가 양성일 때, 폐암일 확률 $$p(cancer \mid positive)$$는 다음의 과정을 통해 구할 수 있다.
 
-폐암에 대한 정보가 주어진 상황에서 Common-parent 모델은 conditional independent하므로 원하는 분포를 $$p(fatigue \mid not lung cancer)$$와 $$p(positive \mid not lung cancer)$$의 곱으로 나눌 수 있다.
+$$
+\begin{align}
+	p(cancer \mid positive) &= \frac{p(positive \mid cancer)p(cancer)}{p(positive)} \\
+    p(cancer) &= p(cancer \mid smoking)p(smoking) + p(cancer \mid no-smoking)p(no-smoking) \\
+    &= 0.03 \times 0.2 + 0.00005 \times 0.8 = 0.00604 \\
+    p(positive) &= p(positive \mid cancer)p(cancer) + p(positive \mid no-cancer)p(no-cancer) \\
+    &= 0.6 \times 0.00604 + 0.02 \times 0.99396 = 0.0235 \\
+    p(cancer \mid positive) &= \frac{0.6 \times 0.00604}{0.0235} = 0.154
+\end{align}
+$$
+
 
 ![BN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/bayesnet%20example.png?raw=true){:width="40%" height="30%"}
 
