@@ -58,8 +58,7 @@ detailed balanced condition을 i에 대하여 sum 한다면, 다음과 같은 �
 
 $$ \sum_{i \in \chi} \pi(i)P_{ij} = \sum_{i \in \chi} \pi(j)P_{ji} = \pi(j) $$
 
-이는 stationary distribution 을 구할 수 있음을 의미한다.
-
+Markov Chain이 ergodic 하다는 것을 보이는건 어려운 일이다. Markov Chain이 ergodic하면 stationary distribution은 유일하지만, 우리는 Markov Chain Monte Carlo(MCMC)과정에서 이를 간접적으로 보이게 된다. 우선 time-reversable한 Markov-Chain을 구한다. time-reversable한 Markov-Chain은 stationary distribution의 존재성(existance)을 보장한다. 따라서 먼저 time-reversable한 Markov Chain을 구하고 이를 다양한 starting point를 지정하여 하나의 범위(구간)으로 수렴하는지를 확인한다. 여기서 같은 곳으로 수렴하는 것이 확인되면 간접적으로 ergodic한 Markov chain임을 보일 수 있다. 
 
 
 
