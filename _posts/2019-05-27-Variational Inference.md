@@ -10,13 +10,15 @@ Variational Inference는 속도가 느린 MCMC 방법을 대체할 수 있는 �
 
 따라서 우리는 2개의 probability distribution의 차이를 비교할 수 있어야 한다. 여기서 비교대상이 되는 2개의 probability distribution은 target posterior distribution인 $$p(\theta \mid y)$$와 이 target posterior distribution에 근사하다고 생각되는 $$q(\theta)$$이며, 이 두가지 분포의 divergence를 계산한다.
 
+##### Kullback-Leibler Divergence
+
 두 분포의 divergence를 계산하기 위해서는 KLD(Kullback-Leibler Divergence)를 알아보아야 한다. KLD는 식의 구조상 symmetric하지 않으며 아래를 통해서 확인할 수 있듯이, 항상 0보다 큰 값을 가진다.
 
 $$
 \begin{align}
 	KL(q(\theta)\mid\mid p(\theta\mid y)) &= \int q(\theta)\log{\frac{q(\theta)}{p(\theta \mid y)}}d\theta \\
     -KL(q(\theta)\mid\mid p(\theta\mid y)) &= \int q(\theta)\log{\frac{p(\theta \mid y)}{q(\theta)}}d\theta \\
-    &= \mathcal{E}_{q}\left[\log{\frac{p(\theta \mid y)}{q(\theta)}}\right] \leq \log{\left[\mathbb{E}_{q}\left[\frac{p(\theta \mid y)}{q(\theta)}\right]\right]} \\
+    &= \mathbb{E}_{q}\left[\log{\frac{p(\theta \mid y)}{q(\theta)}}\right] \leq \log{\left[\mathbb{E}_{q}\left[\frac{p(\theta \mid y)}{q(\theta)}\right]\right]} \\
     &\quad \text{by Jensen's Inequality} \\
     \log{\left[\mathbb{E}_{q}\left[\frac{p(\theta \mid y)}{q(\theta)}\right]\right]} &= \log{\left[\int\frac{p(\theta \mid y)}{q(\theta)}q(\theta)d\theta \right]}=0 \\
     &\therefore -KL(q(\theta)\mid\mid p(\theta\mid y)) \leq 0
@@ -25,123 +27,69 @@ $$
 
 따라서 KLD는 언제나 0보다 크다.
 
-우리의 목표는 KLD를 최소화하는 분포 $$q(\theta)$$를 찾는 것이다. $$q^{*} = argmin_{q \in Q} KL(q(\theta)\mid\mid p(\theta\mid y))$$
+우리의 목표는 KLD를 최소화하는 분포 $$q(\theta)$$를 찾는 것이다.
+
+$$q^{*} = argmin_{q \in Q} KL(q(\theta)\mid\mid p(\theta\mid y))$$
 
 만약 $$\theta = (\theta_{1},\theta_{2})$$라면, $$q(\theta) = q(\theta_{1})q(\theta_{2})$$로 factorization될 수 있다.
 
+##### ELBO(Evidence Lower Bound)
 
-
-그렇다면, 우리는 posterior distribution에 근사한 $$q(z)$$를 만들기 위해 쿨백-라이블러 발산(Kullback-Leibler Divergence, 이하 KLD)에 대해 이해해야 한다. 
-
-KLD은 두 확률분포의 차이를 계산할 수 있는 방식으로 $$p(z\|x)$$와 $$q(z)$$의 KLD 값을 계산한 이후, KLD이 줄어드는 방향으로 $$q(z)$$를 update하는 과정을 반복하면, posterior를 잘 근사하는 $$q^{*}(z)$$를 얻을 수 있다.
+KLD를 활용하여 얻을 수 있는 사실은 또 하나가 있다.
 
 $$
 \begin{align}
-	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z|x)}}\right] = \int q(z)\log{\frac{q(z)}{p(z|x)}}dz \\
-	&= \int q(z) \log{\frac{q(z)p(x)}{p(x|z)p(z)}} dz \\
-	&= \int q(z) \log{\frac{q(z)}{p(z)}}dz + \int q(z)\log{p(x)}dz - \int q(z)\log{p(x|z)}dz \\
-	&= D_{KL}(q(z)|p(z)) + \log{p(x)}-\mathbb{E}_{q}[\log{p(x|z)}]
+	KL(q(\theta)\mid\mid p(\theta\mid y)) &= \int q(\theta)\log{\frac{q(\theta)}{p(\theta\mid y)}}d\theta \geq 0 \\
+    &=\int q(\theta)\log{q(\theta)}d\theta - \int q(\theta)\log{p(\theta \mid y)}d\theta \geq 0 \\
+    &=\int q(\theta)\log{q(\theta)}d\theta - \int q(\theta)\log{p(\theta,y)}d\theta + \int q(\theta)\log{p(y)}d\theta \geq 0 \\
+    &=\int q(\theta)\log{q(\theta)}d\theta - \int q(\theta)\log{p(\theta,y)}d\theta + \log{p(y)} \geq 0 \\
+    \log{p(y)} &\geq -\int q(\theta)\log{q(\theta)}d\theta + \int q(\theta)\log{p(\theta,y)}d\theta
 \end{align}
 $$
 
-몬테 카를로 방법(Monte Carlo Method)을 KLD에 적용하면 다음과 같다.
+바로 위의 부등식에서 부등호 이후의 부분을 ELBO(Evidence Lower Bound)라고 한다.
+
+다음의 부등식이 성립하며, 데이터가 주어진 경우 $$\log{p(y)}$$는 값이 고정되기 때문에 KLD를 minimize하는 것은 ELBO를 maximize 하는 것과 동등하다고 할 수 있다.
+
+$$\log{p(y)} = \text{ELBO} + KL(q(\theta)\mid\mid p(\theta\mid y)) \geq \log{p(y)}$$
+
+$$ q^{*} = argmax_{q \in Q}\text{ELBO}$$
+
+##### Mean Field Variational Inference
+
+우리가 approximate하는 posterior $$q(\theta)$$가 다음과 같이 factorization 된다고 하자.
+
+$$q(\theta) = \prod_{j=1}^{J} q_{j}(\theta_{j})$$
+
+Mean Field Variational Inference는 variational distribution family를 사용한다.
+
+$$ Q= \left\{q : q(\theta) = \prod_{j=1}^{J}q_{j}(\theta_{j})\right\} $$
+
+우리가 추정하고자 하는 true posterior distribution의 parameter들은 서로 independent하지 않는다. variational distribution의 경우는 서로 independent하다는 가정을 하기 때문에 variational distribution family는 true posterior distribution을 포함하지 못한다.
+
+joint distribution $$p(\theta,y)$$ 는 다음과 같이 factorization될 수 있다.
 
 $$
 \begin{align}
-	D_{KL}(q(z)|p(z|x)) &= D_{KL}(q(z)|p(z)) + \log{p(x)}-\mathbb{E}_{q}[\log{p(x|z)}] \\
-    &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z)}}\right]+\log{p(x)}-\mathbb{E}_{q}\left[\log{p(x|z)}\right] \\
-    &\simeq \frac{1}{K}\sum_{i=1}^{K}\left[\log{\frac{q(z_{i})}{p(z_{i})}}\right]+\log{p(x)}-\frac{1}{K}\sum_{i=0}^{K}\left[\log{p(x|z_{i})}\right] \\
-    &= \frac{1}{K}\sum_{i=0}^{K}\left[\log{q(z_{i})}-\log{p(z_{i})}-\log{p(x|z_{i})}\right]+\log{p(x)}
+	p(\theta,y) &= p(\theta_{k},\theta_{-k},y) \\
+    &= p(\theta_{k},\theta_{-k} \mid y)p(y) \\
+    &= p(\theta_{k}\mid\theta_{-k},y)p(\theta_{-k}\mid y)p(y)
 \end{align}
 $$
 
-여기서 $$z_{i} \sim q(z)$$ 이기 때문에 몬테 카를로 방법이라 할 수 있다. 또한 이렇게 Monte Carlo Method를 사용하기 때문에 $$q(z)$$를 설정하는 것이 자유로워진다. 
-
-posterior에 대한 정보가 없다고 할 때, $$q(z)$$를 정규 분포로 설정하자. 정규분포에서 K개의 z를 뽑아낸 후, KLD를 계산할 수 있다. 이후 정규분포의 parameter를 바꾸며 KLD를 최소화화는 정규분포를 발견해낼 수 있고 이렇게 구한 정규분포를 Variational Inference의 결과라 할 수 있다.
-
-바로 위를 통해서 우리는 Variational Inference를 위해선 근사한 분포 $$q(z)$$와 posterior $$p(z\|x)$$의 KLD를 최소화시켜야한다는걸 알 수 있다. 하지만 우리는 곧바로 KLD를 최소화시키는 것은 불가능하다. 대신 ELBO(Evidence lower bound)라는 개념을 통해 KLD를 최소화시키는 것을 진행할 수 있다.
-
-ELBO를 구하기 위해서는 observations에 대한 log (marginal) probability에 Jensen's inequality를 적용한다.
+이를 ELBO에 적용하면 ELBO를 다음과 같이 표현할 수 있다.
 
 $$
 \begin{align}
-	\log{p(x)} &=\log{\int_{z}p(x,z)dz} \\
-    &= \log{\int_{z}p(x,z)\frac{q(z)}{q(z)}} \\
-    &= \log\left(\mathbb{E}_{q}\frac{p(x,z)}{q(z)}\right) \\
-    &\geq \mathbb{E}_{q}\left[\log{p(x,z)}\right]-\mathbb{E}_{q}\left[\log{q(z)}\right]
+	\text{ELBO} &= \mathbb{E}_{q}\left[\log{p(\theta,y)}\right] - \mathbb{E}_{q}\left[\log{q(\theta)}\right] \\
+    &= \mathbb{E}_{q}[\log{p(\theta_{k}\mid\theta_{-k},y)}]+\mathbb{E}_{q}[\log{p(\theta_{-k}\mid y)}]+\mathbb{E}_{q}[\log{p(y)}]-\sum_{j=1}^{J}\mathbb{E}_{q}[\log{q_{j}(\theta_{j})}]
 \end{align}
 $$
 
-이 식에서 second term은 엔트로피(entropy)이며 두개의 Expectation이 모두 계산될 수 있는 variational distributions family를 선택해야 한다.
+여기서 $$\theta_{k}$$에 대한 값을 추정하기 위해 $$\theta_{k}$$에 대한 conditional maximization을 coordinate ascent를 활용해 진행한다.
 
-KLD는 다음과 같이 다시 적힐 수 있다.
 
-$$
-\begin{align}
-	D_{KL}(q(z)|p(z|x)) &= \mathbb{E}_{q}\left[\log{\frac{q(z)}{p(z|x)}}\right] \\
-    &= \mathbb{E}_{q}\left[\log{q(z)}\right]-\mathbb{E}_{q}\left[\log{p(z|x)}\right] \\
-    &= -\left(\mathbb{E}_{q}\left[\log{p(x,z)}\right]-\mathbb{E}_{q}\left[\log{q(Z)}\right]\right)+\log{p(x)}
-\end{align}
-$$
 
-즉 다음과 같이 evidence라고 불리기도 하는 $$\log{p(x)}$$는
-
-$$\log{p(x)}=ELBO+D_{KL}(q(z)|p(z|x))$$
-
-의 형태로 적힐 수 있고 KLD는 항상 0보다 크거나 같기 때문에 $$\log{p(x)} \geq ELBO$$ 이다. 등호는 $$q(z)=p(z\|x)$$ 일 때 성립한다. ELBO는 위에서 볼 수 있는 바와 같이 2가지 형태로 표현할 수 있다.
-
-$$
-\begin{align}
-	ELBO &= \mathbb{E}_{q}\left[\log{p(x,z)}\right]-\mathbb{E}_{q}\left[\log{q(z)}\right] \\
-    &= \mathbb{E}_{q}\left[\log{p(x|z)}\right]-D_{KL}(q(z)|p(z))
-\end{align}
-$$
-
-$$ELBO=\log{p(x)}-D_{KL}(q(z)|p(z|x))$$
-
-이기 때문에 ELBO를 maximize 하는 것은 KLD를 minimize하는 것과 동일하다.
-
-#### Mean Field Variational Inference
-
-latent variable에 대한 variational distribution이 다음과 같이 factorization 된다고 가정하자.
-
-$$q(z_{1},...,z_{m}) = \prod_{j=1}^{m}q(z_{j})$$
-
-Chain rule에 의해 다음과 같은 식을 얻을 수 있고
-
-$$p(z_{1},...,z_{m},x_{1},...,x_{n})=p(x_{1},...,x_{n})\prod_{j=1}^{m}p(z_{j}|z_{1:(j-1)},x_{1},...x_{n})$$
-
-ELBO의 엔트로피 부분은 다음과 같이 바꿀 수 있다.
-
-$$\mathbb{E}_{q}\left[\log{(q_{1},...,q_{m})}\right]=\sum_{j=1}^{m}\mathbb{E}_{j}\left[\log{(q_{j})}\right] $$
-
-여기서 $$\mathbb{E}_{j}$$란 $$q(z_{j})$$에 대한 기대값을 의미한다.
-
-위에서 언급한 2가지 성질을 이용하여 ELBO($$\mathcal{L}$$)을 다음과 같이 적을 수 있다.
-
-$$\mathcal{L}=\log p(x_{1},...,x_{n})+\sum_{j=1}^{m}\{\mathbb{E}\left[\log p(z_{j}|z_{1},...z_{j-1},x_{1},...,x_{n})\right]-\mathbb{E}_{j}\left[\log q(z_{j})\right]\}$$
-
-ELBO를 $$q(z_{k})$$의 함수라 생각하고 variable $$z_{k}$$를 가장 마지막 variable이라 생각하고 Chain Rule를 사용하면 다음과 같은 objective function을 구할 수 있다.
-
-$$
-\begin{align}
-	\mathcal{L}&=\mathbb{E}\left[\log{p(z_{k}|z_{-k},\mathbf{x})}\right]-\mathbb{E}_{j}\left[\log{q(z_{k})}\right]+C \\
-    \mathcal{L}_{k}&=\int q(z_{k})\mathbb{E}_{-k}\left[\log{p(z_{k}|z_{-k},\mathbf{x})}\right]dz_{k} - \int q(z_{k})\log{q(z_{k})}dz_{k}
-\end{align}
-$$
-
-$$q(z_{k})$$에 대한 derivative를 구하면 다음과 같다.
-
-$$\frac{d\mathcal{L}_{k}}{dq(z_{k})}=\mathbb{E}_{-k}\left[\log{p(z_{k}|z_{-k},\mathbf{x})}\right]-\log{q(z_{k})}-1=0$$
-
-이 결과를 바탕으로 $$q(z_{k})$$에 대한 coordinate ascent upate를 진행할 수 있고 posterior의 분모 부분이 $$z_{k}$$에 의존하지 않으므로
-
-$$
-\begin{align}
-	q^{*}(z_{k}) &\propto exp\{\mathbb{E}_{-k}\left[\log p(z_{k}|z_{-k},\mathbf{x})\right]\} \\
-    q^{*}(z_{k}) &\propto exp\{\mathbb{E}_{-k}\left[\log p(z_{k},z_{-k},\mathbf{x})\right]\}
-\end{align}
-$$
 
 coordinate ascent algorithm은 각 $$q(z_{k})$$를 update하며, 그 결과 local maximum으로 수렴한다, $$q(z_{k})$$에 대한 coordinate ascent update는 오로지 $$q(z_{j}),k \neq j$$ 근사값에 의존한다.
 
