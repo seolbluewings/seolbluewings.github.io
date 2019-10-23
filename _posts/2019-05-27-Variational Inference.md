@@ -6,13 +6,28 @@ author: YoungHwan Seol
 categories: Bayesian
 ---
 
-Variational Inference란 복잡한 형태의 posterior 분포 $$p(z\|x)$$를 다루기 쉬운 형태의 $$q(z)$$로 근사하는 것을 말한다.
+Variational Inference는 속도가 느린 MCMC 방법을 대체할 수 있는 방법으로 MCMC보다는 정확성이 떨어지지만, 속도 측면에서는 MCMC보다 우수한 성질을 가지고 있다. Variational Inference는 우리가 추정하고자하는 target distribution을 approximate하는 density를 찾는 것으로 target posterior distribution과 가장 가까운 형태의 closed-form approximation을 찾는 것이라 할 수 있다.
 
-Variational Inference의 핵심적인 아이디어는 다음과 같다.
+따라서 우리는 2개의 probability distribution의 차이를 비교할 수 있어야 한다. 여기서 비교대상이 되는 2개의 probability distribution은 target posterior distribution인 $$p(\theta \mid y)$$와 이 target posterior distribution에 근사하다고 생각되는 $$q(\theta}$$이며, 이 두가지 분포의 divergence를 계산한다.
 
-1. variational parameter $$\nu$$를 갖는 latent variables $$\{z_{1},z_{2},...,z_{m}\}$$의 분포$$q(z_{1},z_{2},...,z_{m}\|\nu)$$를 찾는다.
-2. 이 분포를 찾아가는 과정에서 posterior distribution에 가장 가까이 근사하는 모수 $$\nu$$를 찾아낸다.
-3. 이렇게 구한 분포 $$q$$를 posterior 대신 사용한다.
+두 분포의 divergence를 계산하기 위해서는 KLD(Kullback-Leibler Divergence)를 알아보아야 한다. KLD는 식의 구조상 symmetric하지 않으며 아래를 통해서 확인할 수 있듯이, 항상 0보다 큰 값을 가진다.
+
+$$
+\begin{align}
+	KL(q(\theta)\mid\mid p(\theta\mid y)) &= \int q(\theta)\log{\frac{q(\theta)}{p(\theta \mid y)}}d\theta \\
+    -KL(q(\theta)\mid\mid p(\theta\mid y)) &= \int q(\theta)\log{\frac{p(\theta \mid y)}{q(\theta)}}d\theta \\
+    &= \mathcal{E}_{q}\left[\log{\frac{p(\theta \mid y)}{q(\theta)}}\right] \leq \log{\left[\mathcal{E}_{q}\left[\frac{p(\theta \mid y)}{q(\theta)}\right]\right]} \quad \text{by Jensen's Inequality} \\
+    \log{\left[\mathcal{E}_{q}\left[\frac{p(\theta \mid y)}{q(\theta)}\right]\right]} &= \log{\left[\int\frac{p(\theta \mid y)}{q(\theta)}q(\theta)d\theta \right]}=0 \\
+    &\therefore -KL(q(\theta)\mid\mid p(\theta\mid y)) \leq 0
+\end{align}
+$$
+
+따라서 KLD는 언제나 0보다 크다.
+
+
+
+
+
 
 그렇다면, 우리는 posterior distribution에 근사한 $$q(z)$$를 만들기 위해 쿨백-라이블러 발산(Kullback-Leibler Divergence, 이하 KLD)에 대해 이해해야 한다. 
 
