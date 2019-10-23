@@ -88,93 +88,23 @@ $$
 
 여기서 $$\theta_{k}$$에 대한 값을 추정하기 위해 $$\theta_{k}$$에 대한 conditional maximization을 coordinate ascent를 활용해 진행한다.
 
-
-
-
-coordinate ascent algorithm은 각 $$q(z_{k})$$를 update하며, 그 결과 local maximum으로 수렴한다, $$q(z_{k})$$에 대한 coordinate ascent update는 오로지 $$q(z_{j}),k \neq j$$ 근사값에 의존한다.
-
-Variational Inference의 coordinate ascent algorithm과 Gibbs Sampling은 비슷한 성질을 갖는다.
-
-1. Gibbs Sampling은 conditional posterior로부터 sample하며
-2. Variational Inference의 coordinate ascent algorithm은 다음과 같은 형태를 갖는다. $$q(z_{k}) \propto exp\{\mathbb{E}\left[\log{(conditional)}\right]\}$$
-
-#### Exponential Family Conditionals
-
-각각의 conditional이 exponential family라고 가정하자.
-
-$$p(z_{j}|z_{-j},x) = h(z_{j})exp\{\eta(z_{-j},x)^{T}t(z_{j})-a(\eta(z_{-j},x))\}$$
-
-이 조건에서 mean field variational inference는 직관적이다.
-
-conditional에 log를 취하면
-
-$$\log{p(z_{j}|z_{-j},x)}=\log{h(z_{j})}+\eta(z_{-j},x)^{T}t(z_{j})-a(\eta(z_{-j},x))$$
-
-q(z_{-j})에 대하여 기대값을 취하면,
-
-$$\mathbb{E}\left[\log{p(z_{j}|z_{-j},x)}\right]=\log{h(z_{j})}+\mathbb{E}\left[\eta(z_{-j},x)\right]^{T}t(z_{j})-\mathbb{E}\left[a(\eta(z_{-j},x))\right]$$
-
-마지막 term은 $$q_{j}$$에 의존하지 않기 때문에
-
-$$q^{*}(z_{j}) \propto h(z_{j})exp\{\mathbb{E}\left[\eta(z_{-j},x)\right]^{T}t(z_{j})\}$$
-
-이고 이를 통해서 우리는 optimal $$q(z_{j})$$ 역시 conditional과 같은 exponential family임을 알 수 있다.
-
-#### Variational EM Algorithm
-
-실제 문제에서 우리는 posterior $$p(z\|x)$$에 근사한 $$q(z)$$의 parameter $$\nu$$ 뿐만 아니라 $$p(x\|z)$$의 parameter $$\theta$$를 구해야 한다. 이 때 우리는 EM 알고리즘을 사용할 수 있다.
-
 $$
 \begin{align}
-	\log{p(y|\theta)} &\geq ELBO(\theta,\nu) \\
-    &= \int q_{\nu}(z)\log{\frac{p(x,z|\theta)}{q_{\nu}(z)}}dz
+	\text{ELBO}_{k} &= \mathbbb{E}_{q}[\log{p(\theta_{k}\mid\theta_{-k},y)}]-\mathbb{E}_{q}[\log{q_{k}(\theta_{k})}] \\
+    &= \int\int \log{p(\theta_{k}\mid\theta_{-k},y)}\prod_{j=1}^{J}q_{j}(\theta_{j})d\theta - \int\log{q_{k}(\theta_{k})}\prod_{j=1}^{J}q_{j}(\theta_{j})d\theta \\
+    &= \int q_{k}(\theta_{k}) \left[\int\log{p(\theta_{k}\mid\theta_{-k},y)}\prod_{j\neq k}q_{j}(\theta_{j})d\theta_{-k} \right]d\theta_{k} - \int\log{q_{k}(\theta_{k})}q_{k}(\theta_{k})\left[\prod_{j \neq k}q_{j}(\theta_{j})d\theta_{-k} \right]d\theta_{k} \\
+    \int\log{p(\theta_{k}\mid\theta_{-k},y)\prod_{j \neq k}q_{j}(\theta_{j})d\theta_{-k}} &= \mathbb{E}_{-k}[\log{p(\theta_{k}\mid\theta_{-k},y)}] \\
+    &= \int q_{k}(\theta_{k})\mathbb{E}_{-k}[\log{p(\theta_{k}\mid\theta_{-k},y)}]d\theta_{k}-\int q_{k}(\theta_{k})\log{q_{k}(\theta_{k})}d\theta_{k} \\
+    &= \int q_{k}(\theta_{k}) \log{\frac{\text{exp}[\mathbb{E}_{-k}\log{p(\theta_{-k}\mid\theta_{k},y)}]}{q_{k}(\theta_{k})}}d\theta_{k} \leq 0 \\
+    \therefore \quad q_{k}(\theta_{k}) &\propto \text{exp}(\mathbb{E}_{-k}[\log{p(\theta_{k}\mid\theta_{-k},y)}])
 \end{align}
 $$
 
-$$(\theta,\nu)$$에 대하여 ELBO를 iteratively하게 최대화하는 과정을 진행한다.
+이는 결과적으로 다음과 같은 형태로 표현할 수 있을 것이다.
 
-E-step : given $$\theta$$일 때, $$\nu$$에 대하여 ELBO를 maximize 한다. 이는 곧 $$\nu$$를 parameter로 갖는 $$q_{\nu}(z)$$와 $$p(z\|x,\theta)$$의 KLD를 줄이는 것과 같다.
+$$ q^{*}_{k}(\theta_{k}) \propto \text{exp}(\mathbb{E}_{-k}[\log{p(\theta_{k},\theta_{-k},y)}])$$
 
-$$q^{*}_{\nu}(z)=argmin_{\nu}D_{KL}(q_{\nu}(z)|p(z|x,\theta))$$
-
-M-step : 먼저 E-step에서 구한 $$\nu$$가 given일 때, $$\theta$$에 대하여 ELBO를 maximize 한다. 이는 complete-data log-likelihood의 조건부 기대값을 maximize하는 것과 동일하다.
-
-$$\theta^{*}=argmax_{\theta}\mathbb{E}_{q}\left[\log{p(z,x|\theta)}\right]$$
-
-#### Coordinate Ascent Variational Inference
-
-우리의 목적은 posterior에 근사하는 분포를 알아내는 것이며 이는 최적화(optimization)의 문제로 바라볼 수 있다. 그리고 최적화 문제는 종종 coordinate ascent algorithm을 통해 해결할 수 있다.
-
-우리는 다음의 함수($$\mathcal{L}$$)를 최대화하는 $$q_{\nu}(z)$$를 찾아야 한다.
-
-$$\mathcal{L} = \int q_{\nu}(z)\log{p(z,x)}dz-\int q_{\nu}(z)\log{q_{\nu}(z)}dz$$
-
-mean-field variational inference를 적용하면, 우리의 target function은 다음과 같이 표기할 수 있다.
-
-$$q(\mathbf{Z})=\prod_{j=1}^{m}q_{j}(z_{j})$$
-
-$$
-\begin{align}
-	\mathcal{L}&=\left[\int\prod_{j=1}^{m}q_{j}(z_{j})\left[\log{p(\mathbf{Z}|\mathbf{X})} +\log{p(\mathbf{X})}\right]d\mathbf{Z} -\int\prod_{j=1}^{m}q_{j}(z_{j})\log{\prod_{j=1}^{m}q_{j}(z_{j})}d\mathbf{Z}\right] \\
-   	&= \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{k}|Z_{-k},\mathbf{X})}d\mathbf{Z} \\
-   	&+\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(Z_{-k}|\mathbf{X})}d\mathbf{Z} \\
-   	&+ \int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\log{p(\mathbf{X})}d\mathbf{Z} \\
-  	&-\int q_{k}(z_{k})\prod_{j \neq k} q_{j}(z_{j})\sum_{j=1}^{m}\log{q_{j}(z_{j})}d\mathbf{Z}
-\end{align}
-$$
-
-여기서 $$\prod_{j \neq k} q_{j}(z_{j})$$는 $$q_{-k}(z_{k})$$를 의미한다.
-
-$$
-\begin{align}
-	\log{q_{k}(z_{k})} &= \mathbb{E}_{-k}\left[\log{p(Z_{k}|Z_{-k},x)}\right] + C \\
-    &\Leftrightarrow q_{k}(z_{k}) \propto exp\left[\mathbb{E}_{-k}(\log{p(Z_{k}|Z_{-k},x)})\right] \\
-    q_{k}^{*}(z_{k}) &\propto exp(\mathbb{E}_{-k}\left[\log{p(Z_{k}|Z_{-k},x)}\right]) \times exp(\log{p(Z_{-k},x)}) \\
-    q_{k}^{*}(z_{k}) &\propto exp(\mathbb{E}_{-k}\left[log{p(Z_{k},Z_{-k},x)}\right])
-\end{align}
-$$
-
-우리는 모든 variational distributions에 대하여 위와 같은 iteration을 진행한다.
+각 스텝이 parameter의 conditional 분포의 비례하는 형태를 가지고 이것이 또한 full joint distribution에 비례하는 것을 통해 우리는 Variational Inference의 coordinate ascent Algorithm이 Gibbs Sampler와 꽤 유사한 점이 있다는 것을 알 수 있다. 
 
 아래와 같은 예시를 통해 Coordinate Ascent Variational Inference에 대해 논의를 진행해보자.
 
@@ -211,7 +141,7 @@ $$q(z_{1:n},\theta_{1:K}) = \prod_{i=1}^{n} q_{1}(z_{i}|\pi_{i})\prod_{k=1}^{K} 
 
 ELBO($$\lambda$$}를 maximizing하는 것은 KLD를 minimizing 하는 것과 동일하므로 다음과 같은 과정을 진행한다.
 
-$$ ELBO(\lambda) = \mathbb{E}_{q}[\log{p(z_{1:n},\theta_{1:K},\y_{1:n})}|\lambda]-\mathbb{E}_{q}[\log{q(z_{1:n},\theta_{1:K})|\lambda}] $$
+$$ ELBO(\lambda) = \mathbb{E}_{q}[\log{p(z_{1:n},\theta_{1:K},y_{1:n})}|\lambda]-\mathbb{E}_{q}[\log{q(z_{1:n},\theta_{1:K})|\lambda}] $$
 
 $$
 \begin{align}
