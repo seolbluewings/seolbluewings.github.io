@@ -97,7 +97,7 @@ $$
 $$
 \begin{align}
 	\alpha &= \frac{\pi(\theta^{*})/T_{k}(\theta^{*}\mid\theta^{(t)})}{\pi(\theta^{(t)})/T_{k}(\theta^{(t)}\mid\theta^{*})} \\
-    &= \frac{\pi(\theta^{*})/p(\theta_{k}^{*}\mid\theta_{-k}^{(t)})}{\pi(\theta^{(t)})/p(\theta_{k}^{(t)}\mid\theta_{-k}^{(t)})} \\
+    &= \frac{\pi(\theta^{*})/p(\theta_{k}^{*}\mid\theta_{-k}^{(t)})}{\pi(\theta^{(t)})/p(\theta_{k}^{(t)}\mid\theta_{-k}^{*})} \\
     &=\frac{\pi(\theta_{-k}^{*})}{\pi(\theta_{-k}^{(t)})}=1 \\
     \because \pi(\theta^{*}) &= \frac{\pi(\theta_{k}^{*},\theta_{-k}^{(t)})}{\pi(\theta_{k}^{*}\mid\theta_{-k}^{(t)})} = \pi(\theta_{-k}^{*})
 \end{align}
@@ -127,12 +127,62 @@ $$ p(\sigma^{2}|X)=p(X|\sigma^{2})\cdot p(\sigma^{2}) $$
 
 $$ p(\sigma^{2}|X) \propto (\sigma^{2})^{-n/2-a-1}\cdot exp\{-\frac{1}{\sigma^{2}}(\beta+\frac{\sum(x_{i}-\mu)^{2}}{2})\}$$
 
-간단한 Gibbs Sampler 시행 결과는 다음과 같다. 
+바로 위의 간단한 Gibbs Sampler 시행 코드와 결과는 다음과 같다.
 
-![Gibbs Sampler](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/gibbs_sampler_posterior.png?raw=true)
+~~~
+x = c(10,13,15,11,9,18,20,17,23,21)
+xbar = mean(x)
+xsig = var(x)
+n=length(x)
 
-Gibbs Sampler에서 $$(\mu,\sigma^{2})$$ 표본의 경로는 아래의 그림과 같다. 아래의 그림은 $$(\mu,\sigma^{2})$$의 이동경로를 나타낸 그림으로 첫 5회, 15회, 100회의 이동 경로를 보여준다.
+### setting prior ###
+mu0 = 10
+sig0 = 100
+alpha = 1
+beta = 1
 
-![Gibbs Sampler](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/gibbs_sampler_path.png?raw=true)
+iter = 10000
+theta = matrix(0,ncol=2,nrow=iter)
+
+for(t in 2:iter){
+  ### set initial value
+  theta[1,1] = 0
+  theta[1,2] = 1
+  
+  ### sampling mu from posterior ###
+  new_sig = 1/((n/xsig)+(1/sig0))
+  new_mu = new_sig*((n/xsig)*xbar+(1/sig0)*mu0)
+  theta[t,1] = rnorm(1,new_mu,sqrt(new_sig))
+  
+  ### sampling sigma from posterior ###
+  new_alpha = n/2+alpha
+  new_beta = 0.5*sum((x-theta[t,1])^2)+beta
+  theta[t,2] = 1/rgamma(1,shape=new_alpha,rate=new_beta)
+}
+~~~
+
+Gibbs Sampler에서 $$(\mu,\sigma^{2})$$ 표본의 경로는 아래의 그림과 같다.
+~~~
+par(mfrow=c(1,3))
+plot(theta[1:10,],type="n",xlab=expression(mu),ylab=expression(sigma^2))
+lines(theta[1:10,],lty=2)
+for(i in 1:10){
+  text(theta[i,1],theta[i,2],i)
+}
+
+plot(theta[1:100,],type="n",xlab=expression(mu),ylab=expression(sigma^2))
+lines(theta[1:100,],lty=2)
+for(i in 1:100){
+  text(theta[i,1],theta[i,2],i)
+}
+
+plot(theta[1:10000,],type="n",xlab=expression(mu),ylab=expression(sigma^2))
+lines(theta[1:10000,],lty=2)
+for(i in 1:10000){
+  text(theta[i,1],theta[i,2],i)
+}
+~~~
+
+![Gibbs Sampler](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Gibbs.png?raw=true)
 
 
