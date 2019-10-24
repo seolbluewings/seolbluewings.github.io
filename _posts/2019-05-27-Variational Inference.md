@@ -90,7 +90,7 @@ $$
 
 $$
 \begin{align}
-	\text{ELBO}_{k} &= \mathbbb{E}_{q}[\log{p(\theta_{k}\mid\theta_{-k},y)}]-\mathbb{E}_{q}[\log{q_{k}(\theta_{k})}] \\
+	\text{ELBO}_{k} &= \mathbb{E}_{q}[\log{p(\theta_{k}\mid\theta_{-k},y)}]-\mathbb{E}_{q}[\log{q_{k}(\theta_{k})}] \\
     &= \int\int \log{p(\theta_{k}\mid\theta_{-k},y)}\prod_{j=1}^{J}q_{j}(\theta_{j})d\theta - \int\log{q_{k}(\theta_{k})}\prod_{j=1}^{J}q_{j}(\theta_{j})d\theta \\
     &= \int q_{k}(\theta_{k}) \left[\int\log{p(\theta_{k}\mid\theta_{-k},y)}\prod_{j\neq k}q_{j}(\theta_{j})d\theta_{-k} \right]d\theta_{k} - \int\log{q_{k}(\theta_{k})}q_{k}(\theta_{k})\left[\prod_{j \neq k}q_{j}(\theta_{j})d\theta_{-k} \right]d\theta_{k} \\
     \int\log{p(\theta_{k}\mid\theta_{-k},y)\prod_{j \neq k}q_{j}(\theta_{j})d\theta_{-k}} &= \mathbb{E}_{-k}[\log{p(\theta_{k}\mid\theta_{-k},y)}] \\

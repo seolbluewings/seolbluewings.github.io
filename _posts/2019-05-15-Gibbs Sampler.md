@@ -6,21 +6,21 @@ author: YoungHwan Seol
 categories: Bayesian
 ---
 
-다음과 같은 모수가 존재한다고 하자. 
+다음과 같은 모수가 존재한다고 하자.
 
-$$\mathbf{\theta}=(\theta_{1},\theta_{2},\theta_{3})$$ 
+$$\mathbf{\theta}=(\theta_{1},\theta_{2},\theta_{3})$$
 
 모수들의 결합 사후분포(joint posterior distribution)를 아는 것이 좋겠지만, 이 결합 사후분포
 
 $$p(\theta_{1},\theta_{2},\theta_{3}|\mathbf{X})$$
 
-가 계산하기 어려운 형태로 주어지는 반면, 완전 조건부 사후분포(full conditional posterior distribution)이 계산하기 쉬운 형태로 주어질 때가 있다. 
+가 계산하기 어려운 형태로 주어지는 반면, 완전 조건부 사후분포(full conditional posterior distribution)이 계산하기 쉬운 형태로 주어질 때가 있다.
 
 완전 조건부 사후분포란, 관심모수를 제외한 나머지가 모두 주어진 조건인 분포를 말하며 다음과 같다.
 
 $$p(\theta_{1}|\theta_{2},\theta_{3},\mathbf{X})$$
 
-$$p(\theta_{2}|\theta_{1},\theta_{3},\mathbf{X})$$ 
+$$p(\theta_{2}|\theta_{1},\theta_{3},\mathbf{X})$$
 
 $$p(\theta_{3}|\theta_{1},\theta_{2},\mathbf{X})$$
 
@@ -58,7 +58,7 @@ $$\Theta=(\theta_{1},\theta_{2},\theta_{3},....,\theta_{d})$$
 
 그리고 $$\theta_{-k}^{(t)}=(\theta_{1}^{(t+1)},\theta_{2}^{(t+1)},\theta_{3}^{(t+1)},...,\theta_{k-1}^{(t+1)},\theta_{k+1}^{(t)},....\theta_{d}^{(t)})$$ 라고 정의를 하면 매 step의 각각의 단계는 다음과 같이 표기할 수 있다. 
 
-$$\theta_{k}^{(t+1)} \sim p(\theta_{k}|\theta_{-k}^{(t)})$$ 
+$$\theta_{k}^{(t+1)} \sim p(\theta_{k}|\theta_{-k}^{(t)})$$
 
 이렇듯 조건에 들어가는 모수값을 가장 최근의 값으로 대체하면서 차례대로 $$\theta_{1},\theta_{2},\theta_{3}$$를 완전 조건부 사후분포로부터 추출해내면 m이 충분히 클 때, $$\Theta^{(m)} = (\theta_{1}^{(m)},\theta_{2}^{(m)},\theta_{3}^{(m)})$$ 은 결합 사후분포(joint posterior distribution)의 분포를 따르므로 $$\Theta^{(m)} = (\theta_{1}^{(m)},\theta_{2}^{(m)},\theta_{3}^{(m)})$$ 을 $$\Theta$$ 의 posterior distribution에서 만들어진 표본으로 사용한다.
 
@@ -76,7 +76,34 @@ MCMC의 특징은 $$\Theta^{(i)} = (\theta_{1}^{(i)},\theta_{2}^{(i)},\theta_{3}
 
 1. Gibbs Sampler를 N번 독립적으로 시행하여 $$\Theta_{1}^{(m)},...,\Theta_{N}^{(m)}$$을 얻는다. 여기서 $$\Theta_{k}^{(m)}$$ 이란 k번째 독립된 Gibbs Sampler에서 만들어낸 $$\Theta^{(m)}$$ 이다. 이 방법을 통하서 독립적인 표본을 구할 수 있지만, 시간이 많이 걸린다는 단점이 있다.
 
-2. Gibbs Sampler를 충분히 많이 돌리고 m번째 iteration 이후에서는 크기 $$\mathit{l}$$ 만큼의 간격으로 표본을 추출해낸다. 즉, $$\Theta_{1}^{(m)},\Theta_{1}^{(m+l)},...,\Theta_{N}^{(m+(N-1)l)}$$ 을 구하는 것이다. $$\mathit{l}$$의 크기만 적당하다면, 각각은 서로의 연관성이 약해져 독립적인 표본이라 간주할 수 있다.  
+2. Gibbs Sampler를 충분히 많이 돌리고 m번째 iteration 이후에서는 크기 $$\mathit{l}$$ 만큼의 간격으로 표본을 추출해낸다. 즉, $$\Theta_{1}^{(m)},\Theta_{1}^{(m+l)},...,\Theta_{N}^{(m+(N-1)l)}$$ 을 구하는 것이다. $$\mathit{l}$$의 크기만 적당하다면, 각각은 서로의 연관성이 약해져 독립적인 표본이라 간주할 수 있다.
+
+Gibbs Sampler는 Metropolis Hastings Algorithm의 하나의 special case라고 할 수 있다.
+
+Metropolis Hastings Algorithm에서 사용하는 Transition Kernel이 다음과 같이 주어진다고 가정해보자.
+
+$$
+\begin{equation}
+T_{k}(\theta^{*} \mid \theta^{(t)}) =\left \{\begin{array}{ll}
+p(\theta_{k}^{*} \mid \theta_{-k}^{(t)}) \quad \text{if} \; \theta_{-k}^{(t)}=\theta_{-k}^{*} \\
+0 \quad \text{otherwise}
+\end{array}
+\right.
+\end{equation}
+$$
+
+따라서 M-H 알고리즘에서 활용되는 acceptance probability는 다음과 같이 계산될 수 있다.
+
+$$
+\begin{align}
+	\alpha &= \frac{\pi(\theta^{*})/T_{k}(\theta^{*}\mid\theta^{(t)})}{\pi(\theta^{(t)})/T_{k}(\theta^{(t)}\mid\theta^{*})} \\
+    &= \frac{\pi(\theta^{*})/p(\theta_{k}^{*}\mid\theta_{-k}^{(t)})}{\pi(\theta^{(t)})/p(\theta_{k}^{(t)}\mid\theta_{-k}^{(t)})} \\
+    &=\frac{\pi(\theta_{-k}^{*})}{\pi(\theta_{-k}^{(t)})}=1 \\
+    \because \pi(\theta^{*}) &= \frac{\pi(\theta_{k}^{*},\theta_{-k}^{(t)})}{\pi(\theta_{k}^{*}\mid\theta_{-k}^{(t)})} = \pi(\theta_{-k}^{*})
+\end{align}
+$$
+
+따라서 Gibbs Sampler는 항상 새롭게 proposed 되는 parameter의 값을 accept하는 M-H 알고리즘이라 할 수 있다.
 
 다음과 같은 예시를 생각해보자.
 
