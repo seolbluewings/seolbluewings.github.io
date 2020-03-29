@@ -1,0 +1,157 @@
+---
+layout: post
+title:  "의사결정나무(Decision Tree)"
+date: 2020-03-28
+author: YoungHwan Seol
+categories: Machine Learning.
+---
+
+의사결정나무는 스무고개 놀이와 비슷한 알고리즘이라 할 수 있다. 내가 생각한 인물을 맞춰내는 아키네이터 게임과 유사한 방식으로 알고리즘이 작동한다. 아래 그림과 같이 Y/N 형식의 대답이 나올 수 밖에 없는 알고리즘을 학습을 진행하게 된다.
+
+![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DT1.PNG?raw=true)
+
+따라서 의사결정나무를 학습한다는 것은 정답에 가장 빨리 도달하는 Y/N질문을 학습하는 것이라 말할 수 있을 것이며, 궁극적으로 우리는 데이터를 가장 잘 분류하는 의사결정나무 모형을 만들고자 한다.
+
+
+
+
+
+
+
+이렇게 치료가 혈압 감소에 영향을 미치고 혈압 감소가 질병 회복에 영향을 준다는 정보(사실)를 데이터로부터 얻을 수 없다. 또한 우리는 상관성이 인과성이 아니라고 수업시간에 배우기 때문에 데이터만으로 인과 관계를 만들기는 쉽지 않다.
+
+데이터에 숨은 인과 관계에 대해 접근하기 위해 다음의 4가지가 필요하다.
+
+1. 인과성(causation)에 대한 정의
+2. 인과 가정(causal assumptions)에 대한 인과 모형(causal models)을 만드는 것
+3. 인과 모형의 구조를 데이터의 특징과 연결시키는 것
+4. 모형과 데이터에 포함된 인과 가정의 결합으로부터 결론을 내는 것
+
+먼저 인과성(causation)에 대해 이야기하자.
+
+변수 B가 변수 A에 의존하면 변수 A는 변수 B의 원인(cause)이다. B가 A에 따라 값을 결정하면, A는 B의 원인이 된다. (A is a cause of B if B listens to A and decides its value in response to what it hears.)
+
+구조적 인과 모형(structural causal model)은 확률변수 집합(U,V)와 이에 대한 함수($$f$$)로 구성된다.
+
+앞서 변수 B가 변수 A에 의존하면 변수 A는 변수 B의 원인이라 하였는데, 구조적 인과 모형의 구성 요소를 통해 이야기하자면, B의 값을 결정짓는 함수 $$f$$에 A가 변수로 들어갈 때 변수 A는 변수 B의 직접적 원인(direct cause)가 된다.
+
+확률변수의 집합을 U와 V, 2개로 구분한 이유는 2가지 변수가 갖는 성격이 다르기 때문이다. U는 외생 변수(exogenous variable)이며 외생 변수는 어떤 이유로 해당 데이터가 발생했는지 설명하지 못한다. V는 내생 변수(endogenous variable)로 내생 변수는 적어도 하나의 외생 변수의 자손(child)이다.
+
+다음과 같은 예시를 통해 설명할 수 있다.
+
+![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/VS1.PNG?raw=true)
+
+a는 교육년수, b는 근무년수 c는 급여를 나타낸다. 이때, $$U=\{a,b\}$$, $$V=\{c\}$$ $$f_{c} : c=a + 2b$$ 라고 할 수 있다. a,b가 모두 $$f_{c}$$에 나타나므로 a,b는 모두 c의 direct cause라 할 수 있다.
+
+이처럼 그래프 모형은 변수 U와 변수 V를 나타내는 노드와 함수 $$f$$를 표현하는 링크(화살표)로 구성된다.
+
+#### 개입(intervention)
+
+인과관계를 알 수 있는 가장 좋은 방법은 무작위 통제(Randomized Controlled) 실험을 진행하는 것이다. 어떤 처치(treatment) 혹은 개입(intervention)이 효과가 있는지 확인하기 위해 우리는 먼저 treatment group과 controlled group으로 분리를 한다. 결과에 영향을 주는 단 1개의 변수를 제외한 나머지 모든 요인이 동등하다고 했을 때, 단 1개의 요인만을 변하게 함으로써 결과가 어떻게 바뀌는지 확인할 수 있고 변화가 있던 단 1개의 요인으로 인해 결과가 바뀐 것을 확인할 수 있다.
+
+그러나 단 1개의 요인을 제외한 나머지 요인을 모두 통제하는 실험을 진행하는 것은 아주 어려운 일이다.대신 실험이 아닌 관측 연구(observational study)를 수행할 수 있는데 관측 연구의 경우 인과 관계를 단순한 상관 관계로부터 풀어내기가 어렵다.
+
+다음의 관계를 살펴보자.
+
+![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/causal1.JPG?raw=true)
+
+X는 아이스크림 판매량, Y는 범죄율, Z는 기온이다. 특정 변수의 값을 고정(fix)하는 개입을 진행하면, 우리는 그 변수가 다른 변수에 의해 변하는 자연스러운 현상을 막을 수 있다. 이러한 행동은 개입이 이루어지는 해당 변수로 향하는 링크를 제거하는 결과를 불러온다. 이러한 변화를 조작된 모형(manipulated model)이라 한다.
+
+위의 그림에서 확인할 수 있듯이, X를 고정하면 Z에서 X로 향하는 링크가 제거 된다. 이제 아이스크림 판매량(X)와 기온(Z)은 관련이 없고 아이스크림 판매량(X)가 범죄율(Y)와 독립이라 말할 수 있다.
+
+이후 우리는 변수 X가 자연스럽게 $$X=x$$ 값을 갖는 것과 의도적으로 $$X=x$$의 값을 갖게 만드는 것(fix)을 구분할 필요가 있다. 그래프 모델에서는 manipulated variable X 방향으로 향하는 모든 화살표를 제거하여 개입을 표현할 수 있다.
+
+- $$P(Y=y \mid X=x)$$ : $$X=x$$인 조건에서 $$Y=y$$일 조건부 확률. $$X=x$$인 집단에서 Y의 분포를 반영
+- $$P(Y=y \mid do(X=x))$$ : 의도적으로 $$X=x$$로 만들어 개입할 때, $$Y=y$$일 확률. 모집단의 모든 원소를 의도적으로 $$X=x$$로 만들었을 때, Y의 확률
+
+
+#### 예시 : 치료와 성별
+
+![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/causal2.JPG?raw=true)
+
+다음과 같이 X에서 Y로의 경로가 있는 케이스를 생각해보자. 가장 먼저 언급했던 사례로 X는 신약 복용, Y는 회복 여부, Z는 성별을 나타낸다고 하자. 그리고 다음과 같은 2가지 개입에 대해 생각해보자.
+
+- 신약의 효과를 알아보기 위해 모든 사람에게 약물을 균일하게 투여. $$do(X=1)$$. 이를 가설적 개입(hypothetical intervention)이라 한다.
+- 모든 사람에게 약물을 투여하지 않는 개입. $$do(X=0)$$. 이를 반대적 개입(complementary intervention)이라 한다.
+
+두가지 개입에 의한 차이를 추정하고자 하는데 이를 인과 효과 차이(causal effect difference) 또는 평균 인자 효과(average causal effect, ACE)라 한다.
+
+$$P(Y=1 \mid do(X=1))-p(Y=1 \mid do(X=0))$$
+
+일반적인 형태로는 $$P(Y=y \mid do(X=x))$$로 표현할 수 있을 것이다. 이는 manipulated model의 조건부 확률 $$P_{m}(Y=y \mid X=x)$$과 같다.
+
+인과 효과를 계산할 때, 조작된 확률 $$P_{m}$$이 원래의 확률 $$P$$과 두가지 속성을 공유한다는 것을 고려해야 한다.
+
+1. $$Z$$에서 $$X$$로 가는 링크를 제거하는 것이 $$Z$$의 결정 과정에 영향을 미치지 않아 $$P(Z=z)$$는 변하지 않는다. 지금의 예시에서는 개입 전후 남성, 여성의 비율이 동일하다는 것이다.
+2. $$X$$가 자연스럽게 변하거나, 개입되는 것과 관계없이 Y가 X와 Z에 반응하는 과정, 즉 $$Y = f(x,z)$$가 동일하기 때문에 conditional probability $$P(Y=y \mid Z=z, X=x)$$는 변하지 않는다.
+
+$$
+\begin{align}
+	P_{m}(Z=z) &= P(Z=z) \\
+	P_{m}(Y=y \mid Z=z, X=x) &= P(Y=y \mid Z=z, X=x)
+\end{align}
+$$
+
+manipulated model에서 $$X$$와$$Z$$는 d-seperated 되어있어 개입 상황에서 다음의 식이 성립된다. 
+
+$$P_{m}(Z=z \mid X=x)= P_{m}(Z=z) = P(Z=z)$$
+
+따라서 우리는 개입 상황에 대해 다음과 같은 식을 얻을 수 있으며 이를 조정 공식(adjustment formula)라고 부른다.
+
+$$
+\begin{align}
+	P(Y=y \mid do(X=x)) &= P_{m}(Y=y \mid X=x) \\
+    &= \sum_{z}P_{m}(Y=y \mid X=x, Z=z)P_{m}(Z=z \mid X=x) \\
+    &= \sum_{z}P_{m}(Y=y \mid X=x, Z=z)P_{m}(Z=z) \\
+    &= \sum_{z}P(Y=y \mid X=x, Z=z)P(Z=z)
+\end{align}
+$$
+
+이를 직접 계산해보면 다음과 같을 것이다. X=1은 신약 복용, Y=1 환자의 회복여부, Z=1은 남성을 의미한다고 하자.
+
+$$
+\begin{align}
+P(Y=1 \mid do(X=1)) &= P(Y=1 \mid X=1,Z=1)P(Z=1) + P(Y=1 \mid X=1,Z=0)P(Z=0) \\
+&= 0.93 \times \frac{(87+270)}{700} + 0.73 \times \frac{(263+80)}{700} = 0.8320 \\
+P(Y=1 \mid do(X=0)) &= P(Y=1 \mid X=0,Z=1)P(Z=1) + P(Y=1 \mid X=0,Z=0)P(Z=0) \\
+&= 0.87 \times \frac{(87+270)}{700} + 0.69 \times \frac{(263+80)}{700} = 0.7818
+\end{align}
+$$
+
+따라서 신약 복용$$(X=1)$$과 신약을 복용하지 않았을 때$$(X=0)$$의 효과 차이는 0.0502다. 이는 신약 복용으로 인한 효과가 있음을 의미 한다.
+
+#### 예시 : 치료와 혈압
+
+![CI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/causal3.JPG?raw=true)
+
+인과의 형태가 앞선 예시와 다르다. $$X$$와 $$Z$$ 사이의 화살표 방향이 이전 것과 다르다. 신약$$(X)$$ 복용이 혈압$$(Z)$$에 영향을 주고 혈압이 신약 복용에 영향을 주는건 없다는 것을 반영한 모델이다. 앞선 경우와 마찬가지로 $$P(Y=1 \mid do(X=x))$$를 계산해보도록 하자.
+
+manipulated variable X 방향으로 향하는 모든 화살표를 제거하여 개입을 표현할 수 있다. 그러나 이 케이스의 경우 X의 parent node가 없기 때문에 그래프를 수정하지 않아도 된다. 이렇게 X에 영향을 미치는 요인이 없으면 X를 random treatment로 간주한다.
+
+따라서 $$P(Y=y \mid do(X=x))=P(Y=y \mid X=x)$$이다. 이 때는 앞서 소개한 조정 공식(adjustment formula)에 공집합을 Z 대신 넣은 것과 같다.
+
+이제 우리는 조정 공식(adjustment formula)에 $$Z$$가 어떤 상황에서 포함되는 것이 맞는지 알 수 있다. 개입이 발생할 대, 조정 공식에 포함되는 $$Z$$는 $$X$$의 parent node여야 한다. $$X$$가 특정한 값을 갖도록 fix되는 상황에 parent node의 영향으로 외부에서 가하는 조작(manipulation)이 온전히 반영되지 못할 수 있기 때문이다.
+
+$$pa_{X}$$를 $$X$$의 parent node 집합이라 하면, Y에 대한 X의 인과 효과는 다음과 같다.
+
+$$P(Y=y \mid do(X=x)) = \sum_{z} P(Y=y \mid X=x, pa_{X}=z)P(pa_{X}=z)$$
+
+또한 이 식은 $$P(X=x \mid pa_{X}=z)$$를 곱하고 나누어주면 다음과 같은 형태로 변한다.
+
+$$P(Y=y \mid do(X=x)) = \sum_{z}\frac{P(X=x,Y=y,pa_{X}=z)}{P(X=x \mid pa_{X}=z)}$$
+
+이처럼 우리는 그래프 모형과 가정을 이용해 관측 데이터로부터 인과 관계를 확인할 수 있다.
+
+
+
+##### 이 글은 다음의 [교재](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=128569893)를 참고하였음을 밝힙니다. 
+
+
+
+
+
+
+
+
+
+
