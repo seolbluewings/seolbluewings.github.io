@@ -60,6 +60,42 @@ $$
 
 대출 여부로 나눈 경우는 다음과 같다고 하자. 불순도 개선은 그림에서의 Goodness of split의 값이다. 대출 여부로 나눈 것이 불순도를 더 많이 개선시켰고 따라서 분기의 기준이 되어아햘 X변수는 대출 여부이다.
 
+![DT](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DT5.PNG?raw=true)
+
+
+#### 가지치기(Pruning)
+
+앞서 언급한 알고리즘을 활용하면 궁극적으로 우리는 모든 Terminal Node가 순도 100%인 결과를 만들어낼 수 있다. 그러나 항상 통계학에서는 Training Data에 과적합시키는 것을 지양한다. 이러한 문제를 해결하기 위해 가지치기(Pruning) 개념이 등장한다. 의사결정나무는 뿌리 노드에서 시작해서 top-down 방식으로 나무를 만들어가지만, Pruning은 밑에서부터 불필요한 가지를 쳐낸다.
+
+![DT](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DT6.PNG?raw=true)
+
+가지치기에는 사전 가지치기(Pre-Pruning)와 사후 가지치기(Post-Pruning)의 두가지 종류가 존재한다.
+
+사전 가지치기는 트리의 성장 작업 중 실시하는 가지치기이며, 어느 정도 불순한 Terminal Node가 존재해도 성장을 조기에 종료시키는 방법이다. 보통 R이나 Python에서 hyperparameter 지정을 통해 사전 가지치기를 진행하게 되는데 옵션으로 설정해주는 나무의 최대 깊이(max depth), Terminal Node의 데이터 최대 개수 같은 것들을 설정하여 사전 가지치기를 프로그래밍 과정에서 진행할 수 있다. Python은 사전 가지치기만 실행할 수 있고 보통 프로그래밍 과정에서는 사전 가지치기를 주로 사용한다.
+
+사후 가지치기는 트리 성장을 완료한 후 실시하는데 완성된 트리에서 일부 Terminal Node를 제거하여 가지치기를 진행한다.
+
+가지치기의 기준은 어떻게 설정하는가? 우리가 회귀분석에서 MSE를 작게만드는 것을 최선의 것으로 선택하듯이 가지치기에도 기준이 있다. 여러 분기 중에서 비용함수를 최소화시키는 분기를 찾아내서 가지치기 수준을 결정 짓는다. 프로그램에서 알아서 계산해주니 큰 그림으로 아래와 같은 방식을 통해 그 값이 결정된다는 정도만 알아두면 된다.
+
+비용함수 Cost Complexity Function은 다음과 같다.
+
+$$
+\text{CC(T)} = \text{Err(T)}+\alpha\dot\text{L(T)}
+$$
+
+CC(T)는 의사결정나무의 Cost Complexity를 의미하며 이는 오류가 적으면서 Terminal Node의 수가 작은 것이 작은 값을 가진다. Err(T)는 test data에 대한 오분류율을 의미하며, L(T)는 Terminal Node의 수, $$\alpha$$는 가중치(0.01~0.1)를 의미한다. 이 식은 새로운 분기를 진행함으로써 생기는 오분류율 감소 이득이 Penalty항($$\alpha\tetxt{L(T)}$$) 증가보다 크지 못하면 더 이상 분기를 진행하지 않는다는 것을 의미한다.
+
+그러나 가지치기를 진행해도 과적합(Overfitting)문제를 완벽하게 해결하지 못한다.
+
+#### 정리
+
+의사결정나무의 특징을 요약하면 다음과 같다.
+
+1. 의사결정나무는 간단하고 직관적인 결과 표현이 가능하며 인간의 의사결정과도 유사하다.
+2. 의사결정나무는 Numerical, Categorical 변수 모두를 다룰 수 있다.
+3. 질적 변수를 더미 변수 생성하지 않고 쉽게 다룰 수 있다는 장점이 있다.
+4. 또한 변수의 Scaling이 필요가 없다.
+5. 관측치의 절대값이 아닌 순서가 중요하므로 아웃라이어에 강건한(robust) 특징이 있다.
 
 
 
@@ -73,7 +109,9 @@ $$
 
 
 
-##### 이 글은 다음의 [교재](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=128569893)를 참고하였음을 밝힙니다. 
+
+
+##### 이 글은 다음의 [교재](https://https://web.stanford.edu/~hastie/Papers/ESLII.pdf)를 참고하였음을 밝힙니다. 
 
 
 
