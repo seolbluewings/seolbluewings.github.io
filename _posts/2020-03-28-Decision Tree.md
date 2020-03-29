@@ -80,10 +80,10 @@ $$
 비용함수 Cost Complexity Function은 다음과 같다.
 
 $$
-\text{CC(T)} = \text{Err(T)}+\alpha\dot\text{L(T)}
+CC(T) = Err(T) + \alpha \dot L(T)
 $$
 
-CC(T)는 의사결정나무의 Cost Complexity를 의미하며 이는 오류가 적으면서 Terminal Node의 수가 작은 것이 작은 값을 가진다. Err(T)는 test data에 대한 오분류율을 의미하며, L(T)는 Terminal Node의 수, $$\alpha$$는 가중치(0.01~0.1)를 의미한다. 이 식은 새로운 분기를 진행함으로써 생기는 오분류율 감소 이득이 Penalty항($$\alpha\tetxt{L(T)}$$) 증가보다 크지 못하면 더 이상 분기를 진행하지 않는다는 것을 의미한다.
+CC(T)는 의사결정나무의 Cost Complexity를 의미하며 이는 오류가 적으면서 Terminal Node의 수가 작은 것이 작은 값을 가진다. Err(T)는 test data에 대한 오분류율을 의미하며, L(T)는 Terminal Node의 수, $$\alpha$$는 가중치(0.01~0.1)를 의미한다. 이 식은 새로운 분기를 진행함으로써 생기는 오분류율 감소 이득이 Penalty항($$\alpha\text{L(T)}$$) 증가보다 크지 못하면 더 이상 분기를 진행하지 않는다는 것을 의미한다.
 
 그러나 가지치기를 진행해도 과적합(Overfitting)문제를 완벽하게 해결하지 못한다.
 
@@ -111,7 +111,7 @@ CC(T)는 의사결정나무의 Cost Complexity를 의미하며 이는 오류가 
 
 
 
-##### 이 글은 다음의 [교재](https://https://web.stanford.edu/~hastie/Papers/ESLII.pdf)를 참고하였음을 밝힙니다. 
+##### 이 글은 다음의 [교재](https://web.stanford.edu/~hastie/Papers/ESLII.pdf)를 참고하였음을 밝힙니다. 
 
 
 
