@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Causal Inference"
+title:  "인과적 추론(Causal Inference)"
 date: 2019-08-01
 author: YoungHwan Seol
 categories: Bayesian

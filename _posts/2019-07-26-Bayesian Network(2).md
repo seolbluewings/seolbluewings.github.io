@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bayesian Network(2)"
+title:  "베이지안 네트워크 2(Bayesian Network)"
 date: 2019-07-26
 author: YoungHwan Seol
 categories: Bayesian

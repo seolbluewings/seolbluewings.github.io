@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Markov Chain Theory"
+title:  "마르코프 체인(Markov Chain Theory)"
 date: 2019-03-22 
 author: YoungHwan Seol
 categories: Bayesian

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Gibbs Sampler"
+title:  "깁스 샘플러(Gibbs Sampler)"
 date: 2019-05-22
 author: YoungHwan Seol
 categories: Bayesian

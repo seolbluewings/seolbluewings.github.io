@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Probit model"
+title:  "프로빗 모델(Probit model)"
 date: 2019-07-06
 author: YoungHwan Seol
 categories: Bayesian

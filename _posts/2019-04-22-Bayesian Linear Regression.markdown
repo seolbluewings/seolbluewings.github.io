@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bayesian Linear Regression"
+title:  "베이지안 선형 회귀(Bayesian Linear Regression)"
 date: 2019-04-22
 author: YoungHwan Seol
 categories: Bayesian

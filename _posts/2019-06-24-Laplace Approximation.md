@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Laplace Approximation"
+title:  "라플라스 근사(Laplace Approximation)"
 date: 2019-06-24
 author: YoungHwan Seol
 categories: Bayesian

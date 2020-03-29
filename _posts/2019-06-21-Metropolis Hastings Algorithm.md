@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Metropolis-Hastings Algorithm"
+title:  "메트로폴리스-해스팅스 알고리즘(M-H Algorithm)"
 date: 2019-06-21
 author: YoungHwan Seol
 categories: Bayesian

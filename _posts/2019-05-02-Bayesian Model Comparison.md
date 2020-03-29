@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bayesian Model Comparison"
+title:  "베이지안 모델 비교(Bayesian Model Comparison)"
 date: 2019-05-22
 author: YoungHwan Seol
 categories: Bayesian

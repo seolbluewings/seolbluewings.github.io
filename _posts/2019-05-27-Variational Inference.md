@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Inference"
+title:  "변분 추론(Variational Inference)"
 date: 2019-05-26
 author: YoungHwan Seol
 categories: Bayesian
