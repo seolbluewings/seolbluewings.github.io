@@ -65,7 +65,7 @@ $$
 
 앞서 언급한 알고리즘을 활용하면 궁극적으로 우리는 모든 Terminal Node가 순도 100%인 결과를 만들어낼 수 있다. 그러나 항상 통계학에서는 Training Data에 과적합시키는 것을 지양한다. 이러한 문제를 해결하기 위해 가지치기(Pruning) 개념이 등장한다. 의사결정나무는 뿌리 노드에서 시작해서 top-down 방식으로 나무를 만들어가지만, Pruning은 밑에서부터 불필요한 가지를 쳐낸다.
 
-![DT](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DT6.PNG?raw=true)
+![DT](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DT8.PNG?raw=true)
 
 가지치기에는 사전 가지치기(Pre-Pruning)와 사후 가지치기(Post-Pruning)의 두가지 종류가 존재한다.
 
