@@ -59,12 +59,12 @@ $$
 
 $$
 \begin{align}
-\log{\text{P}(\bf{y}\mid\beta,\sigma^{2})} &= \sum_{i=1}^{N}\log{\mathcal{N}(y_{i})\mid x_{i}^{T}\beta,\sigma^{2})} \nonumber \\
+\log{\text{P}(\bf{y}\mid\beta,\sigma^{2})} &= \sum_{i=1}^{N}\log{\mathcal{N}(y_{i}\mid x_{i}^{T}\beta,\sigma^{2})} \nonumber \\
 &= -\frac{N}{2}\log{2\pi}-\frac{N}{2}\log{\sigma^{2}}-\frac{1}{2\sigma^{2}}\sum_{i=1}^{N}(y_{i}-x_{i}^{T}\beta)^{2}
 \end{align}
 $$
 
-로그 가능도를 구하였으니 MLE 방식을 통하여 우리는 $$\beta$$와 $$\sigma^{2}$$ 에 대한 추정을 시도할 수 있다. 그런데 주목할 사실은 지금처럼 노이즈를 가우시안 분포로 가정한 경우 $$\beta_{\text{MLE}}$$와 $$\beta_{\text{LSE}}$$ 결과가 동일하다는 것이다.
+로그 가능도를 구하였으니 MLE 방식을 통하여 우리는 $$\beta$$와 $$\sigma^{2}$$ 에 대한 추정을 시도할 수 있다. 그런데 주목할 사실은 지금처럼 노이즈를 가우시안 분포로 가정한 경우 $$\hat{\beta_{\text{MLE}}}$$와 $$\hat{\beta_{\text{LSE}}}$$ 결과가 동일하다는 것이다.
 
 위의 로그 가능도에서 모수 $$\beta$$에 대한 관련있는 부분만 고려해보자. 그렇다면 로그 가능도의 앞 2가지 부분을 제외할 수 있고 $$ -\frac{1}{2\sigma^{2}}\sum_{i=1}^{N}(y_{i}-x_{i}^{T}\beta)^{2} $$ 부분만 남는 것을 확인할 수 있다. 이를 최대화시키는 값을 찾는 것이 모수 $$\beta$$의 MLE값을 구하는 것이다. 그런데 잘 생각해보면, 이 값을 최대화하는 것은 $$ \sum_{i=1}^{N}(y_{i}-x_{i}^{T}\beta)^{2} $$ 값을 최소화시키는 것과 동일하다. 이는 최소제곱법 방법과 동일하다.
 

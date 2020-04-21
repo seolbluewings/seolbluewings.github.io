@@ -66,7 +66,7 @@ $$
 
 \text{set} $$\theta^{(t+1)}_{2} &= \theta^{*}_{2}$$ \text{with \quad $$p=min(\alpha,1)$$} \nonumber \\ \text{Otherwise} \theta^{(t+1)}_{2} &= \theta^{(t)}_{2} \text{with \quad $$1-p$$} \nonumber
 \end{align}
-$$
+$$gi
 
 Gibbs Sampler는 Metropolis-Hastings Algorithm의 특수한 경우이며, 이 때 transition kernel이 각 원소(원소 벡터)의 full-condtional posterior이다.
 
