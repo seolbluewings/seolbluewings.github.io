@@ -6,7 +6,7 @@ author: YoungHwan Seol
 categories: Bayesian
 ---
 
-회귀분석이란 P차원 벡터($$\bf{X}$$)가 입력(input)될 때, 그에 대응하는 연속형 타깃 변수(target) $$\bf{y}$$를 예측하는 것이다. N개의 관측값 \(X_{N}\)이 있다고 하자. 이에 대응하는 변수 \(y_{N}\)이 훈련 집합으로 존재한다고 하자. 이 때, 선형회귀모델의 목표는 새로운 변수 $$X_{\text{new}}$$의 종속변수인 $$y_{\text{new}}$$를 예측하는 것이며 최종적으로 $$\text{P}(y_{\text{new}}\mid X_{\text{new}})$$ 의 분포를 모델링하는 것이다. 우리는 이 예측분포를 통해서 $$X_{\text{new}}$$에 대한 $$y_{\text{new}}$$의 불확실성을 표현할 수 있다.
+회귀분석이란 P차원 벡터($$\bf{X}$$)가 입력(input)될 때, 그에 대응하는 연속형 타깃 변수(target) $$\bf{y}$$를 예측하는 것이다. N개의 관측값 $$\(X_{N}\)$$이 있다고 하자. 이에 대응하는 변수 $$\(y_{N}\)$$이 훈련 집합으로 존재한다고 하자. 이 때, 선형회귀모델의 목표는 새로운 변수 $$X_{\text{new}}$$의 종속변수인 $$y_{\text{new}}$$를 예측하는 것이며 최종적으로 $$\text{P}(y_{\text{new}}\mid X_{\text{new}})$$ 의 분포를 모델링하는 것이다. 우리는 이 예측분포를 통해서 $$X_{\text{new}}$$에 대한 $$y_{\text{new}}$$의 불확실성을 표현할 수 있다.
 
 #### '선형' 회귀(Linear Regression)
 
@@ -22,16 +22,16 @@ $$\bf{Y} = \bf{X}\beta + \epsilon, \quad \epsilon \sim \mathcal{N}(0,\sigma^{2})
 
 그렇다면, $$\text{P}(\bf{y}\mid\bf{X},\beta,\sigma^{2})$$의 분포는 $$\mathcal{N}(\bf{y}\mid\bf{X}\beta, \sigma^{2})$$ 로 표현될 수 있다.
 
-손실함수를 다음과 같이 오차제곱합 함수 $$\text{L}(y,\text{f}(x)) = (y-\text{f}(x))^2 $$ 의 형태를 가정한다면, 평균적인 손실은 다음과 같이 표현할 수 있을 것이다.
+손실함수를 다음과 같이 오차제곱합 함수 $$\text{L}(y,\text{f}(x)) = \{y-\text{f}(x)\}^2 $$ 의 형태를 가정한다면, 평균적인 손실은 다음과 같이 표현할 수 있을 것이다.
 
 $$
 \begin{align}
-\mathcal{E}[L] &= \int\int L(y,\text{f}(x))\text{P}(\bf{X},\bf{y})d\bf{X}d\bf{y} \nonumber \\
+\mathbb{E}[L] &= \int\int L(y,\text{f}(x))\text{P}(\bf{X},\bf{y})d\bf{X}d\bf{y} \nonumber \\
 &= \int\int \{y-\text{f}(x)\}^{2}\text{P}(\bf{X},\bf{y})d\bf{X}d\bf{y} \nonumber
 \end{align}
 $$
 
-최소제곱법의 목표는 결국 $$\mathcal{E}[L]$$ 를 최소화하는 $$\text{f}(\bf{X})$$를 선택하는 것이다. 여기서 변분법을 적용하면, 다음과 같이 표기할 수 있다.
+최소제곱법의 목표는 결국 $$\mathbb{E}[L]$$ 를 최소화하는 $$\text{f}(\bf{X})$$를 선택하는 것이다. 여기서 변분법을 적용하면, 다음과 같이 표기할 수 있다.
 
 $$ 2\int L(y,\text{f}(x))\text{P}(\bf{X},\bf{y})d\bf{y} = 0 $$
 
@@ -40,8 +40,7 @@ $$ 2\int L(y,\text{f}(x))\text{P}(\bf{X},\bf{y})d\bf{y} = 0 $$
 $$
 \begin{align}
 \text{f}(\bf{X}) &= \frac{ \int\bf{y}\text{P}(\bf{X},\bf{y})d\bf{y}}{ \text{P}(\bf{X}) } \nonumber \\
-&= \int \bf{y}\text{P}(\bf{y}\mid\bf{X})d\bf{y} \nonumber \\
-&= \mathbb{E}_{\text{y}}[\bf{y}\mid\bf{X}] \nonumber \\
+&= \int \bf{y}\text{P}(\bf{y}\mid\bf{X})d\bf{y} = \mathbb{E}_{\text{y}}[\bf{y}\mid\bf{X}] \nonumber \\
 \mathbb{E}_{\text{y}}[\bf{y}\mid\bf{X}] &= \int \bf{y}\text{P}(\bf{y}\mid\bf{X})d\bf{y} = \bf{X}\beta \nonumber
 \end{align}
 $$
@@ -56,6 +55,18 @@ $$
 \text{P}(\bf{y}\mid\bf{X},\beta,\sigma^{2}) = \prod_{i=1}^{N}\mathcal{N}(y_{i}\mid x_{i}^{T}\beta,\sigma^{2})
 $$
 
+앞으로의 과정에서 입력변수 $$\bf{X}$$의 분포에 대해서는 관심을 두지 않으므로 모든 과정에서 $$\bf{X}$$ 를 생략하더라도 조건부 변수로 설정되어 있다고 생각하자. 그리고 앞서 언급한 가능도에 로그를 취하면 다음과 같이 표현할 수 있다.
+
+$$
+\begin{align}
+\log{\text{P}(\bf{y}\mid\beta,\sigma^{2})} &= \sum_{i=1}^{N}\log{\mathcal{N}(y_{i})\mid x_{i}^{T}\beta,\sigma^{2})} \nonumber \\
+&= -\frac{N}{2}\log{2\pi}-\frac{N}{2}\log{\sigma^{2}}-\frac{1}{2\sigma^{2}}\sum_{i=1}^{N}(y_{i}-x_{i}^{T}\beta)^{2}
+\end{align}
+$$
+
+로그 가능도를 구하였으니 MLE 방식을 통하여 우리는 $$\beta$$와 $$\sigma^{2}$$ 에 대한 추정을 시도할 수 있다. 그런데 주목할 사실은 지금처럼 노이즈를 가우시안 분포로 가정한 경우 $$\beta_{\text{MLE}}$$와 $$\beta_{\text{LSE}}$$ 결과가 동일하다는 것이다.
+
+위의 로그 가능도에서 모수 $$\beta$$에 대한 관련있는 부분만 고려해보자. 그렇다면 로그 가능도의 앞 2가지 부분을 제외할 수 있고 $$ -\frac{1}{2\sigma^{2}}\sum_{i=1}^{N}(y_{i}-x_{i}^{T}\beta)^{2} $$ 부분만 남는 것을 확인할 수 있다. 이를 최대화시키는 값을 찾는 것이 모수 $$\beta$$의 MLE값을 구하는 것이다. 그런데 잘 생각해보면, 이 값을 최대화하는 것은 $$ \sum_{i=1}^{N}(y_{i}-x_{i}^{T}\beta)^{2} $$ 값을 최소화시키는 것과 동일하다. 이는 최소제곱법 방법과 동일하다.
 
 
 
