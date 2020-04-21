@@ -44,23 +44,27 @@ $$\mathbf{\theta}=(\theta_{1},\theta_{2})$$로 나누어질 때, (t+1)번째 ste
 
 $$\theta_{1}^{(t+1)}$$ 추출 과정은 다음의 순서를 따를 것이다.
 $$
-\theta_{1}^{*} &\sim T(\theta_{1}|x,\theta^{(t)}_{1},\theta_{2}^{(t)}) $$
+\theta_{1}^{*} \sim T(\theta_{1}|x,\theta^{(t)}_{1},\theta_{2}^{(t)}) $$
 $$
-\alpha &= \frac{\pi(\theta_{1}^{*},\theta_{2}^{(t)}|x)/T(\theta_{1}^{*}|\theta_{1}^{(t)},\theta_{2}^{(t)})}{\pi(\theta_{1}^{(t)},\theta_{2}^{(t)}|x)/T(\theta_{1}^{(t)}|\theta_{1}^{*},\theta_{2}^{(t)})} $$
+\alpha = \frac{\pi(\theta_{1}^{*},\theta_{2}^{(t)}|x)/T(\theta_{1}^{*}|\theta_{1}^{(t)},\theta_{2}^{(t)})}{\pi(\theta_{1}^{(t)},\theta_{2}^{(t)}|x)/T(\theta_{1}^{(t)}|\theta_{1}^{*},\theta_{2}^{(t)})} $$
 $$
-\text{set} \theta^{(t+1)}_{1} &= \theta^{*}_{1}$$ \text{with \quad $$p=min(\alpha,1)$$} \nonumber \\
-\text{Otherwise} \theta^{(t+1)}_{1}& =\theta^{(t)}_{1} \text{with \quad $$1-p$$}
+\text{set} \theta^{(t+1)}_{1} = \theta^{*}_{1}$$ \text{with \quad $$p=min(\alpha,1)$$} $$
+$$
+\text{Otherwise} \theta^{(t+1)}_{1} = \theta^{(t)}_{1} \text{with \quad $$1-p$$}
 $$
 
 $$\theta_{2}^{(t+1)}$$ 추출 과정은 다음의 순서를 따를 것이다.
 
 $$
-\theta_{2}^{*} &\sim T(\theta_{2}|x,\theta^{(t+1)}_{1},\theta_{2}^{(t)}) $$
+\theta_{2}^{*} \sim T(\theta_{2}|x,\theta^{(t+1)}_{1},\theta_{2}^{(t)}) $$
 $$
-\alpha &= \frac{\pi(\theta_{2}^{*},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{*}|\theta_{1}^{(t+1)},\theta_{2}^{(t)})}{\pi(\theta_{2}^{(t)},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{(t)}|\theta_{2}^{*},\theta_{1}^{(t+1)})} $$
+\alpha = \frac{\pi(\theta_{2}^{*},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{*}|\theta_{1}^{(t+1)},\theta_{2}^{(t)})}{\pi(\theta_{2}^{(t)},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{(t)}|\theta_{2}^{*},\theta_{1}^{(t+1)})} $$
 
 $$
-\text{set} $$\theta^{(t+1)}_{2} &= \theta^{*}_{2}$$ \text{with \quad $$p=min(\alpha,1)$$} \nonumber \\ \text{Otherwise} \theta^{(t+1)}_{2} &= \theta^{(t)}_{2} \text{with \quad $$1-p$$} $$
+\text{set} $$\theta^{(t+1)}_{2} &= \theta^{*}_{2}$$ \text{with \quad $$p=min(\alpha,1)$$} $$
+
+$$
+\text{Otherwise} \theta^{(t+1)}_{2} = \theta^{(t)}_{2} \text{with \quad $$1-p$$} $$
 
 
 Gibbs Sampler는 Metropolis-Hastings Algorithm의 특수한 경우이며, 이 때 transition kernel이 각 원소(원소 벡터)의 full-condtional posterior이다.
