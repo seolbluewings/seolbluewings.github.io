@@ -44,30 +44,20 @@ $$\mathbf{\theta}=(\theta_{1},\theta_{2})$$로 나누어질 때, (t+1)번째 ste
 
 $$\theta_{1}^{(t+1)}$$ 추출 과정은 다음의 순서를 따를 것이다.
 $$
-\theta_{1}^{*} \sim T(\theta_{1}|x,\theta^{(t)}_{1},\theta_{2}^{(t)}) $$
-$$
-\alpha = \frac{\pi(\theta_{1}^{*},\theta_{2}^{(t)}|x)/T(\theta_{1}^{*}|\theta_{1}^{(t)},\theta_{2}^{(t)})}{\pi(\theta_{1}^{(t)},\theta_{2}^{(t)}|x)/T(\theta_{1}^{(t)}|\theta_{1}^{*},\theta_{2}^{(t)})} $$
-$$
-\text{set} \theta^{(t+1)}_{1} = \theta^{*}_{1}$$ \text{with \quad $$p=min(\alpha,1)$$} $$
-$$
-\text{Otherwise} \theta^{(t+1)}_{1} = \theta^{(t)}_{1} \text{with \quad $$1-p$$}
-$$
-
-$$\theta_{2}^{(t+1)}$$ 추출 과정은 다음의 순서를 따를 것이다.
+\theta_{1}^{*} \sim T(\theta_{1}\mid x,\theta^{(t)}_{1},\theta_{2}^{(t)}) $$ 에서 $$\theta_{1}^{*} $$을 추출해내고
 
 $$
-\theta_{2}^{*} \sim T(\theta_{2}|x,\theta^{(t+1)}_{1},\theta_{2}^{(t)}) $$
-$$
-\alpha = \frac{\pi(\theta_{2}^{*},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{*}|\theta_{1}^{(t+1)},\theta_{2}^{(t)})}{\pi(\theta_{2}^{(t)},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{(t)}|\theta_{2}^{*},\theta_{1}^{(t+1)})} $$
+\alpha = \frac{\pi(\theta_{1}^{*},\theta_{2}^{(t)}|x)/T(\theta_{1}^{*}|\theta_{1}^{(t)},\theta_{2}^{(t)})}{\pi(\theta_{1}^{(t)},\theta_{2}^{(t)}|x)/T(\theta_{1}^{(t)}|\theta_{1}^{*},\theta_{2}^{(t)})} $$ 다음의 계산을 통해 $$\alpha$$ 값을 구한다. 이후 $$ p=min(\alpha,1) $$ 의 확률로 $$\theta^{(t+1)}_{1} = \theta^{*}_{1}$$ 처럼 $$\theta^{(t+1)}_{1}$$ 를 채택하고 $$1-p$$의 확률로 $$  \theta^{(t+1)}_{1} = \theta^{(t)}_{1} $$ 값을 설정한다.
+
+마찬가지로 $$\theta_{2}^{(t+1)}$$ 추출 과정은 다음의 순서를 따를 것이다.
 
 $$
-\text{set} $$\theta^{(t+1)}_{2} &= \theta^{*}_{2}$$ \text{with \quad $$p=min(\alpha,1)$$} $$
+\theta_{2}^{*} \sim T(\theta_{2}|x,\theta^{(t+1)}_{1},\theta_{2}^{(t)}) $$ 에서 $$\theta_{2}^{*}$$ 을 추출해내고
 
-$$
-\text{Otherwise} \theta^{(t+1)}_{2} = \theta^{(t)}_{2} \text{with \quad $$1-p$$} $$
+$$ \alpha = \frac{\pi(\theta_{2}^{*},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{*}|\theta_{1}^{(t+1)},\theta_{2}^{(t)})}{\pi(\theta_{2}^{(t)},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{(t)}|\theta_{2}^{*},\theta_{1}^{(t+1)})} $$ 다음의 계산을 통해 $$\alpha$$ 값을 구한다. 이후 $$ p=min(\alpha,1) $$ 의 확률로 $$\theta^{(t+1)}_{2} = \theta^{*}_{2}$$ 처럼 $$\theta^{(t+1)}_{2}$$ 를 채택하고 $$1-p$$의 확률로 $$  \theta^{(t+1)}_{2} = \theta^{(t)}_{2} $$ 값을 설정한다.
 
 
-Gibbs Sampler는 Metropolis-Hastings Algorithm의 특수한 경우이며, 이 때 transition kernel이 각 원소(원소 벡터)의 full-condtional posterior이다.
+깁스 샘플러는 Metropolis-Hastings Algorithm의 특수한 경우이며, 이 때 transition kernel이 각 원소(원소 벡터)의 full-condtional posterior이다.
 
 $$
 \begin{align}
