@@ -5,9 +5,7 @@ date: 2019-06-21
 author: YoungHwan Seol
 categories: Bayesian
 ---
-모수 $$\mathbf{\theta}=(\theta_{1},...,\theta_{p})$$ 의 Posterior distribution인 $$\pi(\theta\mid x)$$로 부터 $$\mathbf{\theta}$$의 사후 표본을 추출하려고 한다.
-
-Gibbs Sampler의 경우는 각 원소 $$\theta_{i}$$의 full-conditional posterior를 활용하며 이 경우에는 $$p(\theta_{i}\mid x,\theta_{1},\theta_{2},...,\theta_{p})$$로부터 직접적인 표본 생성이 가능해야 한다.
+모수 $$\mathbf{\theta}=(\theta_{1},...,\theta_{p})$$ 의 Posterior distribution인 $$\pi(\theta\mid x)$$로 부터 $$\mathbf{\theta}$$의 사후 표본을 추출하려고 한다. 깁스 샘플러의 경우는 각 원소 $$\theta_{i}$$의 full-conditional posterior를 활용하며 이 경우에는 $$p(\theta_{i}\mid x,\theta_{1},\theta_{2},...,\theta_{p})$$로부터 직접적인 표본 생성이 가능해야 한다.
 
 만약 $$\theta_{i}$$에 대해 full-conditional posterior가 closed form으로 나오지 않는다면, 다음과 같이 Metropolis-Hastings Algorithm을 이용한다. Metropolis-Hastings Algorithm을 사용하여 $$\pi(\mathbf{\theta}\mid x)$$로부터 표본 추출이 가능하다.
 
@@ -63,10 +61,10 @@ $$
 \theta_{2}^{*} &\sim T(\theta_{2}|x,\theta^{(t+1)}_{1},\theta_{2}^{(t)}) \nonumber \\
 
 \alpha &= \frac{\pi(\theta_{2}^{*},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{*}|\theta_{1}^{(t+1)},\theta_{2}^{(t)})}{\pi(\theta_{2}^{(t)},\theta_{1}^{(t+1)}|x)/T(\theta_{2}^{(t)}|\theta_{2}^{*},\theta_{1}^{(t+1)})} \nonumber \\
+\end{align}
 
 \text{set} $$\theta^{(t+1)}_{2} &= \theta^{*}_{2}$$ \text{with \quad $$p=min(\alpha,1)$$} \nonumber \\ \text{Otherwise} \theta^{(t+1)}_{2} &= \theta^{(t)}_{2} \text{with \quad $$1-p$$} \nonumber
-\end{align}
-$$gi
+
 
 Gibbs Sampler는 Metropolis-Hastings Algorithm의 특수한 경우이며, 이 때 transition kernel이 각 원소(원소 벡터)의 full-condtional posterior이다.
 
