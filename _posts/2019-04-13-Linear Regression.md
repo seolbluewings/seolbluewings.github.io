@@ -62,11 +62,40 @@ $$
 $$
 \begin{align}
 \bf{MY} &= \bf{X}\hat{\beta} \nonumber \\
-\text{where} \bf{M} &= (\bf{X}^{T}\bf{X})^{-1}\bf{X}^{T} \nonumber
+\text{where}\quad \bf{M} &= (\bf{X}^{T}\bf{X})^{-1}\bf{X}^{T} \nonumber
 \end{align}
 $$
 
+우리의 목표는 앞서 수식에 표현한 것처럼 $$ \text{min}_{\beta} (\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta) $$ 을 구하는 것이며 다음과 같은 과정을 통해 구할 수 있다.
 
+$$
+\begin{align}
+(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta) &= (\bf{Y}-\bf{MY}+\bf{MY}-\bf{X}\beta)^{T}(\bf{Y}-\bf{MY}+\bf{MY}-\bf{X}\beta) \nonumber \\
+
+&= (\bf{Y}-\bf{MY})^{T}(\bf{Y}-\bf{MY}) + (\bf{MY}-\bf{X}\beta)^{T}(\bf{MY}-\bf{X}\beta) \nonumber
+\end{align}
+$$
+
+식이 2가지 부분으로 나뉘는 것을 확인할 수 있고 두가지 값은 모두 0이상의 값을 가질 것이다. 여기서 첫번째 부분은 $$\beta$$가 존재하지 않는다. 따라서 이 값은  $$\beta$$에 의존하지 않는다. 따라서 $$(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)$$를 최소화시키는 것은 $$ (\bf{MY}-\bf{X}\beta)^{T}(\bf{MY}-\bf{X}\beta) $$를 최소화시키는 것과 동일하다. 왜냐면, 여기에는 $$\beta$$가 있기 때문이다. 따라서 여기서 $$\bf{MY} = \bf{X}\beta$$일 때, 최소값이 발생할 것이라는걸 알 수 있다. 이는 $$\beta$$의 LSE를 구하기 위한 필요충분조건에서 마주했던 값이다.
+
+식을 전개하는 과정에서 교차항 부분에 대해서는 계산하지 않았는데 값이 0이 되기 때문이다. 그 이유는 다음과 같다.
+
+$$
+\begin{align}
+(\bf{Y}-\bf{MY})^{T}(\bf{MY}-\bf{X}\beta) &= \bf{Y}^{T}(\bf{I}-\bf{M})\bf{MY}-\bf{Y}^{T}(\bf{I}-\bf{M})\bf{X}\beta = 0\noumber
+\\
+\text{Since} \quad (\bf{I}-\bf{M})\bf{M} &= 0 \nonumber \\
+(\bf{I}-\bf{M})\bf{X} &= 0 \nonumber
+\end{align}
+$$
+
+$$\bf{M}$$값을 위에서 $$\bf{X}$$로 표현했던 것을 대입해보면 첫번째 부분이 0이되는 것을 확인할 수 있고 두번째 부분이 0이 되는 것은 기하학적인 부분에서 설명했던 것을 활용하면 이해할 수 있다. M이 X가 Span하는 공간으로 Orthogonal Projection 시키는 행렬인데 X를 X가 Span하는 공간으로 Orthogonal Projection 시켜도 X 그 자체이기 때문이다.
+
+#### 오차항 가정이 만들어내는 차이
+
+잘 생각해보면 지금까지 우리는 $$\beta$$의 LSE를 구하는 과정에서 오차항이 가우시안 분포를 따른다는 성질을 전혀 사용하지 않았다. 지금부터는 오차항이 가우시안 분포 $$\mathcal{N}(\bf{0},\sigma^{2}\bf{I})$$를 따른다는 가정을 통해 얻을 수 있는 성질들에 대해 이야기할 것이다.
+
+일단 가우시안 분포 가정이 이루어졌을 때, $$\sigma^{2}$$에 대한 불편 추정량(unbiased estimator)을 어떻게 구할 수 있는지 생각해보자.
 
 
 #### 최대 가능도
