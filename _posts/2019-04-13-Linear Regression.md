@@ -12,7 +12,7 @@ categories: Bayesian
 
 가장 단순한 형태의 선형 회귀 모델은 입력 변수들의 선형 결합을 바탕으로 한 모델로 다음과 같이 표현할 수 있다.
 
-$$\bf{Y} = \bf{X}\beta + \epsilon, \quad \epsilon \sim \mathcal{N}(0,\sigma^{2})$$
+$$\bf{Y} = \bf{X}\beta + \epsilon, \quad \epsilon \sim \mathcal{N}(0,\sigma^{2}\bf{I})$$
 
 여기서 짚고 넘어가야할 부분은 무엇에 관한 '선형'이냐는 것이다. 로지스틱 회귀의 경우는 위와 달리 $$\text{logit}(\bf{y}) = \bf{X}\beta $$ 로 표기되는데 이 역시도 선형 모델이라고 불린다. 그래서 입력 변수 $$\bf{X}$$에 대한 선형 함수(결합)가 아닌 $$\beta$$에 대한 선형 함수라고 할 수 있다. 그래서 선형 모델인 것이다. 물론 $$\bf{X}\beta$$의 경우는 입력변수 $$\bf{X}$$의 선형 함수이기도 하다.
 
@@ -62,7 +62,7 @@ $$
 $$
 \begin{align}
 \bf{MY} &= \bf{X}\hat{\beta} \nonumber \\
-\text{where}\quad \bf{M} &= (\bf{X}^{T}\bf{X})^{-1}\bf{X}^{T} \nonumber
+\text{where}\quad \bf{M} &= \bf{X}(\bf{X}^{T}\bf{X})^{-1}\bf{X}^{T} \nonumber
 \end{align}
 $$
 
@@ -95,17 +95,41 @@ $$\bf{M}$$값을 위에서 $$\bf{X}$$로 표현했던 것을 대입해보면 첫
 
 #### 오차항 가정이 만들어내는 차이
 
+###### 1.오차에 대한 불편추정량
+
 잘 생각해보면 지금까지 우리는 $$\beta$$의 LSE를 구하는 과정에서 오차항이 가우시안 분포를 따른다는 성질을 전혀 사용하지 않았다. 지금부터는 오차항이 가우시안 분포 $$\mathcal{N}(\bf{0},\sigma^{2}\bf{I})$$를 따른다는 가정을 통해 얻을 수 있는 성질들에 대해 이야기할 것이다.
 
-일단 가우시안 분포 가정이 이루어졌을 때, $$\sigma^{2}$$에 대한 불편 추정량(unbiased estimator)을 어떻게 구할 수 있는지 생각해보자.
+일단 가우시안 분포 가정이 이루어졌을 때, $$\sigma^{2}$$에 대한 불편 추정량(unbiased estimator)을 어떻게 구할 수 있는지 생각해보자. 이 때, $$r(\bf{X})=r$$이라 가정하자.
 
 $$\bf{Y}$$의 추정값인 $$\hat{\bf{Y}}$$는 $$\hat{\bf{Y}} = \bf{MY} = \bf{X}\hat{\beta}$$ 과 같이 구할 수 있다. 그렇다면, 잔차 $$\hat{\epsilon}$$ 는 $$\bf{Y}-\bf{MY}$$로 표현할 수 있다. 따라서 $$\bf{Y} = \bf{MY} + (\bf{I}-\bf{M})\bf{Y}$$ 로 표현될 수 있다.
 
-기존 $$\bf{Y} = \bf{X}\beta + \epsilon $$ 식의 양변에 $$(\bf{I}-\bf{M})$$을 곱해보자. 그러면 이 식은 $$ (\bf{I}-\bf{M})\bf{Y} = (\bf{I}-\bf{M})\bf{X}\beta + (\bf{I}-\bf{M})\epsilon $$ 로 표현될 수 있다. $$(\bf{I}-\bf{M})\bf{X}=0$$ 이기 때문에 $$(\bf{I}-\bf{M})\bf{Y}$$의 값은 $$\epsilon$$에 의존한다. $$\sigma^{2}$$ 값은 오차항의 성질을 결정짓기 때문에 우리는 $$\sigma^{2}$$을 추정하는 과정에서 $$(\bf{I}-\bf{M})\bf{Y}$$를 이용해야 한다.
+기존 $$\bf{Y} = \bf{X}\beta + \epsilon $$ 식의 양변에 $$(\bf{I}-\bf{M})$$을 곱해보자. $$(\bf{I}-\bf{M})\bf{X}=0$$ 이기 때문에 $$(\bf{I}-\bf{M})\bf{Y}$$의 값은 $$\epsilon$$에 의존한다. $$\sigma^{2}$$ 값은 오차항의 성질을 결정짓기 때문에 우리는 $$\sigma^{2}$$을 추정하는 과정에서 $$(\bf{I}-\bf{M})\bf{Y}$$를 이용해야 한다. Quadratic Form 특성에 의해, 다음과 같은 식이 성립한다.
+
+$$
+\mathbb{E}\[\bf{Y}^{T}(\bf{I}-\bf{M})\bf{Y}\] = \text{tr}\[\sigma^{2}(\bf{I}-\bf{M})\] + \beta^{T}\bf{X}^{T}(\bf{I}-\bf{M})\bf{X}\bf{\beta}
+$$
+
+여기에서 $$(\bf{I}-\bf{M})\bf{X}=0$$ 이라는 것과 $$ \text{tr}\[\sigma^{2}(\bf{I}-\bf{M})\] = \sigma^{2}\text{tr}(\bf{I}-\bf{M})=\sigma^{2}\text{r}(\bf{I}-\bf{M}) = \sigma^{2}(n-r)$$
+이라는 것을 활용하면 다음과 같이 정리될 수 있다.
+
+$$
+\begin{align}
+\mathbb{E}\[\bf{Y}^{T}(\bf{I}-\bf{M})\bf{Y}\] &= \sigma^{2}(n-r) \nonumber \\
+\mathbb{E}\[\bf{Y}^{T}(\bf{I}-\bf{M})\bf{Y}/(n-r)\] &= \sigma{^2}
+\end{align}
+$$
+
+$$\sigma^{2}$$의 불편추정량은 $$ \bf{Y}^{T}(\bf{I}-\bf{M})\bf{Y}/(n-r) $$ 으로 구할 수 있고 이를 MSE(mean squared error)라고 부른다. $$n-r$$로 나누기 이전의 $$ \bf{Y}^{T}(\bf{I}-\bf{M})\bf{Y} $$ 값은 SSE (sum of squares for error)라고 불린다.
+
+###### 2.Gauss-Markov Theorm
+
+$$\bf{a}$$란 벡터가 있다고 하자.
 
 
 
-#### 최대 가능도
+
+
+###### 3.최대 가능도 값이 곧 최소 제곱법으로 추정하는 값
 
 입력 데이터 집합 $$\bf{X}_{N} = \{x_{1},...,x_{N}\}$$ 타깃변수 집합 $$\bf{y}_{N} =\{y_{1},...,y_{N}\}$$ 과 같이 존재한다고 생각해보자. 이 타깃변수의 데이터 포인트 $$(y_{1},...,y_{n})$$ 가 $$ \text{P}(\bf{y}\mid\bf{X},\beta,\sigma^{2}) $$ 로부터 독립적으로 추출된다는 가정을 하자. 그렇다면 다음과 같이 가능도(Likelihood)를 계산할 수 있다.
 
