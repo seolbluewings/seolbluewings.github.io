@@ -65,7 +65,7 @@ $$
 
 이 때, $$\lambda$$값을 충분히 크게 설정하면 몇몇 계수 $$\beta_{j}$$ 값은 0이 될 것이다. 이 때, $$\beta_{j}$$가 0이 된 항에 매칭되는 $$\bf{X}$$의 변수는 더 이상 사용되지 않는다.
 
-![Shrinkage](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/LASSO.PNG?raw=true)
+![Shrinkage](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/LASSO.png?raw=true)
 
 Ridge 와 LASSO의 차이는 Penalty Term이 L2 Norm에서 L1 Norm으로 바뀐다는 것이다. 위의 그림은 Ridge와 LASSO의 차이를 보여주는 그림으로 보여주는 대표적인 예시이다. 이 그림에서 등고선은 $$\hat{\beta}_{LSE}$$ 을 중심으로 하는 오차제곱합의 등고선이다.
 
