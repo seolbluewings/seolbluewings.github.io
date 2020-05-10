@@ -31,7 +31,7 @@ $$
 \hat{\beta}_{LSE} = \text{argmin}_{\beta}(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)
 $$
 
-Ridge의 추정치는 $$ \mid\beat\mid_{2}^{2} \leq t^{2} $$, 즉 L2 Norm이 특정값보다 작다는 제약조건 하에서 다음과 같이 구할 수 있다.
+Ridge의 추정치는 $$ \mid\beta\mid_{2}^{2} \leq t^{2} $$, 즉 L2 Norm이 특정값보다 작다는 제약조건 하에서 다음과 같이 구할 수 있다.
 
 $$
 \hat{\beta}_{Ridge} = \text{argmin}_{\beta}(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)
@@ -43,7 +43,7 @@ $$
 \hat{\beta}_{Ridge} = \text{argmin}_{\beta}\{(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)+\lambda |\beta|_{2}^{2} \}
 $$
 
-이는 LSE를 구하는 과정에 $$ \lambda |\beta|^{2} $$ 라는 Penalty Term이 들어가는 것이며 이 Penalty Term까지 들어간 부분을 포함해 전체를 최소화시키는 것을 의미한다. 이 Penalty Term을 정규화항이라 부르기도 하며  데이터에 의해 지지되지 않는 한 parameter 값이 0을 향해 감소하기 때문에 이를 매개변수 축소(parameter shrinkage)라 부른다.
+이는 LSE를 구하는 과정에 $$ \lambda \mid\beta\mid^{2} $$ 라는 Penalty Term이 들어가는 것이며 이 Penalty Term까지 들어간 부분을 포함해 전체를 최소화시키는 것을 의미한다. 이 Penalty Term을 정규화항이라 부르기도 하며  데이터에 의해 지지되지 않는 한 parameter 값이 0을 향해 감소하기 때문에 이를 매개변수 축소(parameter shrinkage)라 부른다.
 
 기존 LSE의 추정값은 $$ \hat{\beta}_{LSE} (\bf{X}^{T}\bf{X})^{-1}\bf{X}^{T}\bf{Y} $$ 인데 Ridge Regression의 경우 $$ \hat{\beta}_{Ridge} (\bf{X}^{T}\bf{X}+\lambda\bf{I})^{-1}\bf{X}^{T}\bf{Y} $$ 의 형태로 구할 수 있다.
 
@@ -67,5 +67,9 @@ $$
 
 ![Shrinkage](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/LASSO.PNG?raw=true)
 
-Ridge 와 LASSO의 차이는 Penalty Term이 L2 Norm에서 L1 Norm으로 바뀐다는 것이다. 위의 그림은 Ridge와 LASSO의 차이를 보여주는 그림으로 보여주는 대표적인 예시이다. 이 그림에서 등고선은 $$\hat{\beta}_{LSE}$$ 을 중심으로 하는 
+Ridge 와 LASSO의 차이는 Penalty Term이 L2 Norm에서 L1 Norm으로 바뀐다는 것이다. 위의 그림은 Ridge와 LASSO의 차이를 보여주는 그림으로 보여주는 대표적인 예시이다. 이 그림에서 등고선은 $$\hat{\beta}_{LSE}$$ 을 중심으로 하는 오차제곱합의 등고선이다.
+
+음영처리된 부분은 제약조건인 $$ \mid\beta_{1}\mid + \mid\beta_{2}\mid \leq t $$ 와 $$ \beta_{1}^{2} + \beta_{2}^{2} \leq t^{2} $$ 을 만족시키는 영역을 표현한다. 각 $$\beta_{j}$$의 추정치는 등고선과 음영처리된 영역이 만나는 점으로 주어지게 된다.
+
+LASSO의 경우 제약조건을 나타내는 영역이 정사각형 형태이므로 추정값이 모서리제 닿아 계수가 0이될 가능성이 높다. LASSO는 설명력이 없는 입력변수들의 계수를 0으로 추정함으로써 자동적으로 변수선택이 이루어진다.
 
