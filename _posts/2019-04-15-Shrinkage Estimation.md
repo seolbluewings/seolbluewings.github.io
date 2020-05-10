@@ -40,10 +40,10 @@ $$
 이를 라그랑주 승수법에 의하면 다음과 같이 표현할 수 있다. 여기서 $$\lambda \geq 0$$ 이다.
 
 $$
-\hat{\beta}_{Ridge} = \text{argmin}_{\beta}\{(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)+\lambda ||\beat||_{2}^{2} \}
+\hat{\beta}_{Ridge} = \text{argmin}_{\beta}\{(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)+\lambda |\beta|_{2}^{2} \}
 $$
 
-이는 LSE를 구하는 과정에 $$ \lambda ||\beat||^{2} $$ 라는 Penalty Term이 들어가는 것이며 이 Penalty Term까지 들어간 부분을 포함해 전체를 최소화시키는 것을 의미한다. 이 Penalty Term을 정규화항이라 부르기도 하며  데이터에 의해 지지되지 않는 한 parameter 값이 0을 향해 감소하기 때문에 이를 매개변수 축소(parameter shrinkage)라 부른다.
+이는 LSE를 구하는 과정에 $$ \lambda |\beta|^{2} $$ 라는 Penalty Term이 들어가는 것이며 이 Penalty Term까지 들어간 부분을 포함해 전체를 최소화시키는 것을 의미한다. 이 Penalty Term을 정규화항이라 부르기도 하며  데이터에 의해 지지되지 않는 한 parameter 값이 0을 향해 감소하기 때문에 이를 매개변수 축소(parameter shrinkage)라 부른다.
 
 기존 LSE의 추정값은 $$ \hat{\beta}_{LSE} (\bf{X}^{T}\bf{X})^{-1}\bf{X}^{T}\bf{Y} $$ 인데 Ridge Regression의 경우 $$ \hat{\beta}_{Ridge} (\bf{X}^{T}\bf{X}+\lambda\bf{I})^{-1}\bf{X}^{T}\bf{Y} $$ 의 형태로 구할 수 있다.
 
@@ -51,7 +51,7 @@ $$
 
 Ridge Regression은 축소된 추정값을 주지만, 이를 통해 변수 선택까지 진행할 수는 없다. 따라서 고차원 자료의 경우 최종 모형에 대한 해석이 쉽지 않을 수 있다. 그래서 지금부터는 축소된 추정값 뿐만 아니라 변수선택을 통해 예측력을 향상시키는 LASSO에 대해 이야기하고자 한다.
 
-LASSO는 제약조건 $$ ||\beta||_{1} \leq t $$ 즉 L1 Norm 이 특정값 이하의 값을 갖는다는 조건 하에 다음의 식을 만족하는 $$\beta$$를 구하는 것이다.
+LASSO는 제약조건 $$ |\beta|_{1} \leq t $$ 즉 L1 Norm 이 특정값 이하의 값을 갖는다는 조건 하에 다음의 식을 만족하는 $$\beta$$를 구하는 것이다.
 
 $$
 \hat{\beta}_{LASSO} = \text{argmin}_{\beta}(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)
@@ -60,12 +60,12 @@ $$
 이를 라그랑주 승수법에 의하면 다음과 같이 표현할 수 있다. 여기서 $$\lambda \geq 0$$ 이다.
 
 $$
-\hat{\beta}_{LASSO} = \text{argmin}_{\beta}\{(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)+\lambda ||\beat||_{1}\}
+\hat{\beta}_{LASSO} = \text{argmin}_{\beta}\{(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)+\lambda |\beta|_{1}\}
 $$
 
-이 때, $$\lambda$$값을 충분히 크게 설정하면 몇몇 계수 $$\beta_{j}$$ 값은 0이 될 것이다. 이 때, $$\beta_{j}$$가 0이 된 항에 매칭되는 $$\\bf{X}$$의 변수는 더 이상 사용되지 않는다.
+이 때, $$\lambda$$값을 충분히 크게 설정하면 몇몇 계수 $$\beta_{j}$$ 값은 0이 될 것이다. 이 때, $$\beta_{j}$$가 0이 된 항에 매칭되는 $$\bf{X}$$의 변수는 더 이상 사용되지 않는다.
 
 ![Shrinkage](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/LASSO.PNG?raw=true)
 
-
+Ridge 와 LASSO의 차이는 Penalty Term이 L2 Norm에서 L1 Norm으로 바뀐다는 것이다. 
 
