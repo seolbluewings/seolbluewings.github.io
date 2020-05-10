@@ -31,7 +31,7 @@ $$
 \hat{\beta}_{LSE} = \text{argmin}_{\beta}(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)
 $$
 
-Ridge의 추정치는 $$ ||\beat||_{2}^{2} \leq t^{2} $$, 즉 L2 Norm이 특정값보다 작다는 제약조건 하에서 다음과 같이 구할 수 있다.
+Ridge의 추정치는 $$ \mid\beat\mid_{2}^{2} \leq t^{2} $$, 즉 L2 Norm이 특정값보다 작다는 제약조건 하에서 다음과 같이 구할 수 있다.
 
 $$
 \hat{\beta}_{Ridge} = \text{argmin}_{\beta}(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)
@@ -51,7 +51,7 @@ $$
 
 Ridge Regression은 축소된 추정값을 주지만, 이를 통해 변수 선택까지 진행할 수는 없다. 따라서 고차원 자료의 경우 최종 모형에 대한 해석이 쉽지 않을 수 있다. 그래서 지금부터는 축소된 추정값 뿐만 아니라 변수선택을 통해 예측력을 향상시키는 LASSO에 대해 이야기하고자 한다.
 
-LASSO는 제약조건 $$ |\beta|_{1} \leq t $$ 즉 L1 Norm 이 특정값 이하의 값을 갖는다는 조건 하에 다음의 식을 만족하는 $$\beta$$를 구하는 것이다.
+LASSO는 제약조건 $$ \mid\beta\mid_{1} \leq t $$ 즉 L1 Norm 이 특정값 이하의 값을 갖는다는 조건 하에 다음의 식을 만족하는 $$\beta$$를 구하는 것이다.
 
 $$
 \hat{\beta}_{LASSO} = \text{argmin}_{\beta}(\bf{Y}-\bf{X}\beta)^{T}(\bf{Y}-\bf{X}\beta)
@@ -67,5 +67,5 @@ $$
 
 ![Shrinkage](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/LASSO.PNG?raw=true)
 
-Ridge 와 LASSO의 차이는 Penalty Term이 L2 Norm에서 L1 Norm으로 바뀐다는 것이다. 
+Ridge 와 LASSO의 차이는 Penalty Term이 L2 Norm에서 L1 Norm으로 바뀐다는 것이다. 위의 그림은 Ridge와 LASSO의 차이를 보여주는 그림으로 보여주는 대표적인 예시이다. 이 그림에서 등고선은 $$\hat{\beta}_{LSE}$$ 을 중심으로 하는 
 
