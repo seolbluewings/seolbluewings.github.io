@@ -3,7 +3,7 @@ layout: post
 title:  "베이지안 모델 비교(Bayesian Model Comparison)"
 date: 2019-05-22
 author: YoungHwan Seol
-categories: Bayesian
+categories: Statistics
 ---
 
 베이지안 관점에서의 모델 비교는 모델 선택에 있어서의 불확실성을 확률로 나타내는 것을 바탕으로 한다. L개의 모델 $$\{\mathcal{M}_{i}\}$$ ($$\mathit{i}=1,2,...,L$$)을 비교하기로 하자. 이 때 $$\{\mathcal{M}_{i}\}$$는 관측된 데이터 집합 $$\mathcal{D}$$에 대한 확률분포를 의미한다. 

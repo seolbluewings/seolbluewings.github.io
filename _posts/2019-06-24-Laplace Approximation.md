@@ -3,7 +3,7 @@ layout: post
 title:  "라플라스 근사(Laplace Approximation)"
 date: 2019-06-24
 author: YoungHwan Seol
-categories: Bayesian
+categories: Statistics
 ---
 
 라플라스 근사법(Laplace Approximation)은 임의의 함수를 특정 위치에서의 정규 분포로 근사하는 기법을 의미한다. 현재 게시하고 있는 베이즈 관점에서는 Posterior 분포의 가장 비슷한 형태의 가우시안 분포로 대응시키는 것을 의미한다고 할 수 있다.

@@ -3,7 +3,7 @@ layout: post
 title:  "메트로폴리스-해스팅스 알고리즘(M-H Algorithm)"
 date: 2019-06-21
 author: YoungHwan Seol
-categories: Bayesian
+categories: Statistics
 ---
 모수 $$\mathbf{\theta}=(\theta_{1},...,\theta_{p})$$ 의 Posterior distribution인 $$\pi(\theta\mid x)$$로 부터 $$\mathbf{\theta}$$의 사후 표본을 추출하려고 한다. 깁스 샘플러의 경우는 각 원소 $$\theta_{i}$$의 full-conditional posterior를 활용하며 이 경우에는 $$p(\theta_{i}\mid x,\theta_{1},\theta_{2},...,\theta_{p})$$로부터 직접적인 표본 생성이 가능해야 한다.
 

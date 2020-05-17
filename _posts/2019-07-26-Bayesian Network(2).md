@@ -3,7 +3,7 @@ layout: post
 title:  "베이지안 네트워크 2(Bayesian Network)"
 date: 2019-07-26
 author: YoungHwan Seol
-categories: Bayesian
+categories: Statistics
 ---
 
 일반적으로 K개의 변수를 갖는 joint distribution, $$ p(x_{1},...,x_{K}) $$은 다음과 같이 전개(factorization)이 가능하다.

@@ -3,7 +3,7 @@ layout: post
 title:  "깁스 샘플러(Gibbs Sampler)"
 date: 2019-05-22
 author: YoungHwan Seol
-categories: Bayesian
+categories: Statistics
 ---
 
 다음과 같은 모수가 존재한다고 하자.

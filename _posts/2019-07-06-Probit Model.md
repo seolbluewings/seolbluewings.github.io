@@ -3,7 +3,7 @@ layout: post
 title:  "프로빗 모델(Probit model)"
 date: 2019-07-06
 author: YoungHwan Seol
-categories: Bayesian
+categories: Statistics
 ---
 
 프로빗 모형(Probit Model)은 반응변수 Y가 0 또는 1일 때, n개의 반응변수 $$Y_{i}, i=1,...,n$$ 각각에 대하여 독립적으로 $$Ber(p_{i})$$를 가정하여 진행하는 것을 바탕으로 한다.
