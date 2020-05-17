@@ -12,7 +12,7 @@ $$
 \begin{align}
 \text{MSE}(\hat{\theta}) &= \mathbb{E}(\hat{\theta}-\theta)^{2} \nonumber \\
 &= \mathbb{E}(\hat{\theta}-\mathbb{E}(\hat{\theta})+\mathbb{E}(\hat{\theta})-\theta)^{2} \nonumber \\
-&= (\hat{\theta}-\mathbb{E}(\hat{\theta}))^{2}+\mathbb{E}(\mathbb{E}(\hat{\theta})-\theta)^{2} \nonumber \\
+&= \mathbb{E}(\hat{\theta}-\mathbb{E}(\hat{\theta}))^{2} +(\mathbb{E}(\hat{\theta})-\theta)^{2} \nonumber \\
 &= \text{Var}(\hat{\theta})+\text{bias}^{2} \nonumber
 \end{align}
 $$
