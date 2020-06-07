@@ -93,10 +93,22 @@ y = df.iloc[:,4]
 x_tr, x_ts, y_tr, y_ts = train_test_split(x,y, test_size = 0.2, random_state = 0)
 ~~~
 
-간단한 랜덤 포레스트 모델을 생성하고
+간단한 랜덤 포레스트 모델을 생성하고 해당 모델에 대한 교차 검증의 점수를 출력해낸다.
 
 ~~~
 rf_classifier = RandomForestClassifier(n_estimators = 50, max_depth = 3, max_leaf_nodes = 3)
+score = cross_val_score(rf_classifier,x_tr,y_tr, cv= 5)
+print("평균 정확도 :{:.2f}".format(score.mean()))
+### 평균 정확도 : 0.94
+~~~
+
+먼저 소개한 계층별 K-Fold 교차검증을 진행한다면, train_test_split 함수를 입력하는 과정에서 stratify = y 옵션을 추가해주면 된다. 타겟 변수의 분포를 고려하여 Fold를 나누기 때문에 성능이 보다 좋아진 것을 확인할 수 있다.
+
+~~~
+n_x_tr, n_x_ts, n_y_tr, n_y_ts = train_test_split(x,y, test_size = 0.2, random_state = 0, stratify = y)
+n_score = cross_val_score(rf_classifier,n_x_tr,n_y_tr, cv= 5)
+print("평균 정확도 :{:.2f}".format(n_score.mean()))
+### 평균 정확도 : 0.96
 ~~~
 
 
