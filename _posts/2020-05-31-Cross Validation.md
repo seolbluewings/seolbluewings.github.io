@@ -59,13 +59,45 @@ K-Fold 교차검증을 진행하기 위해선 데이터셋을 우선 훈련 데�
 
 #### 계층별 K-Fold 교차검증
 
-만약 데이터가 2가지 클래스($$Y=0$$ 또는 $$Y=1$$)로 구성되며 각 비율이 $$Y=0$$이 90%, $$Y=1$$이 10% 이라고 가정해보자. 만약 앞서 언급한 K-Fold 교차검증을 진행한다면, 어떤 Fold에는 $$Y=0$$인 데이터만 들어가는 현상이 발생해서 모델을 만드는 과정에 어려움이 발생할 수 있다.
+만약 데이터가 2가지 클래스 ($$Y=0$$ 또는 $$Y=1$$) 로 구성되며 각 비율이 $$Y=0$$ 이 90%, $$Y=1$$ 이 10% 이라고 가정해보자. 만약 앞서 언급한 K-Fold 교차검증을 진행한다면, 어떤 Fold에는 $$Y=0$$인 데이터만 들어가는 현상이 발생해서 모델을 만드는 과정에 어려움이 발생할 수 있다.
 
 전체 데이터가 각 클래스별 90%, 10% 비중을 가지고 있다면, 교차검증 과정에서의 각 Fold에 데이터가 클래스별 90%, 10%씩 포함되게 생성되는 것이 바람직할 것이다. 계층별 K-Fold 교차검증은 바로 이러한 처리를 해주는 것을 의미한다.
 
+#### 간단한 파이썬 코드
 
+먼저 필요한 라이브러리를 불러온다. load_iris를 통해 간단한 실습에 활용할 iris 데이터를 가져오고 데이터셋을 분류하기 위한 train_test_split, CV 성능을 판단하기 위한 cross_val_score, 간단한 모델을 만들기 위한 RandomForestClassifier 라이브러리를 불러온다.
 
+~~~
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import RandomForestClassifier
+~~~
 
+sklearn을 통해 불러온 iris 데이터를 pandas의 데이터프레임 형태로 변형시킨다.
+
+~~~
+df= pd.DataFrame(data= np.c_[iris['data'], iris['target']],
+                 columns= iris['feature_names'] + ['target'])
+
+df['species'] = pd.Categorical.from_codes(iris.target, iris.target_names)
+~~~
+
+데이터프레임에서 타겟 변수(y)와 예측을 위해 활용되는 변수(X)로 구분짓고 이를 8:2의 비율로 데이터셋을 훈련 데이터와 테스트 데이터로 구분 짓는다.
+
+~~~
+x = df.iloc[:,0:4]
+y = df.iloc[:,4]
+x_tr, x_ts, y_tr, y_ts = train_test_split(x,y, test_size = 0.2, random_state = 0)
+~~~
+
+간단한 랜덤 포레스트 모델을 생성하고
+
+~~~
+rf_classifier = RandomForestClassifier(n_estimators = 50, max_depth = 3, max_leaf_nodes = 3)
+~~~
 
 
 
