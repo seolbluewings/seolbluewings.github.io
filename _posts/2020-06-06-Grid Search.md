@@ -117,4 +117,4 @@ print("최적의 hyperparamter :",rf_classifier_grid.best_params_)
 
 hyperparameter 튜닝은 머신러닝 모델을 생성하는 과정에서 가장 어려운 단계 중 하나지만, 더 좋은 예측력을 갖춘 모델을 생성하기 위해서는 반드시 거쳐야하는 단계이다. Grid Search와 Random Search는 최적의 hyperparameter를 찾아내는 효율적인 방식이며 우리는 이미 생성되어 있는 함수를 활용하여 최적의 hyperparameter 생성에 대한 목적을 달성해낼 수 있다. Grid Search는 hyperparameter의 조합의 개수가 많을수록 계산량이 많아져 Random Search를 활용하는 것이 낫다고 한다. 선택은 분석자의 자유다. 2가지 방법 말고 Bayesian Optimization과 같은 방법도 있다. 더 좋은 예측을 위해서는 다양한 시도를 해볼 필요가 있다.
 
-##### 이 포스팅과 관련된 간단한 코드는 다음의 [주소](https://github.com/seolbluewings/code_example/blob/master/hyperparameter%20tuning.ipynb)에서 확인할 수 있습니다.
+##### 이 포스팅과 관련된 간단한 코드는 다음의 [주소](https://github.com/seolbluewings/code_example/blob/master/1.hyperparameter%20tuning.ipynb)에서 확인할 수 있습니다.
