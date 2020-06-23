@@ -152,7 +152,7 @@ DBSCAN 알고리즘은 K-평균 군집화와 달리 데이터의 밀집도를 �
 
 
 
-![clustering](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DBSCAN.png?raw=true){:width="50%" height="50%"}{: .center}
+![clustering](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DBSCAN.png?raw=true){:width="70%" height="70%"}{: .center}
 
 
 
@@ -198,7 +198,15 @@ $$
 
 분자 부분은 군집 $$i$$와 군집 $$j$$의 거리 최소값으로 이는 군집 간 분산의 최소값이며, 분모 부분은 전체 $$K$$개의 군집 중 군집 내 분산이 최대인 $$l$$ 번째 군집의 군집 내 분산값을 의미한다. 군집 간 분산은 클수록 군집 내 분산은 작을수록 좋은 군집 결과이므로 Dunn-Index는 값이 클수록 군집의 결과가 좋다고 판단된다.
 
+최적의 군집 개수를 결정하는 과정에서 사용되는 또 다른 방법은 실루엣(silhouette) 점수를 활용하는 것이다. 실루엣 점수 역시도 Dunn-Index와 마찬가지로 군집 내 분산 최소화, 군집 간 분산 최대화를 목표로 한다. 실루엣 점수는 다음과 같은 공식을 통해 구할 수 있다.
 
+$$
+s(i) = \frac{b(x_i)-a(x_i)}{\text{max}\{a(x_i),b(x_i)\}}
+$$
+
+먼저 $$a(x_i)$$ 는 $$i$$번째 개체와 같은 군집에 속한 요소들 간에 거리의 평균값을 의미한다. 반면 $$b(x_i)$$는 $$i$$번째 개체와 다른 군집에 속한 요소들 간의 거리 평균을 구하고 그 중에 최소값을 선택한다. 즉, $$b(x_i)$$ 는 $$i$$번째 개체가 속한 군집과 가장 가까운 이웃 군집을 택하여 거리의 평균값을 계산하는 것이다.
+
+이 값은 -1부터 1 사이의 값을 가질 수 있다. 군집 내 거리 최소, 군집 간 거리 최대를 추구하기 때문에 $$b(x_{i})$$ 가 $$a(x_{i})$$ 인 케이스가 바람직한 결과이다. 따라서 실루엣 점수가 1에 가까울수록 좋다고 볼 수 있다.
 
 ##### 이 포스팅과 관련된 간단한 코드는 다음의 [주소](https://github.com/seolbluewings/code_example/blob/master/2.Cluster%20Analysis.ipynb)에서 확인할 수 있습니다.
 
