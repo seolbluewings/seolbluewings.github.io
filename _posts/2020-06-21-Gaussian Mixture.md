@@ -20,7 +20,7 @@ $$ 0 \leq \pi_{k} \leq 1, \quad \sum_{k=1}^{K}\pi_{k}=1 $$
 
 즉 확률변수 $$\mathbf{z}$$는 디리클레 분포를 따른다고 볼 수 있으며 $$ p(\mathbf{z}) = \sum_{k=1}^{K}\pi_{k}^{z_{k}}$$ 로 표현 가능하다.
 
-$$\mathbf{z}$$ 값이 $$z_{k} = 1$$ 로 특정되었다고 하자. 그렇다면 $$\mahtbf{x}$$에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
+$$\mathbf{z}$$ 값이 $$z_{k} = 1$$ 로 특정되었다고 하자. 그렇다면 $$\mathbf{x}$$에 대한 조건부 분포를 다음과 같이 표현할 수 있다.
 
 $$ P(\mathbf{x} \mid z_{k}=1) \sim \mathcal{N}(\mathbf{x}\mid \mu_{k},\Sigma_{k}) $$
 
