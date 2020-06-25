@@ -12,7 +12,14 @@ $$
 P(\mathbf{x}) = \sum_{k=1}^{K}\pi_{k} \mathcal{N}(\mathbf{x}\mid \mu_{k},\Sigma_{k})
 $$
 
-위와 같은 수식에 잠재 변수(latent variable) 개념을 도입하면 우리는 수식을 더욱 폭넓게 이해할 수 있다. K차원의 이산형 확률변수 $$z$$를 도입하자. 이 이산형 확률변수 $$\mathbf{z}$$는 $$z_{k} \in \{0,1\}$$ 및 $$\sum_{k}z_{k} = 1$$ 조건을 만족한다고 가정하자.
+위와 같은 수식에 잠재 변수(latent variable) 개념을 도입하면 우리는 수식을 더욱 폭넓게 이해할 수 있다. K차원의 이산형 확률변수 $$z$$를 도입하자. 이 이산형 확률변수 다음의 두가지 조건을 만족한다고 가정하자.
+
+$$
+\begin{align}
+\mathbf{z}$$는 $$z_{k} \in \{0,1\} \\ \nonumber
+\sum_{k}z_{k} = 1 \nonumber
+\end{align}
+$$
 
 그렇다면, 확률변수 $$\mathbf{z}$$ 의 분포는 다음과 같이 $$p(z_{k}=1)=\pi_{k}$$ 로 표현할 수 있다. 여기서 $$\pi_{k}$$는 변수 $$z_{k}$$가 1이 되기 위한 확률일테고 $$\pi_{k}$$는 유효한 확률값이 되기 위해서 다음의 2가지 조건을 만족시켜야 한다.
 
@@ -29,13 +36,20 @@ $$ P(\mathbf{x} \mid z_{k}=1) \sim \mathcal{N}(\mathbf{x}\mid \mu_{k},\Sigma_{k}
 $$
 \begin{align}
 P(\mathbf{x},\mathbf{z}) &= P(\mathbf{z})P(\mathbf{x}\mid\mathbf{z}) \\ \nonumber
-P(\mathbf{x}) &= \sum_{z}P(\mathbf{z})P(\mathbf{x}\mid\mathbf{z}) \\ \nonumber
-&= \prod_{k=1}^{K}\{\pi_{k}\mathcal{N}(\mathbf{x}\mid\mu_{k},\Sigma_{k})\}^{z_{k}} \\ \nonumber
+P(\mathbf{x}) &= \sum_{z}P(\mathbf{z})P(\mathbf{x}\mid\mathbf{z}) = \prod_{k=1}^{K}\{\pi_{k}\mathcal{N}(\mathbf{x}\mid\mu_{k},\Sigma_{k})\}^{z_{k}} \\ \nonumber
 &= \sum_{k=1}^{K}\pi_{k}\mathcal{N}(\mathbf{x}\mid\mu_{k},\Sigma_{k}) \nonumber
 \end{align}
 $$
 
+$$P(\mathbf{z})$$ 와 $$P(\mathbf{x},\mathbf{z})$$ 가 주어졌기 때문에 우리는 이를 활용하여 $$P(\mathbf{z}\mid\mathbf{x})$$ 를 다음과 같이 구할 수 있다.
 
+$$
+\begin{align}
+P(z_{k}=1 \mid \mathbf{x}) &= \frac{P(\mathbf{x},z_{k}=1)}{P(\mathbf{x})} = \frac{P(\mathbf{x},z_{k}=1)}{\sum_{z}P(\mathbf{z})P(\mathbf{x}\mid\mathbf{z})} \\ \nonumber
+&= \frac{P(z_{k}=1)P(\mathbf{x}\mid z_{k}=1)}{\sum_{j=1}^{K}P(z_{j}=1)P(\mathbf{x}\mid z_{j}=1)} \\ \nonumber
+&= \frac{\pi_{k}\mathcal{N}(\mathbf{x}\mid \mu_{k},\Sigma_{k})}{\sum_{j=1}^{K}\pi_{j}\mathcal{N}(\mathbf{x}\mid \mu_{j}, \Sigma_{j})} \nonumber
+\end{align}
+$$
 
 
 
