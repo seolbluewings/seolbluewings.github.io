@@ -16,7 +16,7 @@ $$
 
 $$
 \begin{align}
-\mathbf{z}$$는 $$z_{k} \in \{0,1\} \\ \nonumber
+z_{k} \in \{0,1\} \\ \nonumber
 \sum_{k}z_{k} = 1 \nonumber
 \end{align}
 $$
