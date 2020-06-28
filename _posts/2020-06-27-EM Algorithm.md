@@ -71,8 +71,9 @@ $$
 이제 이 식을 활용하여 $$l(\Theta^{(t+1)}\mid\mathbf{X})- l(\Theta^{t}\mid\mathbf{X}) \geq 0$$ 임을 보일 것이다. 수식 표기의 간결성을 위해 $$\mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{Z}\mid \mathbf{X},\Theta)\mid \mathbf{X},\Theta^{(t)}]$$ 를 $$H(\Theta\mid\Theta^{(t)})$$ 로 표기한다.
 
 $$
-l(\Theta^{(t+1)}\mid\mathbf{X})- l(\Theta^{t}\mid\mathbf{X}) = Q(\Theta^{(t+1)}\mid\Theta^{(t)})-Q(\Theta^{(t)}\mid\Theta^{(t)}) - H(\Theta^{(t+1)}\mid\Theta^{(t)}) + H(\Theta^{(t+1)}\mid\Theta^{(t)}) // /nonumber
+l(\Theta^{(t+1)}\mid\mathbf{X})- l(\Theta^{t}\mid\mathbf{X}) = Q(\Theta^{(t+1)}\mid\Theta^{(t)})-Q(\Theta^{(t)}\mid\Theta^{(t)}) - H(\Theta^{(t+1)}\mid\Theta^{(t)}) + H(\Theta^{(t+1)}\mid\Theta^{(t)})
 $$
+
 이며 $$\Theta^{(t+1)} = \text{argmax}_{\Theta}Q(\Theta\mid\Theta^{(t)}$$ 임을 고려하면 $$ Q(\Theta^{(t+1)}\mid\Theta^{(t)})-Q(\Theta^{(t)}\mid\Theta^{(t)}) \geq 0$$ 인것은 자명하다. 그렇다면, 우리는 $$ H(\Theta^{(t+1)}\mid\Theta^{(t)}) - H(\Theta^{(t+1)}\mid\Theta^{(t)}) \leq 0$$ 임을 보이기만 하면 된다.
 
 여기서 다시 $$H$$ 함수를 원래의 $$\mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{Z}\mid \mathbf{X},\Theta)\mid \mathbf{X},\Theta^{(t)}]$$ 로 바꾼다.
@@ -80,14 +81,14 @@ $$
 $$
 \begin{align}
 H(\Theta^{(t+1)}\mid\Theta^{(t)}) - H(\Theta^{(t+1)}\mid\Theta^{(t)}) &= \mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{Z}\mid \mathbf{X},\Theta^{(t+1)})\mid \mathbf{X},\Theta^{(t)}] - \mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{Z}\mid \mathbf{X},\Theta^{(t)})\mid \mathbf{X},\Theta^{(t)}] \\ \nonumber
-&= \mathbb{E}_{\mathbf{Z}}\left[\frac{\text{ln}P(\mahtbf{Z}\mid\mathbf{X},\Theta^{(t+1)})}{\text{ln}P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t)})} \mid \mathbf{X},\Theta^{(t)}\right] \\ \nonumber
-&\leq \text{ln}\left[\mathbb{E}_{\mathbf{Z}}\left[\frac{P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t+1)})}{P(\mathbf{Z}\mid \mathbf{X},\Theta^{(t)})}\right]\right] \nonumber
+&= \mathbb{E}_{\mathbf{Z}}\left[\frac{\text{ln}P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t+1)})}{\text{ln}P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t)})} \mid \mathbf{X},\Theta^{(t)}\right] \\ \nonumber
+&\leq \text{ln}\left[\mathbb{E}_{\mathbf{Z}}\left[\frac{P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t+1)})}{P(\mathbf{Z}\mid \mathbf{X},\Theta^{(t)})}\right]\mathbf{X},\Theta^{(t)} \right] \nonumber
 \end{align}
 $$
 
-로그함수와 같이 concave한 함수에서는 $$\mathbb{E}[g(X)] \leq g[\mahtbb{E}(X)]$$ 라는 Jensen's Inequality 공식을 활용하였다.
+로그함수와 같이 concave한 함수에서는 $$\mathbb{E}[g(X)] \leq g[\mathbb{E}(X)]$$ 라는 Jensen's Inequality 공식을 활용하였다.
 
-
+#### 예제
 
 
 
