@@ -82,7 +82,7 @@ $$
 \begin{align}
 H(\Theta^{(t+1)}\mid\Theta^{(t)}) - H(\Theta^{(t+1)}\mid\Theta^{(t)}) &= \mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{Z}\mid \mathbf{X},\Theta^{(t+1)})\mid \mathbf{X},\Theta^{(t)}] - \mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{Z}\mid \mathbf{X},\Theta^{(t)})\mid \mathbf{X},\Theta^{(t)}] \\ \nonumber
 &= \mathbb{E}_{\mathbf{Z}}\left[\frac{\text{ln}P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t+1)})}{\text{ln}P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t)})} \mid \mathbf{X},\Theta^{(t)}\right] \\ \nonumber
-&\leq \text{ln}\left[\mathbb{E}_{\mathbf{Z}}\left[\frac{P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t+1)})}{P(\mathbf{Z}\mid \mathbf{X},\Theta^{(t)})}\right]\mathbf{X},\Theta^{(t)} \right] \nonumber
+&\leq \text{ln}\left[\mathbb{E}_{\mathbf{Z}}\left[\frac{P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t+1)})}{P(\mathbf{Z}\mid \mathbf{X},\Theta^{(t)})}\right]\mathbf{X},\Theta^{(t)} \right]=0 \nonumber
 \end{align}
 $$
 
