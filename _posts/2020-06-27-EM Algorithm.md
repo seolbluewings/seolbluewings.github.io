@@ -22,20 +22,20 @@ EM알고리즘은 observed variable $$\mathbf{X}$$를 이용한 log-likelihood�
 
 실제 상황에서는 완전한 데이터 집합 $$\{\mathbf{X},\mathbf{Z}\}$$이 주어지지 않고 불완전한 $$\mathbf{X}$$만 주어질 가능성이 아주 높다. 잠재변수 $$\mathbf{Z}$$에 대해서는 $$\mathbf{Z}$$에 대한 posterior distribution인 $$P(\mathbf{Z}\mid\mathbf{X},\Theta)$$를 통해서만 확인할 수 있다. 그래서 우리는 잠재 변수의 Posterior distribution을 통해 기대값을 구하고 이를 활용하여 완전한 데이터셋 $$\{\mathbf{X},\mathbf{Z}\}$$에 대한 log-likelihood를 구할 수 있다.
 
-여기서 잠재변수의 Posterior distribution을 활용해 기대값을 구하는 것이 EM 알고리즘의 E(Expectation) 단계이다. M(Maximization) 단계는 E단계에서 구한 기대값을 최대화시키는 $$\Theta$$ 값을 추정하는 단계이다. 각 parameter에 대한 현재값을 $$\Theta^{old}$$라 하고 E,M 단계를 거쳐서 수정된 parameter값을 $$\Theta^{new}$$ 라고 표기한다.
+여기서 잠재변수의 Posterior distribution을 활용해 기대값을 구하는 것이 EM 알고리즘의 E(Expectation) 단계이다. M(Maximization) 단계는 E단계에서 구한 기대값을 최대화시키는 $$\Theta$$ 값을 추정하는 단계이다. 각 parameter에 대한 현재값을 $$\Theta^{(t)}$$라 하고 E,M 단계를 거쳐서 수정된 parameter값을 $$\Theta^{(t+1)}$$ 라고 표기한다.
 
-E단계에서는 현재의 parameter $$\Theta^{old}$$를 이용하여, $$P(\mathbf{Z}\mid\mahtbf{X},\Theta^{old})$$ 형태의 $$\mathbf{Z}$$ 의 Posterior distribution을 먼저 구한다. 그리고 이 Posterior distribution을 이용하여 다음의 값을 구한다. 편의상 $$t$$ 번째 step에서 $$(t+1)$$번째 step으로 넘어가는 과정을 살펴보는 것으로 표기한다.
+E단계에서는 현재의 parameter $$\Theta^{(t)}$$를 이용하여, $$P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t)})$$ 형태의 $$\mathbf{Z}$$ 의 Posterior distribution을 먼저 구한다. 그리고 이 Posterior distribution을 이용하여 다음의 값을 구한다.
 
 $$
 \begin{align}
-Q(\Theta\mid\Theta^{t}) &= \mathbb{E}_{\mathbf{Z}}[(\Theta\mid \mathbf{X},\mathbf{Z})\mid \mathbf{X},\Theta^{t}] \\ \nonumber
-&= \sum_{\mathbf{Z}}P(\mathbf{Z}\mid\mathbf{X},\Theta^{t})\text{ln}P(\mathbf{X},\mathbf{Z}\mid\Theta) \noonumber
+Q(\Theta\mid\Theta^{(t)}) &= \mathbb{E}_{\mathbf{Z}}[l(\Theta\mid \mathbf{X},\mathbf{Z})\mid \mathbf{X},\Theta^{(t)}] \\ \nonumber
+&= \sum_{\mathbf{Z}}P(\mathbf{Z}\mid\mathbf{X},\Theta^{(t)})\text{ln}P(\mathbf{X},\mathbf{Z}\mid\Theta) \nonumber
 \end{align}
 $$
 
 M단계에서는 E단계에서 구한 $$Q$$ 함수를 최대화시키는 parameter 값을 찾는다.
 
-$$\Theta^{(t+1)} = \text{argmax}_{\Theta}Q(\Theta\mid\Theta^{t})$$
+$$\Theta^{(t+1)} = \text{argmax}_{\Theta}Q(\Theta\mid\Theta^{(t)})$$
 
 전반적인 과정을 살펴본다면 EM 알고리즘은 다음의 4가지 단계로 구성된다.
 
@@ -47,7 +47,29 @@ $$\Theta^{(t+1)} = \text{argmax}_{\Theta}Q(\Theta\mid\Theta^{t})$$
 
 #### EM알고리즘의 Ascent Property
 
-EM알고리즘은 매 반복마다 l(\Theta\mid \mathbf{X})가 증가한다는 성질을 갖는다. 이 말을 좀 더 수식으로 이야기하자면, $$l(\Theta^{(t+1)}\mid\mathbf{X}) \geq l(\Theta^{t}\mid\mathbf{X})$$ 라는 것이다. 이는 매 반복시행마다 log-likelihood를 증가시키는 $$\Theta^{(t+1)}$$를 찾는다는 것으로 이 알고리즘이 MLE를 찾는다는 것과 같은 의미이다.
+EM알고리즘은 매 반복마다 $$l(\Theta\mid \mathbf{X})$$가 증가한다는 성질을 갖는다. 이 말을 좀 더 수식으로 이야기하자면, $$l(\Theta^{(t+1)}\mid\mathbf{X}) \geq l(\Theta^{t}\mid\mathbf{X})$$ 라는 것이다. 이는 매 반복시행마다 log-likelihood를 증가시키는 $$\Theta^{(t+1)}$$를 찾는다는 것으로 이 알고리즘이 MLE를 찾는다는 것과 같은 의미이다.
+
+완전한 데이터 $$\{\mathbf{X},\mathbf{Z}\}$$ 의 joint distribution은 다음과 같이 표현된다.
+
+$$
+\begin{align}
+P(\mathbf{X},\mathbf{Z}\mid \Theta) &= P(\mathbf{X}\mid \Theta)P(\mathbf{Z}\mid\mathbf{X},\Theta) \\ \nonumber
+\text{ln}P(\mathbf{X},\mathbf{Z}\mid\Theta) &= \text{ln}P(\mathbf{X}\mid\Theta) + \text{ln}P(\mathbf{Z}\mid\mathbf{X},\Theta) \nonumber
+\end{align}
+$$
+
+아래의 식 양변에 기대값을 취해보자.
+
+$$
+\begin{align}
+\mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mahtbf{X}\mid\Theta)\mid \mathbf{X},\Theta^{(t)}] &= \mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{X},\mathbf{Z}\mid\Theta)\mid \mathbf{X},\Theta^{(t)}] - \mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{Z}\mid \mathbf{X},\Theta)\mid \mathbf{X},\Theta^{(t)}] \\ \nonumber
+
+\text{ln}P(\mathbf{X}\mid\Theta) &= Q(\Theta\mid\Theta^{(t)})-\mathbb{E}_{\mathbf{Z}}[\text{ln}P(\mathbf{Z}\mid \mathbf{X},\Theta)\mid \mathbf{X},\Theta^{(t)}] \nonumber
+\end{align}
+$$
+
+이제 이 식을 활용하여 $$l(\Theta^{(t+1)}\mid\mathbf{X}) \geq l(\Theta^{t}\mid\mathbf{X})$$ 임을 보일 것이다. 이 식은 $$l(\Theta^{(t+1)}\mid\mathbf{X})- l(\Theta^{t}\mid\mathbf{X}) \geq 0$$ 으로 표현될 수 있고 이 식은 다음과 동치이다.
+
 
 
 
