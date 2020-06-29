@@ -167,7 +167,7 @@ $$
 $$
 \begin{align}
 \frac{\partial Q(\Theta\mid\Theta^{(t)})}{\partial\pi} &= \sum_{i=1}^{n}\hat{z_{i}}\frac{1}{\pi} + \sum_{i=1}^{n}(1-\hat{z_{i}})\left(\frac{-1}{1-\pi}\right)=0 \\ \nonumber
-\pi^{(t+1)} = \frac{\sum_{i=1}^{n}\hat{z_{i}}}{n} \nonumber
+\pi^{(t+1)} &= \frac{\sum_{i=1}^{n}\hat{z_{i}}}{n} \nonumber
 \end{align}
 $$
 
