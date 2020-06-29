@@ -162,23 +162,23 @@ $$
 Q(\Theta\mid\Theta^{(t)}) = \sum_{i=1}^{n}\hat{z_{i}}(\text{ln}\pi+\text{ln}\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1})) + \sum_{i=1}^{n}(1-\hat{z_{i}})(\text{ln}(1-\pi)+\text{ln}\mathcal{N}(x_{i}\mid \mu_{2},\sigma^{2}_{2}))
 $$
 
-마지막으로 $$Q$$함수를 최대화시키는 5가지 모수에 대한 값을 찾는 것이다.
+마지막으로 $$Q$$함수를 최대화시키는 5가지 모수에 대한 값을 찾는 것이다. 각 paramter별로 미분하여 최대값이 나오는 값을 찾아 업데이트 한다.
 
 $$
 \begin{align}
-\frac{\partial Q(\Thtea\mid\Theta^{(t)})}{\partial\pi} &= \sum_{i=1}^{n}\hat{z_{i}}\frac{1}{\pi} + \sum_{i=1}^{n}(1-\hat{z_{i}})\left(\frac{-1}{1-\pi}\right) \\ \nonumber
+\frac{\partial Q(\Theta\mid\Theta^{(t)})}{\partial\pi} &= \sum_{i=1}^{n}\hat{z_{i}}\frac{1}{\pi} + \sum_{i=1}^{n}(1-\hat{z_{i}})\left(\frac{-1}{1-\pi}\right)=0 \\ \nonumber
 \pi^{(t+1)} = \frac{\sum_{i=1}^{n}\hat{z_{i}}}{n} \nonumber
 \end{align}
 $$
 
-같은 방식으로 각 parameter에 대해 미분하여 최대화시키는 값을 찾는다. 매 반복시행마다 업데이트 되는 추정값은 다음과 같다.
+나머지 parameter에 대해서는 업데이트 되는 값이 다음과 같다.
 
 $$
 \begin{align}
 \mu_{1}^{(t+1)} &= \frac{\sum_{i=1}^{n}\hat{z_{i}}x_{i}}{\sum_{i=1}^{n}\hat{z_{i}}} \\ \nonumber
 \mu_{2}^{(t+1)} &= \frac{\sum_{i=1}^{n}(1-\hat{z_{i}})x_{i}}{\sum_{i=1}^{n}(1-\hat{z_{i}})} \\ \nonumber
-(\sigma_{1}^{2})^{(t+1)} = \frac{\sum_{i=1}^{n}\hat{z_{i}}(x_{i}-\mu_{1})^{2}}{\sum_{i=1}^{n}\hat{z_{i}}} \\ \nonumber
-(\sigma_{2}^{2})^{(t+1)} = \frac{\sum_{i=1}^{n}(1-\hat{z_{i}})(x_{i}-\mu_{2})^{2}}{\sum_{i=1}^{n}(1-\hat{z_{i}})} \nonumber
+(\sigma_{1}^{2})^{(t+1)} &= \frac{\sum_{i=1}^{n}\hat{z_{i}}(x_{i}-\mu_{1})^{2}}{\sum_{i=1}^{n}\hat{z_{i}}} \\ \nonumber
+(\sigma_{2}^{2})^{(t+1)} &= \frac{\sum_{i=1}^{n}(1-\hat{z_{i}})(x_{i}-\mu_{2})^{2}}{\sum_{i=1}^{n}(1-\hat{z_{i}})} \nonumber
 \end{align}
 $$
 
