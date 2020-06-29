@@ -93,15 +93,15 @@ $$
 혼합 가우시안 분포(Gaussian Mixture)에 대한 EM 알고리즘 적용 예제를 살펴보도록 하자. 이 예제에서는 2개의 가우시안 분포가 혼합된 형태를 가정한다. 또한 각각의 데이터가 가우시안 분포로부터 서로 독립적으로 n개 추출되는 것으로 가정하자.
 
 $$
-X_{i} \sim (1-\pi)\text{f}(x_{i}\mid \mu_{1},\sigma^{2}_{1}) + \pi\text{f}(x_{i}\mid\mu_{2},\sigma^{2}_{2})
+X_{i} \sim (1-\pi)\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1}) + \pi\mathcal{N}(x_{i}\mid\mu_{2},\sigma^{2}_{2})
 $$
 
 먼저 이 분포에 대한 likelihood와 log-likelihood를 구한다. 편의상 $$\mu$$와 $$\sigma^{2}$$ 로 parameter를 묶어서 표현하겠다.
 
 $$
 \begin{align}
-\text{L}(\pi,\mu,\sigma^{2}\mid \mathbf{X}) &= \prod_{i=1}^{n}\left[(1-\pi)\text{f}(x_{i}\mid \mu_{1},\sigma^{2}_{1}) + \pi\text{f}(x_{i}\mid\mu_{2},\sigma^{2}_{2})\right] \\ \nonumber
-l(\pi,\mu,\sigma^{2}\mid \mathbf{X}) &= \sum_{i=1}^{n}\text{ln}\left[(1-\pi)\text{f}(x_{i}\mid \mu_{1},\sigma^{2}_{1})+\pi\text{f}(x_{i}\mid\mu_{2},\sigma^{2}_{2}) \right] \nonumber
+\text{L}(\pi,\mu,\sigma^{2}\mid \mathbf{X}) &= \prod_{i=1}^{n}\left[(1-\pi)\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1}) + \pi\mathcal{N}(x_{i}\mid\mu_{2},\sigma^{2}_{2})\right] \\ \nonumber
+l(\pi,\mu,\sigma^{2}\mid \mathbf{X}) &= \sum_{i=1}^{n}\text{ln}\left[(1-\pi)\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1})+\pi\mathcal{N}(x_{i}\mid\mu_{2},\sigma^{2}_{2}) \right] \nonumber
 \end{align}
 $$
 
@@ -120,20 +120,43 @@ $$
 $$
 X_{i}\mid Z_{i} =
 \begin{cases}
-\text{f}(x_{i}\mid mu_{1},\sigma^{2}_{1}) \quad \text{if} z_{i}=0 \\
-\text{f}(x_{i}\mid mu_{2},\sigma^{2}_{2}) \quad \text{if} z_{i}=1
+\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1}) \quad \text{if} \quad z_{i}=0 \\
+\mathcal{N}(x_{i}\mid \mu_{2},\sigma^{2}_{2}) \quad \text{if} \quad z_{i}=1
 \end{cases}
 $$
 
 더불어 $$P(\mathbf{X},\mathbf{Z}\ mid \Theta) = P(\mathbf{X}\mid\mathbf{Z},\Theta)P(\mathbf{Z}\mid\Theta)$$ 임을 고려한다면, 다음과 같은 likelihood 식을 구할 수 있다.
 
 $$
-\prod_{i=1}^{n}\left\{\pi\text{f}(x_{i}\mid\mu_{1},\sigma^{2}_{1})\right\}^{z_{i}}\left\{(1-\pi)\text{f}(x_{i}\mid\mu_{2},\sigma^{2}_{2})\right\}^{1-z_{i}}
+\prod_{i=1}^{n}\left\{\pi\mathcal{N}(x_{i}\mid\mu_{1},\sigma^{2}_{1})\right\}^{z_{i}}\left\{(1-\pi)\mathcal{N}(x_{i}\mid\mu_{2},\sigma^{2}_{2})\right\}^{1-z_{i}}
 $$
 
 그래서 최종적인 log-likelihood는 다음과 같이 표현할 수 있다.
 
 $$
-l(\pi,\mu,\sigma^{2}\mid \mathbf{X},\mathbf{Z}) = \sum_{i=1}^{n}z_{i}\{\text{ln}\pi +\text{ln}\text{f}(x_{i}\mid \mu_{1},\sigma^{2}_{1})\} \sum_{i=1}^{n}(1-z_{i})\{\text{ln}(1-\pi) +\text{ln}\text{f}(x_{i}\mid \mu_{2},\sigma^{2}_{2})\}
+l(\pi,\mu,\sigma^{2}\mid \mathbf{X},\mathbf{Z}) = \sum_{i=1}^{n}z_{i}\{\text{ln}\pi +\text{ln}\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1})\} \sum_{i=1}^{n}(1-z_{i})\{\text{ln}(1-\pi) +\text{ln}\mathcal{N}(x_{i}\mid \mu_{2},\sigma^{2}_{2})\}
 $$
 
+이제 E-step으로 들어가자. E-step에서는 잠재변수에 대한 조건부 기대값과 $$Q$$ 함수를 도출해야 한다.
+
+잠재변수에 대한 조건부 기대값은 다음의 과정을 통해 구할 수 있다.
+
+$$
+\begin{align}
+\mathbb{E}_{\mathbf{Z}}[z_{i}\mid x_{i},\Theta^{(t)}] &= 1\times P(z_{i}=1 \mid x_{i},\Theta^{(t)}) + 0\times P(z_{i}=0 \mid x_{i},\Theta^{(t)}) \\ \nonumber
+&= \frac{P(x_{i}\mid z_{i}=1,\Theta^{(t)})P(z_{i}=1\mid \Theta^{(t)})}{P(x_{i}\mid \Theta^{(t)})} \\ \nonumber
+&= \frac{P(x_{i}\mid z_{i}=1,\Theta^{(t)})P(z_{i}=1\mid \Theta^{(t)})}{P(x_{i}\mid z_{i}=1,\Theta^{(t)})P(z_{i}=1\mid \Theta^{(t)})+P(x_{i}\mid z_{i}=0,\Theta^{(t)})P(z_{i}=0\mid \Theta^{(t)})} \\ \nonumber
+&= \frac{\pi^{(t)}\mathcal{N}(x_{i}\mid \mu_{1}^{(t)},(\sigma^{2}_{1})^{2})}{\pi^{(t)}\mathcal{N}(x_{i}\mid \mu_{1}^{(t)},(\sigma^{2}_{1})^{2}) + (1-\pi^{(t)})\mathcal{N}(x_{i}\mid \mu_{2}^{(t)},(\sigma^{2}_{2})^{2})} \nonumber
+\end{align}
+$$
+
+즉 $$z_{i}\mid x_{i},\Theta^{(t)}$$는 다음의 베르누이 분포를 따른다고 할 수 있으며 이 확률이 $$z_{i}\mid x_{i},\Theta^{(t)}$$의 기대값 $$\hat{z_{i}}$$라 할 수 있다.
+
+$$
+z_{i} \mid x_{i},\Theta^{(t)} \sim \text{Ber}\left( \frac{\pi^{(t)}\mathcal{N}(x_{i}\mid \mu_{1}^{(t)},(\sigma^{2}_{1})^{2})}{\pi^{(t)}\mathcal{N}(x_{i}\mid \mu_{1}^{(t)},(\sigma^{2}_{1})^{2}) + (1-\pi^{(t)})\mathcal{N}(x_{i}\mid \mu_{2}^{(t)},(\sigma^{2}_{2})^{2})} \right)
+$$
+
+
+
+\end{align}
+$$
