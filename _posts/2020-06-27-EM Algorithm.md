@@ -10,7 +10,7 @@ EM알고리즘은 잠재변수(latent variable)를 갖는 확률 모델의 MLE �
 
 우선 관측변수 $$\mathbf{X}=\{x_{1},...x_{N}\}$$ 이라 하자. 잠재변수 $$\mathbf{Z}=\{z_{1},z_{2},...z_{n}\}$$ 는 이 논의를 진행하는 과정에서 이산형 변수라고 가정하자. 만약 $$\mathbf{Z}$$가 연속형이라면, 아래의 과정에서 합표기가 되어있는 것을 적분으로 바꾸면 된다. 그리고 모델에 활용되는 Parameter들을 $$\Theta$$ 라고 표현하자.
 
-우리의 목표는 $$P(\mathbf{X} \mid \Theta)$$ 혹은 $$l(\Theta \mid \mathbf{X})$$ 를 최대화시키는 $$\Theta$$ 값을 구하는 것이다. 이 $$P(\mathbf{X} \mid \Theta)$$에 대한 log likelihood는 다음과 같이 표현할 수 있다.
+우리의 목표는 $$P(\mathbf{X} \mid \Theta)$$ 혹은 $$l(\Theta \mid \mathbf{X})$$ 를 최대화시키는 $$\Theta$$ 값을 구하는 것이다. 이 $$P(\mathbf{X} \mid \Theta)$$에 대한 log-likelihood는 다음과 같이 표현할 수 있다.
 
 $$
 \text{ln}P(\mathbf{X}\mid\Theta) = \text{ln}\{\sum_{\mathbf{Z}}P(\mathbf{X},\mathbf{Z}\mid\Theta)\}
@@ -90,6 +90,50 @@ $$
 
 #### 예제
 
+혼합 가우시안 분포(Gaussian Mixture)에 대한 EM 알고리즘 적용 예제를 살펴보도록 하자. 이 예제에서는 2개의 가우시안 분포가 혼합된 형태를 가정한다. 또한 각각의 데이터가 가우시안 분포로부터 서로 독립적으로 n개 추출되는 것으로 가정하자.
 
+$$
+X_{i} \sim (1-\pi)\text{f}(x_{i}\mid \mu_{1},\sigma^{2}_{1}) + \pi\text{f}(x_{i}\mid\mu_{2},\sigma^{2}_{2})
+$$
 
+먼저 이 분포에 대한 likelihood와 log-likelihood를 구한다. 편의상 $$\mu$$와 $$\sigma^{2}$$ 로 parameter를 묶어서 표현하겠다.
+
+$$
+\begin{align}
+\text{L}(\pi,\mu,\sigma^{2}\mid \mathbf{X}) &= \prod_{i=1}^{n}\left[(1-\pi)\text{f}(x_{i}\mid \mu_{1},\sigma^{2}_{1}) + \pi\text{f}(x_{i}\mid\mu_{2},\sigma^{2}_{2})\right] \\ \nonumber
+l(\pi,\mu,\sigma^{2}\mid \mathbf{X}) &= \sum_{i=1}^{n}\text{ln}\left[(1-\pi)\text{f}(x_{i}\mid \mu_{1},\sigma^{2}_{1})+\pi\text{f}(x_{i}\mid\mu_{2},\sigma^{2}_{2}) \right] \nonumber
+\end{align}
+$$
+
+데이터 추출과정은 다음과 같다고 할 수 있다. 아래와 같은 확률로 각각의 데이터 포인트가 어느 가우시안 분포에서 추출될 것인지가 결정되고
+
+$$
+z_{i} =
+\begin{cases}
+1 \quad \text{with probability} \pi \\
+0 \quad \text{with probability} 1-\pi
+\end{cases}
+$$
+
+이제 $$\mathbf{Z}$$ 가 주어진 상태이기 때문에 데이터 포인트의 추출은 조건부 분포를 따를 것이다.
+
+$$
+X_{i}\mid Z_{i} =
+\begin{cases}
+\text{f}(x_{i}\mid mu_{1},\sigma^{2}_{1}) \quad \text{if} z_{i}=0 \\
+\text{f}(x_{i}\mid mu_{2},\sigma^{2}_{2}) \quad \text{if} z_{i}=1
+\end{cases}
+$$
+
+더불어 $$P(\mathbf{X},\mathbf{Z}\ mid \Theta) = P(\mathbf{X}\mid\mathbf{Z},\Theta)P(\mathbf{Z}\mid\Theta)$$ 임을 고려한다면, 다음과 같은 likelihood 식을 구할 수 있다.
+
+$$
+\prod_{i=1}^{n}\left\{\pi\text{f}(x_{i}\mid\mu_{1},\sigma^{2}_{1})\right\}^{z_{i}}\left\{(1-\pi)\text{f}(x_{i}\mid\mu_{2},\sigma^{2}_{2})\right\}^{1-z_{i}}
+$$
+
+그래서 최종적인 log-likelihood는 다음과 같이 표현할 수 있다.
+
+$$
+l(\pi,\mu,\sigma^{2}\mid \mathbf{X},\mathbf{Z}) = \sum_{i=1}^{n}z_{i}\{\text{ln}\pi +\text{ln}\text{f}(x_{i}\mid \mu_{1},\sigma^{2}_{1})\} \sum_{i=1}^{n}(1-z_{i})\{\text{ln}(1-\pi) +\text{ln}\text{f}(x_{i}\mid \mu_{2},\sigma^{2}_{2})\}
+$$
 
