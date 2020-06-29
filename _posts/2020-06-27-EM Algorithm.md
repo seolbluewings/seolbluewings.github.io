@@ -110,8 +110,8 @@ $$
 $$
 z_{i} =
 \begin{cases}
-1 \quad \text{with probability} \pi \\
-0 \quad \text{with probability} 1-\pi
+1 \quad \text{with probability} \quad \pi \\
+0 \quad \text{with probability} \quad 1-\pi
 \end{cases}
 $$
 
@@ -156,7 +156,30 @@ $$
 z_{i} \mid x_{i},\Theta^{(t)} \sim \text{Ber}\left( \frac{\pi^{(t)}\mathcal{N}(x_{i}\mid \mu_{1}^{(t)},(\sigma^{2}_{1})^{2})}{\pi^{(t)}\mathcal{N}(x_{i}\mid \mu_{1}^{(t)},(\sigma^{2}_{1})^{2}) + (1-\pi^{(t)})\mathcal{N}(x_{i}\mid \mu_{2}^{(t)},(\sigma^{2}_{2})^{2})} \right)
 $$
 
+$$Q$$함수 $$Q(\Theta\mid\Theta^{(t)}$$ 는 $$\mathbb{E}_{\mathbf{Z}}[l(\Theta\mid\mathbf{X},\mathbf{Z})\mid \mathbf{X},\Theta^{(t)}]$$ 이며 다음과 같다.
 
+$$
+Q(\Theta\mid\Theta^{(t)}) = \sum_{i=1}^{n}\hat{z_{i}}(\text{ln}\pi+\text{ln}\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1})) + \sum_{i=1}^{n}(1-\hat{z_{i}})(\text{ln}(1-\pi)+\text{ln}\mathcal{N}(x_{i}\mid \mu_{2},\sigma^{2}_{2}))
+$$
 
+마지막으로 $$Q$$함수를 최대화시키는 5가지 모수에 대한 값을 찾는 것이다.
+
+$$
+\begin{align}
+\frac{\partial Q(\Thtea\mid\Theta^{(t)})}{\partial\pi} &= \sum_{i=1}^{n}\hat{z_{i}}\frac{1}{\pi} + \sum_{i=1}^{n}(1-\hat{z_{i}})\left(\frac{-1}{1-\pi}\right) \\ \nonumber
+\pi^{(t+1)} = \frac{\sum_{i=1}^{n}\hat{z_{i}}}{n} \nonumber
 \end{align}
 $$
+
+같은 방식으로 각 parameter에 대해 미분하여 최대화시키는 값을 찾는다. 매 반복시행마다 업데이트 되는 추정값은 다음과 같다.
+
+$$
+\begin{align}
+\mu_{1}^{(t+1)} &= \frac{\sum_{i=1}^{n}\hat{z_{i}}x_{i}}{\sum_{i=1}^{n}\hat{z_{i}}} \\ \nonumber
+\mu_{2}^{(t+1)} &= \frac{\sum_{i=1}^{n}(1-\hat{z_{i}})x_{i}}{\sum_{i=1}^{n}(1-\hat{z_{i}})} \\ \nonumber
+(\sigma_{1}^{2})^{(t+1)} = \frac{\sum_{i=1}^{n}\hat{z_{i}}(x_{i}-\mu_{1})^{2}}{\sum_{i=1}^{n}\hat{z_{i}}} \\ \nonumber
+(\sigma_{2}^{2})^{(t+1)} = \frac{\sum_{i=1}^{n}(1-\hat{z_{i}})(x_{i}-\mu_{2})^{2}}{\sum_{i=1}^{n}(1-\hat{z_{i}})} \nonumber
+\end{align}
+$$
+
+이 과정을 각각의 parameter에 대해 수렴하는 시점까지(t+1시점 값과 t시점 값의 차이가 일정 수준 이하가 될 때까지) 시행하여 최종적인 값을 구해낼 수 있다.
