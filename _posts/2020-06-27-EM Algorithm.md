@@ -134,7 +134,7 @@ $$
 그래서 최종적인 log-likelihood는 다음과 같이 표현할 수 있다.
 
 $$
-l(\pi,\mu,\sigma^{2}\mid \mathbf{X},\mathbf{Z}) = \sum_{i=1}^{n}z_{i}\{\text{ln}\pi +\text{ln}\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1})\} \sum_{i=1}^{n}(1-z_{i})\{\text{ln}(1-\pi) +\text{ln}\mathcal{N}(x_{i}\mid \mu_{2},\sigma^{2}_{2})\}
+l(\pi,\mu,\sigma^{2}\mid \mathbf{X},\mathbf{Z}) = \sum_{i=1}^{n}z_{i}\{\text{ln}\pi +\text{ln}\mathcal{N}(x_{i}\mid \mu_{1},\sigma^{2}_{1})\} + \sum_{i=1}^{n}(1-z_{i})\{\text{ln}(1-\pi) +\text{ln}\mathcal{N}(x_{i}\mid \mu_{2},\sigma^{2}_{2})\}
 $$
 
 이제 E-step으로 들어가자. E-step에서는 잠재변수에 대한 조건부 기대값과 $$Q$$ 함수를 도출해야 한다.
@@ -183,3 +183,5 @@ $$
 $$
 
 이 과정을 각각의 parameter에 대해 수렴하는 시점까지(t+1시점 값과 t시점 값의 차이가 일정 수준 이하가 될 때까지) 시행하여 최종적인 값을 구해낼 수 있다.
+
+##### 이 포스팅의 예제 코드는 다음의 [주소](https://github.com/seolbluewings/code_example/blob/master/3.%20EM%20Algorithm.ipynb)에서 확인할 수 있습니다.
