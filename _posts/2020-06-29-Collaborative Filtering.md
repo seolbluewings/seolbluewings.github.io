@@ -64,19 +64,31 @@ $$
 
 그런데 영화 평점과 관련된 행렬은 아래와 같이 수많은 null 값들이 존재한다. 이렇게 null 값이 존재하는 행렬의 SVD 결과는 과적합을 유발시키는 것으로 알려져 있다.
 
-||기생충|조커|라라랜드|레옹|버드맨|머니볼|파운더|조디악|노트북|원스|
+||기생충|조커|라라랜드|레옹|버드맨|머니볼|파운더|조디악|노트북|$$\cdot\cdot\cdot$$|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|A|5.0|3.5|null|5.0|4.0|null|3.5|null|2.0|1.5|
-|B|null|1.0|5.0|5.0|null|4.5|null|3.5|1.0|4.0|
-|C|4.0|null|4.5|5.0|null|4.5|5.0|4.0|null|null|
-|D|null|null|3.5|3.5|3.0|3.0|2.5|null|null|2.5|
-|E|3.5|4.0|null|null|null|null|3.5|null|null|3.0|
-|F|3.0|5.0|null|5.0|4.0|4.5|null|3.5|2.0|2.0|
-|G|null|null|3.5|5.0|null|4.5|3.5|null|null|4.0|
-|H|1.0|null|null|2.0|3.0|null|null|3.5|2.0|2.0|
+|A|5.0|3.5|null|5.0|4.0|null|3.5|null|2.0|$$\cdot\cdot\cdot$$|
+|B|null|1.0|5.0|5.0|null|4.5|null|3.5|1.0|$$\cdot\cdot\cdot$$|
+|C|4.0|null|4.5|5.0|null|4.5|5.0|4.0|null|$$\cdot\cdot\cdot$$|
+|D|null|null|3.5|3.5|3.0|3.0|2.5|null|null|$$\cdot\cdot\cdot$$|
+|E|3.5|4.0|null|null|null|null|3.5|null|null|$$\cdot\cdot\cdot$$|
+|F|3.0|5.0|null|5.0|4.0|4.5|null|3.5|2.0|$$\cdot\cdot\cdot$$|
+|G|null|null|3.5|5.0|null|4.5|3.5|null|null|$$\cdot\cdot\cdot$$|
+|H|1.0|null|null|2.0|3.0|null|null|3.5|2.0|$$\cdot\cdot\cdot$$|
 |$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|$$\cdot\cdot\cdot$$|
 
+과적합을 방지하기 위해 오차제곱합항 뒤에 벌점화항(penalty term)을 추가하는 것처럼 여기서도 똑같은 방식을 적용할 수 있어 다음과 같은 식을 최소화하는 값을 찾게 된다.
 
+$$
+\text{min}_{P,Q} \sum_{u,i \in \kappa} (r_{ui}-q_{i}^{T}p_{u})^{2} + \lambda(||q_{i}||^{2}+||p_{u}||^{2})
+$$
+
+이 식을 최소화시키는 벡터 $$p_{u}$$, $$q_{i}$$ 를 발견하는 과정은 보통 2가지 알고리즘 1. SGD(Stochastic Gradient Descent) 2. ALS(Alternating Least Square) 방법이 있다.
+
+#### bias항 추가
+
+평점을 짜게주는 사람이 있고, 후하게 주는 사람이 있다. 그리고 다들 좋다고 평가하는 작품이기 때문에 내가 선뜻 평점을 나쁘게 주기 애매한 영화들도 있다. 이런 것들 모두 평점을 매기는 과정에서 bias 항으로 작용할 수 있다.
+
+사용자 $$u$$의 영화 $$i$$에 대한 bias $$b_{ui}$$는 다음과 같이 분해될 수 있다. $$b_{ui} = \mu + b_{u} + b_{i} $$
 
 
 
