@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://seolbluewings.github.io/sitemap.xml
