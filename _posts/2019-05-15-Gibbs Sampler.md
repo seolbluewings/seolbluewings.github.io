@@ -14,7 +14,7 @@ categories: Statistics
 
 $$\Theta=(\theta_{1},\theta_{2},\theta_{3})$$
 
-모수들의 결합 사후분포(joint posterior distribution)를 아는 것이 좋겠지만, 이 joint posterior distribution $$p(\theta_{1},\theta_{2},\theta_{3}|\mathbf{X})$$ 가 계산하기 어려운 형태로 주어지는 반면, 완전 조건부 사후분포(full conditional posterior distribution)는 오히려 계산하기 쉬운 형태(즉, 우리가 알고 있는 분포의 형태)로 주어질 때가 있다.
+모수들의 결합 사후분포(joint posterior distribution)를 아는 것이 좋겠지만, 이 joint posterior distribution $$ p(\theta_{1},\theta_{2},\theta_{3}\mid \mathbf{X})$$ 가 계산하기 어려운 형태로 주어지는 반면, 완전 조건부 사후분포(full conditional posterior distribution)는 오히려 계산하기 쉬운 형태(즉, 우리가 알고 있는 분포의 형태)로 주어질 때가 있다.
 
 full conditional posterior distribution 이란, 관심 parameter를 제외한 나머지가 모두 주어진 조건인 분포를 말하며 아래와 같다.
 
@@ -54,7 +54,7 @@ $$
 $$
 \begin{align}
 \theta_{1}^{(m)} &\sim p(\theta_{1}\mid\theta_{2}^{(m-1)},\theta_{3}^{(m-1)}|\bf{X}) \nonumber \\
-\theta_{2}^{(m)} &\sim p(\theta_{2}\mid\theta_{1}^{(m)},\theta_{3}^{(m-1)}|\bf{X}) \nonumber
+\theta_{2}^{(m)} &\sim p(\theta_{2}\mid\theta_{1}^{(m)},\theta_{3}^{(m-1)}|\bf{X}) \nonumber \\
 \theta_{3}^{(m)} &\sim p(\theta_{3}\mid\theta_{1}^{(m)},\theta_{2}^{(m)}|\bf{X})
 \nonumber
 \end{align}
@@ -76,7 +76,7 @@ $$\theta_{1}^{(m)}$$은 가장 최근의 $$\theta_{2},\theta_{3}$$값인 $$(\the
 
 우리는 $$t$$시점의 parameter $$\Theta^{(t)} = (\theta_{1}^{(t)},\theta_{2}^{(t)},\theta_{3}^{(t)})$$ 을 이용하여 posterior distribution의 sampling을 시행한다.
 
-Gibb Sampler의 특징은 $$\Theta^{(t)} = (\theta_{1}^{(t)},\theta_{2}^{(t)},\theta_{3}^{(t)})$$ 가 Markov Chain이기 때문에 독립적인 표본이 아니라는 것이다. 독립적인 표본을 얻기 위해 다음과 같은 방법을 활용한다.
+Gibb Sampler의 특징은 $$\Theta^{(t)} = (\theta_{1}^{(t)},\theta_{2}^{(t)},\theta_{3}^{(t)})$$ 가 Markov Chain이기 때문에 독립적인 표본이 아니라는 것이다. 독립적인 표본을 얻기 위해 아래 2가지 방법 중 하나를 활용한다.
 
 1. Gibbs Sampler를 N번 독립적으로 시행하여 $$\Theta_{1}^{(m)},...,\Theta_{N}^{(m)}$$을 얻는다. 여기서 $$\Theta_{k}^{(m)}$$ 이란 k번째 독립된 Gibbs Sampler에서 만들어낸 $$\Theta^{(m)}$$ 이다. 이 방법을 통하서 독립적인 표본을 구할 수 있지만, 시간이 많이 걸린다는 단점이 있다.
 
