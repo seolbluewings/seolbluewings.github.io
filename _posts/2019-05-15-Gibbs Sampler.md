@@ -107,9 +107,43 @@ $$
 \end{align}
 $$
 
-따라서 Gibbs Sampler는 항상 새롭게 proposed 되는 parameter의 값을 accept하는 M-H 알고리즘이라 할 수 있다.
+따라서 Gibbs Sampler는 항상 새롭게 proposed되는 parameter의 값을 accept하는 M-H 알고리즘이라 할 수 있다.
 
-다음 포스팅에서는 깁스 샘플러에 대한 간단한 예시와 이를 코드로 구현하는 것을 살펴볼 것이다.
+#### 예제
+
+$$
+\begin{align}
+\mathbf{X} &\sim \mathcal{N}(\mu,\sigma^{2}) \nonumber \\
+\mu &\sim \mathcal{N}(\mu_{0},\sigma^{2}_{0}) \nonumber \\
+\end{align}
+\sigma^{2} &\sim \mathcal{IG}(\alpha,\beta) \nonumber \\
+(x_{1},...,x_{10}) &= (10,13,15,11,9,18,20,17,23,21) \nonumber
+$$
+
+이 때, $$\Theta = (\mu,\sigma^{2})$$ 에 대한 Gibbs Sampler를 진행하라.
+
+#### Sol)
+
+Step 1.) target posterior distribution을 도출하기
+
+$$
+\begin{align}
+p(\mu,\sigma^{2}\mid \mathbf{X}) &\prop p(\mathbf{X}\mid\mu,\sigam^{2})p(\mu\mid\sigma^{2})p(\sigma^{2}) \nonumber \\
+\prop p(\mathbf{X}\mid\mu,\sigam^{2})p(\mu\mid\mu_{0},\sigma^{2}_{0})p(\sigma^{2}\mid\alpha,\beta) \nonumber
+\end{align}
+$$
+
+Step 2.) $$\mu$$에 대한 Gibbs Sampler sampling step을 구하기
+
+$$
+\begin{align}
+
+
+\end{align}
+$$
+
+
+Step 3.) $$\sigma^{2}$$에 대한 Gibbs Sampler sampling step을 구하기
 
 #### 참조 문헌
 
