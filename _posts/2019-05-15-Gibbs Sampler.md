@@ -129,7 +129,7 @@ Step 1.) target posterior distribution을 도출하기
 $$
 \begin{align}
 p(\mu,\sigma^{2}\mid \mathbf{X}) &\propto p(\mathbf{X}\mid\mu,\sigma^{2})p(\mu\mid\sigma^{2})p(\sigma^{2}) \nonumber \\
-\propto p(\mathbf{X}\mid\mu,\sigma^{2})p(\mu\mid\mu_{0},\sigma^{2}_{0})p(\sigma^{2}\mid\alpha,\beta) \nonumber
+&\propto p(\mathbf{X}\mid\mu,\sigma^{2})p(\mu\mid\mu_{0},\sigma^{2}_{0})p(\sigma^{2}\mid\alpha,\beta) \nonumber
 \end{align}
 $$
 
@@ -137,10 +137,10 @@ Step 2.) $$\mu$$에 대한 Gibbs Sampler sampling step을 구하기
 
 $$
 \begin{align}
-p(\mu,\sigma^{2}\mid\mathbf{X}) &\prop p(\mathbf{X}\mid\mu,\sigma^{2})p(\mu\mid\mu_{0},\sigma^{2}_{0}) \nonumber \\
+p(\mu\mid\mathbf{X},\sigma^{2}) &\propto p(\mathbf{X}\mid\mu,\sigma^{2})p(\mu\mid\mu_{0},\sigma^{2}_{0}) \nonumber \\
 &\propto \text{exp}\left[\frac{-n}{2\sigma^{2}}(\mu^{2}-2\bar{x}\mu)+\frac{-1}{2\sigma^{2}_{0}}(\mu^{2}-2\mu_{0}\mu)\right] \nonumber \\
 &\propto \text{exp}\left[\frac{-1}{2}\mu^{2}\left(\frac{1}{\sigma^{2}/n+\frac{1}{\sigma_{0}^{2}}} \right)-2\mu\left(\frac{\bar{x}}{\sigma^{2}/n}+\frac{\mu_{0}}{\sigma^{2}_{0}}\right)  \right] \nonumber \\
-p(\mu\mid\sigma^{2}) &\sim \mathcal{N}\left(\frac{ \frac{\bar{x}}{\sigma^{2}/n} + \frac{\mu_{0}}{\sigma^{2}_{0}} }{ \frac{n}{\sigma^{2}} + \frac{1}{\sigma^{2}_{0}} } , \frac{1}{ \frac{n}{\sigma^{2}} + \frac{1}{\sigma^{2}_{0}} }  \right) \nonumber
+p(\mu\mid\sigma^{2},\mathbf{X}) &\sim \mathcal{N}\left(\frac{ \frac{\bar{x}}{\sigma^{2}/n} + \frac{\mu_{0}}{\sigma^{2}_{0}} }{ \frac{n}{\sigma^{2}} + \frac{1}{\sigma^{2}_{0}} } , \frac{1}{ \frac{n}{\sigma^{2}} + \frac{1}{\sigma^{2}_{0}} }  \right) \nonumber
 \end{align}
 $$
 
@@ -152,7 +152,7 @@ p(\sigma^{2}\mid\mu,\mathbf{X}) &\propto p(\mathbf{X}\mid\mu,\sigma^{2})p(\sigma
 &\propto (\sigma^{2})^{-n/2}\text{exp}\left[\frac{-1}{2\sigma^{2}}\sum_{i=1}^{n}(\mu-x_{i})^{2}\right] (\sigma^{2})^{-\alpha-1}\text{exp}(-b/\sigma^{2}) \nonumber \\
 &\propto (\sigma^{2})^{-n/2-\alpha-1}\text{exp}\left[\frac{-1}{\sigma^{2}}\left(\frac{1}{2}\sum_{i=1}^{n}(\mu-x_{i})^{2}\right) + \beta  \right] \nonumber \\
 
-p(\sigma^{2}\mid\mu\mathbf{X}) &\sim \mathcal{IG}\left(\frac{n}{2}+\alpha, \frac{1}{2}\sum_{i=1}^{n}(\mu-x_{i})^{2}+\beta \right)
+p(\sigma^{2}\mid\mu,\mathbf{X}) &\sim \mathcal{IG}\left(\frac{n}{2}+\alpha, \frac{1}{2}\sum_{i=1}^{n}(\mu-x_{i})^{2}+\beta \right)
 \end{align}
 $$
 
