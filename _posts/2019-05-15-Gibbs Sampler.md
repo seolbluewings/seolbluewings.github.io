@@ -6,7 +6,7 @@ author: seolbluewings
 categories: Statistics
 ---
 
-깁스 샘플러(Gibbs Sampler)는 대표적인 MCMC기법 중 하나로 $$d$$차원의 parameter $$\Theta = (\theta_{1},....,\theta_{d})$$의 sampling을 진행할 수 있는 방법이다.
+깁스 샘플러(Gibbs Sampler)는 대표적인 MCMC기법 중 하나로 $$d$$차원의 parameter인 $$\Theta = (\theta_{1},....,\theta_{d})$$의 sampling을 진행할 수 있도록 하는 방법이다.
 
 우리가 sampling을 실행하기 희망하는 target distribution $$P(\Theta) = P(\theta_{1},...,\theta_{d})$$ 로부터 sampling을 진행하기 어려울 때, Gibbs Sampler를 활용할 수 있다.
 
@@ -115,9 +115,9 @@ $$
 \begin{align}
 \mathbf{X} &\sim \mathcal{N}(\mu,\sigma^{2}) \nonumber \\
 \mu &\sim \mathcal{N}(\mu_{0},\sigma^{2}_{0}) \nonumber \\
-\end{align}
 \sigma^{2} &\sim \mathcal{IG}(\alpha,\beta) \nonumber \\
 (x_{1},...,x_{10}) &= (10,13,15,11,9,18,20,17,23,21) \nonumber
+\end{align}
 $$
 
 이 때, $$\Theta = (\mu,\sigma^{2})$$ 에 대한 Gibbs Sampler를 진행하라.
@@ -128,8 +128,8 @@ Step 1.) target posterior distribution을 도출하기
 
 $$
 \begin{align}
-p(\mu,\sigma^{2}\mid \mathbf{X}) &\prop p(\mathbf{X}\mid\mu,\sigam^{2})p(\mu\mid\sigma^{2})p(\sigma^{2}) \nonumber \\
-\prop p(\mathbf{X}\mid\mu,\sigam^{2})p(\mu\mid\mu_{0},\sigma^{2}_{0})p(\sigma^{2}\mid\alpha,\beta) \nonumber
+p(\mu,\sigma^{2}\mid \mathbf{X}) &\propto p(\mathbf{X}\mid\mu,\sigma^{2})p(\mu\mid\sigma^{2})p(\sigma^{2}) \nonumber \\
+\propto p(\mathbf{X}\mid\mu,\sigma^{2})p(\mu\mid\mu_{0},\sigma^{2}_{0})p(\sigma^{2}\mid\alpha,\beta) \nonumber
 \end{align}
 $$
 
@@ -137,13 +137,24 @@ Step 2.) $$\mu$$에 대한 Gibbs Sampler sampling step을 구하기
 
 $$
 \begin{align}
-
-
+p(\mu,\sigma^{2}\mid\mathbf{X}) &\prop p(\mathbf{X}\mid\mu,\sigma^{2})p(\mu\mid\mu_{0},\sigma^{2}_{0}) \nonumber \\
+&\propto \text{exp}\left[\frac{-n}{2\sigma^{2}}(\mu^{2}-2\bar{x}\mu)+\frac{-1}{2\sigma^{2}_{0}}(\mu^{2}-2\mu_{0}\mu)\right] \nonumber \\
+&\propto \text{exp}\left[\frac{-1}{2}\mu^{2}\left(\frac{1}{\sigma^{2}/n+\frac{1}{\sigma_{0}^{2}}} \right)-2\mu\left(\frac{\bar{x}}{\sigma^{2}/n}+\frac{\mu_{0}}{\sigma^{2}_{0}}\right)  \right] \nonumber \\
+p(\mu\mid\sigma^{2}) &\sim \mathcal{N}\left(\frac{ \frac{\bar{x}}{\sigma^{2}/n} + \frac{\mu_{0}}{\sigma^{2}_{0}} }{ \frac{n}{\sigma^{2}} + \frac{1}{\sigma^{2}_{0}} } , \frac{1}{ \frac{n}{\sigma^{2}} + \frac{1}{\sigma^{2}_{0}} }  \right) \nonumber
 \end{align}
 $$
 
-
 Step 3.) $$\sigma^{2}$$에 대한 Gibbs Sampler sampling step을 구하기
+
+$$
+\begin{align}
+p(\sigma^{2}\mid\mu,\mathbf{X}) &\propto p(\mathbf{X}\mid\mu,\sigma^{2})p(\sigma^{2}) \nonumber \\
+&\propto (\sigma^{2})^{-n/2}\text{exp}\left[\frac{-1}{2\sigma^{2}}\sum_{i=1}^{n}(\mu-x_{i})^{2}\right] (\sigma^{2})^{-\alpha-1}\text{exp}(-b/\sigma^{2}) \nonumber \\
+&\propto (\sigma^{2})^{-n/2-\alpha-1}\text{exp}\left[\frac{-1}{\sigma^{2}}\left(\frac{1}{2}\sum_{i=1}^{n}(\mu-x_{i})^{2}\right) + \beta  \right] \nonumber \\
+
+p(\sigma^{2}\mid\mu\mathbf{X}) &\sim \mathcal{IG}\left(\frac{n}{2}+\alpha, \frac{1}{2}\sum_{i=1}^{n}(\mu-x_{i})^{2}+\beta \right)
+\end{align}
+$$
 
 #### 참조 문헌
 
