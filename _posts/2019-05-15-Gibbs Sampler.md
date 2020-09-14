@@ -156,6 +156,12 @@ p(\sigma^{2}\mid\mu,\mathbf{X}) &\sim \mathcal{IG}\left(\frac{n}{2}+\alpha, \fra
 \end{align}
 $$
 
+상기 예제에 관련한 코드는 아래의 주소에서 확인할 수 있습니다.
+1. R 코드 [주소](https://github.com/seolbluewings/code_example/blob/master/5.Gibbs%20Sampler.R)
+2. Python 코드
+
+
+
 #### 참조 문헌
 
 1. [BDA](http://www.stat.columbia.edu/~gelman/book/)
