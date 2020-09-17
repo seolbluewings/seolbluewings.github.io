@@ -2,7 +2,7 @@
 layout: post
 title:  "EM 알고리즘(EM Algorithm)"
 date: 2020-06-27
-author: YoungHwan Seol
+author: seolbluewings
 categories: Statistics
 ---
 
