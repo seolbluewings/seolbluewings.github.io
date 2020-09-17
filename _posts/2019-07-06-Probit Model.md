@@ -6,7 +6,29 @@ author: seolbluewings
 categories: Statistics
 ---
 
-프로빗 모형(Probit Model)은 반응변수 Y가 0 또는 1일 때, n개의 반응변수 $$Y_{i}, i=1,...,n$$ 각각에 대하여 독립적으로 $$Ber(p_{i})$$를 가정하여 진행하는 것을 바탕으로 한다.
+기존의 회귀분석 모델 $$\mathbf{y} = \mathbf{X}\beta + \epsilon$$ 모형은 보통 1. $$\mathbf{X}$$와 $$\mathbf{y}$$ 사이의 선형 관계가 있고  $$\mathbf{y}$$가 정규분포를 따른다고 볼 수 있을 때, 활용하는 것이 적절하다.
+
+그러나 현실 세계에서는 이러한 조건에 부합하지 않는 데이터가 많다. $$\mathbf{X}$$와 $$\mathbf{y}$$가 선형관계가 아닌 S자 형태의 관계를 보일 수도 있고 $$\mathbf{y}$$가 정규분포가 아닌 이항분포, 다항분포 등을 따를 수도 있다. 이러한 상황에서는 기존의 선형모형을 활용하는 것이 적절하지 않다.
+
+$$\mathbf{X}$$와 $$\mathbf{y}$$ 사이의 다양한 관계를 표현할 수 있는 일반화 선형 모형(Generalized Linear Model)을 이러한 상황에 활용할 수 있다.
+
+$$\mathbf{y} = h(\mathbf{X}\beta)$$
+
+위와 같은 형태로 연결 함수(Link Function) $$h$$ 를 이용해 일반화 선형 모형을 표현할 수 있다. 가장 빈번하게 활용하는 Link Function은 $$\mathbf{y}$$가 이항분포를 따를 때 사용하는 프로빗(probit) 함수와 로지스틱(logistic) 함수가 있다.
+
+$$
+\begin{align}
+y &\sim \text{Ber}(z) \nonumber \\
+h(z) &= log\left(\frac{z}{1-z}\right) \quad \text{logistic함수} \nonumber \\
+h(z) &= \Phi^{-1}(z) \quad \text{probit함수}
+\end{align}
+$$
+
+이처럼 Link Function을 활용하는 과정에서 잠재변수(Latent Variable) $$\mathbf{Z}$$ 를 이용하게 된다. 그리고 잠재변수를 활용하는 과정에서 베이지안 방법론은 계산을 쉽게 할 수 있다는 장점을 갖는다.
+
+### 프로빗 모형(Probit Model)
+
+Probit Model은 반응변수 \mathbf{y}가 0 또는 1의 값을 갖는 이항분포를 따를 때 사용할 수 있다. n개의 반응변수 $$y_{i},\; i=1,...,n$$ 각각에 대하여 독립적으로 $$\text{Ber}(p_{i})$$를 가정하여 진행하는 것을 바탕으로 한다.
 
 이 때 $$Y_{i}$$의 기대값인 $$p_{i}$$와 설명변수의 선형결합인 $$x_{i}^{T}\beta$$의 관계를 생각해볼 필요가 있다. $$p_{i}$$는 0과 1사이에서의 값을 가져야 하므로 $$p_{i}=x_{i}^{T}\beta$$의 관계식을 가정하는 것은 적절하지 않다.
 
