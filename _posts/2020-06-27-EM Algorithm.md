@@ -184,4 +184,4 @@ $$
 
 이 과정을 각각의 parameter에 대해 수렴하는 시점까지(t+1시점 값과 t시점 값의 차이가 일정 수준 이하가 될 때까지) 시행하여 최종적인 값을 구해낼 수 있다.
 
-##### 이 포스팅의 예제 코드는 다음의 [주소](https://github.com/seolbluewings/code_example/blob/master/3.%20EM%20Algorithm.ipynb)에서 확인할 수 있습니다.
+##### 이 포스팅의 예제 코드는 다음의 [주소](https://github.com/seolbluewings/pythoncode/blob/master/3.%20EM%20Algorithm.ipynb)에서 확인할 수 있습니다.
