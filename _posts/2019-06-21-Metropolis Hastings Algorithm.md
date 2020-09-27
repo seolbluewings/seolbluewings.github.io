@@ -5,9 +5,9 @@ date: 2019-06-21
 author: seolbluewings
 categories: Statistics
 ---
-모수 $$\Theta=(\theta_{1},...,\theta_{p})$$ 의 Posterior distribution인 $$p(\theta\mid y)$$로 부터 $$\Theta$$에 대한 Sampling을 진행하고자 한다. Gibbs Sampler의 경우, 각 parameter $$\theta_{k}$$의 full conditional posterior를 활용하며, 이 경우에는 $$p(\theta_{k}\mid\theta_{-k})$$ 가 우리가 아는 closed form 형태의 분포 형태를 가져야 한다.
+모수 $$\Theta=(\theta_{1},...,\theta_{p})$$ 의 Posterior distribution인 $$\pi(\theta\mid x)$$로 부터 $$\Theta$$에 대한 Sampling을 진행하고자 한다. Gibbs Sampler의 경우, 각 parameter $$\theta_{k}$$의 full conditional posterior를 활용하며, 이 경우에는 $$p(\theta_{k}\mid\theta_{-k})$$ 가 우리가 아는 closed form 형태의 분포 형태를 가져야 한다.
 
-만약 $$\theta_{k}$$에 대해 full conditional posterior가 closed form으로 나오지 않는다면, 다음과 같이 Metropolis-Hastings Algorithm을 사용하여 $$p(\mathbf{\theta}\mid y)$$로부터 표본 추출이 가능하다.
+만약 $$\theta_{k}$$에 대해 full conditional posterior가 closed form으로 나오지 않는다면, 다음과 같이 Metropolis-Hastings Algorithm을 사용하여 $$\pi(\mathbf{\theta}\mid x)$$로부터 표본 추출이 가능하다.
 
 Metropolis-Hastings Algorithm은 다음과 같은 절차를 통해 진행된다.
 
@@ -30,7 +30,7 @@ $$
 
 세번째 단계는 코드로 구현하는 단계에서 $$u \sim U(0,1)$$를 통해 u를 생성해내고 이렇게 생성된 u값과 $$\alpha$$의 크기를 비교하여 $$u \leq \alpha$$이면 $$\theta^{(t+1)}=\theta^{*}$$가 되고 $$u > \alpha$$이면, $$\theta^{(t+1)}=\theta^{(t)}$$로 정해진다.
 
-Metropolis-Hastings Algorithm에서 생성된 표본 $$\theta^{(t+1)}$$은 $$p(\theta\mid y)$$로 수렴한다. 따라서 앞서 소개한 Gibbs Sampler와 마찬가지로 수렴시점 이후의 표본을 사용하며 연속된 표본은 서로 상관관계를 가지고 있다.
+Metropolis-Hastings Algorithm에서 생성된 표본 $$\theta^{(t+1)}$$은 $$\pi(\theta\mid x)$$로 수렴한다. 따라서 앞서 소개한 Gibbs Sampler와 마찬가지로 수렴시점 이후의 표본을 사용하며 연속된 표본은 서로 상관관계를 가지고 있다.
 
 분포 $$T(\theta^{*} \mid \theta^{(t)})$$는 $$\theta^{*}$$를 추출하기 위해 임의로 선택되는 밀도함수이며, 이를 transition kernel이라 부른다.
 
@@ -49,7 +49,7 @@ $$
 $$
 \alpha = \frac{\pi(\theta_{1}^{*},\theta_{2}^{(t)}|x)/T(\theta_{1}^{*}|\theta_{1}^{(t)},\theta_{2}^{(t)})}{\pi(\theta_{1}^{(t)},\theta_{2}^{(t)}|x)/T(\theta_{1}^{(t)}|\theta_{1}^{*},\theta_{2}^{(t)})} $$ 다음의 계산을 통해 $$\alpha$$ 값을 구한다. 이후 $$ p=min(\alpha,1) $$ 의 확률로 $$\theta^{(t+1)}_{1} = \theta^{*}_{1}$$ 처럼 $$\theta^{(t+1)}_{1}$$ 를 채택하고 $$1-p$$의 확률로 $$  \theta^{(t+1)}_{1} = \theta^{(t)}_{1} $$ 값을 설정한다.
 
-마찬가지로 $$\theta_{2}^{(t+1)}$$ 추출 과정을 진행할 수 있다. 
+마찬가지로 $$\theta_{2}^{(t+1)}$$ 추출 과정을 진행할 수 있다.
 
 즉, Gibbs Sampler는 Metropolis-Hastings Algorithm의 특수한 경우이며, 이 때 transition kernel이 각 원소(원소 벡터)의 full-condtional posterior이다.
 
@@ -72,7 +72,21 @@ $$
 
 이는 매번 $$\theta^{*}$$를 $$\theta^{(t+1)}$$로 받아들이는 Algorithm으로 Gibbs Sampler는 항상 Accept하는 Metropolis-Hasting Algorithm이라 할 수 있다.
 
+#### 예제
 
+parameter $$\theta$$의 분포가 다음과 같이 주어졌다고 하자.
+
+$$
+p(\theta) \propto \frac{1}{\sqrt{8x^{2}+1}}\text{exp}\left(-\frac{1}{2}\left(x^{2}-8x-\frac{16}{8x^{2}+1}\right)\right)
+$$
+
+이 때, 가우시안분포의 mixture 형태의 분포인 transition kernel
+
+$$
+T(\theta^{*}\mid\theta) = 0.6\mathcal{N}(x-1.5,1)+0.4\mathcal{N}(x+1.5,1)
+$$
+
+를 이용하여 M-H 알고리즘을 통해 샘플링을 진행하자.
 
 #### 참조 문헌
 
