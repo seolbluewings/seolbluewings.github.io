@@ -77,16 +77,17 @@ $$
 parameter $$\theta$$의 분포가 다음과 같이 주어졌다고 하자.
 
 $$
-p(\theta) \propto \frac{1}{\sqrt{8x^{2}+1}}\text{exp}\left(-\frac{1}{2}\left(x^{2}-8x-\frac{16}{8x^{2}+1}\right)\right)
+p(\theta) \propto \frac{1}{\sqrt{8\theta^{2}+1}}\text{exp}\left(-\frac{1}{2}\left(\theta^{2}-8\theta-\frac{16}{8\theta^{2}+1}\right)\right)
 $$
 
-이 때, 가우시안분포의 mixture 형태의 분포인 transition kernel
+이 때, 가우시안분포의 mixture 형태의 분포인 transition kernel를 이용하여 M-H 알고리즘을 통해 샘플링을 진행해보도록 하자.
 
 $$
-T(\theta^{*}\mid\theta) = 0.6\mathcal{N}(x-1.5,1)+0.4\mathcal{N}(x+1.5,1)
+T(\theta^{*}\mid\theta) = 0.6\mathcal{N}(\theta-1.5,1)+0.4\mathcal{N}(\theta+1.5,1)
 $$
 
-를 이용하여 M-H 알고리즘을 통해 샘플링을 진행하자.
+이에 대한 코드는 각각 코드는 다음의 링크 1. [R코드](https://github.com/seolbluewings/rcode/blob/master/7.MH_Algorithm.R) 2. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/7.MH%20Algorithm.ipynb) 에서 확인할 수 있습니다.
+
 
 #### 참조 문헌
 
