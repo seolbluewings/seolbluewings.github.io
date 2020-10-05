@@ -16,15 +16,37 @@ categories: Statistics
 
 이렇게 설정한 입력값(input variable)은 가중치(weight)를 적용하여 선형 결합(linear combination)을 형성한다. $$\mathbf{w} = (w_{1},...,w_{n})$$ 이라면 다음 뉴런(층)으로 전달되는 값은 $$\mathbf{w}^{T}\mathbf{X} = \sum_{i=1}^{n}w_{i}x_{i}$$ 이다. 선형결합 결과를 전달받은 뉴런은 해당층의 임계값과 선형결합 결과를 비교하고 활성화 함수(activation function)을 이용하여 값을 출력해낸다.
 
-활성화 함수는 개별 뉴런으로 전달되는 입력값을 출력값으로 변환하는 함수이며 일반적으로 비선형 함수를 활용한다. 비선형 함수를 활용하는 이유는 다음과 같다.
+활성화 함수는 개별 뉴런으로 전달되는 입력값을 출력값으로 변환하는 함수이며 일반적으로 비선형 함수를 활용한다. 비선형 함수를 활용하는 이유는 다음과 같다. 이 이유는 [밑바닥부터 시작하는 딥러닝](https://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)에 적절한 예시가 있어 해당구절을 가져와 본다.
 
-> 활성화 함수로 선형함수를 이용하면 은닉층을 만드는 이유가 사실상 없다.
->> 만약 선형함수 $$h(x)=cx$$ 를 활성화 함수로 사용하고 은닉층을 2개로 한다면, 출력층 결과는 $$y(x)=h(h(x))=c^{2}x$$ 으로 결정되는데 이는 $$a=c^{2}$$ 이라 했을 때 $$h(x)=ax$$와 사실상 다를게 없기 때문이다. 선형함수로는 여러 은닉층을 구성하는 이점을 살릴 수 없다.
+> 활성화 함수로 선형함수를 이용하면 은닉층을 만드는 이유가 사실상 없다.만약 선형함수 $$h(x)=cx$$ 를 활성화 함수로 사용하고 은닉층을 2개로 한다면, 출력층 결과는 $$y(x)=h(h(x))=c^{2}x$$ 으로 결정되는데 이는 $$a=c^{2}$$ 이라 했을 때 $$h(x)=ax$$와 사실상 다를게 없기 때문이다. 선형함수로는 여러 은닉층을 구성하는 이점을 살릴 수 없다.
 
-가장 빈번하게 사용되는 활성화 함수는 시그모이드 함수 $$\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$$ 이며 step function 또는 hyperbolic tangent function을 사용하기도 한다. 앞으로는 시그모이드 함수를 사용하는 것으로 한정지어 이야기를 풀어갈 것이다.
+가장 빈번하게 사용되는 활성화 함수는 시그모이드 함수 $$\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$$ 이며 step function 또는 hyperbolic tangent function, ReLU를 사용하기도 한다. 앞으로는 시그모이드 함수를 사용하는 것으로 한정지어 이야기를 풀어갈 것이다.
 
+![NN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN1.png?raw=true){:width="70%" height="70%"}{: .center}
 
+다음과 같은 Neural Network가 있다고 가정하자. $$\mathbf{X}=(x_{1},x_{2})$$가 있고 hidden layer는 1개층, output layer는 1개 node로 $$\hat{y}$$를 출력한다고 하자.
 
+참고로 Neural Network 모델은 각 node마다 fully connected 되어있으며 같은 층의 node끼리는 연결되지 않으며 또 층을 뛰어넘는 연결도 존재하지 않는다. 지금의 경우는 1개의 hidden layer층을 갖는 network이나 hidden layer를 2개 이상 설정할 수 있다. 이렇게 설정한다면, 이를 multi-layer perceptron(MLP) 모델이라 부르기도 한다.
+
+각 가중치와 입력값을 활용하여 생성한 선형결합 결과$$b_{1},b_{2},b_{3}$$는 다음과 같을 것이다.
+
+$$
+\begin{align}
+b_{1} &= w_{1}x_{1}+w_{2}x_{2} \nonumber \\
+b_{2} &= w_{3}x_{1}+w_{4}x_{2} \nonumber \\
+b_{3} &= w_{5}x_{1}+w_{6}x_{2} \nonumber
+\end{align}
+$$
+
+이 $$\mathbf{b}=(b_{1},b_{2},b_{3})$$ 는 각 node에서의 활성화 함수 결과를 해당 node의 최종결과값으로 갖는다.
+
+$$
+\begin{align}
+n_{1} &= \frac{1}{1+e^{-b_{1}}} \nonumber \\
+n_{2} &= \frac{1}{1+e^{-b_{2}}} \nonumber \\
+n_{3} &= \frac{1}{1+e^{-b_{3}}} \nonumber
+\end{align}
+$$
 
 
 
@@ -34,4 +56,4 @@ categories: Statistics
 
 2. [단단한 머신러닝](http://www.yes24.com/Product/Goods/88440860)
 
-2. [밑바닥부터 시작하는 딥러닝](https://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)
+3. [밑바닥부터 시작하는 딥러닝](https://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)
