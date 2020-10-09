@@ -68,13 +68,31 @@ $$
 \end{align}
 $$
 
-훈련 데이터들 중 $$(x_{k},y_{k})$$ sample에 대하여 신경망 출력층 값은 $$\hat_{y}_{k} = (\hat{y}_{1k},...,\hat{y}_{lk})$$ 로 표현하기로 하자. 시그모이드 함수를 $$f(x)$$라 표현한다고 했을 때, $$\hat{y_{jk}} = f(\beta_{jk}-\theta_{jk}) $$ 라 할 수 있다. 여기서 $$\theta$$는 출력층에서 활용되는 임계값에 대한 parameter이다. 그리고 최종적으로 우리에게 필요한 평균 오차값은 $$E_{k} = \sum{j=1}{l}(y_{jk}-\hat{y_{jk}})^{2}$$ 일 것이다.
+훈련 데이터들 중 $$(x_{k},y_{k})$$ sample에 대하여 신경망 출력층 값은 $$ \hat{y}_{k} = (\hat{y}_{1k},...,\hat{y}_{lk})$$ 로 표현하기로 하자. 시그모이드 함수를 $$f(x)$$라 표현한다고 했을 때, $$\hat{y}_{jk} = f(\beta_{jk}-\theta_{jk}) $$ 라 할 수 있다. 여기서 $$\theta$$는 출력층에서 활용되는 임계값에 대한 parameter이다. 그리고 최종적으로 우리에게 필요한 평균 오차값은 $$E_{k} = \sum_{j=1}^{l}(y_{jk}-\hat{y_{jk}})^{2}$$ 일 것이다.
 
-![NN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN_EXAMPLE.png?raw=true){:width="100%" height="40%"}{: .center}
+![NN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN_EXAMPLE.png?raw=true){:width="40%" height="30%"}{: .center}
 
 우리가 구해야하는 parameter의 개수는 다음과 같다. 먼저 입력층에서 은닉층으로 향하는 $$d \times q$$개, 은닉층에서 출력층으로 가는 $$ q \times l $$개, 은닉층의 임계값 $$q$$개, 출력층의 임계값 $$l$$개로 총 $$(d+l+1)q+l$$ 개의 parameter를 정해야 한다. 오차 역전파 알고리즘은 재귀적 학습을 통해 반복 과정에서 퍼셉트론의 학습규칙으로 parameter에 대한 예측값을 업데이트하는 방식을 취한다. 즉, 임의의 parameter $$v$$에 대하여 다음과 같이 값이 업데이트 된다.
 
 $$ v \leftarrow v + \Delta v $$
+
+이 때 사용하는 방법이 Gradient Descent 이다. Gradient Descent의 음수값 방향으로 parameter를 조정하며 여기에 학습률 $$\eta \in (0,1)$$도 활용한다.
+
+은닉층에서 출력층으로 값을 전달할 때의 parameter $$w_{hj}$$를 예시로 값을 어떻게 업데이트 시키는지 알아보자. parameter $$w_{hj}$$의 Gradient Descent값은 다음과 같이 표현된다.
+
+$$
+\Delta w_{hj} = -\eta\frac{\partial E_{k}}{\partial w_{hj}}
+$$
+
+parameter $$w_{hj}$$가 어떻게 오차 $$E_{k}$$에 영향을 미치는지 생각해보자. 우선 $$w_{hj}$$는 j번째 출력층 뉴런의 입력값 $$\beta_{jk}$$에 영향을 미친다. 여기서 생성된 $$\beta_{jk}$$는 $$\hat{y}_{jk}$$ 에 영향을 미칠 것이며 궁극적으로 이 $$\hat{y}_{jk}$$가 $$E_{k}$$ 값을 결정짓게 된다. 따라서 Chain Rule을 이용하여 다음과 같이 표현할 수 있을 것이다.
+
+$$
+\frac{\partial E_{k}}{\partial w_{hj}} = \frac{\partial E_{k}}{\partial \hat{y}_{jk}} \times \frac{\partial \hat{y}_{jk}}{\partial \beta_{jk}} \times \frac{\beta_{jk}}{w_{hj}}
+$$
+
+그리고 우리는 앞서 $$\beta_{jk}$$를 $$\beta_{jk} &= \sum_{h=1}^{q}w_{hj}b_{hk}$$ 로 정의하였다. 따라서 $$\frac{\partial \beta_{jk}}{\partial w_{hj}} = b_{hk}$$ 라고 표현할 수 있다.
+
+
 
 
 
