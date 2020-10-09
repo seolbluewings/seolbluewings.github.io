@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "신경망(Neural Network)"
+title:  "신경망(Neural Network) 개요"
 date: 2020-09-28
 author: seolbluewings
 categories: Statistics
@@ -22,9 +22,11 @@ categories: Statistics
 
 가장 빈번하게 사용되는 활성화 함수는 시그모이드 함수 $$\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$$ 이며 step function 또는 hyperbolic tangent function, ReLU를 사용하기도 한다. 앞으로는 시그모이드 함수를 사용하는 것으로 한정지어 이야기를 풀어갈 것이다.
 
+#### 간단한 단층 신경망으로 익숙해지기
+
 ![NN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN1.png?raw=true){:width="70%" height="70%"}{: .center}
 
-다음과 같은 Neural Network가 있다고 가정하자. $$\mathbf{X}=(x_{1},x_{2})$$가 있고 hidden layer는 1개층, output layer는 1개 node로 $$\hat{y}$$를 출력한다고 하자.
+먼저 가장 간단한 NN 형태를 살펴보자. 다음과 같은 Neural Network가 있다고 가정하자. $$\mathbf{X}=(x_{1},x_{2})$$가 있고 hidden layer는 1개층, output layer는 1개 node로 $$\hat{y}$$를 출력한다고 하자.
 
 참고로 Neural Network 모델은 각 node마다 fully connected 되어있으며 같은 층의 node끼리는 연결되지 않으며 또 층을 뛰어넘는 연결도 존재하지 않는다. 지금의 경우는 1개의 hidden layer층을 갖는 network이나 hidden layer를 2개 이상 설정할 수 있다. 이렇게 설정한다면, 이를 multi-layer perceptron(MLP) 모델이라 부르기도 한다.
 
@@ -48,6 +50,28 @@ n_{3} &= \frac{1}{1+e^{-b_{3}}} \nonumber
 \end{align}
 $$
 
+출력층으로 전달되는 입력값은 $$b_{4} = w_{7}n_{1}+w_{8}n_{2}+w_{9}n_{3}$$ 이며 최종적 결과는 $$\hat{y} = \frac{1}{1+e^{-b_{4}}}$$ 를 통해 산출해낼 수 있다.
+
+
+#### 오차 역전파(Error BackPropagation)
+
+입력층 방향에서 출력층 방향으로 값이 전달되는 것을 순전파라고 부르는데 이 반대 방향으로 이동하는 것을 역전파라고 한다. 앞서 우리는 단층(1-hidden layer) 형태의 NN을 살펴보았는데 일반적으로는 학습능력이 더 뛰어난 다층 신경망 모델을 활용한다. 이 다층 신경망 모델을 학습하는 과정에서 오차 역전파(Error Backpropagation) 기법이 활용된다.
+
+먼저 훈련 데이터 $$\mathcal{D} = \{(x_{1},y_{1}),...(x_{m},y_{m})\}$$ 이 존재한다고 가정하자. $$x_{1} = (x_{11},x_{12},...x_{1d})$$ 이고 $$y_{1} = (y_{11},...,y_{1l})$$ 이라 하자. 즉, 입력층은 뉴런 d개, 출력층은 l개이며 중간에 존재하는 은닉층은 q개라고 하자. 훈련 데이터 중 1개의 sample값을 가지고 표준 오차 역전파법에 대해서 살펴보자.
+
+아래의 그림과 같이 입력층, 은닉층, 출력층이 있다고 할 때, 은닉층 h번째 뉴런의 입력값과 출력층 j번째 뉴런의 입력값은 다음과 같이 정의될 수 있다. 그리고 2개 층 모두 시그모이드 함수를 사용한다고 가정하자.
+
+$$
+\begin{align}
+	\alpha_{hk} &= \sum_{i=1}^{d}v_{ih}x_{ik} \nonumber \\
+    \beta_{jk} &= \sum_{h=1}^{q}w_{hj}b_{hk} \nonumber
+\end{align}
+$$
+
+훈련 데이터들 중 $$(x_{k},y_{k})$$ sample에 대하여 신경망 출력층 값은 $$\hat_{y_{k}} = (\hat{y_{1k}},...,\hat{y_{lk}})$$ 로 표현하기로 하자. 시그모이드 함수를 $$f(x)$$라 표현한다고 했을 때, $$\hat{y_{jk}} = f(\beta_{jk}-\theta_{jk}) $$ 라 할 수 있다. 여기서 $$\theta$$는 출력층에서 활용되는 임계값에 대한 parameter이다. 그리고 최종적으로 우리에게 필요한 평균 오차값은 $$E_{k} = \frac{j=1}{l}(y_{jk}-\hat{y_{jk}})^{2}$$ 일 것이다. 
+
+
+![NN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN_EXAMPLE.png?raw=true){:width="70%" height="70%"}{: .center} 
 
 
 
