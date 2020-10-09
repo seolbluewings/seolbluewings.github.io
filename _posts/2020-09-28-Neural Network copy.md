@@ -103,18 +103,20 @@ $$
 
 결국 $$\Delta w_{hj} = \eta\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk})b_{hk}$$ 로 표현된다.
 
-비슷한 방법으로 다음과 같이 Gradient 값을 구할 수 있다. 여기서 $$\theta_{jk},\gamm_{hk}$$ 는 각각 출력층, 은닉층에서의 임계값 parameter를 의미한다.
+비슷한 방법으로 다음과 같이 Gradient 값을 구할 수 있다. 여기서 $$\theta_{jk},\gamma_{hk}$$ 는 각각 출력층, 은닉층에서의 임계값 parameter를 의미한다.
  
 $$
 \begin{align}
 
 \Delta\theta_{jk} &= -\eta\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk}) \nonumber \\
-\Delta v_{ih} = \eta \left(b_{hk}(1-b_{hk})\sum_{j=1}^{l}w_{hj}\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk})\right)x_{ik} \nonumber \\
-\Delta\gamma_{hk} = -\eta\left(b_{hk}(1-b_{hk})\sum_{j=1}^{l}w_{hj}\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk})\right) \noonumber
+\Delta v_{ih} &= \eta \left(b_{hk}(1-b_{hk})\sum_{j=1}^{l}w_{hj}\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk})\right)x_{ik} \nonumber \\
+\Delta\gamma_{hk} &= -\eta\left(b_{hk}(1-b_{hk})\sum_{j=1}^{l}w_{hj}\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk})\right) \nonumber
 \end{align}
 $$
 
+즉, 오차 역전파 알고리즘은 먼저 입력 데이터를 활용하여 순방향으로 신경망 모델을 작동시키고 출력층에서 결과값을 얻어내고서 출력층의 오차를 계산하고 해당 오차를 역전파하여 은닉층 뉴런으로 전달한다. 여기서 오차에 다라 가중치와 임계값을 조정하고 오차가 극히 작아질 때까지 이를 반복 수행한다.
 
+위에서 우리는 하나의 데이터 sample $$(x_{k},y_{k})$$ 에 대하여 역전파 알고리즘이 작동하는 방식을 살펴보았는데 훈련 데이터 $$\mathcal{D}$$의 사이즈가 클 경우, 모든 데이터셋을 활용해 한번에 역전파 알고리즘을 진행시키는 것보다 개별 데이터로 역전파 알고리즘을 적용시키는 것이 더 좋은 결과를 가져오는 것으로 알려져있다.
 
 
 
