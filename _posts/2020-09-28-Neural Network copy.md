@@ -90,7 +90,29 @@ $$
 \frac{\partial E_{k}}{\partial w_{hj}} = \frac{\partial E_{k}}{\partial \hat{y}_{jk}} \times \frac{\partial \hat{y}_{jk}}{\partial \beta_{jk}} \times \frac{\beta_{jk}}{w_{hj}}
 $$
 
-그리고 우리는 앞서 $$\beta_{jk}$$를 $$\beta_{jk} &= \sum_{h=1}^{q}w_{hj}b_{hk}$$ 로 정의하였다. 따라서 $$\frac{\partial \beta_{jk}}{\partial w_{hj}} = b_{hk}$$ 라고 표현할 수 있다.
+그리고 우리는 앞서 $$\beta_{jk}$$를 $$\beta_{jk} = \sum_{h=1}^{q}w_{hj}b_{hk}$$ 로 정의하였다. 따라서 $$\frac{\partial \beta_{jk}}{\partial w_{hj}} = b_{hk}$$ 라고 표현할 수 있다.
+
+시그모이드 함수는 함수의 특성상 $$\Delta f(x) = f(x)(1-f(x))$$ 로 표현된다.
+
+$$
+\begin{align}
+-\frac{\partial E_{k}}{\partial \hat{y}_{jk}} \times \frac{\partial \hat{y}_{jk}}{\partial \beta_{jk}} &= -\Delta f(\beta_{jk}-\theta_{jk}) \times (\hat{y}_{jk}-y_{jk}) \nonumber \\
+&= \hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk}) \nonumber
+\end{align}
+$$
+
+결국 $$\Delta w_{hj} = \eta\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk})b_{hk}$$ 로 표현된다.
+
+비슷한 방법으로 다음과 같이 Gradient 값을 구할 수 있다. 여기서 $$\theta_{jk},\gamm_{hk}$$ 는 각각 출력층, 은닉층에서의 임계값 parameter를 의미한다.
+ 
+$$
+\begin{align}
+
+\Delta\theta_{jk} &= -\eta\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk}) \nonumber \\
+\Delta v_{ih} = \eta \left(b_{hk}(1-b_{hk})\sum_{j=1}^{l}w_{hj}\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk})\right)x_{ik} \nonumber \\
+\Delta\gamma_{hk} = -\eta\left(b_{hk}(1-b_{hk})\sum_{j=1}^{l}w_{hj}\hat{y}_{jk}(1-\hat{y}_{jk})(\hat{y}_{jk}-y_{jk})\right) \noonumber
+\end{align}
+$$
 
 
 
