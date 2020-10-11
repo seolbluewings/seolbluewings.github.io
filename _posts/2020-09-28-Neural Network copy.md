@@ -6,15 +6,13 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
-
-신경망(Neural Network) 모델은 딥러닝을 이해하기 위해서 가장 기본이 되는 개념이라 할 수 있다. 우리 몸속의 뉴런과 뉴런이 연결되어 서로 신호를 주고 받는 것처럼 Neural Network는 아래의 그림과 같이 입력층(Input layer)의 값 $$\mathbf{X} = (x_{1},...,x_{n})$$ 을 받아서 이를 은닉층(hidden layer)로 전달하게 되고 정해진 연산을 수행하여 발생한 결과를 또 다음에 존재하는 hidden layer 또는 출력층(output layer)로 전송하게 된다. output layer에서도 연산을 거쳐 최종 결과를 도출해낸다.
+신경망(Neural Network) 모델은 딥러닝을 이해하기 위해서 가장 기본이 되는 개념이라 할 수 있다. 우리 몸속의 뉴런과 뉴런이 연결되어 서로 신호를 주고 받는 것처럼 Neural Network는 아래의 그림과 같이 입력층(Input layer)의 값 $$\mathbf{X} = (x_{1},...,x_{n})$$ 을 받아서 이를 은닉층(hidden layer)로 전달하게 되고 정해진 연산을 수행하여 발생한 결과를 또 다음에 존재하는 hidden layer 또는 출력층(output layer)로 전송하게 된다. 은닉층은 명백하게 값이 존재하는 입력층, 출력층과 달리 실제 우리 눈에는 보이지 않는 단계라 할 수 있다. 출력층에서는 마찬가지로 연산을 거쳐 최종 결과를 도출해낸다.
 
 ![NN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN.png?raw=true){:width="70%" height="70%"}{: .center}
 
 이 그림처럼 다수의 input을 전달하여 하나의 output을 도출해내는 것을 퍼셉트론(Perceptron)이라 부른다. input variable은 보통 numerical variable로 구성되며 만약 categorical 유형이라면 이를 dummy화하여 input으로 설정하여야 한다.
 
-이렇게 설정한 입력값(input variable)은 가중치(weight)를 적용하여 선형 결합(linear combination)을 형성한다. $$\mathbf{w} = (w_{1},...,w_{n})$$ 이라면 다음 뉴런(층)으로 전달되는 값은 $$\mathbf{w}^{T}\mathbf{X} = \sum_{i=1}^{n}w_{i}x_{i}$$ 이다. 선형결합 결과를 전달받은 뉴런은 해당층의 임계값과 선형결합 결과를 비교하고 활성화 함수(activation function)을 이용하여 값을 출력해낸다.
+이렇게 설정한 입력값(input variable)은 가중치(weight)를 적용하여 선형 결합(linear combination)을 형성한다. $$\mathbf{w} = (w_{1},...,w_{n})$$ 이라면 다음 뉴런(층)으로 전달되는 값은 $$\mathbf{w}^{T}\mathbf{X} = \sum_{i=1}^{n}w_{i}x_{i}$$ 이다. 선형결합 결과를 전달받은 뉴런은 해당층의 임계값과 선형결합 결과를 비교하고 입력값을 출력값으로 변환시키는 활성화 함수(activation function)을 이용하여 값을 출력해낸다.
 
 활성화 함수는 개별 뉴런으로 전달되는 입력값을 출력값으로 변환하는 함수이며 일반적으로 비선형 함수를 활용한다. 비선형 함수를 활용하는 이유는 다음과 같다. 이 이유는 [밑바닥부터 시작하는 딥러닝](https://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)에 적절한 예시가 있어 해당구절을 가져와 본다.
 
@@ -51,6 +49,20 @@ n_{3} &= \frac{1}{1+e^{-b_{3}}} \nonumber
 $$
 
 출력층으로 전달되는 입력값은 $$b_{4} = w_{7}n_{1}+w_{8}n_{2}+w_{9}n_{3}$$ 이며 최종적 결과는 $$\hat{y} = \frac{1}{1+e^{-b_{4}}}$$ 를 통해 산출해낼 수 있다.
+
+#### 출력층 설계
+
+신경망 문제는 분류와 회귀 문제에 모두 사용될 수 있다. 일반적으로 회귀함수의 경우 활성화 함수를 항등함수를 사용하고 분류문제의 경우는 소프트맥스(softmax) 함수를 사용한다.
+
+분류 문제에서 사용하는 소프트맥스 함수의 형태는 다음과 같다.
+
+$$
+y_{k} = \frac{\text{exp}(a_{k})}{\sum_{i=1}^{n}\text{exp}(a_{i})}
+$$
+
+이 결과는 $$[0,1]$$ 범위에 존재하는 실수이며, 모든 출력의 총합이 1이므로 사실상의 확률과도 같다고 볼 수 있다. 신경망을 이용해 분류를 진행할 때, 우리는 일반적으로 가장 큰 출력값을 보이는 뉴런에 해당하는 클래스로 인식하는 것으로 생각한다.
+
+출력층 뉴런의 개수는 문제에 specific하게 설정한다. 일반적으로 분류하고자 하는 class 개수로 설정하게 되는데 예를 들어, MNIST 같이 0부터 9까지의 손글씨를 인식하는 문제의 경우 $$y_{0}=0, y_{1}=1,...,y_{9}=9$$ 과 같이 10개의 출력층 뉴런을 설정한다.
 
 
 #### 오차 역전파(Error BackPropagation)
