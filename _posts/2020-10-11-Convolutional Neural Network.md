@@ -20,7 +20,7 @@ x \quad \text{otherwise}
 \end{cases}
 $$
 
-![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN_STRUCTURE.png?raw=true){:width="70%" height="70%"}{: .center}
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN_STRUCTURE.png?raw=true){:width="100%" height="70%"}{: .center}
 
 그림과 같이 Affine 계층을 통해 ReLU값을 출력해내고 이를 다시 입력값으로 활용하여 계속해서 연산을 진행한 후, 최종적으로는 Softmax 함수를 사용하여 결과를 return한다.
 
@@ -28,11 +28,17 @@ $$
 
 또한 아래 그림을 통해 확인할 수 있는 것처럼 출력층과 가까운 곳에서는 Affine-ReLU 연산을 할 수 있으며 최종 출력층에서는 Affine-Softmax 를 활용한다.
 
-![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CNN_STRUCTURE.png?raw=true){:width="70%" height="70%"}{: .center}
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CNN_STRUCTURE.png?raw=true){:width="100%" height="70%"}{: .center}
 
 #### Conv층을 왜 사용하는가?
 
+기존 NN에서 활용하는 Affine 계층은 인접하는 층에 존재하는 뉴런끼리 모두 연결되고 출력 뉴런의 개수를 사용자 임의로 설정할 수 있다. Affine 계층은 데이터의 차원을 무시한다는 단점을 갖고 있다.
 
+이미지 데이터가 존재한다고 가정하자. 이미지 데이터는 일반적으로 3차원(가로,세로,색상) 데이터인데 이를 기존의 NN에 적용한다고 한다면, 이 데이터를 1차원 형태의 데이터로 변형시켜야 한다. 3차원 데이터를 완전히 활용하지 못하고 이를 1차원으로 차원을 낮춰야한다는 단점이 있는 것이다.
+
+한편, Conv층은 데이터의 차원을 유지한다. Conv층의 입출력 데이터를 특징맵(feature map)이라 부르는데 Conv층은 입력 특징맵(input feature map)과 출력 특징맵(output feature map) 차원을 동등하게 유지시켜준다. 3차원 데이터로 입력받으면 다음 계층에 3차원 데이터로 이를 전달한다.
+
+#### 합성곱 연산 
 
 
 
