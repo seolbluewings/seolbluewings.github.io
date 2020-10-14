@@ -66,7 +66,20 @@ $$ 1\times2 + 2\times0 + 3\times1 + 0\times0 + 1\times1 + 2\times2 + 3\times1 + 
 
 패딩은 아래의 그림처럼 입력 데이터 주변을 특정 값으로 채워서 처리하는 것이다. 그림처럼 (4,4) Size의 입력 데이터 주변에 특정 값을 추가하여 (6,6) Size의 입력 데이터를 만들었고 이 결과 출력이 (4,4) Size로 만들어지게 된다.
 
+##### 3. 스트라이드(Stride)
 
+입력 데이터에 필터를 이동시키면서 출력을 얻어내는데 이 때 필터를 이동시키는 간격을 스트라이드(Stride)라고 부른다. 앞선 예제에서는 간격을 1칸씩 옮겼으니 스트라이드는 1이다. 스트라이드를 키우게 되면 출력의 Size는 감소하게 된다. 반면에 앞서 패딩에서 언급했던 것처럼 패딩을 크게하면 출력의 Size가 커진다.
+
+입력 데이터 Size(H,W) 와 필터 Size(FH,FW), 출력 Size(OH,OW) 패딩(P), 스트라이드(S) 사이의 관계는 다음의 수식과 같다.
+
+$$
+\begin{align}
+OH &= \frac{H+2P-FH}{S}+1 \nonumber \\
+OW &= \frac{W+2P-FW}{S}+1 \nonumber
+\end{align}
+$$
+
+#### 3차원 데이터의 합성곱 연산 
 
 #### 참조 문헌
 1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
