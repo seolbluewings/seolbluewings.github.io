@@ -20,7 +20,7 @@ x \quad \text{otherwise}
 \end{cases}
 $$
 
-![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN_STRUCTURE.png?raw=true){:width="100%" height="70%"}{: .center}
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/NN_STRUCTURE.png?raw=true){:width="70%" height="70%"}{: .center}
 
 그림과 같이 Affine 계층을 통해 ReLU값을 출력해내고 이를 다시 입력값으로 활용하여 계속해서 연산을 진행한 후, 최종적으로는 Softmax 함수를 사용하여 결과를 return한다.
 
@@ -28,7 +28,7 @@ $$
 
 또한 아래 그림을 통해 확인할 수 있는 것처럼 출력층과 가까운 곳에서는 Affine-ReLU 연산을 할 수 있으며 최종 출력층에서는 Affine-Softmax 를 활용한다.
 
-![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CNN_STRUCTURE.png?raw=true){:width="100%" height="70%"}{: .center}
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CNN_STRUCTURE.png?raw=true){:width="70%" height="70%"}{: .center}
 
 #### Conv층을 왜 사용하는가?
 
@@ -38,8 +38,33 @@ $$
 
 한편, Conv층은 데이터의 차원을 유지한다. Conv층의 입출력 데이터를 특징맵(feature map)이라 부르는데 Conv층은 입력 특징맵(input feature map)과 출력 특징맵(output feature map) 차원을 동등하게 유지시켜준다. 3차원 데이터로 입력받으면 다음 계층에 3차원 데이터로 이를 전달한다.
 
-#### 합성곱 연산 
+#### 용어 정리
 
+##### 1. 합성곱 연산
+
+합성곱(Conv) 계층에서는 합성곱 연산이 수행된다. 합성곱 연산을 필터 연산이라 부르기도 하는데, 그림과 같이 합성곱 연산은 입력 데이터에 필터(또는 커널이라 부른다)를 적용해서 출력을 한다.
+
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Conv.png?raw=true){:width="70%" height="70%"}{: .center}
+
+
+데이터와 필터는 (높이 H, 너비 W)의 차원을 갖고 있고 그림에서 입력 데이터는 (4,4) Size, 필터는 (3,3) Size, 출력은 (2,2) Size라 할 수 있다.
+
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Conv1.png?raw=true){:width="100%" height="70%"}{: .center}
+
+그림처럼 필터를 일정 간격으로 움직이면서 입력 데이터에 적용하여 값을 얻어낸다. 출력의 (1,1) 위치값은 다음과 같이 계산된다. 마찬가지 방법으로 다른 값을 구한다.
+
+$$ 1\times2 + 2\times0 + 3\times1 + 0\times0 + 1\times1 + 2\times2 + 3\times1 + 0\times0 + 1\times2 = 15 $$
+
+즉, CNN의 필터는 NN의 weight와 같은 역할을 한다고 볼 수 있다.
+
+##### 2. 패딩(Padding)
+
+그런데 합성곱 연산의 결과를 잘 살펴보면 이상한 점을 발견할 수 있다. 입력 데이터가  (4,4) Size인데 출력은 (2,2) Size로 나온 것이다. 합성곱 연산을 수행하니 데이터의 Size가 줄어든 셈인데 만약 합성곱 연산을 연속해서 수행한다면 최종적으로는 출력의 크기가 (1,1) Size로 나올 것이다. 출력 Size를 고정시키기 위한 목적으로 활용하는 기법이 바로 패딩(Padding)이다. 패딩을 사용하면 우리는 다음 계층으로 연결되는 출력 결과(다음 층에서의 입력 데이터)의 크기를 일관되게 고정시킬 수 있다.
+
+
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Padding.png?raw=true){:width="100%" height="70%"}{: .center}
+
+패딩은 아래의 그림처럼 입력 데이터 주변을 특정 값으로 채워서 처리하는 것이다. 그림처럼 (4,4) Size의 입력 데이터 주변에 특정 값을 추가하여 (6,6) Size의 입력 데이터를 만들었고 이 결과 출력이 (4,4) Size로 만들어지게 된다.
 
 
 
