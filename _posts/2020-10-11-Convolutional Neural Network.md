@@ -79,7 +79,31 @@ OW &= \frac{W+2P-FW}{S}+1 \nonumber
 \end{align}
 $$
 
-#### 3차원 데이터의 합성곱 연산 
+#### 3차원 데이터의 합성곱 연산
+
+이미지 데이터는 3차원 형태의 데이터(채널, 높이, 너비)이다. 앞서서는 단일 채널의 데이터를 통한 합성곱 연산 예시를 살펴보았다. 이제는 채널까지 고려한 3차원 데이터 입력의 합성곱 연산을 생각해보자.
+
+3차원 데이터의 합성곱 연산은 채널 방향으로 feature map의 개수가 늘어난다. 아래의 그림처럼 입력 특징맵의 합성곱 연산을 채널마다 수행하여 그 결과를 모두 더해서 출력 특징맵을 얻어낸다.
+
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Conv2.png?raw=true){:width="100%" height="70%"}{: .center}
+
+당연하게도 입력 특징맵의 채널 수와 필터의 채널수는 동일해야 한다. 그리고 필터의 Size는 모두 동일해야 한다. 그런데 출력의 결과를 살펴보면 1개 채널의 출력 특징맵이다. 다수의 층을 활용해 반복해서 합성곱 연산을 수행하기 위해서는 출력특징맵이 n차원의 형태를 지니는 것이 좋다. 합성곱 연산의 결과 역시 다수의 채널을 갖추도록 만들기 위해선 필터를 다수 적용하여 합성곱 연산을 수행하는 것이다.
+
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Conv3.png?raw=true){:width="100%" height="70%"}{: .center}
+
+입력 특징맵과 필터를 3차원 직육면체로 표현한 것은 (채널, 높이, 너비)의 크기를 갖기 때문이다. 그런데 여기에 필터의 차원을 4차원으로 (출력 채널 수, 입력 채널수, 높이, 너비) 만들어서 출력 특징맵 역시 다수의 출력 특징맵을 가지도록 만들 수 있다.
+
+#### 풀링(Pooling) 계층
+
+앞서 CNN은 기존 NN과 달리 Conv층 $$\to$$ ReLU $$\to$$ Pooling 층을 거친다고 하였다. 풀링은 선택적으로 수행할 수 있는 단계이며, Size를 줄이는 절차라고 할 수 있다.
+
+![CNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Pooling.png?raw=true){:width="100%" height="70%"}{: .center}
+
+위의 그림은 스트라이드 2를 적용하여 $$2\times2$$ 크기의 데이터로 데이터의 Size를 줄인다. $$2\times2$$ Size 영역에서 가장 큰 원소를 하나 꺼내는 것으로 이를 최대 풀링(max pooling)이라 부른다. 이미지 처리에서는 주로 max pooling 처리를 진행하며, 이 외에는 평균 풀링(average pooling)처리가 있다.
+
+Pooling은 단순히 평균값이나 최대값을 채택하므로 별도의 학습과정이라할 것이 없으며 채널마다 독립적으로 이루어지는 작업이기 때문에 입력 데이터의 채널 수를 그대로 보존하는 특징을 갖는다.
+
+... to be continued 
 
 #### 참조 문헌
 1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
