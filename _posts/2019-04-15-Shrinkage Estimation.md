@@ -3,7 +3,7 @@ layout: post
 title:  "선형회귀 축소추정(Shrinkage Estimation)"
 date: 2019-04-15
 author: YoungHwan Seol
-categories: 선형 모델(Linear Model)
+categories: 선형모델
 ---
 
 앞서 소개했던 선형 회귀의 LSE 값은 선형 불편(linear unbiased) 추정치들 중에서 분산이 가장 작다. 어떤 모수 $$\theta$$에 대한 추정치 $$\hat{\theta}$$의 평균제곱오차(MSE, mean squared error)는 다음과 같이 표현될 수 있다.

@@ -3,7 +3,7 @@ layout: post
 title:  "합성곱 신경망(Convolutional Neural Network)"
 date: 2020-10-11
 author: seolbluewings
-categories: Statistics
+categories: 딥러닝
 ---
 
 [작성중]

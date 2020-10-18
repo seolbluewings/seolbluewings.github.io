@@ -3,7 +3,7 @@ layout: post
 title:  "베이지안 선형 회귀(Bayesian Linear Regression)"
 date: 2019-04-22
 author: YoungHwan Seol
-categories: Statistics
+categories: 선형모델
 ---
 
 일반적으로 선형 회귀(linear regression)는 다음과 같이 표현된다.
