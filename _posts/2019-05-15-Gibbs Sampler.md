@@ -3,7 +3,7 @@ layout: post
 title:  "깁스 샘플러(Gibbs Sampler)"
 date: 2019-05-22
 author: seolbluewings
-categories: Statistics
+categories: MCMC
 ---
 
 깁스 샘플러(Gibbs Sampler)는 대표적인 MCMC기법 중 하나로 $$d$$차원의 parameter인 $$\Theta = (\theta_{1},....,\theta_{d})$$의 sampling을 진행할 수 있도록 하는 방법이다.
