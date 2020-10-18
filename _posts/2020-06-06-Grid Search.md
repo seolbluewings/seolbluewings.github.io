@@ -2,8 +2,8 @@
 layout: post
 title:  "Hyperparameter Tuning"
 date: 2020-06-06
-author: YoungHwan Seol
-categories: Statistics
+author: seolbluewings
+categories: 모델평가
 ---
 
 교차검증은 모델의 일반화 성능을 측정하는 방법이며 이제는 모델의 hyperparameter를 튜닝함으로써 일반화 성능을 향상시키는 방법을 알아보고자 한다. 모델의 일반화 성능을 최대로 높여주는 hyperparameter 값을 찾는 일은 모든 데이터 분석에서 반드시 진행해야하는 작업이다. 이에 대하여 알아보자.
