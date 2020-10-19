@@ -1,14 +1,9 @@
 ---
-
 layout: post
-
 title:  "군집 분석(Cluster Analysis)"
-
 date: 2020-06-12
-
-author: YoungHwan Seol
-
-categories: Statistics
+author: seolbluewings
+categories: 혼합모델
 
 ---
 
