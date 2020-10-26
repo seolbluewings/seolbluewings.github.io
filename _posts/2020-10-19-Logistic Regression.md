@@ -8,20 +8,19 @@ categories: 선형모델
 
 [작성중...]
 
+로지스틱 회귀는 프로빗 모델처럼 반응변수 범주형인 케이스에서 활용할 수 있는 방법이다. 로지스틱 회귀는 새로운 변수(X)가 주어졌을 때, 반응 변수가 각 범주에 속할 확률이 얼마인지를 추정하며, 추정된 확률에 따라 반응 변수의 Class를 분류하게 된다.
 
-로지스틱 회귀는 프로빗 모델처럼 반응변수 범주형인 케이스에서 활용할 수 있는 방법이다. 로지스틱 회귀는 새로운 변수(X)가 주어졌을 때, 반응 변수가 각 범주에 속할 확률이 얼마인지를 추정하며, 추정된 확률에 따라 반응 변수의 Class를 분류하게 된다. 로지스틱 회귀 역시도 프로빗 회귀처럼 일반화 선형 모델(generalized linear model)의 한 종류라고 할 수 있다.
+일단 반응 변수의 클래스가 2가지인 경우, 즉 $$ y \in \{0,1\}$$ 로 표현되는 경우를 생각해보자.
 
-일단 반응 변수의 클래스가 2가지인 경우 ,$$ y \in \{0,1\}$$ 로 표현되는 경우를 생각해보자.
+![LR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Logistic.png?raw=true){:width="70%" height="70%"}{:.aligncenter}
 
-앞서 일반화 선형 모델은 연결함수(link function) $$h$$를 이용해서 실수값 $$\mathbf{X}\beta$$를 0 또는 1이란 값으로 변경시킨다.
-
-이런 상황에서 연결함수로 시그모이드 함수(로지스틱 함수)를 활용하는 경우가 있는데 이를 로지스틱 회귀 모델이라 부르며 다음과 같이 표현할 수 있다.
+그림처럼 성공/실패가 명확하게 구분되는 케이스에서 기존의 선형 모델을 그대로 적용하는 것은 무리가 있다. 비선형 함수를 활용하여 성공/실패, $$y=0$$ 또는 $$y=1$$을 구분하는 것이 바람직하다고 할 수 있다. 그림의 우측에서 활용되는 비선형 함수는 시그모이드 함수이며, 이처럼 시그모이드 함수를 연결함수로 활용하여 데이터를 적합시키는 것을 로지스틱 회귀라고 부른다.
 
 $$
 \begin{align}
 \pi(\mathbf{X}) &= p(y=1\mid\mathbf{X}) \nonumber \\
 \log{\frac{\pi(\mathbf{X})}{1-\pi(\mathbf{X})}} &= \mathbf{X}\beta \nonumber \\
-\pi(\mathbf{X}) = \frac{e^{\mathbf{X}\beta}}{1+e^{\mathbf{X}\beta}} \nonumber
+\pi(\mathbf{X}) &= \frac{e^{\mathbf{X}\beta}}{1+e^{\mathbf{X}\beta}} \nonumber
 \end{align}
 $$
 
@@ -31,7 +30,17 @@ $$
 
 모델의 결과에 대한 해석이 가능하다는 점은 로지스틱 회귀가 갖는 장점으로 만약 $$\mathbf{X} = (x_{1},...,x_{k})$$ 이고 $$ d \leq k $$일 때, $$\text{exp}(\beta_{d})$$의 값은 나머지 변수가 고정인 상황에서 $$x_{d}$$가 1단위 변화할 때, Odds가 어떻게 변화하는지를 나타내는 값이라고 해석할 수 있다.
 
+따라서 로지스틱 회귀는 선형 모델의 예측 결과를 활용하여 데이터의 로그 Odds에 근사하는 것이다. 여기서 주의할 부분은 이름은 회귀지만, 실제로 행하는 작업은 분류라는 것이다. 더불어 로지스틱 회귀는 단순하게 결과를 0,1로만 return해준다기 보다는 각 Class로 할당될 확률(0,1로 결정될 확률)을 근사적으로 보여준다고 할 수 있다.
 
+앞서 나열했던 수식을 활용하면 다음과 같은 관계가 나타남을 확인할 수 있다.
+
+$$
+\begin{align}
+\pi(\mathbf{X}) &= p(y=1\mid\mathbf{X}) \nonumber \\
+p(y=1\mid\mathbf{X}) &= \pi(\mathbf{X}) = \frac{e^{\mathbf{X}\beta}}{1+e^{\mathbf{X}\beta}} \nonumber \\
+p(y=0\mid\mathbf{X}) &= 1-\pi(\mathbf{X}) = \frac{1}{1+e^{\mathbf{X}\beta}} \nonumber
+\end{align}
+$$
 
 
 
