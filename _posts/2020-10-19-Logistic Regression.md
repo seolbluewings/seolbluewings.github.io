@@ -12,7 +12,7 @@ categories: 선형모델
 
 일단 반응 변수의 클래스가 2가지인 경우, 즉 $$ y \in \{0,1\}$$ 로 표현되는 경우를 생각해보자.
 
-![LR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Logistic.png?raw=true){:width="70%" height="70%"}{:.aligncenter}
+</center>![LR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Logistic.png?raw=true){:width="70%" height="70%"}</center>
 
 그림처럼 성공/실패가 명확하게 구분되는 케이스에서 기존의 선형 모델을 그대로 적용하는 것은 무리가 있다. 비선형 함수를 활용하여 성공/실패, $$y=0$$ 또는 $$y=1$$을 구분하는 것이 바람직하다고 할 수 있다. 그림의 우측에서 활용되는 비선형 함수는 시그모이드 함수이며, 이처럼 시그모이드 함수를 연결함수로 활용하여 데이터를 적합시키는 것을 로지스틱 회귀라고 부른다.
 
