@@ -12,7 +12,7 @@ categories: 선형모델
 
 일단 반응 변수의 클래스가 2가지인 경우, 즉 $$ y \in \{0,1\}$$ 로 표현되는 경우를 생각해보자.
 
-<center>![LR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Logistic.png?raw=true){:width="70%" height="70%"}</center>
+![LR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Logistic.png?raw=true){:width="70%" height="70%"}
 
 그림처럼 성공/실패가 명확하게 구분되는 케이스에서 기존의 선형 모델을 그대로 적용하는 것은 무리가 있다. 비선형 함수를 활용하여 성공/실패, $$y=0$$ 또는 $$y=1$$을 구분하는 것이 바람직하다고 할 수 있다. 그림의 우측에서 활용되는 비선형 함수는 시그모이드 함수이며, 이처럼 시그모이드 함수를 연결함수로 활용하여 데이터를 적합시키는 것을 로지스틱 회귀라고 부른다.
 
@@ -56,6 +56,21 @@ $$\text{argmin}_{\beta} (Y-h(X\beta))^{T}(Y-h(X\beta))$$
 
 기존 선형회귀 모델에서 최소제곱추정량(Least Square Estimator, LSE)말고도 최대우도추정량(Maximum Likelihood Estimator, MLE)가 존재했던 것을 생각해보자. 로지스틱 회귀에서는 MLE을 사용하여 회귀계수 $$\beta$$를 추정한다.
 
+데이터셋을 $$ \left\{(\mathbf{X}_{i},y_{i})\right}_{i=1}^{n}$$ 으로 표현한다고 하자. 로지스틱 회귀는 0 또는 1 (성공 또는 실패)의 값을 갖기 때문에 베르누이 시행을 전제로 한다. 그래서 우리는 확률변수 $$y$$의 분포를 고려할 필요가 있다.
+
+$$ p(y_{i}=1\mid\mathbf{X},\beta) = \pi(\mathbf{X}_{i})^{y_{i}}\left(1-\pi(\mathbf{X}_{i})\right)^{1-y_{i}}$$
+
+따라서 Likelihhod는 다음과 깉이 표현할 수 있을 것이다.
+
+$$
+\begin{align}
+
+\text{L} &= \prod_{i=1}^{n} \pi(\mathbf{X}_{i})^{y_{i}}\left(1-\pi(\mathbf{X}_{i})\right)^{1-y_{i}} \nonumber \\
+\textit{l} &= \sum_{i=1}^{n}y_{i}\log{\pi(\mathbf{X}_{i})}+ \sum_{i=1}^{n}(1-y_{i})\log{(1-\pi(\mathbf{X}_{i}))} \nonumber
+\end{align}
+$$
+
+이를 이용해서 우리는 $$\beta$$를 최대화시키는 값을 구해야하고, $$\beta^{*} = \text{argmin}_{\beta}\textit{l}(\beta)$$ 이러한 상황에서 일반적으로 활용되는 방법은 Gradient Descent, Newton's Method, Metropolis-Hastings Algorithm 이 있다.
 
 
 
