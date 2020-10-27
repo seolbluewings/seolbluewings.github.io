@@ -12,7 +12,7 @@ categories: 선형모델
 
 일단 반응 변수의 클래스가 2가지인 경우, 즉 $$ y \in \{0,1\}$$ 로 표현되는 경우를 생각해보자.
 
-</center>![LR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Logistic.png?raw=true){:width="70%" height="70%"}</center>
+<center>![LR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Logistic.png?raw=true){:width="70%" height="70%"}</center>
 
 그림처럼 성공/실패가 명확하게 구분되는 케이스에서 기존의 선형 모델을 그대로 적용하는 것은 무리가 있다. 비선형 함수를 활용하여 성공/실패, $$y=0$$ 또는 $$y=1$$을 구분하는 것이 바람직하다고 할 수 있다. 그림의 우측에서 활용되는 비선형 함수는 시그모이드 함수이며, 이처럼 시그모이드 함수를 연결함수로 활용하여 데이터를 적합시키는 것을 로지스틱 회귀라고 부른다.
 
@@ -42,7 +42,19 @@ p(y=0\mid\mathbf{X}) &= 1-\pi(\mathbf{X}) = \frac{1}{1+e^{\mathbf{X}\beta}} \non
 \end{align}
 $$
 
+#### 로지스틱 회귀 추정
 
+로지스틱 회귀문제에서 parameter $$\beta$$에 대한 추정은 로지스틱 회귀의 중요한 이슈이다. 기존의 선형 모델에서는 오차제곱합을 최소화시키는 parameter $$\beta$$를 구했다. 이는 Convex 함수이기 때문에 Global한 minimal을 비교적 쉽게 찾을 수 있다.
+
+$$\text{argmin}_{\beta} (Y-X\beta)^{T}(Y-X\beta)$$
+
+비슷한 방식을 취한다고 한다면, 로지스틱 회귀의 경우는 아래와 같을 것이다. h는 연결함수인 것으로 받아들이자.
+
+$$\text{argmin}_{\beta} (Y-h(X\beta))^{T}(Y-h(X\beta))$$
+
+그런데 이 수식은 앞선 단순 선형회귀 모델의 경우와 달리 Convex하지 않게 된다. non-Convex한 함수가 되어 Global minimal을 찾기가 어려워진다. 따라서 로지스틱 회귀에서 parameter $$\beta$$ 를 추정하는 것이 중요한 이슈이다.
+
+기존 선형회귀 모델에서 최소제곱추정량(Least Square Estimator, LSE)말고도 최대우도추정량(Maximum Likelihood Estimator, MLE)가 존재했던 것을 생각해보자. 로지스틱 회귀에서는 MLE을 사용하여 회귀계수 $$\beta$$를 추정한다.
 
 
 
