@@ -56,7 +56,7 @@ $$\text{argmin}_{\beta} (Y-h(X\beta))^{T}(Y-h(X\beta))$$
 
 기존 선형회귀 모델에서 최소제곱추정량(Least Square Estimator, LSE)말고도 최대우도추정량(Maximum Likelihood Estimator, MLE)가 존재했던 것을 생각해보자. 로지스틱 회귀에서는 MLE을 사용하여 회귀계수 $$\beta$$를 추정한다.
 
-데이터셋을 $$ \left\{(\mathbf{X}_{i},y_{i})\right}_{i=1}^{n}$$ 으로 표현한다고 하자. 로지스틱 회귀는 0 또는 1 (성공 또는 실패)의 값을 갖기 때문에 베르누이 시행을 전제로 한다. 그래서 우리는 확률변수 $$y$$의 분포를 고려할 필요가 있다.
+데이터셋을 $$ \{(\mathbf{X}_{i},y_{i})\}_{i=1}^{n}$$ 으로 표현한다고 하자. 로지스틱 회귀는 0 또는 1 (성공 또는 실패)의 값을 갖기 때문에 베르누이 시행을 전제로 한다. 그래서 우리는 확률변수 $$y$$의 분포를 고려할 필요가 있다.
 
 $$ p(y_{i}=1\mid\mathbf{X},\beta) = \pi(\mathbf{X}_{i})^{y_{i}}\left(1-\pi(\mathbf{X}_{i})\right)^{1-y_{i}}$$
 
@@ -71,6 +71,16 @@ $$
 $$
 
 이를 이용해서 우리는 $$\beta$$를 최대화시키는 값을 구해야하고, $$\beta^{*} = \text{argmin}_{\beta}\textit{l}(\beta)$$ 이러한 상황에서 일반적으로 활용되는 방법은 Gradient Descent, Newton's Method, Metropolis-Hastings Algorithm 이 있다.
+
+이번 포스팅에서는 Metropolis-Hastings Algorithm을 이용하여 $$\beta$$에 대한 추정을 시도하는 것을 살펴보자.
+
+#### Metropolis-Hastings Algorithm
+
+parameter $$\beta$$에 대한 true Posterior distribution을 구하는 식을 먼저 얻어야 할 것이다.
+
+$$ p(\beta\mid y) \propto p(y \mid \beta)p(\beta) $$
+
+여기서 $$\beta$$에 대한 prior를 $$p(\beta) \propto C$$ 로 non-informative prior를 주는 것으로 가정하자. 
 
 
 
