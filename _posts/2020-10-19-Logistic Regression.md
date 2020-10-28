@@ -80,8 +80,15 @@ parameter $$\beta$$에 대한 true Posterior distribution을 구하는 식을 �
 
 $$ p(\beta\mid y) \propto p(y \mid \beta)p(\beta) $$
 
-여기서 $$\beta$$에 대한 prior를 $$p(\beta) \propto C$$ 로 non-informative prior를 주는 것으로 가정하자. 
+여기서 $$\beta$$에 대한 prior를 $$p(\beta) \propto C$$ 로 non-informative prior를 주는 것으로 가정하자. 그렇다면 Posterior는 곧 likelihood에 비례하게 된다.
 
+$$\beta$$에 대한 transition kernel을 $$\beta^{*} \sim \mathcal{N}(\beta,(X^{T}X)^{-1})$$ 라고 설정하면 (t+1)번째 시행에서의 $$\beta$$값은 $$\beta^{(t+1)} \sim \mathcal{N}(\beta^{(t)},(X^{T}X)^{-1})$$ 일 것이다. 따라서 M-H Algorithm에서 활용되는 채택확률 $$\alpha$$는 다음과 같이 계산될 것이다.
+
+$$
+\alpha = \frac{ p(\beta^{(t+1)}\mid y) / \mathcal{N}(\beta^{(t+1)},(X^{T}X)^{-1})  }{  p(\beta^{(t)}\mid y) / \mathcal{N}(\beta^{(t)},(X^{T}X)^{-1})  }
+$$
+
+그리고 새롭게 proposed된 $$\beta^{(t+1)}$$ 값을 확률 $$p=\text{min}(\alpha,1)$$ 로 accept한다. 충분한 iteration을 진행한 이후 $$\beta$$의 Posterior Mode나 Mean 값을 $$\beta$$의 추정값으로 결정 짓는다.
 
 
 ##### 상기 예제에 관련한 코드는 다음의 링크 1. [R코드](https://github.com/seolbluewings/rcode/blob/master/6.Probit_Regression.R) 2. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/6.Probit%20Regression.ipynb) 에서 확인할 수 있습니다.
