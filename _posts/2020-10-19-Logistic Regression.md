@@ -6,8 +6,6 @@ author: seolbluewings
 categories: 선형모델
 ---
 
-[작성중...]
-
 로지스틱 회귀는 프로빗 모델처럼 반응변수 범주형인 케이스에서 활용할 수 있는 방법이다. 로지스틱 회귀는 새로운 변수(X)가 주어졌을 때, 반응 변수가 각 범주에 속할 확률이 얼마인지를 추정하며, 추정된 확률에 따라 반응 변수의 Class를 분류하게 된다.
 
 일단 반응 변수의 클래스가 2가지인 경우, 즉 $$ y \in \{0,1\}$$ 로 표현되는 경우를 생각해보자.
@@ -91,7 +89,7 @@ $$
 그리고 새롭게 proposed된 $$\beta^{(t+1)}$$ 값을 확률 $$p=\text{min}(\alpha,1)$$ 로 accept한다. 충분한 iteration을 진행한 이후 $$\beta$$의 Posterior Mode나 Mean 값을 $$\beta$$의 추정값으로 결정 짓는다.
 
 
-##### 상기 예제에 관련한 코드는 다음의 링크 1. [R코드](https://github.com/seolbluewings/rcode/blob/master/6.Probit_Regression.R) 2. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/8.Logistic%20Regression.ipynb) 에서 확인할 수 있습니다.
+##### 상기 예제에 관련한 코드는 다음의 링크 1. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/8.Logistic%20Regression.ipynb) 에서 확인할 수 있습니다.
 
 
 
