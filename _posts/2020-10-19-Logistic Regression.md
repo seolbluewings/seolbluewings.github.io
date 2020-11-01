@@ -64,7 +64,7 @@ $$
 \begin{align}
 
 \text{L} &= \prod_{i=1}^{n} \pi(\mathbf{X}_{i})^{y_{i}}\left(1-\pi(\mathbf{X}_{i})\right)^{1-y_{i}} \nonumber \\
-\textit{l} &= \sum_{i=1}^{n}y_{i}\log{\pi(\mathbf{X}_{i})}+ \sum_{i=1}^{n}(1-y_{i})\log{(1-\pi(\mathbf{X}_{i}))} \nonumber
+\textit{l} &= \sum_{i=1}^{n}\left((1-y_{i})(-x_{i}^{T}\beta)-\log{1+\text{exp}(-x_{i}^{T}\beta)}  \right) \nonumber
 \end{align}
 $$
 
@@ -80,10 +80,10 @@ $$ p(\beta\mid y) \propto p(y \mid \beta)p(\beta) $$
 
 여기서 $$\beta$$에 대한 prior를 $$p(\beta) \propto C$$ 로 non-informative prior를 주는 것으로 가정하자. 그렇다면 Posterior는 곧 likelihood에 비례하게 된다.
 
-$$\beta$$에 대한 transition kernel을 $$\beta^{*} \sim \mathcal{N}(\beta,(X^{T}X)^{-1})$$ 라고 설정하면 (t+1)번째 시행에서의 $$\beta$$값은 $$\beta^{(t+1)} \sim \mathcal{N}(\beta^{(t)},(X^{T}X)^{-1})$$ 일 것이다. 따라서 M-H Algorithm에서 활용되는 채택확률 $$\alpha$$는 다음과 같이 계산될 것이다.
+$$\beta$$에 대한 transition kernel을 $$\beta^{*} \sim \mathcal{N}(\beta,(X^{T}X)^{-1})$$ 라고 설정하면 (t+1)번째 시행에서의 $$\beta$$값은 $$\beta^{(t+1)} \sim \mathcal{N}(\beta^{(t)},(X^{T}X)^{-1})$$ 일 것이다. 따라서 M-H Algorithm에서 활용되는 채택확률 $$\alpha$$는 다음과 같이 계산될 것이다. Transition Kernel의 경우, 대칭 형태인 정규분포이기 때문에 삭제해도 무방하여 계산과정에서는 제외하였다. 
 
 $$
-\alpha = \frac{ p(\beta^{(t+1)}\mid y) / \mathcal{N}(\beta^{(t+1)},(X^{T}X)^{-1})  }{  p(\beta^{(t)}\mid y) / \mathcal{N}(\beta^{(t)},(X^{T}X)^{-1})  }
+\alpha = \frac{ p(\beta^{(t+1)}\mid y) }{  p(\beta^{(t)}\mid y) }
 $$
 
 그리고 새롭게 proposed된 $$\beta^{(t+1)}$$ 값을 확률 $$p=\text{min}(\alpha,1)$$ 로 accept한다. 충분한 iteration을 진행한 이후 $$\beta$$의 Posterior Mode나 Mean 값을 $$\beta$$의 추정값으로 결정 짓는다.
