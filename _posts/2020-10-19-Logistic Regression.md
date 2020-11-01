@@ -64,7 +64,7 @@ $$
 \begin{align}
 
 \text{L} &= \prod_{i=1}^{n} \pi(\mathbf{X}_{i})^{y_{i}}\left(1-\pi(\mathbf{X}_{i})\right)^{1-y_{i}} \nonumber \\
-\textit{l} &= \sum_{i=1}^{n}\left((1-y_{i})(-x_{i}^{T}\beta)-\log{1+\text{exp}(-x_{i}^{T}\beta)}  \right) \nonumber
+\textit{l} &= \sum_{i=1}^{n}\left((1-y_{i})(-x_{i}^{T}\beta)-\log{(1+\text{exp}(-x_{i}^{T}\beta))}  \right) \nonumber
 \end{align}
 $$
 
