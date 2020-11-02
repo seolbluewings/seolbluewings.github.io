@@ -127,7 +127,7 @@ $$
 
 이처럼 $$\beta$$와 $$\mathbf{u}$$의 Conditional Posterior distribution은 Sampling하기 편한 형태로 주어지기 때문에 이후의 과정에서 Gibbs Sampler 등을 이용하여 $$\beta$$와 $$\mathbf{u}$$에 대한 Sampling을 수행할 수 있게 된다.
 
-##### 상기 예제에 관련한 코드는 다음의 링크 1. [R코드](https://github.com/seolbluewings/rcode/blob/master/Probit%20Regression.ipynb) 2. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/6.Probit%20Regression.ipynb) 에서 확인할 수 있습니다.
+##### 상기 예제에 관련한 코드는 다음의 링크 1. [R코드](https://github.com/seolbluewings/R_code/blob/master/Probit%20Regression.ipynb) 2. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/6.Probit%20Regression.ipynb) 에서 확인할 수 있습니다.
 
 
 #### 참조 문헌

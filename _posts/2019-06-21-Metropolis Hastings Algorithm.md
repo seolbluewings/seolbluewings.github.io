@@ -87,7 +87,7 @@ $$
 T(\theta^{*}\mid\theta) = 0.6\mathcal{N}(\theta-1.5,1)+0.4\mathcal{N}(\theta+1.5,1)
 $$
 
-이에 대한 코드는 각각 코드는 다음의 링크 1. [R코드](https://github.com/seolbluewings/rcode/blob/master/M-H%20Algorithm.ipynb) 2. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/7.MH%20Algorithm.ipynb) 에서 확인할 수 있습니다.
+이에 대한 코드는 각각 코드는 다음의 링크 1. [R코드](https://github.com/seolbluewings/R_code/blob/master/M-H%20Algorithm.ipynb) 2. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/7.MH%20Algorithm.ipynb) 에서 확인할 수 있습니다.
 
 
 #### 참조 문헌
