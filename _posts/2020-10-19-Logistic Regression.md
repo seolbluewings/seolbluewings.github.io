@@ -89,7 +89,13 @@ $$
 그리고 새롭게 proposed된 $$\beta^{(t+1)}$$ 값을 확률 $$p=\text{min}(\alpha,1)$$ 로 accept한다. 충분한 iteration을 진행한 이후 $$\beta$$의 Posterior Mode나 Mean 값을 $$\beta$$의 추정값으로 결정 짓는다.
 
 
-##### 상기 예제에 관련한 코드는 다음의 링크 1. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/8.Logistic%20Regression.ipynb) 에서 확인할 수 있습니다.
+##### 상기 예제에 관련한 코드는 다음의 링크 1. [Python코드](https://github.com/seolbluewings/pythoncode/blob/master/8.Logistic%20Regression.ipynb) 2. [R코드](https://github.com/seolbluewings/rcode/blob/master/Logistic%20Regression.ipynb) 에서 확인할 수 있습니다.
+
+
+#### 참조 문헌
+1. [Categorical Data Analysis](https://d1wqtxts1xzle7.cloudfront.net/45095661/AGRESTI.PDF?1461669052=&response-content-disposition=inline%3B+filename%3DCategorical_Data_Analysis.pdf&Expires=1604326876&Signature=ahH43ZxLJmWSbmVkF3r4fESFrVbC18~TAeNGjspg46h5mIhn7I-XbXcfFBsyGQjcxZb-T0SpluXdBk-yJ1sghNkuWq-8BN3ubrWEbsrbiOS4z~ovVT0vrhW6QfGy7WpbIpeODrq2RBk9FF~taaehvE6YYZAYRBWAoUK9JBfG5ES1qzeEhyZcrmMn-vtbRAYaVSURzBbhtI77jwe~u2CWtcVctTPfptggb4aEfqnVFFXVZeRelBsovgVaaQvg54n-o7xdX-UZFR~ZiTRUsz~rHO~l3HaA6jobD54TL6DVncwfhHEiOD5nOpXj9~2CTNCwzjRxgTW63HCFEIGWYrRzEQ__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA) <br>
+
+2. [단단한 머신러닝](http://www.yes24.com/Product/Goods/88440860)
 
 
 
