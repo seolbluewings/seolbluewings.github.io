@@ -24,12 +24,37 @@ $$g(x_{1},x_{2})=0$$ 을 풀어서 $$x_{2} = h(x_{1})$$ 형태로 $$x_{2}$$를 $
 
 D차원의 변수 $$\mathbf{X} = (x_{1},...,x_{D})$$ 가 존재한다고 가정하자. 그리고 제약조건 $$g(\mathbf{X})=0$$ 이 있을 것이다. 이 제약조건은 D-1차원이다.
 
-> 왜 D-1차원인가? : 고등학교 시절 벡터를 다룬 단원에서 평면에 대한 수식을 생각해보자. 3차원 공간에서의 평면에 대한 수식은  $$ ax_{1}+bx_{2}+cx_{3}+d = 0 $$ 였다. 이 수식은 $$g(\mathbf{X})=0$$ 이며, 3차원 공간에서의 데이터 $$\mathbf{X}$$ 에 대한 $$g(\mathbf{X})=0$$ 은 평면 2차원이다. 그래서 데이터 $$\mathbf{X}$$가 D차원일 때, 제약조건 $$g(\mathbf{X})=0$$은 D-1차원일 것이다.
+> 왜 D-1차원인가? 고등학교 시절 벡터를 다룬 단원에서 평면에 대한 수식을 생각해보자. 3차원 공간에서의 평면에 대한 수식은  $$ ax_{1}+bx_{2}+cx_{3}+d = 0 $$ 였다. 이 수식은 $$g(\mathbf{X})=0$$ 이며, 3차원 공간에서의 데이터 $$\mathbf{X}$$ 에 대한 $$g(\mathbf{X})=0$$ 은 평면 2차원이다. 그래서 데이터 $$\mathbf{X}$$가 D차원일 때, 제약조건 $$g(\mathbf{X})=0$$은 D-1차원일 것이다.
 
+이 때 우리는 2가지 사항을 확인할 수 있다.
 
+- $$g(\mathbf{X})=0$$ 상의 임의의 점 $$X$$에 대하여 $$\partial g(\mathbf{X})$$는 $$g(\mathbf{X})=0$$ 과 직교한다.
 
+표면상의 한 점 $$x$$와 $$x+\epsilon$$ 이 있다고 가정해보자. $$g(x+\epsilon)$$은 다음과 같이 Taylor Series 전개될 수 있다.
 
+$$g(x+\epsilon) \simeq g(x) + \epsilon^{T}\partial g(x)$$
 
+$$x$$와 $$x+\epsilon$$은 둘 다 제약조건 $$g(\mathbf{X})=0$$ 위에 존재하기 때문에 $$g(x)=g(x+\epsilon)$$ 이다. $$\epsilon \to 0$$이면 $$ \epsilon^{T}\partial g(x)=0$$ 이다. $$\epsilon$$은 $$g(\mathbf{X})=0$$ 에 평행하기 때문에 $$ \epsilon^{T}\partial g(x)=0$$ 임을 고려한다면, $$\partial g(x)$$는 제약조건 평면에 수직이라는 것을 알 수 있다.
+
+- 최적의 포인트 $$\mathbf{X}^{*}$$에서 $$f(\mathbf{X})$$에서 해당 $$\mathbf{X}^{*}$$에서의 경사 $$\partial f(\mathbf{X}^{*})$$에서 제약조건 $$g(\mathbf{X})=0$$에 직교한다.
+
+만약 직교하지 않는다면, $$g(\mathbf{X})=0$$을 따라 더 짧은 거리를 이동시켜 $$f(\mathbf{X})$$ 값을 더 증가시킬 수 있다.
+
+따라서 $$\partial f$$와 $$\partial g$$는 평행(방향이 같거나 반대방향)하다고 할 수 있다. 따라서 다음을 만족하는 0 아닌 parameter $$\lambda$$가 존재할 것이며 이 $$\lambda$$를 라그랑주 승수라고 부른다.
+
+$$\partial f(\mathbf{X}^{*}) + \lambda\partial g(\mathbf{X}^{*}) = 0$$
+
+$$\lambda$$ 값은 양수, 음수 모두 가능하다. 여기서 라그랑주 함수를 다음과 같이 도입할 수 있다.
+
+$$L(\mathbf{X},\lambda) \equiv f(\mathbf{X}) + \lambda g(\mathbf{X})$$
+
+이 때, 다음의 식을 생각해볼 수 있다.
+$$
+\begin{align}
+\frac{\partial}{\partial\mathbf{X}} &= \partial f(\mathbf{X}) + \lambda g(\mathbf{X}) = 0 \nonumber \\
+\frac{\partial}{\partial\lambda} &= g(\mathbf{X}) = 0 \nonumber
+\end{align}
+$$
 
 
 
