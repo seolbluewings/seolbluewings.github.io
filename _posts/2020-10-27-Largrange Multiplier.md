@@ -22,7 +22,9 @@ $$g(x_{1},x_{2})=0$$ 을 풀어서 $$x_{2} = h(x_{1})$$ 형태로 $$x_{2}$$를 $
 
 이러한 상황에서 라그랑주 승수라고 불리는 parameter $$\lambda$$를 도입하면 문제를 비교적 간단하게 해결할 수 있다.
 
-D차원의 변수 $$\mathbf{X} = (x_{1},...,x_{D})$$ 가 존재한다고 가정하자. 그리고 제약조건 $$g(\mathbf{X})=0$$ 이 있을 것이다. 이 제약조건은 D-1차원이다.
+#### 등식 제약 조건(equality constraint)
+
+D차원의 변수 $$\mathbf{X} = (x_{1},...,x_{D})$$ 가 존재한다고 가정하자. 그리고 제약조건 $$g(\mathbf{X})=0$$ 이 있을 것이다. 이 때 등식이 사용하기 때문에 이를 등식 제약 조건(equality constraint)이라 부른다. 이 제약조건은 D-1차원이다.
 
 > 왜 D-1차원인가? 고등학교 시절 벡터를 다룬 단원에서 평면에 대한 수식을 생각해보자. 3차원 공간에서의 평면에 대한 수식은  $$ ax_{1}+bx_{2}+cx_{3}+d = 0 $$ 였다. 이 수식은 $$g(\mathbf{X})=0$$ 이며, 3차원 공간에서의 데이터 $$\mathbf{X}$$ 에 대한 $$g(\mathbf{X})=0$$ 은 평면 2차원이다. 그래서 데이터 $$\mathbf{X}$$가 D차원일 때, 제약조건 $$g(\mathbf{X})=0$$은 D-1차원일 것이다.
 
@@ -30,7 +32,7 @@ D차원의 변수 $$\mathbf{X} = (x_{1},...,x_{D})$$ 가 존재한다고 가정�
 
 - $$g(\mathbf{X})=0$$ 상의 임의의 점 $$X$$에 대하여 $$\bigtriangledown g(\mathbf{X})$$는 $$g(\mathbf{X})=0$$ 과 직교한다.
 
-표면상의 한 점 $$x\mathbf{X}$와 $$\mathbf{x+\epsilon}$$ 이 있다고 가정해보자. $$g(\mathbf{X+\epsilon})$$은 다음과 같이 Taylor Series 전개될 수 있다.
+표면상의 한 점 $$\mathbf{X}$와 $$\mathbf{x+\epsilon}$$ 이 있다고 가정해보자. $$g(\mathbf{X+\epsilon})$$은 다음과 같이 Taylor Series 전개될 수 있다.
 
 $$g(\mathbf{X+\epsilon}) \simeq g(\mathbf{X}) + \mathbf{\epsilon}^{T}\bigtriangledown g(\mathbf{X})$$
 
@@ -52,12 +54,32 @@ $$L(\mathbf{X},\lambda) \equiv f(\mathbf{X}) + \lambda g(\mathbf{X})$$
 
 $$
 \begin{align}
-\bigtriangledown_{\mathbf{X}}L &= \bigtriangledown f(\mathbf{X}) + \lambda \bigtriangledowng(\mathbf{X}) = 0 \nonumber \\
+\bigtriangledown_{\mathbf{X}}L &= \bigtriangledown f(\mathbf{X}) + \lambda \bigtriangledown g(\mathbf{X}) = 0 \nonumber \\
 \bigtriangledown_{\lambda}L &= g(\mathbf{X}) = 0 \nonumber
 \end{align}
 $$
 
+즉, 우리는 라그랑주 함수 $$L(\mathbf{X},\lambda)$$를 정의함으로써 제약조건 하의 최적화 문제를 라그랑주 함수의 무제약 최적화 문제로 변환시킬 수 있다. 이제는 $$L(\mathbf{X},\lambda)$$의 임계점을 찾는 문제로 바뀌었고 $$\mathbf{X}$$가 $$D$$차원이라면, 임계점 $$\mathbf{X}^{*}$$와 $$\lambda$$를 찾는 $$D+1$$개의 공식을 얻게 된다.
+
+#### 부등식 제약 조건(inequality constraint)
+
+앞서 우리는 제약조건이 등식인 형태, $$g(\mathbf{X})=0$$ 에서의 함수 $$f$$의 최적화를 살펴보았는데 이번에는 $$g(\mathbf{X}) \geq 0$$ 조건에서 함수 $$f$$를 최대화시키는 경우를 생각해볼 것이다. 이 상황에서 경우의 수는 다음과 같이 2가지다.
+
+1. 제약 조건 하의 함수 $$f$$의 임계점이 $$g(\mathbf{X})>0$$ 지역에 존재하는 경우
+
+2. 제약 조건 하의 함수 $$f$$의 임계점이 $$g(\mathbf{X})=0$$ 지역에 존재하는 경우
+
+1의 경우를 제약 조건이 비활성화(inactive)되었다고 말하며 2의 경우 제약 조건이 활성(active) 되었다고 말한다.
+
+우선 1번 케이스부터 살펴보도록 하자. 이 때, 함수 $$g(\mathbf{X})$$는 어떠한 역할도 하지 않아 단순히 $$\bigtriangledown f(\mathbf{X})=0$$ 만으로 최적의 임계점을 찾게 된다. 이는 기존의 라그랑주 함수에서 $$\lambda=0$$ 인 케이스라고 볼 수 있겠다.
+
+2번 케이스는 앞서 등식 제약 조건에서 맞이했던 상황과 동등하다. $$\lambda \neq 0$$ 인 상황에서 라그랑주 함수의 임계점을 구하는 것이다. 이제는 라그랑주 승수 $$\lambda$$의 부호가 중요하다.
 
 
+
+#### 참조 문헌
+1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
+
+2. [단단한 머신러닝](http://www.yes24.com/Product/Goods/88440860)
 
 
