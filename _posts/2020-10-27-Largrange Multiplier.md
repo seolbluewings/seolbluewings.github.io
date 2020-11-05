@@ -32,7 +32,7 @@ D차원의 변수 $$\mathbf{X} = (x_{1},...,x_{D})$$ 가 존재한다고 가정�
 
 - $$g(\mathbf{X})=0$$ 상의 임의의 점 $$X$$에 대하여 $$\bigtriangledown g(\mathbf{X})$$는 $$g(\mathbf{X})=0$$ 과 직교한다.
 
-표면상의 한 점 $$\mathbf{X}$와 $$\mathbf{x+\epsilon}$$ 이 있다고 가정해보자. $$g(\mathbf{X+\epsilon})$$은 다음과 같이 Taylor Series 전개될 수 있다.
+표면상의 한 점 $$\mathbf{X}$$와 $$\mathbf{X+\epsilon}$$ 이 있다고 가정해보자. $$g(\mathbf{X+\epsilon})$$은 다음과 같이 Taylor Series 전개될 수 있다.
 
 $$g(\mathbf{X+\epsilon}) \simeq g(\mathbf{X}) + \mathbf{\epsilon}^{T}\bigtriangledown g(\mathbf{X})$$
 
@@ -40,7 +40,7 @@ $$\mathbf{X}$$와 $$\mathbf{X+\epsilon}$$은 둘 다 제약조건 $$g(\mathbf{X}
 
 - 최적의 포인트 $$\mathbf{X}^{*}$$에서 $$f(\mathbf{X})$$에서 해당 $$\mathbf{X}^{*}$$에서의 경사 $$\bigtriangledown f(\mathbf{X}^{*})$$에서 제약조건 $$g(\mathbf{X})=0$$에 직교한다.
 
-만약 직교하지 않는다면, $$g(\mathbf{X})=0$$을 따라 더 짧은 거리를 이동시켜 $$f(\mathbf{X})$$ 값을 더 증가시킬 수 있다.
+만약 직교하지 않는다면, $$g(\mathbf{X})=0$$을 따라 더 짧은 거리를 이동시켜 $$f(\mathbf{X})$$ 값을 더 증가시킬 수 있다. 이 부분에 대해서는 시각적으로 한번 확인하는 것이 확실하게 와닿는데 이 [블로그](https://m.blog.naver.com/PostView.nhn?blogId=lyb0684&logNo=221332307807&proxyReferer=https:%2F%2Fwww.google.com%2F)에서 이를 시각적으로 이 사실을 보여준다.
 
 따라서 $$\bigtriangledown f$$와 $$\bigtriangledown g$$는 평행(방향이 같거나 반대방향)하다고 할 수 있다. 따라서 다음을 만족하는 0 아닌 parameter $$\lambda$$가 존재할 것이며 이 $$\lambda$$를 라그랑주 승수라고 부른다.
 
