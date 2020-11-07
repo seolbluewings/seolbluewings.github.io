@@ -75,9 +75,12 @@ $$
 
 2번 케이스는 앞서 등식 제약 조건에서 맞이했던 상황과 동등하다. $$\lambda \neq 0$$ 인 상황에서 라그랑주 함수의 임계점을 구하는 것이다. 이제는 라그랑주 승수 $$\lambda$$의 부호가 중요하다. 함수 $$f(\mathbf{X})$$는 기울기 $$\bigtriangledown f(\mathbf{X})$$가 $$g(\mathbf{X})>0$$ 이 지향하는 방향으로 존재할 때만 최대값을 갖을 것이다.
 
-기존 $$\bigtriangledown f(\mathbf{X}^{*}) + \lambda\bigtriangledown g(\mathbf{X}^{*}) = 0$$ 수식이 성립하기 때문에 임의의 $$\lambda>0$$ 에 대하여 $$ \bigtriangledown f(\mathbf{X}) = - \lambda\bigtriangledown g(\mathbf{X}) $$ 이 성립한다.
+기존 $$\bigtriangledown f(\mathbf{X}^{*}) + \lambda\bigtriangledown g(\mathbf{X}^{*}) = 0$$ 수식이 성립하기 때문에 임의의 $$\lambda>0$$ 에 대하여 다음이 성립한다.
+
+$$ \bigtriangledown f(\mathbf{X}) = - \lambda\bigtriangledown g(\mathbf{X}) $$
 
 1,2번 조건 모두 $$\lambda g(\mathbf{X}) =0$$ 인 것은 분명하다. 따라서 $$f(\mathbf{X})$$를 $$g(\mathbf{X})\geq 0$$ 조건에서 최대화시키는 문제는 라그랑주 함수 $$L(\mathbf{X},\lambda) \equiv f(\mathbf{X}) + \lambda g(\mathbf{X})$$ 를 다음의 조건 아래에서 $$\mathbf{X}$$ 와 $$\lambda$$ 에 대해 최적화시키는 것으로 변형시킬 수 있다. 이 조건들을 KKT(Karush-Kuhn-Tucker) 조건이라 부른다.
+
 $$
 \begin{align}
 g(\mathbf{X}) &\geq 0 \nonumber \\
