@@ -73,7 +73,7 @@ $$\bigtriangledown_{\mathbf{X}}L = \bigtriangledown f(\mathbf{X}) = 0 $$
 
 수식 자체는 $$\lambda \neq 0$$ 이므로 이전과 동등하지만, 주의할 사항이 생긴다. 최적의 포인트 $$\mathbf{X}^{*}$$라 할 때, $$\bigtriangledown f(\mathbf{X}^{*})$$ 와 $$\bigtriangledown g(\mathbf{X}^{*})$$ 는 서로 방향이 반대여야한다. 이에 대해서는 위의 이미지 오른쪽을 통해 확인할 수 있다. $$\bigtriangledown g(\mathbf{X})$$는 $$g(\mathbf{X})$$가 지향하는 방향으로 존재할 것이며 임의의 $$\lambda>0$$에 대하여 아래의 식이 성립한다.
 
-$$\bigtriangledown f(\mathbf{X}) = -\lambda\bigtriangledown g(\mathbf{X})$
+$$\bigtriangledown f(\mathbf{X}) = -\lambda\bigtriangledown g(\mathbf{X})$$
 
 함수 $$f(\mathbf{X})$$의 최적화 방향(최대/최소)과 제약조건의 부등식 조건에 따라 다음과 같이 케이스를 분류할 수 있다. $$\lambda>0$$ 이라고 가정하자.
 
