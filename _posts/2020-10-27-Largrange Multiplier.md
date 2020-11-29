@@ -46,8 +46,8 @@ $$L(\mathbf{X},\lambda) \equiv f(\mathbf{X}) + \lambda g(\mathbf{X})$$
 
 $$
 \begin{align}
-\bigtriangledown_{\mathbf{X}}L &= \bigtriangledown f(\mathbf{X}) + \lambda \bigtriangledown g(\mathbf{X}) = 0 \nonumber \\
-\bigtriangledown_{\lambda}L &= g(\mathbf{X}) = 0 \nonumber
+\bigtriangledown_{\mathbf{X}}L &\equiv \bigtriangledown f(\mathbf{X}) + \lambda \bigtriangledown g(\mathbf{X}) = 0 \nonumber \\
+\bigtriangledown_{\lambda}L &\equiv g(\mathbf{X}) = 0 \nonumber
 \end{align}
 $$
 
@@ -69,21 +69,23 @@ $$\bigtriangledown_{\mathbf{X}}L = \bigtriangledown f(\mathbf{X}) = 0 $$
 
 2번 케이스는 앞서 등식 제약 조건에서 맞이했던 상황과 동등하다. $$\lambda \neq 0$$ 인 상황에서 라그랑주 함수의 임계점을 구하는 것이다. 이제는 라그랑주 승수 $$\lambda$$의 부호가 중요하다. 함수 $$f(\mathbf{X})$$는 기울기 $$\bigtriangledown f(\mathbf{X})$$가 $$g(\mathbf{X})>0$$ 이 지향하는 방향으로 존재할 때만 최대값을 갖을 것이다.
 
-![LARGRANGE](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Largrange.png?raw=true){:width="70%" height="70%"}
+![LARGRANGE](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Largrange.png?raw=true){:width="100%" height="70%"}
 
-수식 자체는 $$\lambda \neq 0$$ 이므로 이전과 동등하지만, 주의할 사항이 생긴다. 최적의 포인트 $$\mathbf{X}^{*}$$라 할 때, $$\bigtraiangledown f(\mathbf{X}^{*})$$ 와 $$\bigtriangledown g(\mathbf{X}^{*})$$ 는 서로 방향이 반대여야한다. 이에 대해서는 위의 이미지 오른쪽을 통해 확인할 수 있다. $$\bigtriangledown g(\mathbf{X})$$는 $$g(\mathbf{X})$$가 지향하는 방향으로 존재할 것이다.
+수식 자체는 $$\lambda \neq 0$$ 이므로 이전과 동등하지만, 주의할 사항이 생긴다. 최적의 포인트 $$\mathbf{X}^{*}$$라 할 때, $$\bigtriangledown f(\mathbf{X}^{*})$$ 와 $$\bigtriangledown g(\mathbf{X}^{*})$$ 는 서로 방향이 반대여야한다. 이에 대해서는 위의 이미지 오른쪽을 통해 확인할 수 있다. $$\bigtriangledown g(\mathbf{X})$$는 $$g(\mathbf{X})$$가 지향하는 방향으로 존재할 것이며 임의의 $$\lambda>0$$에 대하여 아래의 식이 성립한다.
 
-$$\bigtriangledown f(\mathbf{X}) = \lambda\bigtriangledown g(\mathbf{X})\quad \lambda < 0$$
+$$\bigtriangledown f(\mathbf{X}) = -\lambda\bigtriangledown g(\mathbf{X})$
 
-함수 $$f(\mathbf{X})$$의 최적화 방향(최대/최소)과 제약조건의 부등식 조건에 따라 다음과 같이 케이스를 분류할 수 있다.
+함수 $$f(\mathbf{X})$$의 최적화 방향(최대/최소)과 제약조건의 부등식 조건에 따라 다음과 같이 케이스를 분류할 수 있다. $$\lambda>0$$ 이라고 가정하자.
 
-|CASE|$$g(\mathbf{X} \geq 0$$|$$g(\mathbf{X} \leq 0$$|
+|CASE|$$g(\mathbf{X}) \geq 0$$|$$g(\mathbf{X}) \leq 0$$|
 |:---:|:---:|:---:|
-|$$\text{max} f(\mathbf{X})$$|$$\bigtriangledown f(\mathbf{X}) = \lambda\bigtriangledown g(\mathbf{X}),\lambda <0$$|$$\bigtriangledown f(\mathbf{X}) = \lambda\bigtriangledown g(\mathbf{X}),\lambda >0$$|
-|$$\text{min} f(\mathbf{X})$$|$$\bigtriangledown f(\mathbf{X}) = \lambda\bigtriangledown g(\mathbf{X}),\lambda >0$$|$$\bigtriangledown f(\mathbf{X}) = \lambda\bigtriangledown g(\mathbf{X}),\lambda <0$$|
+|$$\text{max} f(\mathbf{X})$$|$$\bigtriangledown f(\mathbf{X}) = -\lambda\bigtriangledown g(\mathbf{X})$$|$$\bigtriangledown f(\mathbf{X}) = \lambda\bigtriangledown g(\mathbf{X})$$|
+|$$\text{min} f(\mathbf{X})$$|$$\bigtriangledown f(\mathbf{X}) = \lambda\bigtriangledown g(\mathbf{X})$$|$$\bigtriangledown f(\mathbf{X}) = -\lambda\bigtriangledown g(\mathbf{X})$$|
 
 
-1,2번 조건 모두 $$\lambda g(\mathbf{X}) =0$$ 인 것은 분명하다. 따라서 $$f(\mathbf{X})$$를 $$g(\mathbf{X})\geq 0$$ 조건에서 최대화시키는 문제는 라그랑주 함수 $$L(\mathbf{X},\lambda) \equiv f(\mathbf{X}) + \lambda g(\mathbf{X})$$ 를 다음의 조건 아래에서 $$\mathbf{X}$$ 와 $$\lambda$$ 에 대해 최적화시키는 것으로 변형시킬 수 있다. 이 조건들을 KKT(Karush-Kuhn-Tucker) 조건이라 부른다.
+1,2번 조건 모두 $$\lambda g(\mathbf{X}) =0$$ 인 것은 분명하다. 1번 조건일 때는 $$\lambda=0$$ 이고 2번 조건일 때는 $$g(\mathbf{X})=0$$이기 때문이다.
+
+따라서 $$f(\mathbf{X})$$를 $$g(\mathbf{X})\geq 0$$ 조건에서 최대화시키는 문제는 라그랑주 함수 $$L(\mathbf{X},\lambda) \equiv f(\mathbf{X}) + \lambda g(\mathbf{X})$$ 를 다음의 조건 아래에서 $$\mathbf{X}$$ 와 $$\lambda$$ 에 대해 최적화시키는 것으로 변형시킬 수 있다. 이 조건들을 KKT(Karush-Kuhn-Tucker) 조건이라 부른다.
 
 $$
 \begin{align}
@@ -99,4 +101,4 @@ $$
 
 2. [단단한 머신러닝](http://www.yes24.com/Product/Goods/88440860)
 
-
+3. [Optimization with Inequality Constraints](http://fourier.eng.hmc.edu/e176/lectures/ch3/node14.html)
