@@ -20,7 +20,7 @@ Duality는 어떠한 최적화 문제가 원초 문제(이하 Primal Problem)와
 
 $$
 \begin{align}
-	\text{min}_{x}c^{T}x & \nonumber \\
+	\text{min}_{x} & c^{T}x  \nonumber \\
     \text{s.t.} \quad Ax &= b \nonumber \\
     Gx &\leq h \nonumber
 \end{align}
@@ -54,7 +54,7 @@ $$-A^{T}u-G^{T}v = c$$ 라고 보면, 우리는 Primal Problem의 Objective func
 
 $$
 \begin{align}
-	\text{max}_{u,v} -u^{T}b - v^{T}h & \nonumber \\
+	\text{max}_{u,v} & -u^{T}b - v^{T}h \nonumber \\
     \text{s.t.} \quad v &\geq 0 \nonumber \\
     -A^{T}u-G^{T}v &= c \nonumber
 \end{align}
