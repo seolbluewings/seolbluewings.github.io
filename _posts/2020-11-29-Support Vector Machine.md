@@ -33,13 +33,13 @@ $$
 
 ![SVM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/SVM_2.png?raw=true){:width="100%" height="70%"}
 
-그림을 통해 확인할 수 있듯이, $$(\mathbf{w},b)$$에 가장 가까운 몇가지 데이터 포인트는 $$\mathbf{w}^{T}x_{i}+b = \pm 1$$을 만족하는 점이다. 이를 서포트 벡터(Support Vector)라고 부른다. 두가지 서로 다른 클래스$$(y_{i}=1,y_{i}=-1)$$의 서포트 벡터에서 $$(\mathbf{w},b)$$에 도달하는 거리의 합은 $$\frac{2}{||w||}$$이며 이를 마진(margin)이라 부른다.
+그림을 통해 확인할 수 있듯이, $$(\mathbf{w},b)$$에 가장 가까운 몇가지 데이터 포인트는 $$\mathbf{w}^{T}x_{i}+b = \pm 1$$을 만족하는 점이다. 이를 서포트 벡터(Support Vector)라고 부른다. 두가지 서로 다른 클래스 $$(y_{i}=1,y_{i}=-1)$$의 서포트 벡터에서 $$(\mathbf{w},b)$$에 도달하는 거리의 합은 $$\frac{2}{\vert\vert w \vert\vert}$$ 이며 이를 마진(margin)이라 부른다.
 
 데이터를 가장 잘 분리해내는 hyperplane(Optiaml Seperating Hyperplane, OSH)은 바로 이 margin이 최대화되는 지점에서 생길 것이다. 다만 분류를 정확히 해야한다는 제약 조건이 있으므로 이를 수식으로 표현하면 다음과 같을 것이다.
 
 $$
 \begin{align}
-\text{max}\frac{2}{||w||} & \nonumber \\
+\text{max}\frac{2}{\vert\vert w \vert\vert} & \nonumber \\
 \text{subject to} &
 \begin{cases}
 \mathbf{w}^{T}x_{i}+b \geq 1 \quad \forall i : y_{i}= 1 \\
@@ -48,15 +48,15 @@ $$
 \end{align}
 $$
 
-$$||w||^{-1}$$을 최대화시키는 것은 $$||w||^{2}$$을 최소화시키는 것과 동일하다. 따라서 다음과 같은 수식으로 표현해도 의미는 변하지 않는다.
+$$\vert\vert w \vert\vert^{-1}$$을 최대화시키는 것은 $$\vert\vert w \vert\vert^{2}$$을 최소화시키는 것과 동일하다. 따라서 다음과 같은 수식으로 표현해도 의미는 변하지 않는다.
 
 $$
-\text{min}\frac{1}{2}||w||^{2} \quad \text{subject to} \quad y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1 \; \forall i
+\text{min}\frac{1}{2}\vert\vert w \vert\vert^{2} \quad \text{subject to} \quad y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1 \; \forall i
 $$
 
 이 수식을 통해 최적의 $$(\mathbf{w},b)$$, 즉 OSH를 구하고 싶다. 이는 어떠한 목적함수를 제약조건 하에서 최대/최소화시키는 문제이기 때문에 라그랑주 승수법을 활용해 답을 얻을 수 있다. 위의 수식을 라그랑주 함수로 표현하면 다음과 같다. 라그랑주 함수에 대해서는 [여기](https://ratsgo.github.io/convex%20optimization/2018/01/25/duality/)를 참고하길 바란다.
 
-$$L(\mathbf{w},b,\alpha) = \frac{1}{2}||w||^{2}-\sum_{i=1}^{m}\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1\}, \alpha_{i} \geq 0 $$
+$$L(\mathbf{w},b,\alpha) = \frac{1}{2} \vert\vert w \vert\vert^{2}-\sum_{i=1}^{m}\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1\}, \alpha_{i} \geq 0 $$
 
 
 
