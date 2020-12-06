@@ -31,7 +31,7 @@ $$
 \end{align}
 $$
 
-![SVM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/SVM_3.png?raw=true){:width="100%" height="70%"}
+![SVM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/SVM_3.png?raw=true){:width="70%" height="70%"}
 
 그림을 통해 확인할 수 있듯이, $$(\mathbf{w},b)$$에 가장 가까운 몇가지 데이터 포인트는 $$\mathbf{w}^{T}x_{i}+b = \pm 1$$을 만족하는 점이다. 이를 서포트 벡터(Support Vector)라고 부른다. 두가지 서로 다른 클래스 $$(y_{i}=1,y_{i}=-1)$$의 서포트 벡터에서 $$(\mathbf{w},b)$$에 도달하는 거리의 합은 $$\frac{2}{\vert\vert w \vert\vert}$$ 이며 이를 마진(margin)이라 부른다.
 
@@ -64,7 +64,7 @@ $$
 \begin{align}
 \frac{\partial L}{\partial \mathbf{w}} &= \mathbf{w}-\sum_{i=1}^{n}\alpha_{i}y_{i}x_{i}=0 \nonumber \\
 \frac{\partial L}{\partial b} &= -\sum_{i=1}^{n}\alpha_{i}y_{i} = 0 \nonumber \\
-&\therefore \mathbf{w}=\sum_{i=1}^{n}\alpha_{i}y_{i}x_{i} \quad \sum_{i=1}^{n}\alpha_{i}y_{i} =0 \nonumber
+\therefore \mathbf{w}&=\sum_{i=1}^{n}\alpha_{i}y_{i}x_{i} \quad \sum_{i=1}^{n}\alpha_{i}y_{i} =0 \nonumber
 \end{align}
 $$
 
@@ -79,7 +79,7 @@ h(\alpha) &= \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{
 \end{align}
 $$
 
-우리는 기존의 OSH $$(\mathbf{w},b)$를 다음과 같이 변형해서 표현할 수 있다. 다시금 상기해보자. OSH는 우리가 발견하길 원했던 바로 그 최적의 hyperplane이다.
+우리는 기존의 OSH $$(\mathbf{w},b)$를 다음과 같이 변형해서 표현할 수 있다.
 
 $$f(x) = \mathbf{w}^{T}x+b = \sum_{i=1}^{n}\alpha_{i}y_{i}x_{i}^{T}x+b $$
 
@@ -88,14 +88,30 @@ $$f(x) = \mathbf{w}^{T}x+b = \sum_{i=1}^{n}\alpha_{i}y_{i}x_{i}^{T}x+b $$
 $$
 \begin{cases}
 \alpha_{i} \geq 0 \; \forall i \\
-y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1 \; forall i \\
-\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1\} = 0 \; forall i
+y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1 \; \forall i \\
+\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1\} = 0 \; \forall i
 \end{cases}
 $$
 
+이 KKT조건들 중 3번째 조건을 잘 살펴볼 필요가 있다. 3번째 조건을 만족하는 solution은 $$\alpha_{i} = 0$$ 또는 $${y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 뿐이다. 따라서 $${y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 일 때만 $$\alpha_{i} > 0$$일 수 있다. 그런데 $${y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 조건을 만족시킨다는 의미는 해당 포인트가 서포트 벡터라는 것이다.
 
+OSH를 다시금 상기해보자. 데이터를 가장 잘 분리해낼 수 있는 OSH, $$\mathbf{w}^{T}x+b=0$$를 발견하는 것이 우리의 목표였다. 법선벡터 $$\mathbf{w}$$와 $$b$$를 찾아내면 우리는 OSH를 구할 수 있다.
 
+법선벡터 $$\mathbf{w}$$는 $$\mathbf{w}=\sum_{i=1}^{n}\alpha_{i}y_{i}x_{i}$$로 표현될 수 있다. $$(x_{i},y_{i})$$는 데이터로 주어지기 때문에 우리는 $$\alpha$$만 알면 $$\mathbf{w}$$를 알 수 있다. 수식을 통해서 확인할 수 있듯이, $$\alpha_{i} > 0$$인 것들만 $$\mathbf{w}$$에 영향을 미친다.
 
+$$\alpha_{i}>0$$만 영향을 미치는 것인데 이러한 포인트는 앞서 서포트 벡터 뿐이라는 것을 언급했다. 이는 서포트 벡터 머신의 중요한 성질이다. 대부분의 데이터는 필요가 없게되며 모델은 오로지 서포트 벡터와 관련되기 때문이다.
+
+$$b$$는 서포트 벡터에 대해서 $$y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 식을 만족하는 성질을 활용해 계산한다. 임의의 서포트 벡터 $$x_{k}$$를 활용해 $$b$$를 구할 수 있다. 그러나 모든 서포트 벡터에 대해 평균을 내어 $$b$$를 구하는 것이 수치적으로 더욱 안정적인 방법으로 알려져있다.
+
+집합 $$S$$가 서포트 벡터의 index 집합을 의미한다고 했을 때 $$y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 수식은 다음과 동치일 것이다.
+
+$$y_{i}\left\{\sum_{i \in S}\alpha_{i}y_{i}x_{i}^{T}x +b \right\} = 1$$
+
+이 수식을 정리하여 평균값을 구하면 $$b$$는 다음과 같은 형태로 구할 수 있다. 여기서 $$N_{S}$$는 서포트 벡터의 총 개수를 의미한다.
+
+$$b = \frac{1}{N_{S}}\sum_{i \in S} \left(y_{i}-\sum_{i \in S}\alpha_{i}y_{i}x_{i}^{T}x \right)$$
+
+지금까지 우리는 가장 단순한 형태의 선형 SVM 형태를 살펴보았다. 단순한 선형결합이 아닌 커널 기법을 통해 SVM의 OSH를 비선형 형태로 확장시킬 수 있다. 더불어 우리는 OSH를 통해 데이터를 완벽하게 분리할 수 있음을 가정했는데 사실 훈련 데이터를 정확하게 분리하도록 모델을 훈련시키는 것은 모델의 일반화 측면에서 좋지 못할 수 있다. 이러한 단점을 보완하기 위해서 slack variable을 도입하여 SVM 모델을 심화시킬 수 있는데 다음 포스팅에서 그 내용을 알아보도록 하자.
 
 #### 참조 문헌
 1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
