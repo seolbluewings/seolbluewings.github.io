@@ -39,7 +39,7 @@ $$
 
 $$
 \begin{align}
-\text{max}\frac{2}{\vert\vert w \vert\vert} & \nonumber \\
+&\text{maximize}\frac{2}{\vert\vert w \vert\vert} \nonumber \\
 \text{subject to} \quad &
 \begin{cases}
 \mathbf{w}^{T}x_{i}+b \geq +1 \quad \forall i : y_{i}= +1 \\
@@ -51,7 +51,7 @@ $$
 $$\vert\vert w \vert\vert^{-1}$$을 최대화시키는 것은 $$\vert\vert w \vert\vert^{2}$$을 최소화시키는 것과 동일하다. 따라서 다음과 같은 수식으로 표현해도 의미는 변하지 않는다.
 
 $$
-\text{min}\frac{1}{2}\vert\vert w \vert\vert^{2} \quad \text{subject to} \quad y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1 \; \forall i
+\text{minimize}\frac{1}{2}\vert\vert w \vert\vert^{2} \quad \text{subject to} \quad y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1 \; \forall i
 $$
 
 이 수식을 통해 최적의 $$(\mathbf{w},b)$$, 즉 OSH를 구하고 싶다. 이는 어떠한 목적함수를 제약조건 하에서 최대/최소화시키는 문제이기 때문에 라그랑주 승수법을 활용해 답을 얻을 수 있다. 위의 수식을 라그랑주 함수로 표현하면 다음과 같다. 라그랑주 함수에 대해서는 [여기](https://ratsgo.github.io/convex%20optimization/2018/01/25/duality/)를 참고하길 바란다.

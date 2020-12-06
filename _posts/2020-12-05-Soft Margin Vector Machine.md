@@ -34,7 +34,7 @@ $$
 
 $$
 \begin{align}
-\text{min}\frac{1}{2}\vert\vert w \vert\vert^{2} + C\sum_{i=1}^{n}\xi_{i} & \nonumber \\
+&\text{minimize}\left\{\frac{1}{2}\vert\vert w \vert\vert^{2} + C\sum_{i=1}^{n}\xi_{i}\right\} \nonumber \\
 &\text{subject to}
 \begin{cases}
 y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1-\xi_{i}\quad \forall i \\
