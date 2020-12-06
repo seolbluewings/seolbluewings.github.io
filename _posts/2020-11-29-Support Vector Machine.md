@@ -6,7 +6,7 @@ author: seolbluewings
 categories: 분류
 ---
 
-훈련 데이터가 다음과 같은 형태, $$\mathcal{D}= \left\{(x_{1},y_{1}),(x_{2},y_{2}),....,(x_{m},y_{m}) \right\}, y_{i} \in \{-1,1\}$$ 로 주어졌다고 가정하자.
+훈련 데이터가 다음과 같은 형태, $$\mathcal{D}= \left\{(x_{1},y_{1}),(x_{2},y_{2}),....,(x_{n},y_{n}) \right\}, y_{i} \in \{-1,1\}$$ 로 주어졌다고 가정하자.
 
 분류 문제의 가장 기본적인 아이디어는 데이터를 서로 다른 클래스로 분리시킬 수 있는 hyperplane(초평면)을 발견해내는 것이다. 하지만 아래의 그림 중 왼쪽과 같이 훈련 데이터를 분리시킬 수 있는 hyperplane의 경우의 수가 여러가지일 때를 생각해보자. 이러한 상황에서 우리는 어떻게 hyperplane을 선택해야할까? 어떻게 hyperplane을 설정하는 것이 최선인가를 고민하게 된다.
 
@@ -31,7 +31,7 @@ $$
 \end{align}
 $$
 
-![SVM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/SVM_2.png?raw=true){:width="100%" height="70%"}
+![SVM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/SVM_3.png?raw=true){:width="100%" height="70%"}
 
 그림을 통해 확인할 수 있듯이, $$(\mathbf{w},b)$$에 가장 가까운 몇가지 데이터 포인트는 $$\mathbf{w}^{T}x_{i}+b = \pm 1$$을 만족하는 점이다. 이를 서포트 벡터(Support Vector)라고 부른다. 두가지 서로 다른 클래스 $$(y_{i}=1,y_{i}=-1)$$의 서포트 벡터에서 $$(\mathbf{w},b)$$에 도달하는 거리의 합은 $$\frac{2}{\vert\vert w \vert\vert}$$ 이며 이를 마진(margin)이라 부른다.
 
@@ -40,9 +40,9 @@ $$
 $$
 \begin{align}
 \text{max}\frac{2}{\vert\vert w \vert\vert} & \nonumber \\
-\text{subject to} &
+\text{subject to} \quad &
 \begin{cases}
-\mathbf{w}^{T}x_{i}+b \geq 1 \quad \forall i : y_{i}= 1 \\
+\mathbf{w}^{T}x_{i}+b \geq +1 \quad \forall i : y_{i}= +1 \\
 \mathbf{w}^{T}x_{i}+b \leq -1 \quad \forall i : y_{i}= -1
 \end{cases}
 \end{align}
@@ -56,7 +56,44 @@ $$
 
 이 수식을 통해 최적의 $$(\mathbf{w},b)$$, 즉 OSH를 구하고 싶다. 이는 어떠한 목적함수를 제약조건 하에서 최대/최소화시키는 문제이기 때문에 라그랑주 승수법을 활용해 답을 얻을 수 있다. 위의 수식을 라그랑주 함수로 표현하면 다음과 같다. 라그랑주 함수에 대해서는 [여기](https://ratsgo.github.io/convex%20optimization/2018/01/25/duality/)를 참고하길 바란다.
 
-$$L(\mathbf{w},b,\alpha) = \frac{1}{2} \vert\vert w \vert\vert^{2}-\sum_{i=1}^{m}\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1\}, \alpha_{i} \geq 0 $$
+$$L(\mathbf{w},b,\alpha) = \frac{1}{2} \vert\vert w \vert\vert^{2}-\sum_{i=1}^{n}\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1\}, \quad \alpha_{i} \geq 0 $$
+
+라그랑주 함수 $$L(\mathbf{w},b,\alpha)$$를 각 $$\mathbf{w},b$$에 대해 편미분을 하면 다음의 2가지 조건을 얻을 수 있다.
+
+$$
+\begin{align}
+\frac{\partial L}{\partial \mathbf{w}} &= \mathbf{w}-\sum_{i=1}^{n}\alpha_{i}y_{i}x_{i}=0 \nonumber \\
+\frac{\partial L}{\partial b} &= -\sum_{i=1}^{n}\alpha_{i}y_{i} = 0 \nonumber \\
+&\therefore \mathbf{w}=\sum_{i=1}^{n}\alpha_{i}y_{i}x_{i} \quad \sum_{i=1}^{n}\alpha_{i}y_{i} =0 \nonumber
+\end{align}
+$$
+
+2가지 조건을 이용해서 라그랑주 함수에서 $$\mathbf{w},b$$를 제거할 수 있고 이를 통해 최대 마진을 구하려는 Primal problem의 Dual Problem 형태로 변경된다.
+
+$$
+\begin{align}
+
+h(\alpha) &= \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j}-\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j}+\sum_{i=1}^{n}\alpha_{i} \nonumber \\
+&= -\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j}+\sum_{i=1}^{n}\alpha_{i} \nonumber \\
+&\text{subject to}\quad \sum_{i=1}^{n}\alpha_{i}y_{i}=0\quad \alpha_{i} \geq 0 \; \forall i \nonumber
+\end{align}
+$$
+
+우리는 기존의 OSH $$(\mathbf{w},b)$를 다음과 같이 변형해서 표현할 수 있다. 다시금 상기해보자. OSH는 우리가 발견하길 원했던 바로 그 최적의 hyperplane이다.
+
+$$f(x) = \mathbf{w}^{T}x+b = \sum_{i=1}^{n}\alpha_{i}y_{i}x_{i}^{T}x+b $$
+
+상기 과정들은 다음과 같은 KKT 조건을 만족해야한다. KKT 조건에 대해서는 [여기](https://ratsgo.github.io/convex%20optimization/2018/01/26/KKT/)를 참고하길 바란다.
+
+$$
+\begin{cases}
+\alpha_{i} \geq 0 \; \forall i \\
+y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1 \; forall i \\
+\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1\} = 0 \; forall i
+\end{cases}
+$$
+
+
 
 
 
