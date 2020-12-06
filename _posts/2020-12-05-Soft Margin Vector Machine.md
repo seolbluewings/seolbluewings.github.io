@@ -1,12 +1,14 @@
 ---
 layout: post
 title:  "여유 변수를 활용한 소프트 마진(Soft Margin by using Slack Variables)"
-date: 2020-11-29
+date: 2020-12-05
 author: seolbluewings
 categories: 분류
 ---
 
 [작성중]
+
+
 앞선 포스팅에서 우리는 서로 다른 클래스의 데이터가 완벽하게 분리되는 OSH $$(\mathbf{w},b)$$가 존재함을 가정했다. 하지만 현실에서는 그러한 OSH가 있다고 보기 어렵다. 설령 그런 OSH가 있다한들 그 OSH는 훈련 데이터에 대한 과적합(overfitting)일 수 있다는 의심부터 하는 것이 바람직하다.
 
 따라서 우리는 현실에 존재할법한, 즉 아래의 이미지와 같이 데이터를 완벽하게 분리시키지는 못하는(nonseparable cases) 경우에도 사용할 수 있는 SVM 모델을 만들어야한다. 그렇다면 우리는 기존의 SVM 모델에서 약간의 오류는 허용하는 방식으로 모델을 수정해야 한다. 이러한 방법은 소프트 마진(soft margin)이란 개념으로 이어진다.
@@ -24,7 +26,7 @@ $$ y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1-\xi_{i}\quad \forall i$$
 한편, 잘못 분류된 포인트(아래의 그림에서 Misclassified point)에 해당되는 포인트는 $$\xi_{i} >1$$ 값을 갖는다. 즉, 오분류 포인트에 매칭되는 $$\xi_{i}$$값은 $$\xi_{i}>1$$ 이라고 표현할 수 있다. 전체 오분류 개수는 다음과 같은 상한(upper bound)를 가지며 상한을 최소화시킴으로써 전체 오분류 개수를 줄일 수 있다.
 
 $$
-\text{전체 오분류 개수} = \sum_{\xi>1} 1 \leq \sum_{\xi>1}\xi_{i} \leq \sum_{i=1}^{n}\xi_{i}
+\text{total number of misclassification} = \sum_{\xi>1} 1 \leq \sum_{\xi>1}\xi_{i} \leq \sum_{i=1}^{n}\xi_{i}
 $$
 
 
