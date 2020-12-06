@@ -88,12 +88,14 @@ $$f(x) = \mathbf{w}^{T}x+b = \sum_{i=1}^{n}\alpha_{i}y_{i}x_{i}^{T}x+b $$
 $$
 \begin{cases}
 \alpha_{i} \geq 0 \; \forall i \\
+\\
 y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1 \; \forall i \\
+\\
 \alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1\} = 0 \; \forall i
 \end{cases}
 $$
 
-이 KKT조건들 중 3번째 조건을 잘 살펴볼 필요가 있다. 3번째 조건을 만족하는 solution은 $$\alpha_{i} = 0$$ 또는 $${y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 뿐이다. 따라서 $${y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 일 때만 $$\alpha_{i} > 0$$일 수 있다. 그런데 $${y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 조건을 만족시킨다는 의미는 해당 포인트가 서포트 벡터라는 것이다.
+이 KKT조건들 중 3번째 조건을 잘 살펴볼 필요가 있다. 3번째 조건을 만족하는 solution은 $$\alpha_{i} = 0$$ 또는 $$y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 뿐이다. 따라서 $$y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 일 때만 $$\alpha_{i} > 0$$일 수 있다. 그런데 $$y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$ 조건을 만족시킨다는 의미는 해당 포인트가 서포트 벡터라는 것이다.
 
 OSH를 다시금 상기해보자. 데이터를 가장 잘 분리해낼 수 있는 OSH, $$\mathbf{w}^{T}x+b=0$$를 발견하는 것이 우리의 목표였다. 법선벡터 $$\mathbf{w}$$와 $$b$$를 찾아내면 우리는 OSH를 구할 수 있다.
 
