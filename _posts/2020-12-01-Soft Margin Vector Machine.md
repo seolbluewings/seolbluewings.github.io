@@ -60,29 +60,49 @@ Primal Problem인 라그랑주 함수를 Dual Problem으로 바꾸기 위해서�
 $$
 \begin{cases}
 \alpha_{i} \geq 0, \beta_{i} \geq 0 \quad \forall i \\
+\\
 y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1- \xi_{i} \; \xi_{i} \geq 0 \quad \forall i \\
+\\
 \alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1+\xi_{i}\}=0 \; \beta_{i}\xi_{i}=0 \quad \forall i
 \end{cases}
 $$
 
 더불어 라그랑주 함수를 각각 $$\mathbf{w},b,\mathbf{\xi}$$ 에 대해 편미분을 수행하면 다음과 같은 결과를 얻는다.
 
+$$
 \begin{align}
 \frac{\partial L}{\partial \mathbf{w}} &= \mathbf{w}- \sum_{i=1}^{n}\alpha_{i}y_{i}x_{i} = 0 \nonumber \\
 \frac{\partial L}{\partial b} &= \sum_{i=1}^{n}\alpha_{i}y_{i} = 0 \nonumber \\
-\frac{\[artial L}{\partial \mathbf{\xi}} &= C\bf{1}-\mathbf{\alpha}-\mathbf{\beta} = 0 \nonumber
+\frac{\partial L}{\partial \mathbf{\xi}} &= C\bf{1}-\mathbf{\alpha}-\mathbf{\beta} = 0 \nonumber
 \end{align}
+$$
 
 이를 활용하면 라그랑주 함수를 다움과 같이 최적의 $$\alpha, \beta$$를 찾기위한 dual function으로 표현할 수 있다.
 
 $$
 \begin{align}
 h(\alpha,\beta) &= \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j}+C\sum_{i=1}^{n}\xi_{i} \nonumber \\
--\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j} - \sum_{i=1}^{n}\alpha_{i}y_{i}b + \sum_{i=1}^{n}\alpha_{i}(1-\xi_{i})-\sum_{i=1}^{n}\beta_{i}\xi_{i} \nonumber \\
+&-\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j} - \sum_{i=1}^{n}\alpha_{i}y_{i}b + \sum_{i=1}^{n}\alpha_{i}(1-\xi_{i})-\sum_{i=1}^{n}\beta_{i}\xi_{i} \nonumber \\
 &= -\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j} + \sum_{i=1}^{n}\alpha_{i}
 \end{align}
 $$
 
+이 dual function은 다음의 문제와 동치이다. 벡터형태로 표현한 것 뿐이다.
+
+$$
+\begin{align}
+\text{max}_{0 \leq \alpha \leq C,\; \mathbf{Y}^{T}\alpha} & -\frac{1}{2}\alpha^{T}\mathbf{Y}\mathbf{X}\mathbf{X}^{T}\mathbf{Y}\alpha + \bf{1}^{T}\alpha \nonumber \\
+&\text{where} \mathbf{Y} = \text{diag}\{y_{1},...,y_{n}\} \nonumber
+\end{align}
+$$
+
+이렇게 구한 수식을 이용해서 OSH를 찾는 과정은 다음과 같다. $$\alpha^{*}$$가 dual problem의 솔루션이라 가정하자. 앞선 [포스팅](https://seolbluewings.github.io/%EB%B6%84%EB%A5%98/2020/11/29/Support-Vector-Machine.html)을 참고하면, 우리는 $$\alpha_{i}^{*} >0$$인 경우, 즉 해당 포인트가 서포트 벡터인 경우에 한해서만 값의 의미가 있다는 것을 알 수 있다.
+
+집합 $$S$$를 서포트 벡터의 집합이라 한다면 다음과 같이 OSH의 법선 벡터 $$\mathbf{w}^{*}$$를 구할 수 있다.
+
+$$ \mathbf{w}^{*} = \sum_{i=1}^{n}\alpha_{i}y_{i}x_{i} = \sum_{i \in S} \alpha_{i}^{*}y_{i}x_{i}$$
+
+그리고 다음의 수식 $$\alpha_{i}^{*} + \beta_{i}^{*} = C \; \forall i$$ 이 성립하며 KKT 조건들 중 3번째 요건에 의해 $$\alpha_{i}^{*}>0,\beta_{i}^{*}>0$$인 서포트 벡터에 대해서 $$y_{i}(\mathbf{w}^{T}x_{i}+b)=1$$이 성립한다. 따라서 최적의 OSH를 결정짓기 위한 b값은 임의의 한점을 잡아 계산하거나 앞선 포스팅에서 마찬가지로 설명했듯이 모든 서포트 벡터를 통해 구한 값의 평균값으로 결정지을 수 있다. 
 
 
 #### 참조 문헌
