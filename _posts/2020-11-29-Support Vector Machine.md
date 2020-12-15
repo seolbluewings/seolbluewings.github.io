@@ -79,7 +79,7 @@ h(\alpha) &= \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{
 \end{align}
 $$
 
-우리는 기존의 OSH $$(\mathbf{w},b)$를 다음과 같이 변형해서 표현할 수 있다.
+우리는 기존의 OSH $$(\mathbf{w},b)$$를 다음과 같이 변형해서 표현할 수 있다.
 
 $$f(x) = \mathbf{w}^{T}x+b = \sum_{i=1}^{n}\alpha_{i}y_{i}x_{i}^{T}x+b $$
 

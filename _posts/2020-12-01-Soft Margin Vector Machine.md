@@ -31,7 +31,7 @@ $$
 
 ![SVM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/SVM_2.png?raw=true){:width="100%" height="70%"}
 
-따라서 우리의 최적화 문제(optimization problem)은 다음과 같이 표현될 수 있다.
+따라서 우리의 최적화 문제(optimization problem)은 다음과 같이 표현될 수 있다. 이 수식은 기존의 포스팅에서 마주했던 수식에 페널티항이 추가된 형태라고 할 수 있다. $$C$$값은 페널티항에 들어가는 regularization paramter이다. $$C$$값이 크다면, 이는 허용하는 오차의 개수가 적다는 것이다. 따라서 margin의 사이즈를 줄이는 결과를 초래한다. 반대로 $$C$$값이 작다면, 이는 허용하는 오차의 개수가 크다는 것이다. 이는 margin의 사이즈를 크게 만드는 결과를 초래한다.
 
 $$
 \begin{align}
@@ -45,6 +45,44 @@ y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1-\xi_{i}\quad \forall i \\
 $$
 
 이에 대한 결과는 최적의 소프트마진 초평면(optimal soft-margin hyperplane)이라 부른다. 기존의 hard-margin처럼 이 역시 라그랑주 함수를 통해 다른 방식으로 표현할 수 있다.
+
+$$
+\begin{align}
+L(\mathbf{w},b,\xi,\alpha,\beta) &= \frac{1}{2}\vert\vert w \vert\vert^{2} + C\sum_{i=1}^{n}\xi_{i} \nonumber \\
+&- \sum_{i=1}^{n}\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1+\xi_{i}\} - \sum_{i=1}^{n}\beta_{i}\xi_{i} \nonumber
+\end{align}
+$$
+
+이 수식에서 모든 $$i$$에 대하여 라그랑주 승수는 $$\alpha_{i} \geq 0$$, $$\beta_{i} \geq 0$$ 조건을 만족해야한다.
+
+Primal Problem인 라그랑주 함수를 Dual Problem으로 바꾸기 위해서는 다음의 KKT 조건이 성립해야 한다.
+
+$$
+\begin{cases}
+\alpha_{i} \geq 0, \beta_{i} \geq 0 \quad \forall i \\
+y_{i}(\mathbf{w}^{T}x_{i}+b) \geq 1- \xi_{i} \; \xi_{i} \geq 0 \quad \forall i \\
+\alpha_{i}\{y_{i}(\mathbf{w}^{T}x_{i}+b)-1+\xi_{i}\}=0 \; \beta_{i}\xi_{i}=0 \quad \forall i
+\end{cases}
+$$
+
+더불어 라그랑주 함수를 각각 $$\mathbf{w},b,\mathbf{\xi}$$ 에 대해 편미분을 수행하면 다음과 같은 결과를 얻는다.
+
+\begin{align}
+\frac{\partial L}{\partial \mathbf{w}} &= \mathbf{w}- \sum_{i=1}^{n}\alpha_{i}y_{i}x_{i} = 0 \nonumber \\
+\frac{\partial L}{\partial b} &= \sum_{i=1}^{n}\alpha_{i}y_{i} = 0 \nonumber \\
+\frac{\[artial L}{\partial \mathbf{\xi}} &= C\bf{1}-\mathbf{\alpha}-\mathbf{\beta} = 0 \nonumber
+\end{align}
+
+이를 활용하면 라그랑주 함수를 다움과 같이 최적의 $$\alpha, \beta$$를 찾기위한 dual function으로 표현할 수 있다.
+
+$$
+\begin{align}
+h(\alpha,\beta) &= \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j}+C\sum_{i=1}^{n}\xi_{i} \nonumber \\
+-\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j} - \sum_{i=1}^{n}\alpha_{i}y_{i}b + \sum_{i=1}^{n}\alpha_{i}(1-\xi_{i})-\sum_{i=1}^{n}\beta_{i}\xi_{i} \nonumber \\
+&= -\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}x_{i}^{T}x_{j} + \sum_{i=1}^{n}\alpha_{i}
+\end{align}
+$$
+
 
 
 #### 참조 문헌
