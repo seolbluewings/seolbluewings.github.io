@@ -21,7 +21,7 @@ description: >
 # and never end with a slash. Set it to a blank value if hosting at the
 # root of your server.
 baseurl: http://seolbluewings.github.io
-url: http://seolbluewings.github.io # the base hostname & protocol for your site
+url: "http://seolbluewings.github.io" # the base hostname & protocol for your site
 cover: "/assets/header_image.jpg"
 logo: "/assets/logo.png"
 
