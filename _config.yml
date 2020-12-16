@@ -4,6 +4,8 @@ gems:
   - jekyll-archives # Sorry, not GitHub pages friendly!
   - jekyll-sitemap
   - jekyll-paginate
+plugins:
+  - jekyll-sitemap
 
 exclude:
   - "/vendor/"
@@ -29,6 +31,8 @@ paginate: 5
 paginate_path: "/page:num/"
 inter_post_navigation: false
 highlightjs_theme: "monokai-sublime"
+
+
 
 # Archive settings (see https://github.com/jekyll/jekyll-archives/)
 jekyll-archives:
