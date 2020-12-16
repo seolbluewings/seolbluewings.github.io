@@ -12,13 +12,13 @@ exclude:
 title: In Statistics We Trust
 subtitle: 
 email: tjfdudh@gmail.com
-name: YoungHwan Seol
+name: seolbluewings
 description: >
   
 # Base URL of site (i.e. /blog). It should always start with a slash,
 # and never end with a slash. Set it to a blank value if hosting at the
 # root of your server.
-baseurl: ""
+baseurl: "http://seolbluewings.github.io"
 url: "http://seolbluewings.github.io" # the base hostname & protocol for your site
 cover: "/assets/header_image.jpg"
 logo: "/assets/logo.png"
