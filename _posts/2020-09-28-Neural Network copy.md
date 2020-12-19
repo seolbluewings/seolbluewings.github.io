@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "신경망(Neural Network) 개요"
+title:  "Basic of Neural Network"
 date: 2020-09-28
 author: seolbluewings
-categories: 딥러닝
+categories: NeuralNetwork
 ---
 
 신경망(Neural Network) 모델은 딥러닝을 이해하기 위해서 가장 기본이 되는 개념이라 할 수 있다. 생물학적 신경망 구조로부터 착안되어 만들어진 알고리즘이며, 입력값과 출력값 사이의 복잡한 형태의 비선형모형을 만들기 위해 사용된다. 신경망의 기본적인 작동 원리는 여러개의 뉴런을 상호 연결하여 입력값에 대한 최적의 출력값을 예측하는 것이다. 이 모델은 예측력이 매우 좋은데 비해 해석이 어렵다는 단점이 있다.

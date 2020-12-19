@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "합성곱 신경망(Convolutional Neural Network)"
+title:  "Convolutional Neural Network"
 date: 2020-10-11
 author: seolbluewings
-categories: 딥러닝
+categories: NeuralNetwork
 ---
 
 [작성중]

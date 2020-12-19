@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "메트로폴리스-해스팅스 알고리즘(M-H Algorithm)"
+title:  "Metropolis-Hastings Algorithm"
 date: 2019-06-21
 author: seolbluewings
 comments : true
-categories: 샘플링
+categories: Bayesian
 ---
 모수 $$\Theta=(\theta_{1},...,\theta_{p})$$ 의 Posterior distribution인 $$\pi(\theta\mid x)$$로 부터 $$\Theta$$에 대한 Sampling을 진행하고자 한다. Gibbs Sampler의 경우, 각 parameter $$\theta_{k}$$의 full conditional posterior를 활용하며, 이 경우에는 $$p(\theta_{k}\mid\theta_{-k})$$ 가 우리가 아는 closed form 형태의 분포 형태를 가져야 한다.
 
