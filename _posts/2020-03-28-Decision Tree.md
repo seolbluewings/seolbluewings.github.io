@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "의사결정나무(Decision Tree)"
+title:  "Basic of Decision Tree"
 date: 2020-03-30
-author: YoungHwan Seol
-categories: 분류
+author: seolbluewings
+categories: DecisionTree
 ---
 
 의사결정나무는 스무고개 놀이와 비슷한 알고리즘이라 할 수 있다. 내가 생각한 인물을 맞춰내는 아키네이터 게임과 유사한 방식으로 알고리즘이 작동한다. 아래 그림은 유명한 타이타닉 데이터의 Y값인 생존여부를 맞추는 과정이며, 의사결정나무는 위와 같이 Y/N 형식의 대답이 나올 수 밖에 없는 알고리즘을 학습을 진행하게 된다. 그 결과 우리는 개인이 타이타닉호에서 생존했는지 사망했는지를 예측하는 값을 결정지을 수 있게 된다. 의사결정나무는 그림과 같이 간단하고 직관적인 결과 표현이 가능하고 인간의 의사결정 과정과도 유사하다.

@@ -3,7 +3,7 @@ layout: post
 title:  "편향-분산 트레이드오프(Bias-Variance Trade-Off)"
 date: 2020-04-16
 author: seolbluewings
-categories: 모델평가
+categories: 모델평가 
 ---
 
 우리는 모델을 통한 예측을 진행할 때, 모델의 퍼포먼스를 측정하게 된다. 분류의 문제라면 정확도(accuracy)나 F1 score 같은 것들을 이용할 것이고 회귀분석의 경우라면 평균제곱오차(MSE)가 모델의 퍼포먼스를 측정하는데 가장 빈번하게 사용하는 기준이 된다.

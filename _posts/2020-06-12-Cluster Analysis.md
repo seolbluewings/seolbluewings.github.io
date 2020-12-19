@@ -1,10 +1,9 @@
 ---
 layout: post
-title:  "군집 분석(Cluster Analysis)"
+title:  "Cluster Analysis"
 date: 2020-06-12
 author: seolbluewings
-categories: 혼합모델
-
+categories: Clustering
 ---
 
 

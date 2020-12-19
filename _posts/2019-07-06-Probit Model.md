@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "프로빗 모델(Probit model)"
+title:  "Probit model"
 date: 2019-07-06
 author: seolbluewings
-categories: 선형모델
+categories: Bayesian
 ---
 
 기존의 회귀분석 모델 $$\mathbf{y} = \mathbf{X}\beta + \epsilon$$ 모형은 보통 1. $$\mathbf{X}$$와 $$\mathbf{y}$$ 사이의 선형 관계가 있고  2. $$\mathbf{y}$$가 정규분포를 따른다고 볼 수 있을 때, 활용하는 것이 적절하다.

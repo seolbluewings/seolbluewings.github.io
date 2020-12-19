@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "교차 검증(Cross-Validation)"
+title:  "Cross-Validation"
 date: 2020-05-31
 author: seolbluewings
 categories: 모델평가
