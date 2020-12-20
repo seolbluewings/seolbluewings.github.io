@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "Convolutional Neural Network"
+title:  "Basic of Convolutional Neural Network"
 date: 2020-10-11
 author: seolbluewings
-categories: NeuralNetwork
+categories: 딥러닝
 ---
 
 [작성중]
