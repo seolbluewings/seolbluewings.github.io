@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "인과적 추론(Causal Inference)"
+title:  "Causal Inference"
 date: 2019-08-01
-author: YoungHwan Seol
-categories: 베이지안네트워크
+author: seolbluewings
+categories: Bayesian
 ---
 
 먼저 심슨의 역설(Simpson's paradox)에 대해 언급하도록 하자. 심슨의 역설이란 전체 집단에서 나타나는 통계적 연관성(statistical association)이 하위 집단에서는 동일하게 유지되지 않는 현상을 의미한다.

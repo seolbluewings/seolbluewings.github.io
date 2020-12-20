@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "편향-분산 트레이드오프(Bias-Variance Trade-Off)"
+title:  "Bias-Variance Trade-Off"
 date: 2020-04-16
 author: seolbluewings
 categories: 모델평가 

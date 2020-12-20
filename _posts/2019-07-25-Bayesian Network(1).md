@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "베이지안 네트워크 1(Bayesian Network)"
+title:  "Concept of Bayesian Network 1"
 date: 2019-07-25
-author: YoungHwan Seol
-categories: 베이지안네트워크
+author: seolbluewings
+categories: Bayesian
 ---
 
 베이지안 네트워크(Bayesian Network)는 확률변수 간의 관계를 노드(node)와 링크(link) 혹은 엣지(edge)를 사용해 그래프 모델로 표현하는 것이다. 이후의 논의를 진행하기에 앞서 다음의 용어들에 대하여 정리하고 가도록 한다.
