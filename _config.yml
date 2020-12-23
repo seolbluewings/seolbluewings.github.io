@@ -45,7 +45,7 @@ jekyll-archives:
 
 # Disqus comments
 # disqus_shortname: bencentra
-disqus_shortname : 'seolbluewings.github.io'
+disqus_shortname : seolbluewings.github.io
 
 # Google analytics
 # ga_tracking_id: "UA-XXXX-1"
