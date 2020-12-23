@@ -37,7 +37,7 @@ prior distribution을 위와 같이 설정하면, Posterior Distribution은 다�
 $$
 \begin{align}
 {\it p}(\beta,\sigma^{2}\vert y) &\propto (\sigma^{2})^{-n/2} \times \text{exp}\{ \frac{1}{2\sigma^{2}}(y-X\beta)^{T}(y-X\beta)\} \nonumber \\
-&\times \text{exp}\{ -\frac{1}{2}(\beta-\beta_0)^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\} \times (\sigma^{2})^{-a-1}\cdot exp\{-b/\sigma^{2}\} \nonumber
+&\times \text{exp}\{ -\frac{1}{2}(\beta-\beta_0)^{T}\Sigma^{-1}_{0}(\beta-\beta_{0})\} \times (\sigma^{2})^{-a-1}\times \text{exp}\{-b/\sigma^{2}\} \nonumber
 \end{align}
 $$
 
@@ -74,7 +74,7 @@ Parameter에 대한 Full Conditional Posterior Distribution으로부터 Sampling
 
 #### Bayesian Linear Model 학습 과정
 
-![BLR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Figure3.7.png?raw=true){:width="50%" height="50%"}{: .center}
+![BLR](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Figure3.7.png?raw=true){:width="70%" height="70%"}{: .center}
 
 위의 그림은 1차원 데이터 x에 대한 회귀모델을 나타낸 것으로 $$y=\beta_{0}+\beta_{1}x$$ 형태이며 이 모델 상에서 데이터 집합의 크기가 커짐에 따른 베이지안 학습 결과를 보여준다. 현재의 Posterior 분포는 새로운 데이터 포인트가 관측된 후, 새로운 Prior distribution이 되는 베이지안 학습의 순차적인 모습을 보여준다.
 
