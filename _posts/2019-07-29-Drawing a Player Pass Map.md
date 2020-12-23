@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "패스맵 그리기(Drawing a Player Pass Map)"
+title:  "Drawing a Player Pass Map"
 date: 2019-07-29
 author: YoungHwan Seol
 categories: Football
