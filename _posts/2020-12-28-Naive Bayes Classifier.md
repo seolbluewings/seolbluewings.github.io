@@ -52,7 +52,40 @@ $$
 
 우리는 여기서 아래의 표기에 주목할 필요가 있다. 베이즈 최적 분류기는 곧 각 샘플 $$x$$에 대해 사후확률 $$\it{p}(c\vert x)$$를 최대화시킬 수 있는 클래스로 결정을 내리게 된다. 확률에 근거하여 판단한다고 했을 때, 가장 가능성이 높은 클래스로, 즉 확률이 높은 클래스로 할당되는 것은 우리의 상식과도 부합하는 결과라고 할 수 있다.
 
-#### Naive Bayes Classifier 
+#### Naive Bayes Classifier
+
+앞서 논의한 Bayesian Decision Theory를 활용하기 위해서 우리는 $$\it{p}(c\vert x)$$를 추정해야 한다. 이 때, $$\it{p}(c \vert x)$$는 베이즈 정리에 의해 다음과 같이 표현될 수 있다.
+
+$$
+\it{p}(c \vert x) = \frac{\it{p}(x,c)}{\it{p}(c)} = \frac{\it{p}(c)\it{p}(x \vert c)}{\it{p}(x)}
+$$
+
+그런데 $$\it{p}(x \vert c)$$는 모든 변수를 동시에 고려하는 joint probability이기 때문에 추정하기 쉬운 값이 아니다. 그래서 Naive Bayes Classifier는 앞서 언급했던 것처럼 각 변수들의 상호 조건부 독립성(feature's conditional independence)을 가정한다. 이는 각 변수들이 독립적으로 Class 분류 결과에 영향을 미친다고 생각하는 것이다. 따라서 우리는 $$\it{p}(c\vert x)$$를 다음과 같이 표현할 수 있다.
+
+$$\it{p}(c\vert x) = \frac{\it{p}(c)\it{p}(x\vert c)}{\it{p}(x)} =\frac{\it{p}(c)}{\it{p}(x)}\prod_{i=1}^{D}p(x_{i}\vert c) $$
+
+여기서 D는 $$x$$의 차원을 의미하며, 우리가 다루는 데이터셋에서 컬럼개수를 의미할 것이다. $$x_{i}$$는 여러개 컬럼들 중에서 i번째 컬럼값을 의미한다. 앞선 논의와 마찬가지로 분류기의 오차율을 최소화시키는 것을 목표로 한다면 Naive Bayes Classifier는 다음과 같은 수식으로 표현할 수 있을 것이다. 여기서 $$\it{p}(x)$$를 고려하지 않는 것은 동일한 값을 지니기 때문에 관심을 두지 않는 것이다.
+
+$$ h^{*}(x) = \text{argmax}_{c \in \mathcal{y}} \it{p}(c)\prod_{i=1}^{D}\it{p}(x_{i}\vert c)$$
+
+따라서 Naive Bayes Classifier는 훈련 데이터 $$X$$가 있다면, 이를 이용하여 각 Class별 사전 확률 $$\it{p}(c)$$를 추정하고 각 class별로 변수의 확률 $$\it{p}(x_{i}\vert c)$$를 계산하는 과정이다.
+
+
+
+
+
+
+
+
+
+
+
+#### 참조 문헌
+1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
+
+
+
+
 
 
 #### 참조 문헌
