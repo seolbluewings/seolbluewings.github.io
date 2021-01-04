@@ -33,7 +33,7 @@ $$
 
 $$ \it{p}(\beta \vert \sigma, y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\beta})$$
 
-여기서 $$\Sigma_{\beta} = \left(\frac{1}{\sigma^{2}}X^{T}X +\Sigma_{0}^{-1} \right)^{-1}$$ 이며 $$ \mu_{\beta} = \Sigma_{\beta}^{-1}\left(\frac{1}{\sigma^{2}}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\right)$$ 이다.
+여기서 $$\Sigma_{\beta} = \left(\frac{1}{\sigma^{2}}X^{T}X +\Sigma_{0}^{-1} \right)^{-1}$$ 이며 $$ \mu_{\beta} = \Sigma_{\beta}\left(\frac{1}{\sigma^{2}}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\right)$$ 이다.
 
 새로운 $$\tilde{y}$$에 대한 분포는 다음과 같을 것이다.
 
@@ -58,10 +58,17 @@ $$
 
 그렇다면, Posterior Predictive Distribution의 분산 term인 $$\sigma^{2}+\tilde{x}^{T}\Sigma_{\beta}\tilde{x}$$ 에서 2번째항은 데이터가 추가될수록 점점 미치는 영향력이 작아질 것이다. 그 결과 추가되는 데이터가 무한히 많아지면, $$N \to \infty$$, 이 Posterior Predictive Distribution의 분산은 $$\sigma^{2}$$의 부분만 남는다고 볼 수 있다.
 
-결국 $$\sigma^{2}_{N}(x) \geq \sigma^{2}_{N+1}(x)\$$라는 것인데 이에 대해서는 다음의 [논문](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.25.9575&rep=rep1&type=pdf)을 통해 증명됨을 확인할 수 있다.
+결국 $$\sigma^{2}_{N}(x) \geq \sigma^{2}_{N+1}(x)$$라는 것인데 이에 대해서는 다음의 [논문](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.25.9575&rep=rep1&type=pdf)을 통해 증명됨을 확인할 수 있다.
 
+![PPD](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/PPD_1.PNG?raw=true){: .align-center}{:width="70%" height="70%"}
 
+이 그림은 간단한 베이지한 선형모델의 결과를 바탕으로 생성된 Posterior Predictive Distribution을 나타내는 Plot이다. 분석에 활용된 데이터 포인트에 대해서는 Plot 내에 점으로 표기하였다. 빨간색 선은 Posterior Mean으로 추정한 값을 활용해 모델을 적합시킨 것이고 파란색 선은 $$\beta$$의 Posterior Distribution을 통해 여러번 샘플링한 값을 가지고서 적합시킨 결과이다.
 
+![PPD](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/PPD_2.PNG?raw=true){: .align-center}{:width="70%" height="70%"}
+
+이 그림은 앞선 그림과 동일한 시행을 수행한 것이나 관측한 데이터 포인트 개수를 늘렸고 관측되는 데이터의 범위도 늘린 결과이다. 데이터 갯수를 늘린 결과, 우리는 Posterior Distribution을 더욱 정밀하게 추정할 수 있고 그에 따라 Posterior Predictive Distribution이 가질 수 있는 값의 범위가 좁혀지는 것을 확인할 수 있다. 범위가 좁다는 것은 분산이 작다는 것과 동등하다.
+
+이 결과를 통해 우리는 2가지를 확인할 수 있다. Posterior Predictive Distribution의 불확실성은 데이터에 종속적이며, 데이터가 존재하는 주변에서 그 불확실성(분산)이 작다. 또한 불확실성의 정도는 관측된 데이터의 수가 증가함에 따라 감소하는 것을 확인할 수 있다.
 
 이와 관련한 코드는 다음의 [링크](https://github.com/seolbluewings/pythoncode/blob/master/10.Posterior%20Predictive%20Distribution.ipynb) 에서 확인할 수 있습니다.
 
