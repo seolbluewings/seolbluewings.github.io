@@ -7,8 +7,6 @@ comments : true
 categories: Bayesian
 ---
 
-[작성중...]
-
 앞서 소개했던 Bayesian Linear Regression [포스팅](https://seolbluewings.github.io/bayesian/2019/04/22/Bayesian-Linear-Regression.html)을 통해서 우리는 기존의 Frequentist들의 회귀계수 $$\beta$$에 대한 추정방법과 다른 Bayesian 방식을 학습하였다. 그러나 분석 목적에 따라 $$\beta$$를 추정하는 것보다 $$\beta$$ 값을 이용하여 새로운 독립적인 데이터 $$x_{new}$$가 주어졌을 때, 예측값인 $$y_{new}$$ 를 구하는 것이 더 중요할 수도 있다. 앞으로 편의상 $$y$$에 대한 예측값은 $$\tilde{y}$$로 표현하겠다.
 
 $$\tilde{y}$$를 추정하기 위해서 Bayesian이 취할 수 있는 방식은 $$\tilde{y}$$에 대한 분포를 구하는 것일거다. 이를 $$\tilde{y}$$에 대한 예측 분포(Predictive Distribution)이라 부르며 일반적으로 Posterior Predictive Distribution이라 말한다.
@@ -60,14 +58,12 @@ $$
 
 그렇다면, Posterior Predictive Distribution의 분산 term인 $$\sigma^{2}+\tilde{x}^{T}\Sigma_{\beta}\tilde{x}$$ 에서 2번째항은 데이터가 추가될수록 점점 미치는 영향력이 작아질 것이다. 그 결과 추가되는 데이터가 무한히 많아지면, $$N \to \infty$$, 이 Posterior Predictive Distribution의 분산은 $$\sigma^{2}$$의 부분만 남는다고 볼 수 있다.
 
+결국 $$\sigma^{2}_{N}(x) \geq \sigma^{2}_{N+1}(x)\$$라는 것인데 이에 대해서는 다음의 [논문](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.25.9575&rep=rep1&type=pdf)을 통해 증명됨을 확인할 수 있다.
 
 
 
 
-
-
-
-
+이와 관련한 코드는 다음의 [링크](https://github.com/seolbluewings/pythoncode/blob/master/10.Posterior%20Predictive%20Distribution.ipynb) 에서 확인할 수 있습니다.
 
 
 

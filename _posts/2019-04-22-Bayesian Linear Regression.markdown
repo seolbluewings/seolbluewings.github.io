@@ -58,7 +58,7 @@ $$
 {\it p}(\beta\vert\sigma^{2},y) \sim \mathcal{N}(\mu_{\beta},\Sigma_{\beta})
 $$
 
-여기서 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 이며 $$\mu_{\beta}=\Sigma_{\beta}^{-1}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이다.
+여기서 $$\Sigma_{\beta}=\bigg( \frac{1}{\sigma^2}X^{T}X+\Sigma^{-1}_{0}\bigg)^{-1}$$ 이며 $$\mu_{\beta}=\Sigma_{\beta}\cdot\bigg(\frac{1}{\sigma^2}X^{T}y+\Sigma^{-1}_{0}\beta_{0}\bigg)$$ 이다.
 
 마찬가지 방식으로 $$\sigma^{2}$$에 대한 Full Conditional Posterior Distribution을 구하면 다음과 같다.
 
