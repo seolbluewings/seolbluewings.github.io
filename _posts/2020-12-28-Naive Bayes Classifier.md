@@ -68,7 +68,7 @@ $$ h^{*}(x) = \text{argmax}_{c \in \mathcal{y}} p(c)\prod_{i=1}^{D}p(x_{i}\vert 
 
 따라서 Naive Bayes Classifier는 훈련 데이터 $$X$$가 있다면, 이를 이용하여 각 Class별 사전 확률 $$\it{p}(c)$$를 추정하고 각 class별로 변수의 확률 $$p(x_{i}\vert c)$$를 계산하는 과정이다.
 
-#### Naive Bayes Classifier 관련한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/11.Naive%20Bayes%20Classifier.ipynb)에서 확인할 수 있습니다.
+###### Naive Bayes Classifier 관련한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/11.Naive%20Bayes%20Classifier.ipynb)에서 확인할 수 있습니다.
 
 #### 참조 문헌
 1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
