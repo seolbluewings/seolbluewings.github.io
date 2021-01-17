@@ -73,14 +73,30 @@ Precision과 Recall의 중요성은 문제의 상황마다 다르다. 상품추�
 Precision과 Recall의 조화평균인 F1 Score도 있다. F1 Score에 대한 일반식은 다음과 같다. Precision을 P, Recall을 R로 표기하기로 한다.
 
 $$
-F_{\beta} = \frac{(1+\beta^{2})PR}{(\beta^{2}P)+R}, \quad \text{where} \beta >0
+F_{\beta} = \frac{(1+\beta^{2})PR}{(\beta^{2}P)+R}, \quad \text{where}\; \beta >0
 $$
 
 여기서 $$\beta$$는 Precision에 대한 Recall의 상대적 중요도를 의미한다. 만약 $$\beta>1$$인 경우, Recall의 영향력이 크고 $$\beta<1$$인 경우는 Precision의 영향력이 크다. $$\beta=1$$이라면, 이를 F1 Score라 부르며 이는 Precision과 Recall의 조화평균이다.
 
 #### ROC와 AUC
 
+일반적으로 분류목적으로 활용되는 많은 모델은 예측결과를 다음과 같은 확률값 $$p(y=1\vert x) = 0.64 $$으로 결과를 반환한다. 그리고 이러한 예측 결과는 임계점과 비교하여 임계점보다 크면 Positive Value로, 작으면 Negative Value로 분류한다. 그런데 이 임계점 역시도 분석 목적에 따라 다르게 설정될 수 있다. 일반적으로는 0.5를 기준으로 하지만 꼭 0.5만이 임계점으로 기준이 되는 것은 아니다. 따라서 우리는 변화하는 임계점 속에서도 성능이 좋은 일반화된 모델을 발견할 수 있는 기준점이 필요하다. 이것이 바로 ROC 곡선이다.
 
+ROC 곡선은 모델의 예측결과를 기반으로 참양성률(TPR, True Positive Rate)을 y축, 거짓양성률(FPR, False Positive Rate)을 x축에 놓는다.
+
+$$
+\begin{align}
+\text{TPR} &= \frac{\text{TP}}{\text{TP}+\text{FN}} \nonumber \\
+\text{FPR} &= \frac{\text{FP}}{\text{TN}+\text{FP}} \nonumber
+\end{align}
+$$
+
+ROC 곡선은 아래의 그림과 같은데 여기서 (0,0)에서 (1,1)을 선으로 그으면, 이것은 랜덤한 결과를 내는 모델의 성능을 의미한다. 따라서 랜덤한 결과를 내는 모델보다 더 좋은 성능을 가진 예측 모델이라면 곡선의 형태는 concave해야할 것이다.
+
+
+![MEM!](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/ROC.png?raw=true){: .align-center}{:width="70%" height="70%"}
+
+한 모델의 ROC 곡선이 다른 모델의 ROC 곡선에 완전히 포함되는 경우, 후자가 전자보다 더 우월한 성능을 가진 모델이라 말할 수 있다. 그러나 위의 그림 중 오른쪽처럼 ROC곡선이 어느 하나가 다른 하나를 완전히 감싸는 형태가 아닌 교차하는 형태로 존재할 수도 있다. 이럴 때는 곡선의 아래 면적을 구한 값으로 비교를 하게 된다. 위의 그림 중 왼쪽 이미지처럼 곡선 아래의 색칠된 면적으로 비교하게 된다. 이를 AUC(Area Under ROC Curve)라고 부른다.
 
 
 
