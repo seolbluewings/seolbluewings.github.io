@@ -78,6 +78,28 @@ $$
 
 여기서 $$\beta$$는 Precision에 대한 Recall의 상대적 중요도를 의미한다. 만약 $$\beta>1$$인 경우, Recall의 영향력이 크고 $$\beta<1$$인 경우는 Precision의 영향력이 크다. $$\beta=1$$이라면, 이를 F1 Score라 부르며 이는 Precision과 Recall의 조화평균이다.
 
+#### MultiClass 분류 평가지표
+
+항상 이진분류 문제만 있는 것은 아니다. 실제 문제에서는 MultiClass 분류 문제도 있다. 따라서 다중 분류에 적용할 수 있는 모델 평가방법도 알아볼 필요가 있다. 다중분류에 대한 지표는 이진분류 평가 지표에서 비롯된다.
+
+Class가 균형잡혀 있다면, Confusion Matrix를 통한 정확도(오차율) 계산으로도 충분하다. 정확도 계산은 전체 개수에서 행렬의 대각선 부분의 값을 더한 것, $$x_{11}+x_{22}+x_{33}$$ 의 비율을 통해 구한다.
+
+||예측 1|예측 2|예측 3|
+|:---:|:---:|:---:|
+|실제 1|$$x_{11}$$|$$x_{12}$$|$$x_{13}$$|
+|실제 2|$$x_{21}$$|$$x_{22}$$|$$x_{23}$$|
+|실제 3|$$x_{31}$$|$$x_{32}$$|$$x_{33}$$|
+
+각 Class별로 Precision, Recall, F1 Score 계산이 가능하다. 만약 Class간 불균형한 문제를 해결한다면 Multiclass 분류문제에서도 이진 분류와 마찬가지로 F1 Score를 사용한다. 그런데 Multiclass용 F1 Score가 필요하다.
+
+Multiclass용 F1 Score는 다음과 같이 구할 수 있다. 먼저 한가지 Class를 Positive로 설정하고 나머지 Class를 모두 Negative로 설정한다. 이진분류 형태의 Confusion Matrix를 먼저 생성하고 여기서의 평균값을 이용해서 F1 Score를 구한다.
+
+평균을 내는 방법도 문제를 바라보는 관점에 따라 다르게 선택이 가능하다.
+
+1. 각 Sample을 동일하게 간주한다면, 모든 Class별로 거짓 양성(FP), 거짓음성(FN), 진짜양성(TP)값을 구하고 이들의 평균값 $$\bar{\text{FP}}$$, $$\bar{\text{FN}}$$, $$\bar{\text{TP}}$$ 를 먼저 구한다. 그리고 그 이후 Precision, Recall, F1 Score값을 구해서 활용한다. 이러한 경우, micro-Precision, micro-Recall, Micro-F1 Score값을 구했다고 말한다.
+
+2. 만약 각 Class를 동일한 비중으로 고려한다면, 모든 Class별로 F1 Score값을 구하고서 이를 단순 평균낸 것을 F1 Score로 활용한다. 이를 Macro-F1 Score라 부른다.
+
 #### ROC와 AUC
 
 일반적으로 분류목적으로 활용되는 많은 모델은 예측결과를 다음과 같은 확률값 $$p(y=1\vert x) = 0.64 $$으로 결과를 반환한다. 그리고 이러한 예측 결과는 임계점과 비교하여 임계점보다 크면 Positive Value로, 작으면 Negative Value로 분류한다. 그런데 이 임계점 역시도 분석 목적에 따라 다르게 설정될 수 있다. 일반적으로는 0.5를 기준으로 하지만 꼭 0.5만이 임계점으로 기준이 되는 것은 아니다. 따라서 우리는 변화하는 임계점 속에서도 성능이 좋은 일반화된 모델을 발견할 수 있는 기준점이 필요하다. 이것이 바로 ROC 곡선이다.
@@ -99,7 +121,7 @@ ROC 곡선은 아래의 그림과 같은데 여기서 (0,0)에서 (1,1)을 선�
 한 모델의 ROC 곡선이 다른 모델의 ROC 곡선에 완전히 포함되는 경우, 후자가 전자보다 더 우월한 성능을 가진 모델이라 말할 수 있다. 그러나 위의 그림 중 오른쪽처럼 ROC곡선이 어느 하나가 다른 하나를 완전히 감싸는 형태가 아닌 교차하는 형태로 존재할 수도 있다. 이럴 때는 곡선의 아래 면적을 구한 값으로 비교를 하게 된다. 위의 그림 중 왼쪽 이미지처럼 곡선 아래의 색칠된 면적으로 비교하게 된다. 이를 AUC(Area Under ROC Curve)라고 부른다.
 
 
-
 #### 참조 문헌
 
 1. [단단한 머신러닝](http://www.yes24.com/Product/Goods/88440860)
+2. [Introduction to Machine Learning with Python](https://github.com/amueller/introduction_to_ml_with_python)
