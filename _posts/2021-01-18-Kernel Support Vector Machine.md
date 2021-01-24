@@ -24,7 +24,7 @@ $$ f(x) = w^{T}\phi(x)+b$$
 
 $$
 \begin{align}
-\&text{min}_{w,b}\frac{1}{2}\vert\vert w\vert\vert^{2} \nonumber \\
+&\text{min}_{w,b}\frac{1}{2}\vert\vert w\vert\vert^{2} \nonumber \\
 &\text{s.t.} y_{i}(w^{T}\phi(x_{i})+b) \geq 1, \quad \forall i \nonumber
 \end{align}
 $$
@@ -33,7 +33,7 @@ $$
 
 $$
 \begin{align}
-&\text{max}_{\alpha}\sum_{i=1}^{n}\alpha_{i}-\frac{1}{&2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}\phi(x_{i})^{T}\phi(x_{j}) \nonumber \\
+&\text{max}_{\alpha}\sum_{i=1}^{n}\alpha_{i}-\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}\phi(x_{i})^{T}\phi(x_{j}) \nonumber \\
 &\text{s.t.} \sum_{i=1}^{n}\alpha_{i}y_{i} = 0 \quad \alpha_{i}\geq 0
 \end{align}
 $$
@@ -58,7 +58,7 @@ $$\kappa(x_{i},x_{j}) = \phi(x_{i})^{T}\phi(x_{j})$$
 
 $$
 \begin{align}
-&\text{max}_{\alpha}\sum_{i=1}^{n}\alpha_{i}-\frac{1}{&2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}\kappa(x_{i},x_{j}) \nonumber \\
+&\text{max}_{\alpha}\sum_{i=1}^{n}\alpha_{i}-\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}\kappa(x_{i},x_{j}) \nonumber \\
 &\text{s.t.} \sum_{i=1}^{n}\alpha_{i}y_{i} = 0 \quad \alpha_{i}\geq 0
 \end{align}
 $$$$$$
