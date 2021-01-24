@@ -52,8 +52,6 @@ $$\kappa(x_{i},x_{j}) = \phi(x_{i})^{T}\phi(x_{j})$$
 |다항 Kernel|$$\kappa(x_{i},x_{j}) = (x_{i}^{T}x_{j})^{d}  $$|
 |가우시안(RBF) Kernel|$$\kappa(x_{i},x_{j}) = \text{exp}\left(-\frac{\vert\vert x_{i}-x_{j} \vert\vert^{2}}{2\sigma^{2}} \right)  $$|
 
-|실제 3|$$x_{31}$$|
-
 앞선 Dual Problem을 다시 표현하면 다음과 같이 표현할 수 있다.
 
 $$
@@ -61,7 +59,7 @@ $$
 &\text{max}_{\alpha}\sum_{i=1}^{n}\alpha_{i}-\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y_{i}y_{j}\kappa(x_{i},x_{j}) \nonumber \\
 &\text{s.t.} \sum_{i=1}^{n}\alpha_{i}y_{i} = 0 \quad \alpha_{i}\geq 0
 \end{align}
-$$$$$$
+$$
 
 우리가 구하고자 하는 hyperplane 역시 Kernel Function을 통해 다시 표현할 수 있고 이 수식은 최적의 hyperplane은 훈련 데이터를 활용한 Kernel Function을 구함으로써 얻을 수 있다는 것을 의미한다.
 
