@@ -73,6 +73,25 @@ $$
 
 따라서 Kernel Trick에 의해 생성되는 고차원 공간이 데이터를 분리하는데 있어 좋고 나쁨은 Kernel SVM의 성능에 큰 영향을 미친다. 따라서 Kernel Function의 선택은 SVM의 최대 변수가 된다고 말할 수 있다.
 
+#### Gaussian Kernel
+
+가우시안 커널(Gaussian Kernel)은 가장 빈번하게 활용되는 Kernel Function이다. 선형 커널은 기존 SVM에서 활용했던 것이니 특별할 것이 없다고 볼 수 있다. 다항 커널은 사용자가 지정한 d값에 의해 새로운 Space의 차원이 결정된다.
+
+가우시안 커널은 다음과 같이 표현할 수 있는데
+
+$$
+\begin{align}
+\kappa(x_{i},x_{j}) &\propto \text{exp}\{(x_{i}-x_{j})^{2}\} \nonumber \\
+&\propto \text{exp}(-x_{i}^{2})\text{exp}(-x_{j}^{2})\text{exp}(2x_{i}x_{j})
+\end{align}
+$$
+
+exponential 함수 $$e^{x}$$는 Taylor Series에 의해 다음과 같이 표현될 수 있다.
+
+$$e^{x} = \sum_{k=0}^{\infty}\frac{x^{k}}{k!} $$
+
+이는 exponential 함수를 이용하는 것이 Kernel에 input값으로 들어오는 데이터의 공간을 무한한 차원으로 확장시킬 수 있다는 것을 의미한다. 따라서 가우시안 커널은 입력되는 데이터의 차원에 관계없이 무한대 차원으로 데이터를 mapping시킬 수 있다는 것에서 큰 장점을 지닌 Kernel이라 할 수 있다.
+
 
 #### 참조 문헌
 1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
