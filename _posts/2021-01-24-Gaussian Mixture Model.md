@@ -10,13 +10,13 @@ categories: Bayesian
 
 우리는 통계문제를 해결하는 과정에서 데이터가 가우시안 분포(정규 분포)를 따를 것이라는 가정을 자주 한다. 그러나 데이터의 분포를 단 1개의 가우시안 분포만을 사용하여 표현하려는 것은 위험한 부분이 있다. 다음과 같은 경우를 고려해보자.
 
-![GMM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/GMM_1.png?raw=true){:width="60%" height="60%"}
+![GMM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/GMM_1.png?raw=true){:width="70%" height="70%"}
 
 그림을 통해 확인할 수 있는 것처럼 이 데이터들은 2개의 집단으로 나누어진 것으로 판단하는 것이 옳다. 하나의 가우시안 분포만으로는 데이터를 설명하기는 부적절하다. 대신 2개의 가우시안 분포를 선형 결합시킨다면, 우리는 이 데이터 집합을 더욱 잘 표현할 수 있다.
 
 가우시안 분포들을 선형 결합하여 우리는 새로운 확률 분포를 생성해낼 수 있다.
 
-![GMM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/GMM_2.png?raw=true){:width="60%" height="60%"}
+![GMM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/GMM_2.png?raw=true){:width="70%" height="70%"}
 
 이 이미지는 파란색 곡선으로 표기된 3개의 가우시안 분포를 혼합하여 새로운 1개의 분포(빨간색)를 생성해낸 것을 의미한다. 새로운 분포를 생성하는 과정에서 우리는 혼합하는 가우시안 분포의 개수를 조정할 수도 있고 선형 결합의 대상이 되는 가우시안 분포의 parameter 값을 조정할 수도 있다. 또한 선형 결합의 계수를 조정함으로써 우리는 새롭게 생성되는 분포를 변주시킬 수 있다.
 
@@ -30,7 +30,7 @@ $$ p(x) = \sum_{k=1}^{K} \pi_{k}\mathcal{N}(x\vert \mu_{k},\Sigma_{k})$$
 
 $$\pi_{k} = p(k)$$ 로 k번째 가우시안 분포에 속할 사전 확률(Prior)로 간주할 수 있다. $$\mathcal{N}(x\vert \mu_{k},\Sigma_{k})$$ 는 k가 주어진 상황에서 x의 확률, $$p(x \vert k)$$로 볼 수 있다.
 
-$$p(x) = \sum_{k=1}^{K}p(k)p(x\vert k) = \sum_{k=1}^{K}\pi_{k}\mathcal{N)(x\vert \mu_{k},\Sigma_{k})$$
+$$p(x) = \sum_{k=1}^{K}p(k)p(x\vert k) = \sum_{k=1}^{K}\pi_{k}\mathcal{N}(x\vert \mu_{k},\Sigma_{k})$$
 
 가 성립되어 Posterior distribution에 해당하는 $$p(k\vert x)$$ 값은 다음과 같이 계산될 것이다.
 
@@ -38,6 +38,15 @@ $$
 p(k\vert x) = \frac{p(k)p(x\vert k)}{\sum_{k=1}^{K}p(x)p(x\vert k)} = \frac{\pi_{k}\mathcal{N}(x \vert \mu_{k},\Sigma_{k})}{\sum_{k=1}^{K}\pi_{k}\mathcal{N}(x\vert \mu_{k},\Sigma_{k})}
 $$
 
+#### Gaussian Mixture Model의 활용
+
+Gaussian Mixture Model을 활용하여 우리는 데이터 x가 주어졌을 때, 이 데이터가 어느 집단에 속하는지에 대한 확률 $$p(k \vert x)$$값을 구할 수 있다. 즉 우리는 Gaussian Mixture Model을 통하여 데이터를 Clustering 시킬 수 있다.
+
+각 데이터에 대하여 $$p(k \vert x)$$를 구할 수 있고 이 값이 가장 큰 k를 찾아내어 해당 데이터를 k번째 군집에 속하는 것으로 판단하게 된다.
+
+$$k_{i} = \text{argmax}_{k} \pi_{ik}$$
+
+#### la
 
 
 #### 참조 문헌
