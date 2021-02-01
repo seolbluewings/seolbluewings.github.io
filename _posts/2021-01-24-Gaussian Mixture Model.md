@@ -46,7 +46,25 @@ Gaussian Mixture Model을 활용하여 우리는 데이터 x가 주어졌을 때
 
 $$k_{i} = \text{argmax}_{k} \pi_{ik}$$
 
-#### la
+#### latent variable을 활용한 Gaussian Mixture Model
+
+Gaussian Mixture Model은 이산형 잠재변수(latent variable)를 활용할 때 더욱 계산하기가 쉽다. 다음과 같은 조건을 만족하는 K차원의 이산확률변수 $$\mathbf{z}$$ 가 존재한다고 하자.
+
+$$ z_{k} \in \{0,1\}, \quad \sum_{k}z_{k}= 1 $$
+
+즉, $$\mathbf{z} = (z_{1},z_{2},...,z_{K})$$ 인데 특정 원소 $$z_{k}=1$$이고 나머지는 0인 경우를 의미한다. 벡터 $$\mathbf{z}$$는 어떤 원소가 0인지 아닌지에 따라 K개의 서로 다른 상태를 가질 수 있다. 따라서 이 latent variable을 활용하여 우리는 특정 데이터가 어느 집단에 속하게 될 것인가를 추론하는데 활용이 가능하다.
+
+새로운 변수 $$\mathbf{z}$$의 추가로 우리의 관심이 되는 분포는 $$p(x,z)$$라고 표현이 가능하다. 또한 이 Joint Distribution은 $$p(x,z) = p(z)p(x\vert z)$$ 로도 표현이 가능하다.
+
+$$\mathbf{z}$$에 대한 분포는 k번째 집단에 속할 확률 $$\pi_{k}$$로 표현이 가능하다. 이 때, $$\pi_{k}$$는 확률로써 유효하기 위해 $$0 \leq \pi_{k} \leq 1$$, $$\sum_{k=1}^{K}\pi_{k}=1$$ 조건을 만족해야 한다.
+
+$$ p(z_{k}=1) = \pi_{k} $$
+
+이를 조금 더 일반적으로 표현하면, $$p(z)$$는 다음과 같이 표현이 가능하다.
+
+$$ p(z) = \prod_{k=1}^{K}\pi_{k}^{z_{k}} $$
+
+
 
 
 #### 참조 문헌

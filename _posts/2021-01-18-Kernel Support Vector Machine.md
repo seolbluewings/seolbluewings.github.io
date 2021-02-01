@@ -6,7 +6,6 @@ author: seolbluewings
 categories: 서포트벡터머신
 ---
 
-[작성중...]
 
 앞선 SVM [포스팅](https://seolbluewings.github.io/%EC%84%9C%ED%8F%AC%ED%8A%B8%EB%B2%A1%ED%84%B0%EB%A8%B8%EC%8B%A0/2020/11/29/Support-Vector-Machine.html)에서는 데이터가 선형 hyperplane을 통해 분리가 가능함을 가정하였다. 여기에 Slack Variable을 추가하여 약간의 오차는 눈감아주는 모델도 생성했었다. 그러나 현실적으로 데이터를 선형 hyperplane을 통해 분류해낼 수 있는 경우는 없다. 단순한 XOR 게이트 문제 역시 선형분리시키지 못하는 사례 중 하나다.
 
