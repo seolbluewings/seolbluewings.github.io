@@ -54,7 +54,7 @@ $$ z_{k} \in \{0,1\}, \quad \sum_{k}z_{k}= 1 $$
 
 즉, $$\mathbf{z} = (z_{1},z_{2},...,z_{K})$$ 인데 특정 원소 $$z_{k}=1$$이고 나머지는 0인 경우를 의미한다. 벡터 $$\mathbf{z}$$는 어떤 원소가 0인지 아닌지에 따라 K개의 서로 다른 상태를 가질 수 있다. 따라서 이 latent variable을 활용하여 우리는 특정 데이터가 어느 집단에 속하게 될 것인가를 추론하는데 활용이 가능하다.
 
-새로운 변수 $$\mathbf{z}$$의 추가로 우리의 관심이 되는 분포는 $$p(x,z)$$라고 표현이 가능하다. 또한 이 Joint Distribution은 $$p(x,z) = p(z)p(x\vert z)$$ 로도 표현이 가능하다.
+새로운 변수 $$\mathbf{z}$$의 추가로 우리의 관심이 되는 분포는 $$p(x,\mathbf{z})$$라고 표현이 가능하다. 또한 이 Joint Distribution은 $$p(x,\mathbf{z}) = p(\mathbf{z})p(x\vert \mathbf{z})$$ 로도 표현이 가능하다.
 
 $$\mathbf{z}$$에 대한 분포는 k번째 집단에 속할 확률 $$\pi_{k}$$로 표현이 가능하다. 이 때, $$\pi_{k}$$는 확률로써 유효하기 위해 $$0 \leq \pi_{k} \leq 1$$, $$\sum_{k=1}^{K}\pi_{k}=1$$ 조건을 만족해야 한다.
 
@@ -62,7 +62,26 @@ $$ p(z_{k}=1) = \pi_{k} $$
 
 이를 조금 더 일반적으로 표현하면, $$p(z)$$는 다음과 같이 표현이 가능하다.
 
-$$ p(z) = \prod_{k=1}^{K}\pi_{k}^{z_{k}} $$
+$$ p(\mathbf{z}) = \prod_{k=1}^{K}\pi_{k}^{z_{k}} $$
+
+한편, $$\mathbf{z}$$가 given일 때 x의 조건부 분포 $$p(x\vert\mathbf{z})$$ 는 다음과 같다.
+
+$$ p(x\vert z_{k}=1) \sim \mathcal{N}(x\vert \mu_{k},\Sigma_{k}) $$
+
+이를 일반식으로 표현하면, 다음과 같을 것이다.
+
+$$ p(x\vert\mathbf{z}) = \prod_{k=1}^{K}\mathcal{N}(x\vert\mu_{k},\Sigma_{k})^{z_{k}} $$
+
+따라서 우리가 원래 알고 있었던 $$ p(x) = \sum_{k=1}^{K} \pi_{k}\mathcal{N}(x\vert \mu_{k},\Sigma_{k})$$ 식은 다음의 과정을 통해서 동일하게 얻을 수 있다.
+
+$$ p(x) = \sum_{\mathbf{z}}p(\mathbf{z})p(x\vert\mathbf{z}) = \sum_{k=1}^{K} \pi_{k}\mathcal{N}(x\vert \mu_{k},\Sigma_{k}) $$
+
+우리는 본래는 존재하지 않았던 latent variable $$\mathbf{z}$$를 도입하여 Gaussian Mixture Model을 표현할 수 있고 $$p(x)$$ 대신 Joint Distribution인 $$p(x,\mathbf{z})$$를 활용하여 Gaussian Mixture Model 문제를 해결할 수 있다. 그리고 이 방법이 더 편리하다.
+
+Gaussian Mixture Model 문제를 해결하는 가장 대표적인 방법은 EM 알고리즘을 활용하는 것이다. [EM알고리즘 포스팅](https://seolbluewings.github.io/bayesian/2020/06/27/EM-Algorithm.html)의 예제에서 EM 알고리즘을 활용하여 Gaussian Mixture Model의 각 parameter를 추정하는 것을 예제로 해결한 바 있다. 따라서 이번 포스팅에서는 EM 알고리즘이 아닌 Gibbs Sampler를 통해 Gaussian Mixture Model을 해결하는 것을 살펴보고자 한다.
+
+#### Gaussian Mixture Model with Gibbs Sampler
+
 
 
 
