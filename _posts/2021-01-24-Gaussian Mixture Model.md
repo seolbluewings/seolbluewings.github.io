@@ -108,11 +108,6 @@ $$
 \begin{align}
 p(\mathbf{z},\pi,\mu,\sigma^{2}\vert \mathbf{y})
 &\propto p(\mathbf{y}\vert \mathbf{z},\mu,\sigma^{2})p(\mathbf{z}\vert\pi)p(\pi)p(\mu)p(\sigma^{2}) \nonumber \\
-
-&\propto \prod_{i=1}^{n} \prod_{k=1}^{K}\left\{ (\sigma_{k}^{2})^{-1/2} \text{exp} \left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2} \right) \right\}^{I(z_{i}=k)} \nonumber \\
-&\times \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)} \times \prod_{k=1}^{K} (\pi_{k})^{\frac{1}{K}-1} \times \prod_{k=1}^{K} \text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
-&\times \prod_{k=1}^{K} (\sigma^{2}_{k})^{-100-1} \text{exp}(-1/\sigma^{2}_{k})
-
 \end{algin}
 $$
 
