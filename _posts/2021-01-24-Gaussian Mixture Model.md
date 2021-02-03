@@ -106,11 +106,9 @@ Step 1. Target Posterior Distribution 구하기
 
 $$
 \begin{align}
-p(\mathbf{z},\pi,\mu,\sigma^{2}\vert \mathbf{y}) \propto p(\mathbf{y}\vert \mathbf{z},\pi,\mu,\sigma^{2})p(\mathbf{z}\vert\pi,\mu,\sigma^{2})p(\pi\vert\mu,\sigma^{2})p(\mu\vert\sigma^{2})p(\sigma^{2}) \nonumber \\
-&\propto p(\mathbf{y}\vert \mathbf{z},\mu,\sigma^{2})p(\mathbf{z}\vert\pi)p(\pi)p(\mu)p(\sigma^{2}) \nonumber
-\propto \prod_{i=1}^{n}\prod_{k=1}^{K}\left\{(\sigma_{k}^{2})^{-1/2}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2} \right) \right\}^{I(z_{i}=k)} \nonumber \\
-&\times \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)} \times \prod_{k=1}^{K} (\pi_{k})^{\frac{1}{K}-1} \times \prod_{k=1}^{K}\text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
-&\times \prod_{k=1}^{K} (\sigma^{2}_{k})^{-100-1} \text{exp}(-1/\sigma^{2}_{k})
+p(\mathbf{z},\pi,\mu,\sigma^{2}\vert \mathbf{y}) &\propto p(\mathbf{y}\vert \mathbf{z},\pi,\mu,\sigma^{2})p(\mathbf{z}\vert\pi,\mu,\sigma^{2})p(\pi\vert\mu,\sigma^{2})p(\mu\vert\sigma^{2})p(\sigma^{2}) \nonumber \\
+&\propto p(\mathbf{y}\vert \mathbf{z},\mu,\sigma^{2})p(\mathbf{z}\vert\pi)p(\pi)p(\mu)p(\sigma^{2}) \nonumber \\
+
 \end{algin}
 $$
 
@@ -118,9 +116,19 @@ Step 2. $$\mathbf{z}$$ 에 대한 Sampling Step 설정
 
 $$
 \begin{align}
-p(\mathbf{z}\vert\pi,\mu,\sigma^{2},\mathbf{y}) \propto \prod_{i=1}^{n}\prod_{k=1}^{K}\left\{(\sigma_{k}^{2})^{-1/2}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2} \right) \right\}^{I(z_{i}=k)} \times \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)} \nonumber \\
-p(z_{i}\vert\pi,\mu,\sigma^{2},\mathbf{y}) \propto \prod_{k=1}^{K}\left\{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) \right\}^{I(z_{i}=k)} \nonumber \\
-p(z_{i}=k\vert\pi,\mu,\sigma^{2},\mathbf{y}) = \frac{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) }{ \sum_{k=1}^{K}\left\{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) \right\} }
+p(\mathbf{z}\vert\pi,\mu,\sigma^{2},\mathbf{y}) &\propto \prod_{i=1}^{n}\prod_{k=1}^{K}\left\{(\sigma_{k}^{2})^{-1/2}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2} \right) \right\}^{I(z_{i}=k)} \times \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)} \nonumber \\
+p(z_{i}\vert\pi,\mu,\sigma^{2},\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) \right\}^{I(z_{i}=k)} \nonumber \\
+p(z_{i}=k\vert\pi,\mu,\sigma^{2},\mathbf{y}) &= \frac{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) }{ \sum_{k=1}^{K}\left\{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) \right\} }
+\end{align}
+$$
+
+Step 3. $$\pi$$에 대한 Sampling Step 설정
+
+$$
+\begin{align}
+p(\pi\vert\mathbf{z},\mu,\sigma^{2},\mathbf{y}) &\propto \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)}\prod_{k=1}^{K}(\pi_{k})^{\frac{1}{K}-1} \nonumber \\
+&\propto \prod_{k=1}^{K}\left[ \pi_{k}^{\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{K}-1} \right] \nonumber \\
+\pi_{k} &\sim \text{Dirichlet}\left(\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{K} \right)
 \end{align}
 $$
 
