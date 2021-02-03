@@ -82,6 +82,16 @@ Gaussian Mixture Model 문제를 해결하는 가장 대표적인 방법은 EM �
 
 #### Gaussian Mixture Model with Gibbs Sampler
 
+데이터 $$ \{(x_{1},y_{1}),...,(x_{n},y_{n})\} $$ 가 주어지고 우리는 이 데이터가 다른 집단에 속하는 데이터들이 서로 섞여있는 형태라고 생각한다. 따라서 다음과 같은 Gaussian Mixture Model을 가정할 수 있다.
+
+$$ y_{i} \sim \sum_{k=1}^{K}\pi_{k}\mathcal{N}(\mu_{k},\sigma^{2}_{k}), \quad i=1,2,...,n $$
+
+여기서 $$\mu_{k},\sigma_{k}^{2}$$는 각 가우시안 분포의 평균과 분산을 의미한다. 데이터 집단의 개수인 K는 사실 알지 못하지만, 우리는 K를 알고 있는 상황에서 Gaussian Mixture Model을 생성할 수 있다. 따라서 [K-Means Clustering Algorithm](https://seolbluewings.github.io/%EA%B5%B0%EC%A7%91%ED%99%94/2020/06/12/Cluster-Analysis.html)처럼 사전에 K값에 대한 결정을 내려야 한다. 다만 이 경우 $$\sum_{k=1}^{K}\pi_{k}=1$$ 조건만 만족하면 된다.
+
+Gaussian Mixture Model을 해결하기 위해 사용하는 latent variable $$z_{i}$$는 확률 $$\pi = (\pi_{1},...,\pi_{k})$$ 에 대응하는 indicator variable로의 역할을 수행한다.
+
+
+
 
 
 
