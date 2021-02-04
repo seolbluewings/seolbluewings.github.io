@@ -134,6 +134,35 @@ p(\pi\vert\mathbf{z},\mu,\sigma^{2},\mathbf{y}) &\propto \prod_{i=1}^{n}\prod_{k
 \end{align}
 $$
 
+Step 4. $$\mathbf{\mu}$$에 대한 Sampling Step 설정
+
+$$
+\begin{align}
+p(\mathbf{\mu}\vert\mathbf{z},\pi,\sigma^{2},\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}} (y_{i}-\mu_{k})^{2} \right)\right\}^{I(z_{i}=k)}\prod_{k=1}^{K}\text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
+p(\mu_{k}\vert\mathbf{z},\pi,\sigma^{2},\mathbf{y}) &\propto \text{exp}\left\{-\frac{1}{2\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}\right\}\text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
+&\propto \text{exp}\left\{-\frac{1}{2}\left( (\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}})\mu_{k}^{2}-2\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)\mu_{k}y_{i} \right)\right\} \nonumber \\
+p(\mu_{k}\vert\mathbf{z},\pi,\sigma^{2},\mathbf{y}) &\sim \mathcal{N}\left(\frac{\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)y_{i}}{\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}}}, \left(\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}}  \right)^{-1}   \right)
+\end{align}
+$$
+
+Step 5. $$\sigma^{2}$$에 대한 Sampling Step 설정
+
+$$
+\begin{align}
+p(\sigma^{2}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}} (y_{i}-\mu_{k})^{2} \right)\right\}^{I(z_{i}=k)} \prod_{k=1}^{K}(\sigma^{2}_{k})^{-100-1}\text{exp}(-1/\sigma^{2}_{k}) \nonumber \\
+p(\sigma^{2}_{k}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\propto (\sigma^{2}_{k})^{-\frac{1}{2}I(z_{i}=k)-100-1}\text{exp}\left\{-\frac{1}{\sigma^{2}_{k}}\left(\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}\right) +1  \right\} \nonumber \\
+p(\sigma^{2}_{k}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\sim \text{IG}\left(\frac{1}{2}I(z_{i}=k)+100,\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}+1 \right)
+\end{align}
+$$
+
+다음의 5가지 Step에 대한 Gibbs Sampler를 수행하여 burn-in period 이후의 값들을 활용하여 각각의 parameter 추정을 할 수 있다.
+
+새로운 데이터가 추가되었을 때는 우리가 구한 parameter들을 활용해 다음의 식을 계산하고 가장 확률값이 높은 집단에 속하는 것으로 간주하면 된다.
+
+$$
+p(k\vert x) = \frac{p(k)p(x\vert k)}{\sum_{k=1}^{K}p(x)p(x\vert k)} = \frac{\pi_{k}\mathcal{N}(x \vert \mu_{k},\Sigma_{k})}{\sum_{k=1}^{K}\pi_{k}\mathcal{N}(x\vert \mu_{k},\Sigma_{k})}
+$$
+
 
 
 #### 참조 문헌
