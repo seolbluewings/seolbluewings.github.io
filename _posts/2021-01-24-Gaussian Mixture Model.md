@@ -6,7 +6,6 @@ author: seolbluewings
 categories: Bayesian
 ---
 
-[작성중...]
 
 우리는 통계문제를 해결하는 과정에서 데이터가 가우시안 분포(정규 분포)를 따를 것이라는 가정을 자주 한다. 그러나 데이터의 분포를 단 1개의 가우시안 분포만을 사용하여 표현하려는 것은 위험한 부분이 있다. 다음과 같은 경우를 고려해보자.
 
@@ -150,8 +149,8 @@ Step 5. $$\sigma^{2}$$에 대한 Sampling Step 설정
 $$
 \begin{align}
 p(\sigma^{2}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}} (y_{i}-\mu_{k})^{2} \right)\right\}^{I(z_{i}=k)} \prod_{k=1}^{K}(\sigma^{2}_{k})^{-100-1}\text{exp}(-1/\sigma^{2}_{k}) \nonumber \\
-p(\sigma^{2}_{k}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\propto (\sigma^{2}_{k})^{-\frac{1}{2}I(z_{i}=k)-100-1}\text{exp}\left\{-\frac{1}{\sigma^{2}_{k}}\left(\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}\right) +1  \right\} \nonumber \\
-p(\sigma^{2}_{k}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\sim \text{IG}\left(\frac{1}{2}I(z_{i}=k)+100,\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}+1 \right)
+p(\sigma^{2}_{k}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\propto (\sigma^{2}_{k})^{-\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)-100-1}\text{exp}\left\{-\frac{1}{\sigma^{2}_{k}}\left(\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}\right) +1  \right\} \nonumber \\
+p(\sigma^{2}_{k}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\sim \text{IG}\left(\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)+100,\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}+1 \right)
 \end{align}
 $$
 
