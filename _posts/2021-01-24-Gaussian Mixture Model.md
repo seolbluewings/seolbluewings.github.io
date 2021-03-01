@@ -83,19 +83,18 @@ Gaussian Mixture Model 문제를 해결하는 가장 대표적인 방법은 EM �
 
 데이터 $$ \{(x_{1},y_{1}),...,(x_{n},y_{n})\} $$ 가 주어지고 우리는 이 데이터가 다른 집단에 속하는 데이터들이 서로 섞여있는 형태라고 생각한다. 따라서 다음과 같은 Gaussian Mixture Model을 가정할 수 있다.
 
-$$ y_{i} \sim \sum_{k=1}^{K}\pi_{k}\mathcal{N}(\mu_{k},\sigma^{2}_{k}), \quad i=1,2,...,n $$
+$$ y_{i} \sim \sum_{k=1}^{K}\pi_{k}\mathcal{N}(\mu_{k},1), \quad i=1,2,...,n $$
 
-여기서 $$\mu_{k},\sigma_{k}^{2}$$는 각 가우시안 분포의 평균과 분산을 의미한다. 데이터 집단의 개수인 K는 사실 알지 못하지만, 우리는 K를 알고 있는 상황에서 Gaussian Mixture Model을 생성할 수 있다. 따라서 [K-Means Clustering Algorithm](https://seolbluewings.github.io/%EA%B5%B0%EC%A7%91%ED%99%94/2020/06/12/Cluster-Analysis.html)처럼 사전에 K값에 대한 결정을 내려야 한다. 다만 이 경우 $$\sum_{k=1}^{K}\pi_{k}=1$$ 조건만 만족하면 된다.
+여기서 $$\mu_{k}$$는 각 가우시안 분포의 평균을 의미한다. 분산은 다 동일한 것으로 가정한다. 데이터 집단의 개수인 K는 사실 알지 못하지만, 우리는 K를 알고 있는 상황에서 Gaussian Mixture Model을 생성할 수 있다. 따라서 [K-Means Clustering Algorithm](https://seolbluewings.github.io/%EA%B5%B0%EC%A7%91%ED%99%94/2020/06/12/Cluster-Analysis.html)처럼 사전에 K값에 대한 결정을 내려야 한다. 다만 이 경우 $$\sum_{k=1}^{K}\pi_{k}=1$$ 조건만 만족하면 된다.
 
 Gaussian Mixture Model을 해결하기 위해 사용하는 latent variable $$z_{i}$$는 확률 $$\pi = (\pi_{1},...,\pi_{k})$$ 에 대응하는 indicator variable로의 역할을 수행한다.
 
-Gibbs Sampler 과정을 수행하기 위해 우리는 다음의 parameter $$\Theta = (\pi,\mu_{k},\sigma^{2}_{k})$$ 에 대한 Prior Distribution을 설정해야 한다.
+Gibbs Sampler 과정을 수행하기 위해 우리는 다음의 parameter $$\Theta = (\pi,\mu_{k})$$ 에 대한 Prior Distribution을 설정해야 한다.
 
 $$
 \begin{align}
 \pi &= (\pi_{1},...,\pi_{k}) \sim \text{Dirichlet}(\frac{1}{K},...\frac{1}{K}) \nonumber \\
-\mu_{k} &\sim \mathcal{N}(0,10^{2}) \quad k=1,2,...,K \nonumber \\
-\sigma^{2}_{k} &\sim \text{IG}(100,1) \quad k=1,2,...,K \nonumber
+\mu_{k} &\sim \mathcal{N}(0,10^{2}) \quad k=1,2,...,K \nonumber
 \end{align}
 $$
 
@@ -105,11 +104,10 @@ Step 1. Target Posterior Distribution 구하기
 
 $$
 \begin{align}
-p(\mathbf{z},\pi,\mu,\sigma^{2}\vert \mathbf{y})
-&\propto p(\mathbf{y}\vert \mathbf{z},\mu,\sigma^{2})p(\mathbf{z}\vert\pi)p(\pi)p(\mu)p(\sigma^{2}) \nonumber \\
-&\propto \prod_{i=1}^{n} \prod_{k=1}^{K}\left\{ (\sigma_{k}^{2})^{-1/2} \text{exp} \left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2} \right) \right\}^{I(z_{i}=k)} \nonumber \\
-&\times \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)} \times \prod_{k=1}^{K} (\pi_{k})^{\frac{1}{K}-1} \times \prod_{k=1}^{K} \text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
-&\times \prod_{k=1}^{K} (\sigma^{2}_{k})^{-100-1} \text{exp}(-1/\sigma^{2}_{k})
+p(\mathbf{z},\pi,\mu\vert \mathbf{y})
+&\propto p(\mathbf{y}\vert \mathbf{z},\mu)p(\mathbf{z}\vert\pi)p(\pi)p(\mu) \nonumber \\
+&\propto \prod_{i=1}^{n} \prod_{k=1}^{K}\left\{\text{exp} \left(-\frac{1}{2}(y_{i}-\mu_{k})^{2} \right) \right\}^{I(z_{i}=k)} \nonumber \\
+&\times \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)} \times \prod_{k=1}^{K} (\pi_{k})^{\frac{1}{K}-1} \times \prod_{k=1}^{K} \text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber
 \end{align}
 $$
 
@@ -117,9 +115,9 @@ Step 2. $$\mathbf{z}$$ 에 대한 Sampling Step 설정
 
 $$
 \begin{align}
-p(\mathbf{z}\vert\pi,\mu,\sigma^{2},\mathbf{y}) &\propto \prod_{i=1}^{n}\prod_{k=1}^{K}\left\{(\sigma_{k}^{2})^{-1/2}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2} \right) \right\}^{I(z_{i}=k)} \times \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)} \nonumber \\
-p(z_{i}\vert\pi,\mu,\sigma^{2},\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) \right\}^{I(z_{i}=k)} \nonumber \\
-p(z_{i}=k\vert\pi,\mu,\sigma^{2},\mathbf{y}) &= \frac{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) }{ \sum_{k=1}^{K}\left\{ \pi_{k}\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}}(y_{i}-\mu_{k})^{2}\right) \right\} }
+p(\mathbf{z}\vert\pi,\mu,\mathbf{y}) &\propto \prod_{i=1}^{n}\prod_{k=1}^{K}\left\{\text{exp}\left(-\frac{1}{2}(y_{i}-\mu_{k})^{2} \right) \right\}^{I(z_{i}=k)} \times \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)} \nonumber \\
+p(z_{i}\vert\pi,\mu,\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{ \pi_{k}\text{exp}\left(-\frac{1}{2}(y_{i}-\mu_{k})^{2}\right) \right\}^{I(z_{i}=k)} \nonumber \\
+p(z_{i}=k\vert\pi,\mu,\mathbf{y}) &= \frac{ \pi_{k}\text{exp}\left(-\frac{1}{2}(y_{i}-\mu_{k})^{2}\right) }{ \sum_{k=1}^{K}\left\{ \pi_{k}\text{exp}\left(-\frac{1}{2}(y_{i}-\mu_{k})^{2}\right) \right\} }
 \end{align}
 $$
 
@@ -127,7 +125,7 @@ Step 3. $$\pi$$에 대한 Sampling Step 설정
 
 $$
 \begin{align}
-p(\pi\vert\mathbf{z},\mu,\sigma^{2},\mathbf{y}) &\propto \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)}\prod_{k=1}^{K}(\pi_{k})^{\frac{1}{K}-1} \nonumber \\
+p(\pi\vert\mathbf{z},\mu,\mathbf{y}) &\propto \prod_{i=1}^{n}\prod_{k=1}^{K}(\pi_{k})^{I(z_{i}=k)}\prod_{k=1}^{K}(\pi_{k})^{\frac{1}{K}-1} \nonumber \\
 &\propto \prod_{k=1}^{K}\left[ \pi_{k}^{\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{K}-1} \right] \nonumber \\
 \pi_{k} &\sim \text{Dirichlet}\left(\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{K} \right)
 \end{align}
@@ -137,24 +135,14 @@ Step 4. $$\mathbf{\mu}$$에 대한 Sampling Step 설정
 
 $$
 \begin{align}
-p(\mathbf{\mu}\vert\mathbf{z},\pi,\sigma^{2},\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}} (y_{i}-\mu_{k})^{2} \right)\right\}^{I(z_{i}=k)}\prod_{k=1}^{K}\text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
-p(\mu_{k}\vert\mathbf{z},\pi,\sigma^{2},\mathbf{y}) &\propto \text{exp}\left\{-\frac{1}{2\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}\right\}\text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
-&\propto \text{exp}\left\{-\frac{1}{2}\left( (\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}})\mu_{k}^{2}-2\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)\mu_{k}y_{i} \right)\right\} \nonumber \\
-p(\mu_{k}\vert\mathbf{z},\pi,\sigma^{2},\mathbf{y}) &\sim \mathcal{N}\left(\frac{\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)y_{i}}{\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}}}, \left(\frac{1}{\sigma^{2}_{k}}\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}}  \right)^{-1}   \right)
+p(\mathbf{\mu}\vert\mathbf{z},\pi,\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{\text{exp}\left(-\frac{1}{2} (y_{i}-\mu_{k})^{2} \right)\right\}^{I(z_{i}=k)}\prod_{k=1}^{K}\text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
+p(\mu_{k}\vert\mathbf{z},\pi,\mathbf{y}) &\propto \text{exp}\left\{-\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}\right\}\text{exp}\left(-\frac{1}{2\cdot 10^{2}}\mu_{k}^{2}\right) \nonumber \\
+&\propto \text{exp}\left\{-\frac{1}{2}\left( (\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}})\mu_{k}^{2}-2\sum_{i=1}^{n}I(z_{i}=k)\mu_{k}y_{i} \right)\right\} \nonumber \\
+p(\mu_{k}\vert\mathbf{z},\pi,\mathbf{y}) &\sim \mathcal{N}\left(\frac{\sum_{i=1}^{n}I(z_{i}=k)y_{i}}{\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}}}, \left(\sum_{i=1}^{n}I(z_{i}=k)+\frac{1}{10^{2}}  \right)^{-1}   \right)
 \end{align}
 $$
 
-Step 5. $$\sigma^{2}$$에 대한 Sampling Step 설정
-
-$$
-\begin{align}
-p(\sigma^{2}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\propto \prod_{k=1}^{K}\left\{\text{exp}\left(-\frac{1}{2\sigma^{2}_{k}} (y_{i}-\mu_{k})^{2} \right)\right\}^{I(z_{i}=k)} \prod_{k=1}^{K}(\sigma^{2}_{k})^{-100-1}\text{exp}(-1/\sigma^{2}_{k}) \nonumber \\
-p(\sigma^{2}_{k}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\propto (\sigma^{2}_{k})^{-\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)-100-1}\text{exp}\left\{-\frac{1}{\sigma^{2}_{k}}\left(\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}\right) +1  \right\} \nonumber \\
-p(\sigma^{2}_{k}\vert\mathbf{z},\pi,\mu,\mathbf{y}) &\sim \text{IG}\left(\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)+100,\frac{1}{2}\sum_{i=1}^{n}I(z_{i}=k)(y_{i}-\mu_{k})^{2}+1 \right)
-\end{align}
-$$
-
-다음의 5가지 Step에 대한 Gibbs Sampler를 수행하여 burn-in period 이후의 값들을 활용하여 각각의 parameter 추정을 할 수 있다.
+다음의 4가지 Step에 대한 Gibbs Sampler를 수행하여 burn-in period 이후의 값들을 활용하여 각각의 parameter 추정을 할 수 있다.
 
 새로운 데이터가 추가되었을 때는 우리가 구한 parameter들을 활용해 다음의 식을 계산하고 가장 확률값이 높은 집단에 속하는 것으로 간주하면 된다.
 
