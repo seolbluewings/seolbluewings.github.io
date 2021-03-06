@@ -150,7 +150,7 @@ $$
 p(k\vert x) = \frac{p(k)p(x\vert k)}{\sum_{k=1}^{K}p(x)p(x\vert k)} = \frac{\pi_{k}\mathcal{N}(x \vert \mu_{k},\Sigma_{k})}{\sum_{k=1}^{K}\pi_{k}\mathcal{N}(x\vert \mu_{k},\Sigma_{k})}
 $$
 
-상기 예제에 대한 간략한 코드는 [R코드](https://github.com/seolbluewings/R_code/blob/master/13.Gaussian%20Mixture%20Model.ipynb) 링크를 확인할 수 있습니다.
+상기 예제에 대한 간략한 코드는 [R코드](https://github.com/seolbluewings/R_code/blob/master/13.Gaussian%20Mixture%20Model.ipynb) 또는 [Python코드](https://github.com/seolbluewings/Python/blob/master/13.Gaussian%20Mixture%20Model.ipynb) 링크를 확인할 수 있습니다.
 
 
 #### 참조 문헌
