@@ -16,7 +16,7 @@ categories: 모델평가
 
 #### UnderSampling과 OverSampling
 
-![ID](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Sampling.png?raw=true){: .align-center}{:width="70%" height="70%"}
+![ID](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Sampling.png?raw=true){: .align-center}{:width="80%" height="80%"}
 
 과소표집(UnderSampling)과 과대표집(OverSampling)은 위의 그림을 통해 이해할 수 있다.
 
@@ -30,7 +30,30 @@ OverSampling은 소수의 Class(Minority Class)의 데이터를 복제하여 Cla
 
 SMOTE 알고리즘은 데이터 수가 부족한 Minority Class의 데이터 개수를 증가시켜 각 Class의 데이터 개수를 적절하게 유지시키는 방법으로 OverSampling과 비슷한 전략을 취한다고 볼 수 있다.
 
-OverSampling은 Minority Class 데이터를 중복해서 활용하지만, SMOTE는 Minority Class 데이터를 활용하여 Minory Class로 간주할 가상의 새로운 데이터 포인트를 만들어내는 방법이다. 따라서 SMOTE를 통해 Minority Class의 데이터 개수를 늘리고 이를 통해 각 Class 별 데이터 수를 적절하게 맞춰줌으로써 데이터 불균형 이슈를 해결할 수 있다.
+SMOTE와 OverSampling의 가장 큰 차이는 다음과 같다. 기존의 OverSampling은 Minority Class 데이터를 동질하게 복제함으로써 Minority Class 데이터 개수를 증가시키지만, SMOTE는 기존의 Minority Class 데이터를 활용하여 새로운 데이터를 생성하고 신규 생성된 데이터를 Minority Class 데이터로 간주하고 이를 Train Data Set에 포함시킨다.
+
+SMOTE 알고리즘은 다음의 과정을 통해 새로운 데이터를 생성해낸다.
+
+1. Minority Class에 속하는 데이터 개수가 N이라고 한다면, N개의 데이터의 Subset인 M개 데이터를 선택한다. $$N \geq M$$
+2. 아래의 과정을 $ i = 1,2,...,M $$ 에 대해 반복한다.
+3. 하나의 데이터 포인트 $$x_{i}$$에 대한 K-NN(nearest-neighbors)을 찾는다.
+4. $$x_{i}$$의 K-NN이 되는 포인트들 중 1개 $$x_{j}$$를 임의(random)로 선택한다.
+5. 두 데이터 포인트 간의 유클리드 거리, $$\vert\vert x_{i} - x_{j} \vert\vert$$ 를 구한다.
+6. 0~1 사이의 숫자중 하나를 임의로 선택한다. 즉, $$\text{Uniform}(0,1)$$에서 임의의 값 u를 하나 추출한다.
+7. 앞서 구한 유클리드 거리에 6번째 단계에서 추출한 값을 곱하여, u\times $$\vert\vert x_{i} - x_{j} \vert\vert$$, 이를 $$x_{i}$$에 더한다.
+8. 7번째 단계에서 구한 값을 새로운 Minority Class 데이터로 간주한다.
+
+![ID](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/SMOTE.png?raw=true){: .align-center}{:width="70%" height="70%"}
+
+1~8 단계를 거치면 그림과 같이 가상의 Minority Class 데이터를 만들어낼 수 있다. 그림은 $$K=5$$ 일 때의 케이스이다.
+
+
+
+
+
+
+
+
 
 (추후 작성...)
 
