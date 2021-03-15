@@ -2,8 +2,8 @@
 layout: post
 title:  "Drawing a Player Pass Map"
 date: 2019-07-29
-author: YoungHwan Seol
-categories: Football
+author: seolbluewings
+categories: ETC
 ---
 
 

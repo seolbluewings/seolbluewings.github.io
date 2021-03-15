@@ -3,10 +3,9 @@ layout: post
 title:  "Basic of Convolutional Neural Network"
 date: 2020-10-11
 author: seolbluewings
-categories: 딥러닝
+categories: DL
 ---
 
-[작성중]
 
 햡성곱 신경망(Convolutional Neural Network, 이하 CNN)은 주로 이미지, 음성인식에 쓰이는 딥러닝 기법으로 앞서 살펴본 NN의 심화형태라고 볼 수 있다.
 

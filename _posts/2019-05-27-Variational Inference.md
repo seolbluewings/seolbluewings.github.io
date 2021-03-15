@@ -3,7 +3,7 @@ layout: post
 title:  "Variational Inference"
 date: 2019-05-26
 author: seolbluewings
-categories: Bayesian
+categories: ML
 ---
 
 Variational Inference는 속도가 느린 MCMC 방법을 대체할 수 있는 방법으로 MCMC보다는 정확성이 떨어지지만, 속도 측면에서는 MCMC보다 우수한 성질을 가지고 있다. Variational Inference는 우리가 추정하고자하는 target distribution을 approximate하는 density를 찾는 것으로 target posterior distribution과 가장 가까운 형태의 closed-form approximation을 찾는 것이라 할 수 있다.

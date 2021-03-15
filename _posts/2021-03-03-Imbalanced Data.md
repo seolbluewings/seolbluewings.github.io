@@ -3,7 +3,7 @@ layout: post
 title:  "Overcoming Imbalanced Class Data"
 date: 2021-03-03
 author: seolbluewings
-categories: 모델평가
+categories: ML
 ---
 
 분류 문제를 해결하려는 과정에서 우리는 target data인 $$\mathbf{y}$$의 Class 불균형 이슈를 빈번하게 접하게 된다. 앞선 [모델평가 방법론](https://seolbluewings.github.io/%EB%AA%A8%EB%8D%B8%ED%8F%89%EA%B0%80/2021/01/13/Model-Evaluation-Metrics.html) 포스팅에서 소개한 바와 같이 데이터 Class 불균형은 분류 목적 알고리즘 성능에 영향을 미치게 된다.

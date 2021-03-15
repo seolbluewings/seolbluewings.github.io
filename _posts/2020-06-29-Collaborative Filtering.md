@@ -3,7 +3,7 @@ layout: post
 title:  "Concept of Collaborative Filtering"
 date: 2020-06-29
 author: seolbluewings
-categories: 추천시스템
+categories: ML
 ---
 
 [작성중]

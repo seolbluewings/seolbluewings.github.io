@@ -3,7 +3,7 @@ layout: post
 title:  "EM Algorithm"
 date: 2020-06-27
 author: seolbluewings
-categories: Bayesian
+categories: ML
 ---
 
 EM알고리즘은 잠재변수(latent variable)를 갖는 확률 모델의 MLE 값을 찾는 과정에서 활용되는 기법이다. 잠재변수를 활용하는 가우시안 혼합 모델에 관한 추정에 자주 활용되는 기법이기도 하다.

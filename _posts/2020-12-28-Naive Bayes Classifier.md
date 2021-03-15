@@ -4,7 +4,7 @@ title:  "Naive Bayes Classifier"
 date: 2020-12-28
 author: seolbluewings
 comments : true
-categories: Bayesian
+categories: ML
 ---
 
 나이브 베이즈 분류기(Naive Bayes Classifier)는 베이즈 정리에 기반하여, 즉 조건부 확률을 이용해 각 Class에 속할 확률을 계산하여 분류를 진행하는 학습 모델을 의미한다.

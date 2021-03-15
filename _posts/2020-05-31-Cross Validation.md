@@ -3,7 +3,7 @@ layout: post
 title:  "Cross-Validation"
 date: 2020-05-31
 author: seolbluewings
-categories: 모델평가
+categories: ML
 ---
 
 앞선 포스팅에서 우리는 전체 MSE를 낮게하는 것 중에서 분산과 편향의 적절한 균형을 찾아야 한다고 말했다. 그렇다면 우리는 어느 정도의 복잡도를 갖춘 모델을 결정해야 한다. 그 적정 수준은 어떻게 결정지을 수 있을까?

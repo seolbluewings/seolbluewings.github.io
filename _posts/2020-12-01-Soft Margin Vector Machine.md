@@ -3,7 +3,7 @@ layout: post
 title:  "Soft Margin by using Slack Variables"
 date: 2020-12-01
 author: seolbluewings
-categories: 서포트벡터머신
+categories: ML
 ---
 
 앞선 포스팅에서 우리는 서로 다른 클래스의 데이터가 완벽하게 분리되는 OSH $$(\mathbf{w},b)$$가 존재함을 가정했다. 하지만 현실에서는 그러한 OSH가 있다고 보기 어렵다. 설령 그런 OSH가 있다한들 그 OSH는 훈련 데이터에 대한 과적합(overfitting)일 수 있다는 의심부터 하는 것이 바람직하다.
