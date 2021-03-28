@@ -10,9 +10,9 @@ categories: Statistics
 
 Variational Inference는 우리가 추정하고자하는 복잡한 형태의 Target Distribution을 근사하는 분포를 찾는 과정에서 우리가 이미 알고 있는 간단한 형태의 분포를 활용하여 Target Distribution을 근사한다. 주로 Exponential Family에 속하는 분포들을 활용하게 되며 이를 Variational Inference에서 사용할 때, Variational Family라고 부르기도 한다.
 
-![VI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/VI.png?raw=true){:width="100%" height="100%"}{: .aligncenter}
+![VI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/VI.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
-위의 그림처럼 Target Distribution과 가장 가까운 형태의 Closed-Form 분포를 찾는 것이 Variational Inference이다. 따라서 우리는 두 Distribution의 차이를 비교할 수 있어야 한다. 여기서 비교대상이 되는 2개의 probability distribution은 target posterior distribution인 $$p(\theta \mid y)$$와 이 target posterior distribution에 근사하다고 생각되는 $$q(\theta)$$이다.
+위의 그림처럼 Target Distribution과 가장 가까운 형태의 Closed-Form 분포 Q를 찾는 것이 Variational Inference이다. 따라서 우리는 두 Distribution의 차이를 비교할 수 있어야 한다. 여기서 비교대상이 되는 2개의 probability distribution은 target posterior distribution인 $$p(\theta \mid y)$$와 이 target posterior distribution에 근사하다고 생각되는 $$q(\theta)$$이다.
 
 #### Kullback-Leibler Divergence
 
