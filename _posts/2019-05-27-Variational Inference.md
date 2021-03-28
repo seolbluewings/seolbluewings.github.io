@@ -22,7 +22,7 @@ $$
 \begin{align}
 KL(q(\theta)\vert p(\theta\mid y)) &= \int q(\theta)\log{\frac{q(\theta)}{p(\theta \mid y)}}d\theta \\
 -KL(q(\theta)\vert p(\theta\mid y)) &= \int q(\theta)\log{\frac{p(\theta \mid y)}{q(\theta)}}d\theta \\
-&= \mathbb{E}_{q}\left[\log{\frac{p(\theta \mid y)}{q(\theta)}}\right] \leq \log{\left[\mathbb{E}_{q}\left[\frac{p(\theta \mid y)}{q(\theta)}\right]\right]} &\quad \text{by Jensen's Inequality} \\
+&= \mathbb{E}_{q}\left[\log{\frac{p(\theta \mid y)}{q(\theta)}}\right] \leq \log{\left[\mathbb{E}_{q}\left[\frac{p(\theta \mid y)}{q(\theta)}\right]\right]} \; \text{by Jensen's Inequality} \\
 \log{\left[\mathbb{E}_{q}\left[\frac{p(\theta \mid y)}{q(\theta)}\right]\right]} &= \log{\left[\int\frac{p(\theta \mid y)}{q(\theta)}q(\theta)d\theta \right]}=0
 \end{align}
 $$
@@ -116,9 +116,6 @@ $$
 각 스텝이 parameter의 conditional 분포의 비례하는 형태를 가지고 이것이 또한 full joint distribution에 비례하는 것을 통해 우리는 Variational Inference가 Gibbs Sampler와 꽤 유사한 점이 있다는 것을 알 수 있다.
 
 실전에서 Variational Inference를 활용할 때는 어떠한 Variational Family 분포를 선택하는지가 중요하다. 변수의 분포를 적절하지 못하게 가정한다면, Variational Inference의 효율은 낮다. 이후의 포스팅에서 Variational Inference를 활용하는 것을 업로드하고자 한다.
-
-#### 출처
-
 
 #### 참조 문헌
 1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
