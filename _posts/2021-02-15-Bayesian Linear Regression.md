@@ -10,7 +10,7 @@ categories: Statistics
 
 먼저 논의했던 Gibbs Sampler, Variational Inference를 활용해 통계학에서 가장 자주 접하게 되는 회귀 분석 문제를 해결해보고자 한다. 두 방법을 사용한 회귀분석 풀이는 널리 알려져있는 [LSE 추정 방식](https://seolbluewings.github.io/statistics/2019/04/13/Linear-Regression.html)과는 차이가 있다. Gibbs Sampler, Variational Inference를 사용하는 Bayesian Linear Regression(베이지안 회귀 분석)은 모델에서 활용되는 parameter 값에 대한 Prior Distribution(사전 분포)를 가정하고 데이터 포인트에 대한 Likelihood를 활용해 Posterior Distribution(사후 분포)을 구해서 Parameter에 대한 추정을 Posterior Distribution을 사용해 진행한다.
 
-$$ p(\theta\very y) \propto p(y\vert\theta)p(\theta)$$
+$$ p(\theta\vert y) \propto p(y\vert\theta)p(\theta)$$
 
 널리 알려진 LSE 방식과 Bayesian Linear Regression 방식은 parameter를 바라보는 관점에서의 차이가 있다. LSE는 parameter인 회귀계수 $$\beta$$를 고정된 상수값으로 간주한다. parameter의 점추정값에 대한 오차는 추정값에 대한 신뢰구간(confidence interval)을 통해 반영한다.
 
@@ -33,7 +33,7 @@ $$\mathbf{y}$$,$$y_{\text{new}}$$가 서로 독립적이라고 한다면 Posteri
 $$
 \begin{align}
 p(\beta,\sigma\vert \mathbf{y},y_{\text{new}}) &\propto p(y_{\text{new}}\vert\beta,\sigma)p(\mathbf{y}\vert\beta,\sigma)p(\beta)p(\sigma) \\
-&propto p(y_{\text{new}}\vert\beta,\sigma)p(\beta,\sigma\vert\mathbf{y})
+&\propto p(y_{\text{new}}\vert\beta,\sigma)p(\beta,\sigma\vert\mathbf{y})
 \end{align}
 $$
 
