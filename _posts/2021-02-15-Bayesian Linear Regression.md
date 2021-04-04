@@ -49,6 +49,61 @@ $$
 
 #### Bayesian Linear Regression via Gibbs Sampler
 
+데이터 $$\mathbf{y}$$가 $$\mathbf{y}\vert \beta,\lambda \sim \mathcal{N}(\mathbf{X}\beta,\lambda^{-1}I)$$ 를 따른다고 하자. 또한 우리의 관심 parameter인 $$\beta,\lambda$$에 대해 Conjugate Prior와 Hierarchical Prior를 다음과 같이 설정하기로 하자.
+
+$$
+\begin{align}
+\beta &\sim \mathcal{N}_{p}(0, (\alpha\lambda)^{-1}I) \nonumber \\
+\lambda &\sim \Gamma(a_{0},b_{0}) \nonumber \\
+\alpha &\sim \Gamma(c_{0},d_{0}) \nonumber
+\end{align}
+$$
+
+먼저 parameter에 대한 Target Posterior Distribution을 구하는 것이 Gibbs Sampler 문제를 풀기위해 가장 선행되어야할 행동이다.
+
+$$
+\begin{align}
+p(\alpha,\beta,\lambda\vert \mathbf{y}) &\propto p(\alpha,\beta,\lambda,\mathbf{y}) = p(\mathbf{y}\vert\beta,\lambda)p(\beta\vert\alpha,\lambda)p(\lambda)p(\alpha) \nonumber \\
+&\propto (2\pi)^{-n/2}\vert\lambda^{-1}I\vert^{-1/2}\text{exp}\left(-\frac{1}{2}(\mahtbf{y}-\mathbf{X}\beta)^{T}(\lambda^{-1}I)^{-1}(\mathbf{y}-\mathbf{X}\beta)  \right) \nonumber \\
+&\times \vert (\alpha\lambda)^{-1}I\vert^{-1/2}\text{exp}\left(-\frac{1}{2}\beta^{T}((\alpha\lambda)^{-1}I)^{-1}\beta\right) \nonumber \\
+&\times \lambda^{a_{0}-1}\text{exp}(-b_{0}\lambda)\alpha^{c_{0}-1}\text{exp}(-d_{0}\alpha) \nonumber
+\end{align}
+$$
+
+이 수식을 정리하면 Target Posterior Distribution은 다음의 수식에 비례한다고 표현할 수 있다.
+
+$$
+p(\alpha,\beta,\lambda\vert\mathbf{y}) \propto \lambda^{n/2}\text{exp}\left(-\frac{\lambda}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)\right)(\alpha\lambda)^{p/2}\text{exp}\left(-\frac{\alpha\lambda}{2}\beta^{T}\beta\right)\lambda^{a_{0}-1}\text{exp}(-b_{0}\lambda)\alpha^{c_{0}-1}\text{exp}(-d_{0}\alpha)
+$$
+
+Gibbs Sampler를 활용하기 위해서는 각 Parameter에 대한 Full Conditional Distribution을 구해야한다. 각 Step별로 수식에서 해당 Parameter가 있는 부분들을 다 가져와서 수식을 정리하면, 각 Step별로 어떤 분포를 통해 Parameter에 대한 Sampling을 진행할 수 있는지 알게 된다.
+
+1. $$p(\beta\vert\lambda,\alpha,\mathbf{y})$$ 구하기
+
+$$
+\begin{align}
+p(\beta\vert\lambda,\alpha,\mathbf{y}) &\propto \text{exp}\left(-\frac{\lambda}{2}(\beta^{T}\mathbf{X}^{T}\mathbf{X}\beta-2\beta^{T}\mathbf{X}^{T}\mathbf{y})-\frac{\alpha\lambda}{2}\beta^{T}\beta\right) \nonumber \\
+&\propto \text{exp}\left(-\frac{\lambda}{2}\left[\beta-(\mathbf{X}^{T}\mathbf{X}+\alpha I)^{-1}\mathbf{X}^{T}\mathbf{y}\right]^{T}(\mathbf{X}^{T}\mathbf{X}+\alpha I)\left[\beta-(\mathbf{X}^{T}\mathbf{X}+\alpha I)^{-1}\mathbf{X}^{T}\mathbf{y}\right]\right) \nonumber \\
+\end{align}
+$$
+
+$$\therefore \beta\vert\lambda,\alpha,\mathbf{y} \sim \mathcal{N}((\mathbf{X}^{T}\mathbbf{X}+\alpha I)^{-1}\mathbf{X}^{T}y, [\lambda(\mathbf{X}^{T}\mathbf{X}+\alpha I)]^{-1} )$$
+
+
+2. $$p(\lambda\vert\alpha,\beta,\mathbf{y})$$ 구하기
+
+$$
+\begin{align}
+p(\lambda\vert \alpha,\beta,\mathbf{y}) &\propto \lambda^{\frac{n+p}{2}+a_{0}-1}\text{exp}\left(-\lambda\left[\frac{(\mathbf{y}-\mathbf{X}^{T}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)}{2} +\frac{\alpha}{2}\beta^{T}\beta+b_{0}\right]\right)
+\end{align}
+$$
+
+
+3. $$p(\alpha\vert\beta,\lambda,\mathbf{y})$$ 구하기
+
+
+
+
 #### Bayesian Linear Regression via Variational Inference
 
 
