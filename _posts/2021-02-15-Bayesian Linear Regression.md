@@ -64,9 +64,9 @@ $$
 $$
 \begin{align}
 p(\alpha,\beta,\lambda\vert \mathbf{y}) &\propto p(\alpha,\beta,\lambda,\mathbf{y}) = p(\mathbf{y}\vert\beta,\lambda)p(\beta\vert\alpha,\lambda)p(\lambda)p(\alpha) \nonumber \\
-&\propto (2\pi)^{-n/2}\vert\lambda^{-1}I\vert^{-1/2}\text{exp}\left(-\frac{1}{2}(\mahtbf{y}-\mathbf{X}\beta)^{T}(\lambda^{-1}I)^{-1}(\mathbf{y}-\mathbf{X}\beta)  \right) \nonumber \\
-&\times \vert (\alpha\lambda)^{-1}I\vert^{-1/2}\text{exp}\left(-\frac{1}{2}\beta^{T}((\alpha\lambda)^{-1}I)^{-1}\beta\right) \nonumber \\
-&\times \lambda^{a_{0}-1}\text{exp}(-b_{0}\lambda)\alpha^{c_{0}-1}\text{exp}(-d_{0}\alpha) \nonumber
+&\propto (2\pi)^{-n/2}\vert\lambda^{-1}I\vert^{-1/2}\text{exp}\left(-\frac{1}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\lambda^{-1}I)^{-1}(\mathbf{y}-\mathbf{X}\beta)  \right) \nonumber \\
+&\;\times \vert (\alpha\lambda)^{-1}I\vert^{-1/2}\text{exp}\left(-\frac{1}{2}\beta^{T}((\alpha\lambda)^{-1}I)^{-1}\beta\right) \nonumber \\
+&\;\times \lambda^{a_{0}-1}\text{exp}(-b_{0}\lambda)\alpha^{c_{0}-1}\text{exp}(-d_{0}\alpha) \nonumber
 \end{align}
 $$
 
@@ -78,7 +78,7 @@ $$
 
 Gibbs Sampler를 활용하기 위해서는 각 Parameter에 대한 Full Conditional Distribution을 구해야한다. 각 Step별로 수식에서 해당 Parameter가 있는 부분들을 다 가져와서 수식을 정리하면, 각 Step별로 어떤 분포를 통해 Parameter에 대한 Sampling을 진행할 수 있는지 알게 된다.
 
-1. $$p(\beta\vert\lambda,\alpha,\mathbf{y})$$ 구하기
+- $$p(\beta\vert\lambda,\alpha,\mathbf{y})$$ 구하기
 
 $$
 \begin{align}
@@ -87,24 +87,60 @@ p(\beta\vert\lambda,\alpha,\mathbf{y}) &\propto \text{exp}\left(-\frac{\lambda}{
 \end{align}
 $$
 
-$$\therefore \beta\vert\lambda,\alpha,\mathbf{y} \sim \mathcal{N}((\mathbf{X}^{T}\mathbbf{X}+\alpha I)^{-1}\mathbf{X}^{T}y, [\lambda(\mathbf{X}^{T}\mathbf{X}+\alpha I)]^{-1} )$$
+$$\therefore \quad \beta\vert\lambda,\alpha,\mathbf{y} \sim \mathcal{N}((\mathbf{X}^{T}\mathbf{X}+\alpha I)^{-1}\mathbf{X}^{T}y, [\lambda(\mathbf{X}^{T}\mathbf{X}+\alpha I)]^{-1} )$$
 
 
-2. $$p(\lambda\vert\alpha,\beta,\mathbf{y})$$ 구하기
+- $$p(\lambda\vert\alpha,\beta,\mathbf{y})$$ 구하기
 
 $$
-\begin{align}
-p(\lambda\vert \alpha,\beta,\mathbf{y}) &\propto \lambda^{\frac{n+p}{2}+a_{0}-1}\text{exp}\left(-\lambda\left[\frac{(\mathbf{y}-\mathbf{X}^{T}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)}{2} +\frac{\alpha}{2}\beta^{T}\beta+b_{0}\right]\right)
-\end{align}
+p(\lambda\vert \alpha,\beta,\mathbf{y}) \propto \lambda^{\frac{n+p}{2}+a_{0}-1}\text{exp}\left(-\lambda\left[\frac{(\mathbf{y}-\mathbf{X}^{T}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)}{2} +\frac{\alpha}{2}\beta^{T}\beta+b_{0}\right]\right)
 $$
 
+$$\therefore \quad \lambda\vert\alpha,\beta,\mathbf{y} \sim  \Gamma\left(\frac{n+p}{2}+a_{0},\frac{(\mathbf{y}-\mathbf{X}^{T}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)}{2} +\frac{\alpha}{2}\beta^{T}\beta+b_{0}\right)  $$
 
-3. $$p(\alpha\vert\beta,\lambda,\mathbf{y})$$ 구하기
+- $$p(\alpha\vert\beta,\lambda,\mathbf{y})$$ 구하기
 
+$$
+p(\alpha\vert \beta,\lambda,\mathbf{y}) \propto \alpha^{\frac{p}{2}+c_{0}-1}\text{exp}\left(-\alpha\left[\frac{\lambda}{2}\beta^{T}\beta+d_{0} \right]\right)
+$$
 
+$$
+\therefore \quad \alpha\vert\beta,\lambda,\mathbf{y} \sim \Gamma\left(\frac{p}{2}+c_{0},\frac{\lambda}{2}\beta^{T}\beta+d_{0}\right)
+$$
 
+각각의 Parameter에 대한 Full Conditional Distribution을 구했으니 Iteration 횟수만큼 각 Step별로 Parameter를 Sampling을 진행하면 Parameter에 대한 분포를 구할 수 있다.
 
 #### Bayesian Linear Regression via Variational Inference
 
+Ture Target Posterior Distribution은 복잡한 형태이기 때문에 우리는 Target Posterior Distriubtion에 근사한 간단한 형태의 분포 $$q(\alpha,\beta,\lambda)$$ 를 찾을 것이다. Variational Inference에서는 각 Parameter간의 독립성을 가정하기 때문에 우리는 근사분포 $$q$$에 대해 다음과 같이 표현할 수 있다.
+
+$$ q(\alpha,\beta,\lambda) = q_{1}(\alpha)q_{2}(\beta)q_{3}(\lambda)$$
+
+Variational Inference에서는 각 Parameter에 대해 적절한 분포 가정을 해야하기 때문에 각 Parameter가 어느 range의 값을 갖는지를 살펴볼 필요가 있다. 먼저 $$\beta$$는 $$(-\infty,\infty)$$ 이기 때문에 Normal Distribution을 가정할 수 있고 $$\alpha,\lambda$$는 $$(0,\infty)$$ 이기 때문에 Gamma Distribution을 가정할 수 있다.
+
+따라서 다음과 같이 Variational Distribution을 선택하기로 한다.
+
+$$
+\begin{align}
+\beta &\sim \mathcal{N}(m,s) \nonumber \\
+\lambda &\sim \Gamma(a,b) \nonumber \\
+\alpha &\sim \Gamma(c,d) \nonumber
+\end{align}
+$$
+
+우리의 목표는 Target Posterior Distribution에 가장 가까운 최적의 분포 $$q^{*}(\alpha,\beta,\lambda)$$를 찾는 것인데 이는 $$m,s,a,b,c,d$$의 optimal 값을 찾는 것과 동일하다. ELBO가 maximize 되어 더 이상 Variational Parameter($$m,s,a,b,c,d$$)의 값이 변하지 않을 때까지 업데이트 하는 것이 Variational Inference를 통해 최적의 Parameter를 찾는 것이다.
+
+- Update $$q^{*}(\beta)$$ via $$\mathbb{E}(\alpha),\mathbb{E}(\lambda)$$
+
+$$
+\begin{align}
+q^{*}(\beta) &\propto \text{exp}\left(\mathbb{E}_{-\beta}\log{p(\beta,\alpha,\lambda,\mathbf{y})}\right) \nonumber \\
+&\propto \text{exp}\left(\mathbb{E}_{-\beta}\log{p(\mathbf{y}\vert\beta,\lambda)}+\log{p(\beta\vert\lambda,\alpha)}+\log{p(\lambda)}+\log{p(\alpha)}\right) \nonumber
+\end{align}
+$$
+
+- Update $$q^{*}(\lambda)$$ via $$\mathbb{E}(\alpha),\mathbb{E}(\beta)$$
+
+- Update $$q^{*}(\alpha)$$ via $$\mathbb{E}(\beta),\mathbb{E}(\lambda)$$
 
 
