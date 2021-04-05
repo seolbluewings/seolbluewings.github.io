@@ -135,11 +135,25 @@ $$
 $$
 \begin{align}
 q^{*}(\beta) &\propto \text{exp}\left(\mathbb{E}_{-\beta}\log{p(\beta,\alpha,\lambda,\mathbf{y})}\right) \nonumber \\
-&\propto \text{exp}\left(\mathbb{E}_{-\beta}\log{p(\mathbf{y}\vert\beta,\lambda)}+\log{p(\beta\vert\lambda,\alpha)}+\log{p(\lambda)}+\log{p(\alpha)}\right) \nonumber
+&\propto \text{exp}\left(\mathbb{E}_{-\beta}\log{p(\mathbf{y}\vert\beta,\lambda)}+\log{p(\beta\vert\lambda,\alpha)}+\log{p(\lambda)}+\log{p(\alpha)}\right) \nonumber \\
+&\propto\text{exp}\left(\mathbb{E}_{-\beta}\left[-\frac{\labmda}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)-\frac{\alpha\lambda}{2}\beta^{T}\beta\right]\right) \nonumber \\
+&\propto \text{exp}\left(-\frac{\mathbb{E}_{-\beta}(\lambda)}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)-\frac{\mathbb{E}_{-\beta}(\lambda)\mathbb{E}_{-\beta}(\alpha)}{2}\beta^{T}\beta \right) \nonumber \\
+&\propto\text{exp}\left(-\frac{\mathbb{E}_{-\beta}(\lambda)}{2}\left[\beta^{T}(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I)\beta-2\beta^{T}\mathbf{X}^{T}\mathbf{y}\right]\right) \nonumber \\
+&\propto\text{exp}\left(-\frac{\mathbb{E}_{-\beta}(\lambda)}{2}\left(\beta^{T}-(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I)^{-1}\mathbf{X}^{T}\mathbf{y} \right)^{T}\left(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I  \right)\left(\beta^{T}-(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I)^{-1}\mathbf{X}^{T}\mathbf{y} \right)   \right)
 \end{align}
 $$
 
+$$\therefore \quad q^{*}(\beta) \sim \mathcal{N}_{p}\left((\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I)^{-1}\mathbf{X}^{T}\mathbf{y}, \mathbb{E}_{-\beta}(\lambda)^{-1}(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I)^{-1} \right)$$
+
 - Update $$q^{*}(\lambda)$$ via $$\mathbb{E}(\alpha),\mathbb{E}(\beta)$$
+
+$$
+\begin{align}
+q^{*}(\lambda) &\propto \text{exp}\left(\mathbb{E}_{-\lambda}\log{p(\alpha,\beta,\lambda,\mathbf{y})}\right) \nonumber \\
+&\propto\text{exp}\left(\mathbb{E}_{-\lambda}\left[\log{p(\mathbf{y}\vert\beta,\lambda)}+\log{p(\beta\vert\lambda,\alpha)}+\log{p(\lambda)}\right]\right) \nonumber \\
+&\propto\text{exp}\left(\mathbb{E}_{-\lambda}\left[\frac{n}{2}\log{\lambda}-\frac{\lambda}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)+\frac{p}{2}\log{\lambda}-\frac{\alpha\lambda}{2}\beta^{T}\beta+(a_{0}-1)\log{\lambda}-b_{0}\lambda\right] \right) \nonumber \\
+\end{align}
+$$
 
 - Update $$q^{*}(\alpha)$$ via $$\mathbb{E}(\beta),\mathbb{E}(\lambda)$$
 
