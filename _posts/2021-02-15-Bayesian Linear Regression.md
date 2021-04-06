@@ -160,7 +160,7 @@ $$\therefore \quad q^{*}(\lambda) \sim \Gamma\left(\frac{n+p}{2}+a_{0}, \frac{\m
 
 $$
 \begin{align}
-q^{*}(\alpha) &\propto \text{exp}\left(\mathbb{E}_{-\alpha}\left[\log{p(\alpha,\beta,\lambda,\mathbf{y})}\right]\right) \noonumber \\
+q^{*}(\alpha) &\propto \text{exp}\left(\mathbb{E}_{-\alpha}\left[\log{p(\alpha,\beta,\lambda,\mathbf{y})}\right]\right) \nonumber \\
 &\propto\text{exp}\left(\mathbb{E}_{-\alpha}\left[\log{p(\beta\vert\lambda,\alpha)}+\log{p(\alpha)}\right]\right) \nonumber \\
 &\propto\text{exp}\left(\mathbb{E}_{-\alpha}\left[\frac{p}{2}\log{\alpha}-\frac{\alpha\lambda}{2}\beta^{T}\beta+(c_{0}-1)\log{\alpha}-d_{0}\alpha\right]  \right) \nonumber \\
 &\propto \alpha^{\frac{p}{2}+c_{0}-1}\text{exp}\left(-\alpha\left[\frac{1}{2}\mathbb{E}_{-\alpha}(\lambda)\mathbb{E}_{-\alpha}(\beta^{T}\beta)+d_{0}\right]  \right) \nonumber
@@ -174,10 +174,14 @@ $$\therefore \quad q^{*}(\alpha) \sim \Gamma\left(\frac{p}{2}+c_{0}, \frac{1}{2}
 단, 이 과정에서 우리는 $$\mathbb{E}_{-\beta}(\lambda)$$와 같은 값들을 계산할 수 있어야 한다. 지금의 문제에서 Expectation 부분에 대한 연산은 아래와 같이 수행한다.
 
 $$
-\mathbb{E}_{-\beta}(\lambda) = \int\int \lambda q(\lambda)q(\alpha)d\lambda d\alpha = \int\lambda q(\lambda)\int q(\alpha)d\alpha d\lambda = \mathbb{E}_{q}(\lambda) = \frac{a^{*}}{b^{*}}
+\mathbb{E}_{-\beta}(\lambda) = \int\int \lambda q(\lambda)q(\alpha)d\lambda d\alpha = \int\lambda q(\lambda)\int q(\alpha)d\alpha d\lambda = \mathbb{E}(\lambda) = \frac{a^{*}}{b^{*}}
 $$
 
-같은 방법으로 $$\mathbb{E}_{-\beta} = \frac{c^{*}}{d^{*}}$$ 이다.
+같은 방법으로 $$\mathbb{E}_{-\beta}(\alpha) $$ 연산이 가능하며 연산 결과, 각 Parameter에 대한 기대값을 구하는 것과 다르지 않다.
+
+$$
+\mathbb{E}_{-\beta}(\alpha) = \int\int \lambda q(\lambda)q(\alpha)d\lambda d\alpha = \int\alpha q(\alpha)\int q(\lambda)d\lambda d\alpha = \mathbb{E}(\alpha) = \frac{c^{*}}{d^{*}}
+$$
 
 $$\beta \sim \mathcal{N}(m^{*},s^{*})$$ 를 따른다면, $$\mathbf{X}\beta$$는 다음$$\mathbf{X}]\beta \sim \mathcal{N}(\mathbf{X}m^{*},\mathbf{X}s^{*}\mathbf{X}^{T})$$을 따를 것이다.
 
@@ -185,8 +189,8 @@ $$\beta \sim \mathcal{N}(m^{*},s^{*})$$ 를 따른다면, $$\mathbf{X}\beta$$는
 
 $$
 \begin{align}
-\mathbb{E}(\beta^{T}\beta) = (m^{*})^{T}m^{*}+\text{tr}(s^{*}) \nonumber \\
-\mathbb{E}(\beta^{T}\mathbf{X}^{T}\mathbf{X}\beta) = (\mathbf{X}m^{*})^{T}(\mathbf{X}m^{*})+\text{tr}(\mathbf{X}s^{*}\mathbf{X}^{T})
+\mathbb{E}(\beta^{T}\beta) &= (m^{*})^{T}m^{*}+\text{tr}(s^{*}) \nonumber \\
+\mathbb{E}(\beta^{T}\mathbf{X}^{T}\mathbf{X}\beta) &= (\mathbf{X}m^{*})^{T}(\mathbf{X}m^{*})+\text{tr}(\mathbf{X}s^{*}\mathbf{X}^{T})
 \end{align}
 $$
 
