@@ -6,8 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
-
 먼저 논의했던 Gibbs Sampler, Variational Inference를 활용해 통계학에서 가장 자주 접하게 되는 회귀 분석 문제를 해결해보고자 한다. 두 방법을 사용한 회귀분석 풀이는 널리 알려져있는 [LSE 추정 방식](https://seolbluewings.github.io/statistics/2019/04/13/Linear-Regression.html)과는 차이가 있다. Gibbs Sampler, Variational Inference를 사용하는 Bayesian Linear Regression(베이지안 회귀 분석)은 모델에서 활용되는 parameter 값에 대한 Prior Distribution(사전 분포)를 가정하고 데이터 포인트에 대한 Likelihood를 활용해 Posterior Distribution(사후 분포)을 구해서 Parameter에 대한 추정을 Posterior Distribution을 사용해 진행한다.
 
 $$ p(\theta\vert y) \propto p(y\vert\theta)p(\theta)$$
