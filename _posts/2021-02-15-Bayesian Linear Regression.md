@@ -136,7 +136,7 @@ $$
 \begin{align}
 q^{*}(\beta) &\propto \text{exp}\left(\mathbb{E}_{-\beta}\log{p(\beta,\alpha,\lambda,\mathbf{y})}\right) \nonumber \\
 &\propto \text{exp}\left(\mathbb{E}_{-\beta}\log{p(\mathbf{y}\vert\beta,\lambda)}+\log{p(\beta\vert\lambda,\alpha)}+\log{p(\lambda)}+\log{p(\alpha)}\right) \nonumber \\
-&\propto\text{exp}\left(\mathbb{E}_{-\beta}\left[-\frac{\labmda}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)-\frac{\alpha\lambda}{2}\beta^{T}\beta\right]\right) \nonumber \\
+&\propto\text{exp}\left(\mathbb{E}_{-\beta}\left[-\frac{\lambda}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)-\frac{\alpha\lambda}{2}\beta^{T}\beta\right]\right) \nonumber \\
 &\propto \text{exp}\left(-\frac{\mathbb{E}_{-\beta}(\lambda)}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)-\frac{\mathbb{E}_{-\beta}(\lambda)\mathbb{E}_{-\beta}(\alpha)}{2}\beta^{T}\beta \right) \nonumber \\
 &\propto\text{exp}\left(-\frac{\mathbb{E}_{-\beta}(\lambda)}{2}\left[\beta^{T}(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I)\beta-2\beta^{T}\mathbf{X}^{T}\mathbf{y}\right]\right) \nonumber \\
 &\propto\text{exp}\left(-\frac{\mathbb{E}_{-\beta}(\lambda)}{2}\left(\beta^{T}-(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I)^{-1}\mathbf{X}^{T}\mathbf{y} \right)^{T}\left(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I  \right)\left(\beta^{T}-(\mathbf{X}^{T}\mathbf{X}+\mathbb{E}_{-\beta}(\alpha)I)^{-1}\mathbf{X}^{T}\mathbf{y} \right)   \right)
@@ -152,9 +152,47 @@ $$
 q^{*}(\lambda) &\propto \text{exp}\left(\mathbb{E}_{-\lambda}\log{p(\alpha,\beta,\lambda,\mathbf{y})}\right) \nonumber \\
 &\propto\text{exp}\left(\mathbb{E}_{-\lambda}\left[\log{p(\mathbf{y}\vert\beta,\lambda)}+\log{p(\beta\vert\lambda,\alpha)}+\log{p(\lambda)}\right]\right) \nonumber \\
 &\propto\text{exp}\left(\mathbb{E}_{-\lambda}\left[\frac{n}{2}\log{\lambda}-\frac{\lambda}{2}(\mathbf{y}-\mathbf{X}\beta)^{T}(\mathbf{y}-\mathbf{X}\beta)+\frac{p}{2}\log{\lambda}-\frac{\alpha\lambda}{2}\beta^{T}\beta+(a_{0}-1)\log{\lambda}-b_{0}\lambda\right] \right) \nonumber \\
+&\propto\text{exp}\left(\mathbb{E}_{-\lambda}\left[\left(\frac{n+p}{2}+a_{0}-1\right)\log{\lambda}-\frac{\lambda}{2}\left(\mathbf{y}^{T}\mathbf{y}-2\beta^{T}\mathbf{X}^{T}\mathbf{y}+\beta^{T}\mathbf{X}^{T}\mathbf{X}\beta+\alpha\beta^{T}\beta+2b_{0}\right)\right]\right)
 \end{align}
 $$
 
+$$\therefore \quad q^{*}(\lambda) \sim \Gamma\left(\frac{n+p}{2}+a_{0}, \frac{\mathbf{y}^{T}\mathbf{y}}{2}-\mathbf{y}^{T}\mathbf{X}\mathbb{E}_{-\lambda}(\beta)+\frac{\mathbb{E}_{-\lambda}(\beta^{T}\mathbf{X}^{T}\mathbf{X}\beta)}{2}+\frac{\mathbb{E}_{-\lambda}(\alpha)\mathbb{E}_{-\lambda}(\beta^{T}\beta)}{2}+b_{0}\right)$$
+
 - Update $$q^{*}(\alpha)$$ via $$\mathbb{E}(\beta),\mathbb{E}(\lambda)$$
 
+$$
+\begin{align}
+q^{*}(\alpha) &\propto \text{exp}\left(\mathbb{E}_{-\alpha}\left[\log{p(\alpha,\beta,\lambda,\mathbf{y})}\right]\right) \noonumber \\
+&\propto\text{exp}\left(\mathbb{E}_{-\alpha}\left[\log{p(\beta\vert\lambda,\alpha)}+\log{p(\alpha)}\right]\right) \nonumber \\
+&\propto\text{exp}\left(\mathbb{E}_{-\alpha}\left[\frac{p}{2}\log{\alpha}-\frac{\alpha\lambda}{2}\beta^{T}\beta+(c_{0}-1)\log{\alpha}-d_{0}\alpha\right]  \right) \nonumber \\
+&\propto \alpha^{\frac{p}{2}+c_{0}-1}\text{exp}\left(-\alpha\left[\frac{1}{2}\mathbb{E}_{-\alpha}(\lambda)\mathbb{E}_{-\alpha}(\beta^{T}\beta)+d_{0}\right]  \right) \nonumber
+\end{align}
+$$
 
+$$\therefore \quad q^{*}(\alpha) \sim \Gamma\left(\frac{p}{2}+c_{0}, \frac{1}{2}\mathbb{E}_{-\alpha}(\lambda)\mathbb{E}_{-\alpha}(\beta^{T}\beta)+d_{0}  \right)  $$
+
+각 Parameter 별 Variational Distribution의 Variational Parameter 값 (m,s,a,b,c,d)을 계속 Update 하되 값이 더 이상 변하지 않는 지점에서 연산을 멈추게 된다.
+
+단, 이 과정에서 우리는 $$\mathbb{E}_{-\beta}(\lambda)$$와 같은 값들을 계산할 수 있어야 한다. 지금의 문제에서 Expectation 부분에 대한 연산은 아래와 같이 수행한다.
+
+$$
+\mathbb{E}_{-\beta}(\lambda) = \int\int \lambda q(\lambda)q(\alpha)d\lambda d\alpha = \int\lambda q(\lambda)\int q(\alpha)d\alpha d\lambda = \mathbb{E}_{q}(\lambda) = \frac{a^{*}}{b^{*}}
+$$
+
+같은 방법으로 $$\mathbb{E}_{-\beta} = \frac{c^{*}}{d^{*}}$$ 이다.
+
+$$\beta \sim \mathcal{N}(m^{*},s^{*})$$ 를 따른다면, $$\mathbf{X}\beta$$는 다음$$\mathbf{X}]\beta \sim \mathcal{N}(\mathbf{X}m^{*},\mathbf{X}s^{*}\mathbf{X}^{T})$$을 따를 것이다.
+
+따라서 $$\mathbb{E}(\beta^{T}\beta)$$와 $$\mathbb{E}(\beta^{T}\mathbf{X}^{T}\mathbf{X}\beta)$$ 는 다음과 같이 계산될 수가 있다.
+
+$$
+\begin{align}
+\mathbb{E}(\beta^{T}\beta) = (m^{*})^{T}m^{*}+\text{tr}(s^{*}) \nonumber \\
+\mathbb{E}(\beta^{T}\mathbf{X}^{T}\mathbf{X}\beta) = (\mathbf{X}m^{*})^{T}(\mathbf{X}m^{*})+\text{tr}(\mathbf{X}s^{*}\mathbf{X}^{T})
+\end{align}
+$$
+
+
+#### 참조 문헌
+1. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) <br>
+2. [단단한 머신러닝](http://www.yes24.com/Product/Goods/88440860)
