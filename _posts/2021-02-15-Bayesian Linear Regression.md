@@ -183,7 +183,7 @@ $$
 \mathbb{E}_{-\beta}(\alpha) = \int\int \lambda q(\lambda)q(\alpha)d\lambda d\alpha = \int\alpha q(\alpha)\int q(\lambda)d\lambda d\alpha = \mathbb{E}(\alpha) = \frac{c^{*}}{d^{*}}
 $$
 
-$$\beta \sim \mathcal{N}(m^{*},s^{*})$$ 를 따른다면, $$\mathbf{X}\beta$$는 다음$$\mathbf{X}]\beta \sim \mathcal{N}(\mathbf{X}m^{*},\mathbf{X}s^{*}\mathbf{X}^{T})$$을 따를 것이다.
+$$\beta \sim \mathcal{N}(m^{*},s^{*})$$ 를 따른다면, $$\mathbf{X}\beta$$는$$\mathbf{X}\beta \sim \mathcal{N}(\mathbf{X}m^{*},\mathbf{X}s^{*}\mathbf{X}^{T})$$을 따를 것이다.
 
 따라서 $$\mathbb{E}(\beta^{T}\beta)$$와 $$\mathbb{E}(\beta^{T}\mathbf{X}^{T}\mathbf{X}\beta)$$ 는 다음과 같이 계산될 수가 있다.
 
