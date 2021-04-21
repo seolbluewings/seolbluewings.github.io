@@ -20,12 +20,24 @@ Content Based Filtering 방법은 컨텐츠의 속성을 이용, 사용자가 �
 
 내가 [There Will Be Blood] 라는 영화에 평점 5점을 줬다고 가정하자. 이 작품의 속성을 간단하게 정의해보면, 1. 아카데미 작품상 후보 2. PTA 감독의 작품 정도로 표현할 수 있다. 따라서 Content Based Filtering 활용 시, 추천 알고리즘은 나에게 또 다른 아카데미 작품상 후보인 [포드v페라리] 영화를 추천하거나 PTA 감독의 또 다른 작품인 [마스터], [매그놀리아] 등을 추천해줄 것이다.
 
-
 ![CBF](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CBF.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
-위 이미지는 Content Based Filtering의 원리를 명쾌하게 보여줌과 동시에 Collaborative Filtering의 차이까지도 보여주는 가장 대표적인 이미지다. Content Based Filtering에서는 다른 사용자의 정보가 필요하지 않다.
+위 이미지는 Content Based Filtering의 원리를 명쾌하게 보여줌과 동시에 Collaborative Filtering의 차이까지도 보여주는 가장 대표적인 이미지다. 사용자의 과거 컨텐츠 소비 특성을 파악하여 과거에 소비한 컨텐츠와 비슷한 컨텐츠를 추천해준다. 따라서 Content Based Filtering에서는 다른 사용자의 정보가 필요하지 않다.
 
-다만 Content Based Filtering은 컨텐츠를 설명할 수 있는 데이터를 확보할 수 있어야 한다. 영화라는 컨텐츠를 감독, 수상, 출연배우 등으로 속성 정의를 하듯이 다른 컨텐츠를 Content Based Filtering으로 추천하고자 한다면 컨텐츠에 대한 속성 정의를 할 수 있어야 한다. 
+다만 Content Based Filtering은 컨텐츠를 설명할 수 있는 데이터를 확보할 수 있어야 한다. 영화라는 컨텐츠를 감독, 수상, 출연배우 등으로 속성 정의를 하듯이 다른 컨텐츠를 Content Based Filtering으로 추천하고자 한다면 컨텐츠에 대한 속성 정의를 할 수 있어야 한다.
+
+따라서 Content Based Filtering은 다음의 과정을 통해 추천이 발생한다.
+
+1. 컨텐츠에 대한 속성(프로필) 생성
+2. 사용자에 대한 속성(프로필) 역시 정의하고 컨텐츠의 속성에 대한 선호도를 계산
+3. 사용자에게 추천할만한 컨텐츠를 최종적으로 예측
+
+컨텐츠에 대한 속성을 생성할 때는 컨텐츠의 특징을 벡터화시켜서 저장하며 [TF-IDF](https://seolbluewings.github.io/statistics/2021/03/10/TFIDF.html) 같은 개념 등을 활용하여 컨텐츠 특징의 상대적 중요도를 반영하기도 한다. 앞서 소개했던 [There Will Be Blood] 작품에 대해서 [#완성도, #명작, #PTA, #아카데미] 와 같은 방식으로 속성을 정의내릴 수 있다는 것이다. 이를 벡터화 하는 과정에서 TF-IDF 개념을 이용하고, 영화감독을 지칭하는 #PTA 특징은 수없이 많은 영화 중에 TF-IDF 적용 시, 두드러지는 값을 만들어낼 것이다.
+
+사용자에 대한 속성을 정의하는 것도 추천을 위해 필요한 과정이다. 
+
+
+
 
 
 
