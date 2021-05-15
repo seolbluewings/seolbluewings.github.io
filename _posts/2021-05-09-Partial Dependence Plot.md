@@ -24,7 +24,7 @@ $$\mathbf{X} = \{x_{1},...,x_{p}\}$$ 와 같이 p차원의 변수가 존재하�
 
 만약 $$z_{c}$$ 변수가 한가지 특정한 값으로 고정된 상태라면, $$\hat{F}(\mathbf{X})$$ 함수는 오로지 관심변수 집합 $$z_{s}$$ 만을 변수로 갖는 함수가 된다.
 
-$$ \hat{F}_{z_{c}}(z_{s}) = \hat{F}(z_{s}\vert z_{c}) $$
+$$ \hat{F}_{z_{c}}(z_{s}) = \hat{F}(z_{s}\vert z_{c}=c) $$
 
 일반적으로 함수 $$ \hat{F}_{z_{c}}(z_{s}) $$의 형태는 특정한 값으로 지정한 $$z_{c}$$ 값에 의존하지만, 이러한 의존성은 $$z_{c}$$의 평균치로 대체하는 것 대비 크게 강하지 않다. 따라서 관심변수 $$z_{s}$$에 대한 모델 $$\hat{F}$$의 Partial Dependence는 다음과 같이 표현이 가능하다.
 
@@ -35,11 +35,23 @@ p(z_{s}) &= \mathbb{E}_{z_{c}}\left[\hat{F}(z_{s},z_{c})\right] \nonumber \\
 \end{align}
 $$
 
-여기서 $$p_{z_{c}(z_{c})$$ 란 $$z_{c}$$에 대한 marginal probability density로서 다음의 식을 통해 구할 수 있으며 $$p(z_{s},z_{c})$$는 모든 Input 변수 X에 대한 Joint Distribution이다.
+여기서 $$ p_{z_{c}}(z_{c}) $$ 란 $$z_{c}$$에 대한 marginal probability density로서 다음의 식을 통해 구할 수 있으며 $$p(z_{s},z_{c})$$는 모든 Input 변수 X에 대한 Joint Distribution이다.
 
 $$ p_{z_{c}}(z_{c}) = \int p(z_{s},z_{c})dz_{s} $$
 
+그러나 일반적으로 $$ p_{z_{c}}(z_{c}) $$ 에 대한 명확한 수식을 알고있는 경우는 극히 드물다. 따라서 모델을 학습하는 과정에서 주어진 데이터를 바탕으로 근사적인 방법을 통해 $$p(z_{s})$$ 를 추정하게 된다.
 
+모델 학습과정에서 사용하는 데이터가 n개 존재한다고 가정하자. 그렇다면 $$z_{c}$$ 집합에 포함되는 변수들도 각 n개씩 존재하여 다음과 같이 표현이 가능할 것이다.
+
+$$ z_{c} = \{z_{1c},z_{2c},...,z_{nc}\}$$
+
+결국 관심변수 $$z_{s}$$에 대한 Partial Dependence를 구하는 것은 $$p(z_{s})$$를 구하는 것이며 이는 모델 학습과정에서 사용되는 $$z_{c} = \{z_{1c},z_{2c},...,z_{nc}\}$$ 데이터를 모두 활용하여 모델 $$\hat{F}$$ 에 적용시킨 후 모델 결과값에 대한 평균을 취해 구하게 된다.
+
+$$ p(z_{s}) = \frac{1}{n}\sum_{i=1}^{n}\hat{F}(z_{s},z_{ic}) $$
+
+이 상황에서 관심변수 $$z_{s}$$ 의 크기를 조정함에 따라 예측 결과(모델 적합결과) $$\hat{F}$$를 파악하는 것이 변수 $$z_{s}$$ 에 대한 Partial Dependence를 구하는 과정이며 이 변화를 Plot으로 표현한 것이 Partial Dependence Plot 이다.
+
+#### PDP의 장/단점
 
 #### 참조 문헌
 1. [위키백과 오픈 API](https://ko.wikipedia.org/wiki/%EC%98%A4%ED%94%88_API) <br>
