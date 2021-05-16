@@ -3,7 +3,7 @@ layout: post
 title:  "Gaussian Mixture Model"
 date: 2021-01-24
 author: seolbluewings
-categories: ML
+categories: Statistics
 ---
 
 

@@ -3,7 +3,7 @@ layout: post
 title:  "Basic of Support Vector Machine"
 date: 2020-11-29
 author: seolbluewings
-categories: ML
+categories: Statistics
 ---
 
 훈련 데이터가 다음과 같은 형태, $$\mathcal{D}= \left\{(x_{1},y_{1}),(x_{2},y_{2}),....,(x_{n},y_{n}) \right\}, y_{i} \in \{-1,1\}$$ 로 주어졌다고 가정하자.

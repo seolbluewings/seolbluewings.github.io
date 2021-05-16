@@ -3,7 +3,7 @@ layout: post
 title:  "Logistic Regression"
 date: 2020-10-19
 author: seolbluewings
-categories: ML
+categories: Statistics
 ---
 
 로지스틱 회귀는 프로빗 모델처럼 반응변수 범주형인 케이스에서 활용할 수 있는 방법이다. 로지스틱 회귀는 새로운 변수(X)가 주어졌을 때, 반응 변수가 각 범주에 속할 확률이 얼마인지를 추정하며, 추정된 확률에 따라 반응 변수의 Class를 분류하게 된다.
