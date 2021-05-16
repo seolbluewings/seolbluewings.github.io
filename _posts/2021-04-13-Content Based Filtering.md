@@ -3,7 +3,7 @@ layout: post
 title:  "Content Based Filtering"
 date: 2021-04-13
 author: seolbluewings
-categories: ML
+categories: Statistics
 ---
 
 추천 시스템이란 추천 대상자(이하 사용자)가 관심을 가질만한 컨텐츠(영화, 상품, 음악 등...)를 개인별 맞춤 형태로 추천해주는 것을 의미한다.
