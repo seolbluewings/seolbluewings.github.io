@@ -3,7 +3,7 @@ layout: post
 title:  "Drawing a Player Pass Map"
 date: 2019-07-29
 author: seolbluewings
-categories: ETC
+categories: Football
 ---
 
 
