@@ -6,8 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-(작성중...)
-
 모델은 보통 2가지 관점에서 평가를 받는다. 관점 하나는 설명력이고 또 다른 관점 하나는 예측력이다. 보통 예측력이 좋은 모델일수록 해석력이 떨어지는 것으로 알려져 있다. 여기서 모델을 해석한다는 것은 변수 $$\mathbf{X}$$가 1단위 증가할 때, 반응변수 $$\mathbf{y}$$가 얼마나 변하는가? 를 알아내는 것을 의미한다. 결국 이는 Input에 의한 Output의 변동성을 체크한다는 것이다.
 
 그러나 앙상블 모형에서부터 딥러닝까지 모델이 복잡해질수록 예측력은 높아지나 Input의 변동이 Output 변동에 얼마나 영향을 미쳤는지를 파악하기가 점점 어려워진다. 이렇게 예측력이 높으나 해석력이 떨어지는 모델을 Black Box 모델이라 부른다.
@@ -53,6 +51,16 @@ $$ p(z_{s}) = \frac{1}{n}\sum_{i=1}^{n}\hat{F}(z_{s},z_{ic}) $$
 
 #### PDP의 장/단점
 
+PDP는 무엇보다 이미지로 결과를 보여준다는 점에서 해석이 직관적이다. 또한 인과적인 해석이 가능하다. PDP를 통해 표현하려하는 관심변수가 다른 변수들과 상관성이 낮다면 PDP는 관심변수가 결과 예측에 미치는 평균적인 영향력을 잘 보여준다.
+
+다만, 시각화를 통해 보여준다는 점으로 인해 단점이 있다. 사람이 시각적으로 3차원까지 밖에 인지할 수 없기 때문에 PDP는 최대 2개 변수까지만 관심변수를 설정할 수 있다.
+
+또한 변수의 독립성 측면에서도 이슈가 있다. Partial Dependence는 계산하고자 하는 변수가 다른 변수와의 Correlation이 없다는 상황을 가정한다. 다음과 같은 상황을 생각해보자. 사람의 달리기 속도$$(\mathbf{y})$$를 예측한다고 하는 상황에 $$\mathbf{X}$$ 변수로 키와 몸무게가 주어졌다고 하자. 이 때 우리는 달리기 속도에 대해 몸무게의 영향력을 파악하기 위해 Partial Dependence를 계산하려 하는데 상식적으로 몸무게와 키는 상관성이 있는 변수이다.
+
+몸무게 40kg인 경우에 대해 Partial Dependence를 구하려고 하는 상황에서 우리는 키값들의 평균을 구하게 되는데 평균을 구하는 과정에서 키가 190cm인 사람이 들어갈 수도 있다. 몸무게 40kg인 사람에게는 비현실적인 수치가 계산에 포함되는 것이다. 이러한 문제를 해결하기 위해 [Accumulated Local Effect Plots](https://christophm.github.io/interpretable-ml-book/ale.html) 이란 방법을 사용하기도 한다.
+
+
+
 #### 참조 문헌
-1. [위키백과 오픈 API](https://ko.wikipedia.org/wiki/%EC%98%A4%ED%94%88_API) <br>
-2. [직장인을 위한 데이터분석 실무 with 파이썬](https://wikibook.co.kr/playwithdata/)
+1. [Partial Dependence Plot (PDP)](https://christophm.github.io/interpretable-ml-book/pdp.html) <br>
+2. [ "Greedy function approximation: A gradient boosting machine." Annals of statistics (2001)](http://scholar.google.co.kr/scholar_url?url=https://projecteuclid.org/download/pdf_1/euclid.aos/1013203451&hl=ko&sa=X&ei=gL-gYOqqMIqWyQTCj5CoDQ&scisig=AAGBfm32i0MEcGQztHTLEV3WO3VYfi3h9g&nossl=1&oi=scholarr)
