@@ -14,6 +14,9 @@ categories: Statistics
 
 Black Box 모델에서도 Input 변수의 변동에 따른 Output의 변화를 살펴보고 싶은 욕구가 생기기 마련인데 이러한 이슈를 해결하기 위해 제안된 방법이 바로 Partial Dependence Plot(PDP) 이다.
 
+
+![PDP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/PDP.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
+
 #### Concept of PDP(Partial Dependence Plot)
 
 PDP는 명칭을 통해서 확인할 수 있듯이, Plot을 그리는 방법이다. 시각화는 가장 강력한 해석 방법 중 하나로 PDP는 $$\mathbf{X}$$ 변수 집합에 대하여 반응변수 $$\mathbf{y}$$의 변화 수준을 표현한다. 그러나 안타깝게도 변수 1~2개 수준에서만 표현이 가능하다.
