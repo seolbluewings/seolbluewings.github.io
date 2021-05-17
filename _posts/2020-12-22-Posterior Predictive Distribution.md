@@ -4,10 +4,10 @@ title:  "Posterior Predictive Distribution"
 date: 2020-12-22
 author: seolbluewings
 comments : true
-categories: ML
+categories: Statistics
 ---
 
-앞서 소개했던 Bayesian Linear Regression [포스팅](https://seolbluewings.github.io/bayesian/2019/04/22/Bayesian-Linear-Regression.html)을 통해서 우리는 기존의 Frequentist들의 회귀계수 $$\beta$$에 대한 추정방법과 다른 Bayesian 방식을 학습하였다. 그러나 분석 목적에 따라 $$\beta$$를 추정하는 것보다 $$\beta$$ 값을 이용하여 새로운 독립적인 데이터 $$x_{new}$$가 주어졌을 때, 예측값인 $$y_{new}$$ 를 구하는 것이 더 중요할 수도 있다. 앞으로 편의상 $$y$$에 대한 예측값은 $$\tilde{y}$$로 표현하겠다.
+앞서 소개했던 Bayesian Linear Regression [포스팅](https://seolbluewings.github.io/statistics/2021/02/15/Bayesian-Linear-Regression.html)을 통해서 우리는 기존의 Frequentist들의 회귀계수 $$\beta$$에 대한 추정방법과 다른 Bayesian 방식을 학습하였다. 그러나 분석 목적에 따라 $$\beta$$를 추정하는 것보다 $$\beta$$ 값을 이용하여 새로운 독립적인 데이터 $$x_{new}$$가 주어졌을 때, 예측값인 $$y_{new}$$ 를 구하는 것이 더 중요할 수도 있다. 앞으로 편의상 $$y$$에 대한 예측값은 $$\tilde{y}$$로 표현하겠다.
 
 $$\tilde{y}$$를 추정하기 위해서 Bayesian이 취할 수 있는 방식은 $$\tilde{y}$$에 대한 분포를 구하는 것일거다. 이를 $$\tilde{y}$$에 대한 예측 분포(Predictive Distribution)이라 부르며 일반적으로 Posterior Predictive Distribution이라 말한다.
 

@@ -3,10 +3,9 @@ layout: post
 title:  "Concept of Collaborative Filtering"
 date: 2020-06-29
 author: seolbluewings
-categories: ML
+categories: Statistics
 ---
 
-[작성중]
 
 우리는 일상 생활 속에서 추천 시스템(Recommendation System)을 자주 접하게 된다. 영화를 선택하는 과정에서 플랫폼(왓챠 또는 넷플릭스)은 나에게 잘 맞을 것 같은 영화를 제시해준다. 인터넷에서 물건을 구매하는 과정에서도 내가 관심있을 것으로 여겨지는 상품을 추천 받는다. 일상 생활 속에서 수많은 추천 시스템을 접하고 있기 때문에 우리는 이 추천 시스템이 어떤 논리와 이론 속에서 구현되고 있는지 알고 있을 필요가 있다.
 

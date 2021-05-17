@@ -3,7 +3,7 @@ layout: post
 title:  "Kernel Support Vector Machine"
 date: 2021-01-18
 author: seolbluewings
-categories: ML
+categories: Statistics
 ---
 
 

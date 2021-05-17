@@ -4,7 +4,7 @@ title:  "Model Evaluation Metrics"
 date: 2021-01-13
 author: seolbluewings
 comments : true
-categories: ML
+categories: Statistics
 ---
 
 모델을 생성하는 과정에서 우리는 예측결과가 가장 좋은 모델을 생성하길 희망한다. 어떠한 예측 모델은 1가지 방법론으로만 만들어지는게 아니다. 분류 분석 문제에서 로지스틱 회귀를 사용할 수도 있고 랜덤 포레스트를 활용할 수도 있다. 즉, 하나의 문제를 해결하기 위해서 다양한 방법론을 활용할 수 있다.

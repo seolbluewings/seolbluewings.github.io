@@ -3,7 +3,7 @@ layout: post
 title:  "Cluster Analysis"
 date: 2020-06-12
 author: seolbluewings
-categories: ML
+categories: Statistics
 ---
 
 
