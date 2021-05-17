@@ -9,218 +9,243 @@
 
 <url>
   <loc>https://seolbluewings.github.io/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/about/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/posts/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://seolbluewings.github.io/ml/2021/03/15/LDA.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <loc>https://seolbluewings.github.io/statistics/2021/05/09/Partial-Dependence-Plot.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://seolbluewings.github.io/ml/2021/03/03/Imbalanced-Data.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <loc>https://seolbluewings.github.io/data/2021/04/26/Open-API.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://seolbluewings.github.io/ml/2021/01/24/Gaussian-Mixture-Model.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <loc>https://seolbluewings.github.io/statistics/2021/04/13/Content-Based-Filtering.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://seolbluewings.github.io/ml/2021/01/18/Kernel-Support-Vector-Machine.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <loc>https://seolbluewings.github.io/statistics/2021/03/15/LDA.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://seolbluewings.github.io/ml/2021/01/13/Model-Evaluation-Metrics.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <loc>https://seolbluewings.github.io/statistics/2021/03/10/TFIDF.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/page2/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
+  <loc>https://seolbluewings.github.io/statistics/2021/03/03/Imbalanced-Data.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2021/02/15/Bayesian-Linear-Regression.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2021/01/24/Gaussian-Mixture-Model.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2021/01/18/Kernel-Support-Vector-Machine.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2021/01/13/Model-Evaluation-Metrics.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/12/28/Naive-Bayes-Classifier.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/12/22/Posterior-Predictive-Distribution.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/12/18/PCA.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/12/01/Soft-Margin-Vector-Machine.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/11/29/Support-Vector-Machine.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/10/19/Logistic-Regression.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/10/11/Convolutional-Neural-Network.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/09/28/Neural-Network-copy.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
   <loc>https://seolbluewings.github.io/statistics/2020/08/04/MCMC.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/07/14/Boosting.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/06/29/Collaborative-Filtering.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/06/27/EM-Algorithm.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/06/12/Cluster-Analysis.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/06/06/Grid-Search.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/05/31/Cross-Validation.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/04/16/Bias-Variance-Trade-Off.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/03/30/Bagging.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2020/03/30/Decision-Tree.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2019/08/01/Causal-Inference.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2019/07/26/Bayesian-Network(2).html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2019/07/25/Bayesian-Network(1).html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2019/07/06/Probit-Model.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2019/06/21/Metropolis-Hastings-Algorithm.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2019/05/26/Variational-Inference.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2019/05/22/Gibbs-Sampler.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/statistics/2019/04/15/Shrinkage-Estimation.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/statistics/2019/04/13/Linear-Regression.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://seolbluewings.github.io/ml/2020/12/28/Naive-Bayes-Classifier.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/12/22/Posterior-Predictive-Distribution.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/12/18/PCA.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/12/01/Soft-Margin-Vector-Machine.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/11/29/Support-Vector-Machine.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/10/19/Logistic-Regression.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/07/14/Boosting.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/06/29/Collaborative-Filtering.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/06/27/EM-Algorithm.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/06/12/Cluster-Analysis.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/06/06/Grid-Search.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/05/31/Cross-Validation.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/04/16/Bias-Variance-Trade-Off.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/03/30/Bagging.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2020/03/30/Decision-Tree.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/08/01/Causal-Inference.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/07/26/Bayesian-Network(2).html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/07/25/Bayesian-Network(1).html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/07/06/Probit-Model.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/06/21/Metropolis-Hastings-Algorithm.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/05/26/Variational-Inference.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/05/22/Gibbs-Sampler.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/04/15/Bayesian-Linear-Regression.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/ml/2019/04/15/Shrinkage-Estimation.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/etc/2019/07/29/Drawing-a-Player-Pass-Map.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/dl/2020/10/11/Convolutional-Neural-Network.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://seolbluewings.github.io/dl/2020/09/28/Neural-Network-copy.html</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <loc>https://seolbluewings.github.io/football/2019/07/29/Drawing-a-Player-Pass-Map.html</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/page3/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/page4/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/page5/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/page6/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://seolbluewings.github.io/page7/</loc>
-  <lastmod>2021-03-15T14:49:40+00:00</lastmod>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
   <priority>0.26</priority>
+</url>
+<url>
+  <loc>https://seolbluewings.github.io/page8/</loc>
+  <lastmod>2021-05-17T13:53:23+00:00</lastmod>
+  <priority>0.21</priority>
 </url>
 
 
