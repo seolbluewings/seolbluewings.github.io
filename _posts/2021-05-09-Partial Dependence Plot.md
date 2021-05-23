@@ -62,7 +62,7 @@ PDP는 무엇보다 이미지로 결과를 보여준다는 점에서 해석이 �
 
 몸무게 40kg인 경우에 대해 Partial Dependence를 구하려고 하는 상황에서 우리는 키값들의 평균을 구하게 되는데 평균을 구하는 과정에서 키가 190cm인 사람이 들어갈 수도 있다. 몸무게 40kg인 사람에게는 비현실적인 수치가 계산에 포함되는 것이다. 이러한 문제를 해결하기 위해 [Accumulated Local Effect Plots](https://christophm.github.io/interpretable-ml-book/ale.html) 이란 방법을 사용하기도 한다.
 
-
+PDP에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Partial%20Dependence%20Plot.ipynb)에서 확인 가능하다.
 
 #### 참조 문헌
 1. [Partial Dependence Plot (PDP)](https://christophm.github.io/interpretable-ml-book/pdp.html) <br>
