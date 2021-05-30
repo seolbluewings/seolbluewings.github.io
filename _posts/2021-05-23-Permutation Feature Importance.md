@@ -19,7 +19,7 @@ categories: Statistics
 훈련 데이터를 통해 모델을 학습한 뒤, 검증 데이터에서 변수 $$x_{i}$$ 를 무작위로 데이터를 섞어버린 뒤 학습한 모델에 fitting하여 모델의 성능을 파악해본다.
 
 
-![PFI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/PFI.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
+![PFI](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/PFI.png?raw=true){:width="100%" height="100%"}{: .aligncenter}
 
 만약 $$x_{i}$$ 변수의 순서를 무작위로 섞었을 때, 모델의 성능이 떨어진다면 이 $$x_{i}$$ 변수는 중요 변수라고 판단을 하게 된다. 변수 $$x_{i}$$가 의미없는 noise 변수로 작동한 결과 모델의 성능이 떨어진 것으로 직관적인 판단이 가능하다.
 
@@ -30,11 +30,15 @@ categories: Statistics
 훈련 데이터를 통해 학습된 모델을 $$F$$라 표현하고 input 변수를 $$\mathbf{X}= \{x_{1},x_{2},...,x_{p}\}$$ 로 표현하기로 하자 타겟변수를 $$\mathbf{y}$$로 표현하기로 한다.
 
 - 학습된 모델에 대한 최초 error를 계산한다.
+
 $$ e^{ori} = L(\mathbf{y},F(\mathbf{X}))$$
+
 - 각 변수 $$x_{1},...,x_{p}$$에 대하여 다음의 과정을 반복 수행한다.
 - $$i$$번째 변수 $$x_{i}$$에 대하여 변수의 순서를 무작위로 바꾼 $$\mathbf{X}^{per}$$를 생성한다. 이렇게 생성된 $$\mathbf{X}^{per}$$는 변수 $$x_{i}$$와 $$\mathbf{y}$$의 관계를 끊어버린다.
 - Permutation 된 데이터 $$\mathbf{X}^{per}$$에 대한 error를 계산한다.
+
 $$ e^{per} = L(\mathbf{y},F(\mathbf{X}^{per}))$$
+
 - $$e^{per} / e^{ori}$$ 또는 $$ e^{per} - e^{ori} $$ 를 계산하고 p가지 변수에 대해 내림차순으로 정렬하여 값이 큰 순서대로 변수의 중요도를 부여한다.
 
 
