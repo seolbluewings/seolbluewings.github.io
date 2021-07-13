@@ -16,7 +16,7 @@ Gaussian Process는 다른 베이지안 추론과 유사하게 함수에 대한 
  
 #### Linear Regression을 통한 출발
 
-앞서 논의했던 베이지안 회귀는 벡터 $$\Phi = (1,\mathbf{X})$$ 를 선형결합하는 것이었다. 만약 회귀식이 Polynomial일 경우는 $$\Phi$$가 (1,$$\mathbf[X},{\mathbf{X}}^{2}$$,...) 과 같이 확장 될 수 있다. 벡터 $$\Phi$$ 안에 속한 값들은 총 M개의 기저함수로 총 M개의 기저함수의 선형 결합으로 정의된 모델을 다음과 같이 표현할 수 있다.
+앞서 논의했던 베이지안 회귀는 벡터 $$\Phi = (1,\mathbf{X})$$ 를 선형결합하는 것이었다. 만약 회귀식이 Polynomial일 경우는 $$\Phi$$가 (1,$$\mathbf{X},{\mathbf{X}}^{2}$$,...) 과 같이 확장 될 수 있다. 벡터 $$\Phi$$ 안에 속한 값들은 총 M개의 기저함수로 총 M개의 기저함수의 선형 결합으로 정의된 모델을 다음과 같이 표현할 수 있다.
 
 $$y(\mathbf{x}) = \omega^{T}\Phi(\mathbf{x})$$
 
@@ -40,7 +40,7 @@ $$ K_{nm} = k(x_{n},x_{m}) = \frac{1}{\alpha}\phi(x_{n})^{T}\phi(x_{m}) $$
 
 결국 $$\mathbf{y}$$의 분포는 다음과 같이 표현 가능하다.
 
-$$ p(\mathbf[y}) \sim \mathcal{N}(0,K) $$
+$$ p(\mathbf{y}) \sim \mathcal{N}(0,K) $$
 
 
 
