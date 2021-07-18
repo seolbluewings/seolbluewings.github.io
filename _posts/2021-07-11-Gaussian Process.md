@@ -6,8 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
-
 Input 데이터 $$x_{i}$$에 대한 Target Output $$t_{i}$$는 일반적으로 $$t_{i}=y(x_{i})+\epsilon_{i}$$ 로 표현 가능하다. 모델은 어떠한 현상을 수식으로 표현하는 것인데 이는 결국 $$t_{i}$$를 가장 잘 설명할 수 있는 최적의 함수 $$y(x_{i})$$를 구하는 것이라고 볼 수 있다.
 
 함수 $$y(x_{i})$$가 선형회귀 식이라고 할 때, 지금까지는 함수 $$y(x_{i})$$의 parameter인 $$\theta$$의 분포 $$p(\theta\vert x,y)$$를 찾는 것을 목표로 했다. 그러나 이제는 함수 자체에 대한 추론을 해보고 싶다. 이 함수 자체에 대한 추론을 진행하는 것이 가우시안 과정(Gaussian Process)이다.
@@ -69,11 +67,11 @@ $$
 \end{align}
 $$
 
-이 수식은 Quadratic Form 으로 정리가 가능하며, 다음의 두가지 Matrix를 정의할 때 
+이 수식은 Quadratic Form 으로 정리가 가능하며, 다음의 두가지 Matrix를 정의할 때
 
 $$
 \begin{align}
-\mathbf{Z} &= \begin{pmatrix} \mathbf{y} \\ \mathbf{t} \end{pmatrix} 
+\mathbf{z} &= \begin{pmatrix} \mathbf{y} \\ \mathbf{t} \end{pmatrix}
 \\
 R^{-1} &=
 \begin{pmatrix}
@@ -83,9 +81,48 @@ K & K\beta I_{N}(\beta I_{N})^{-1} \\
 \end{align}
 $$
 
-Joint Distribution은 $$-\frac{1}{2}\mathbf{z}^{T}R\mathbf{z}$$ 로 표기 가능하다. 결국 다시 우리가 알고 있는 Gaussian 분포 형태의 결과를 얻을 수 있다. 
+Joint Distribution은 다음과 같은 Multivariate Gaussian 분포를 따른다.
+
+$$ p(\mathbf{y},\mathbf{t}) \sim \mathcal{N}((\mathbf{y},\mathbf{t})\vert (0,0),\begin{pmatrix} K & K \\ K & (\beta I_{N})^{-1}+K \end{pmatrix}) $$
+
+우리가 관심있는 분포는 $$p(\mathbf{t})$$이고 이는 Joint Distribution을 marginalized 하여 구할 수 있다. Multivariate Gaussian Distribution의 특징을 참고한다면 $$p(\mathbf{t})$$는 다음과 같이 구할 수 있다.
+
+$$ p(\mathbf{t}) \sim \mathcal{N}(\mathbf{t} \vert 0,(\beta I_{N})^{-1}+K) $$
+
+여기서 K는 Gram Matrix로 일반적으로 다음과 같이 정의한다.
+
+$$ K_{nm} = k(x_{n},x_{m}) = \frac{1}{\alpha}\phi(x_{n})^{T}\phi(x_{m}) $$
+
+그러나 우리가 가장 궁금해하는 것은 observed data point \mathbf{t} = \{t_{1},...,t_{N}\}를 이용해 새로운 $$t_{N+1}$$의 분포를 정확하게 맞추는 것이다. 그렇다면 정말 우리에게 필요한 분포는 $$p(t_{N+1}\vert \mathbf{t})$$ 가 되겠다.
+
+이 $$p(t_{N+1}\vert \mathbf{t})$$ 분포는 풀어서 표현하면 다음과 동일하다.
+
+$$ p(t_{N+1}\vert \mathbf{t}) = \frac{p(t_{1},....,t_{N+1})}{p(t_{1},...,t_{N})} $$
+
+이 수식에서의 분모에 해당하는 분포는 이미 알고 있다. 따라서 우리는 분자에 해당하는 분포 $$p(\mathbf{t}_{N})$$ 만 알 수 있다면, 최종 목표인 $$p(t_{N+1}\vert \mathbf{t}_{N})$$ 을 구할 수 있다.
+
+$$\mathbf{t}_{N+1}$$의 분포는 다음과 같다. 여기서 $$\text{Cov}_{N}$$은 $$p(\mathbf{t}$$의 Covariance인 K 이며, $$\mathbf{k}^{T} = (K_{(N+1)(1)},....K_{(N+1)(N)}) 을 의미한다.
+
+$$
+p(t_{1},...t_{N},t_{N+1}) \sim \mathcal{N}(\mathbf{t}\vert 0, \begin{pmatrix} \text{Cov}_{N} & \mathbf{k} \\ \mathbf{k}^{T} & K_{(N+1)(N+1)}+\beta \end{pmatrix})
+$$
+
+Multivariate Gaussian Distribution의 특성을 다시 한 번 사용하면 $$p(t_{n+1}\vert t_{1},...,t_{n})$$ 분포는 다음과 같이 구할 수 있다.
+
+$$
+\begin{align}
+p(t_{N+1}\vert t_{1},...,t_{N}) &\sim \mathcal{N}(t_{N+1}\vert 0+\mathbf{k}^{T}\text{Cov}_{N}^{-1}(\mathbf{t}_{N}-0), K_{(N+1)(N+1)}+\beta - \mathbf{k}^{T}\text{Cov}_{N}^{-1}\mathbf{k}) \nonumber \\
+\mu(t_{N+1}) &= \mathbf{k}^{T}\text{Cov}_{N}^{-1}\mathbf{t}_{N} \nonumber \\
+\sigma^{2}(t_{N+1}) &=  K_{(N+1)(N+1)}+\beta - \mathbf{k}^{T}\text{Cov}_{N}^{-1}\mathbf{k} \nonumber
+\end{align}
+$$
+
+평균 $$\mu(t_{N+1})$$ 값은 $$t_{N+1}$$이 관측될 가능성이 가장 높은 예측 포인트가 될 것이다.
+
+이 과정이 Gaussian Process를 이용해 회귀분석을 정의하는 핵심적인 맥락이다. $$\mathbf{k}$$는 input 데이터 $$\mathbf{X}$$에 의해 정해지는 Kernel Function이고 기존에 회귀분석을 했을 때 추정했던 weight $$\omega$$는 이제 Kernel Function 속에 들어가 있는 것으로 보면 된다.
 
 
 #### 참조 문헌
-1. [Permutation Importance](https://www.kaggle.com/dansbecker/permutation-importance) <br>
-2. [Permutation Feature Importance](https://christophm.github.io/interpretable-ml-book/feature-importance.html)
+1. [Gaussian Process](https://kaist.edwith.org/aiml-adv/lecture/21300) <br>
+2. [A Visual Exploration of Gaussian Processes](https://distill.pub/2019/visual-exploration-gaussian-processes/#Posterior)
+3. [PRML](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf)
