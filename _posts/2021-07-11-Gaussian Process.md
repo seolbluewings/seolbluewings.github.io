@@ -83,7 +83,7 @@ $$
 
 Joint Distribution은 다음과 같은 Multivariate Gaussian 분포를 따른다.
 
-$$ p(\mathbf{y},\mathbf{t}) \sim \mathcal{N}((\mathbf{y},\mathbf{t})\vert (0,0),\begin{pmatrix} K & K \\ K & (\beta I_{N})^{-1}+K \end{pmatrix}) $$
+$$ p(\mathbf{y},\mathbf{t}) \sim \mathcal{N}\left((\mathbf{y},\mathbf{t})\vert (0,0),\begin{pmatrix} K & K \\ K & (\beta I_{N})^{-1}+K \end{pmatrix}\right) $$
 
 우리가 관심있는 분포는 $$p(\mathbf{t})$$이고 이는 Joint Distribution을 marginalized 하여 구할 수 있다. Multivariate Gaussian Distribution의 특징을 참고한다면 $$p(\mathbf{t})$$는 다음과 같이 구할 수 있다.
 
@@ -93,7 +93,7 @@ $$ p(\mathbf{t}) \sim \mathcal{N}(\mathbf{t} \vert 0,(\beta I_{N})^{-1}+K) $$
 
 $$ K_{nm} = k(x_{n},x_{m}) = \frac{1}{\alpha}\phi(x_{n})^{T}\phi(x_{m}) $$
 
-그러나 우리가 가장 궁금해하는 것은 observed data point \mathbf{t} = \{t_{1},...,t_{N}\}를 이용해 새로운 $$t_{N+1}$$의 분포를 정확하게 맞추는 것이다. 그렇다면 정말 우리에게 필요한 분포는 $$p(t_{N+1}\vert \mathbf{t})$$ 가 되겠다.
+그러나 우리가 가장 궁금해하는 것은 observed data point $$\mathbf{t} = \{t_{1},...,t_{N}\}$$ 를 이용해 새로운 $$t_{N+1}$$의 분포를 정확하게 맞추는 것이다. 그렇다면 정말 우리에게 필요한 분포는 $$p(t_{N+1}\vert \mathbf{t})$$ 가 되겠다.
 
 이 $$p(t_{N+1}\vert \mathbf{t})$$ 분포는 풀어서 표현하면 다음과 동일하다.
 
@@ -101,10 +101,10 @@ $$ p(t_{N+1}\vert \mathbf{t}) = \frac{p(t_{1},....,t_{N+1})}{p(t_{1},...,t_{N})}
 
 이 수식에서의 분모에 해당하는 분포는 이미 알고 있다. 따라서 우리는 분자에 해당하는 분포 $$p(\mathbf{t}_{N})$$ 만 알 수 있다면, 최종 목표인 $$p(t_{N+1}\vert \mathbf{t}_{N})$$ 을 구할 수 있다.
 
-$$\mathbf{t}_{N+1}$$의 분포는 다음과 같다. 여기서 $$\text{Cov}_{N}$$은 $$p(\mathbf{t}$$의 Covariance인 K 이며, $$\mathbf{k}^{T} = (K_{(N+1)(1)},....K_{(N+1)(N)}) 을 의미한다.
+$$\mathbf{t}_{N+1}$$의 분포는 다음과 같다. 여기서 $$\text{Cov}_{N}$$은 $$p(\mathbf{t}$$의 Covariance인 K 이며, $$\mathbf{k}^{T} = (K_{(N+1)(1)},....K_{(N+1)(N)})$$ 을 의미한다.
 
 $$
-p(t_{1},...t_{N},t_{N+1}) \sim \mathcal{N}(\mathbf{t}\vert 0, \begin{pmatrix} \text{Cov}_{N} & \mathbf{k} \\ \mathbf{k}^{T} & K_{(N+1)(N+1)}+\beta \end{pmatrix})
+p(t_{1},...t_{N},t_{N+1}) \sim \mathcal{N}\left(\mathbf{t}\vert 0, \begin{pmatrix} \text{Cov}_{N} & \mathbf{k} \\ \mathbf{k}^{T} & k_{(N+1)(N+1)}+\beta \end{pmatrix}\right)
 $$
 
 Multivariate Gaussian Distribution의 특성을 다시 한 번 사용하면 $$p(t_{n+1}\vert t_{1},...,t_{n})$$ 분포는 다음과 같이 구할 수 있다.
@@ -113,13 +113,15 @@ $$
 \begin{align}
 p(t_{N+1}\vert t_{1},...,t_{N}) &\sim \mathcal{N}(t_{N+1}\vert 0+\mathbf{k}^{T}\text{Cov}_{N}^{-1}(\mathbf{t}_{N}-0), K_{(N+1)(N+1)}+\beta - \mathbf{k}^{T}\text{Cov}_{N}^{-1}\mathbf{k}) \nonumber \\
 \mu(t_{N+1}) &= \mathbf{k}^{T}\text{Cov}_{N}^{-1}\mathbf{t}_{N} \nonumber \\
-\sigma^{2}(t_{N+1}) &=  K_{(N+1)(N+1)}+\beta - \mathbf{k}^{T}\text{Cov}_{N}^{-1}\mathbf{k} \nonumber
+\sigma^{2}(t_{N+1}) &=  k_{(N+1)(N+1)}+\beta - \mathbf{k}^{T}\text{Cov}_{N}^{-1}\mathbf{k} \nonumber
 \end{align}
 $$
 
 평균 $$\mu(t_{N+1})$$ 값은 $$t_{N+1}$$이 관측될 가능성이 가장 높은 예측 포인트가 될 것이다.
 
 이 과정이 Gaussian Process를 이용해 회귀분석을 정의하는 핵심적인 맥락이다. $$\mathbf{k}$$는 input 데이터 $$\mathbf{X}$$에 의해 정해지는 Kernel Function이고 기존에 회귀분석을 했을 때 추정했던 weight $$\omega$$는 이제 Kernel Function 속에 들어가 있는 것으로 보면 된다.
+
+Kernel Function을 통해서 데이터 포인트 간의 관계에 대한 설정이 가능하며 기존 회귀분석이 $$\omega$$에 대한 명확한 값 또는 분포를 계산하여 $$\hat{t}_{N+1}$$의 값을 하나의 포인트로 특정했던 것과 달리 Gaussian Process를 통한 회귀는 $$t_{N+1}$$에 대한 Posterior Predictive Distribution을 구한다.
 
 
 #### 참조 문헌
