@@ -10,7 +10,9 @@ Input 데이터 $$x_{i}$$에 대한 Target Output $$t_{i}$$는 일반적으로 $
 
 함수 $$y(x_{i})$$가 선형회귀 식이라고 할 때, 지금까지는 함수 $$y(x_{i})$$의 parameter인 $$\theta$$의 분포 $$p(\theta\vert x,y)$$를 찾는 것을 목표로 했다. 그러나 이제는 함수 자체에 대한 추론을 해보고 싶다. 이 함수 자체에 대한 추론을 진행하는 것이 가우시안 과정(Gaussian Process)이다.
 
-Gaussian Process는 다른 베이지안 추론과 유사하게 함수에 대한 Prior 분포를 설정하고 데이터를 통해 관찰한 뒤, 함수에 대한 Posterior 분포를 생성한다.
+![GP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/GP.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
+
+붉은 x 표기로 존재하는 점이 학습 데이터이며 이 데이터 포인트를 이용해서 함수의 분포에 대해 추론하고 관측되지 않은 지점에서의 함수에 대한 predictive distribution을 구한다. 이 그래프에서의 평균에 맞춰 함수의 형태를 예측하지만, 함수의 불확실성에 대해서 음영처리 되어 표기해준다. 학습 데이터가 없는 곳에서 불확실성이 큰 것 역시 합리적인 결과이다.
  
 #### Linear Regression을 통한 출발
 
@@ -122,6 +124,9 @@ $$
 이 과정이 Gaussian Process를 이용해 회귀분석을 정의하는 핵심적인 맥락이다. $$\mathbf{k}$$는 input 데이터 $$\mathbf{X}$$에 의해 정해지는 Kernel Function이고 기존에 회귀분석을 했을 때 추정했던 weight $$\omega$$는 이제 Kernel Function 속에 들어가 있는 것으로 보면 된다.
 
 Kernel Function을 통해서 데이터 포인트 간의 관계에 대한 설정이 가능하며 기존 회귀분석이 $$\omega$$에 대한 명확한 값 또는 분포를 계산하여 $$\hat{t}_{N+1}$$의 값을 하나의 포인트로 특정했던 것과 달리 Gaussian Process를 통한 회귀는 $$t_{N+1}$$에 대한 Posterior Predictive Distribution을 구한다.
+
+
+상기 내용에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Gaussian%20Process.ipynb)에서 확인 가능합니다.
 
 
 #### 참조 문헌
