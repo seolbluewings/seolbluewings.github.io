@@ -125,6 +125,33 @@ $$
 
 Kernel Function을 통해서 데이터 포인트 간의 관계에 대한 설정이 가능하며 기존 회귀분석이 $$\omega$$에 대한 명확한 값 또는 분포를 계산하여 $$\hat{t}_{N+1}$$의 값을 하나의 포인트로 특정했던 것과 달리 Gaussian Process를 통한 회귀는 $$t_{N+1}$$에 대한 Posterior Predictive Distribution을 구한다.
 
+#### Gaussian Process Classifier
+
+Gaussian Process를 활용해서 분류 문제 또한 해결할 수 있다.
+
+분류 문제에서의 목표는 훈련 데이터가 주어진 상황에서 새로운 데이터에 대한 target variable $t_{new}$의 Posterior Distribution을 구하는 것이 되겠다.
+
+앞서 정의했던 Gaussian Process 모델 결과는 실수 전체 범위에서 값을 가질 수 있다. 그러나 분류 문제를 위해서는 우리는 이 값을 [0,1] 범위로 좁혀주는 변환을 해야한다. 적절한 연결함수(Link Function) $$\simga$$ 를 이용해서 Gaussian Process를 활용한 분류 문제를 해결할 수 있다.
+
+![GP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/GP1.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
+
+일반적인 로지스틱 회귀에서 취했던 방식을 떠올리면 쉽다. $$\mathbf{X}\beta$$의 선형 결합에 대한 Sigmoid 함수를 취했던 것에서 $$f(\mathbf{x};\Theta)$$ 에 대한 sigmoid 함수를 취하는 것으로 바뀌는 것일 뿐이다. 여기서 $$f(\mathbf{x};\theta)$$ 란 훈련 데이터셋을 통해 학습한 Gaussian Process 결과이며 $$\theta$$는 학습이 완료된 kernel hyperparameter를 의미한다.
+
+기존의 로지스틱 회귀와의 차이점이라면, 기존 로지스틱 회귀에서의 Sigmoid 함수 적용 결과는 단조 증가함수였다. 따라서 데이터가 임계점을 넘어간 순간 다시는 다른 Class로 분류될 가능성이 없었다. 그러나 Gaussian Process Classifier는 위의 그림과 같이 Class를 결정짓는 Link Fuction의 굴곡이 있다. 아마도 이 데이터는 기존의 로지스틱 회귀로는 높은 정확도를 가진 분류기를 만들기 어려웠을 것이다.
+
+따라서 우리가 최적화시켜야할 objective function의 수식은 다음과 같다.
+
+$$ p(t\vert\theta) = \sigma\left(f(\mathbf{x};\theta)\right)^{t}\left(1-\sigma\left(f(\mathbf{x};\theta)\right)\right)^{(1-t)} $$
+
+이 수식에 대한 log-likelihood를 최대화시키는 결과를 kernel hyperparameter를 찾으면 되고 찾은 결과를 통해 새로운 데이터 포인트에 대한 결과를 예측하고자 한다면, $$ p(t_{N+1}\vert \mathbf{t}_{N}) $$ 을 구하면 된다.
+
+이 $$ p(t_{N+1}\vert \mathbf{t}_{N}) $$ 수식을 조금 풀어서 표현하자면 다음과 같을 것이다.
+
+$$
+p(t_{N+1}\vert \mathbf{t}_{N}) = \int p(t_{N+1}\vert f(\mathbf{x};\theta))p(f(\mathbf{x};\theta)\vert\mathbf{t})d f(\mathbf{x};\theta)
+$$
+
+이 수식에 대해서는 라플라스 근사를 통해 근사값을 발견할 수 있으나 최적의 kernel hyperparameter를 구하는 것은 여러 분석 Tool의 패키지를 이용하는 것이 보다 합리적인 것으로 생각된다.
 
 상기 내용에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Gaussian%20Process.ipynb)에서 확인 가능합니다.
 
