@@ -131,7 +131,7 @@ Gaussian Process를 활용해서 분류 문제 또한 해결할 수 있다.
 
 분류 문제에서의 목표는 훈련 데이터가 주어진 상황에서 새로운 데이터에 대한 target variable $t_{new}$의 Posterior Distribution을 구하는 것이 되겠다.
 
-앞서 정의했던 Gaussian Process 모델 결과는 실수 전체 범위에서 값을 가질 수 있다. 그러나 분류 문제를 위해서는 우리는 이 값을 [0,1] 범위로 좁혀주는 변환을 해야한다. 적절한 연결함수(Link Function) $$\simga$$ 를 이용해서 Gaussian Process를 활용한 분류 문제를 해결할 수 있다.
+앞서 정의했던 Gaussian Process 모델 결과는 실수 전체 범위에서 값을 가질 수 있다. 그러나 분류 문제를 위해서는 우리는 이 값을 [0,1] 범위로 좁혀주는 변환을 해야한다. 적절한 연결함수(Link Function) $$\sigma$$ 를 이용해서 Gaussian Process를 활용한 분류 문제를 해결할 수 있다.
 
 ![GP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/GP1.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
