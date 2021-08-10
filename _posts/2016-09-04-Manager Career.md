@@ -7,7 +7,7 @@ categories: Football
 ---
 
 
-![Manager](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Football/Manager/Wenger.jpg?raw=true){:width="70%" height="70%"}{: .align-center}
+![Manager](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Football/Manager/Wenger.jpg?raw=true){: .align-center}
 
 by Simon Kuper
 
@@ -41,9 +41,6 @@ by Simon Kuper
 
 
 
-
-
-
 #### 출처
 
-1. [Football manager : a career of two halves](https://www.ft.com/content/79243fec-067f-11e6-9b51-0fb5e65703ce?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F79243fec-067f-11e6-9b51-0fb5e65703ce.html%3Fftcamp%3Dpublished_links%252Frss%252Flife-arts_simon-kuper%252Ffeed%252F%252Fproduct%26siteedition%3Dintl&_i_referer=https%3A%2F%2Ft.co%2Fce84ca612d075030c809d460ae051e05&classification=conditional_standard&ftcamp=published_links%2Frss%2Flife-arts_simon-kuper%2Ffeed%2F%2Fproduct&iab=barrier-app&siteedition=intl)
+[Football manager : a career of two halves](https://www.ft.com/content/79243fec-067f-11e6-9b51-0fb5e65703ce?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F79243fec-067f-11e6-9b51-0fb5e65703ce.html%3Fftcamp%3Dpublished_links%252Frss%252Flife-arts_simon-kuper%252Ffeed%252F%252Fproduct%26siteedition%3Dintl&_i_referer=https%3A%2F%2Ft.co%2Fce84ca612d075030c809d460ae051e05&classification=conditional_standard&ftcamp=published_links%2Frss%2Flife-arts_simon-kuper%2Ffeed%2F%2Fproduct&iab=barrier-app&siteedition=intl)

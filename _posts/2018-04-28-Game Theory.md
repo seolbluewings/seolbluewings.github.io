@@ -7,7 +7,7 @@ categories: Football
 ---
 
 
-![Penalty](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Football/Penalty/penalty1.jpg?raw=true){:width="70%" height="70%"}{: .align-center}
+![Penalty](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Football/Penalty/penalty1.jpg?raw=true){: .align-center}
 
 by Murad Ahmed
 
@@ -25,7 +25,7 @@ by Murad Ahmed
 
 나는 발렌시아의 훈련장에서 디에고 알베스를 만날 수 있었다. 리우 데 자네이로 출신인 알베스는 상 파울루의 히베이렁 쁘레뚜(Ribeirao Preto)에서 성장했다. 다른 브라질 어린이들과 똑같이 알베스 역시도 축구에 미쳐있는 소년이었다. "체중이 불어나면서 저는 골키퍼로 축구 경기를 뛰기 시작했습니다. 학교 시합이 있기 전에 부모님은 "오늘 누가 골키퍼를 보니?" 라고 물어봤고 제 대답은 "제가 오늘 골키퍼에요." 였습니다. 모두 저같이 뚱뚱한 녀석이 무슨 골키퍼를 보냐면서 비웃었지만, 저는 계속 선방을 해냈습니다. 경기가 끝난 이후 모두가 저의 활약에 기뻐했습니다."
 
-![Penalty](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Football/Penalty/penalty2.png?raw=true){:width="70%" height="70%"}{: .align-center}
+![Penalty](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Football/Penalty/penalty2.png?raw=true){:width="90%" height="90%"}{: .align-center}
 
 이후 체중은 감소했지만 알베스의 슈팅 방어능력은 떨어지지 않았다. 18살에 알베스는 아틀레치쿠 미네이루에 입단했고 이후 스페인 프리메라 리가의 알메리아를 거쳐 발렌시아에 합류했다.
 
@@ -77,7 +77,7 @@ by Murad Ahmed
 
 그러나 축구 선수는 결코 일반인이 아니다. 프로 선수는 승리를 쟁취하기 위해 반드시 상대를 어리둥절하게 만드는 플레이를 펼친다. 따라서 선수들은 일반인보다 행동 전략을 더 혼합해서 사용한다. 바이에른 뮌헨의 프랭크 리베리, 바르셀로나의 리오넬 메시는 페널티킥 상황에서 방향 설정을 가장 잘 랜덤화하는 선수들 중 하나다.
 
-![Penalty](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Football/Penalty/penalty3.png?raw=true){:width="70%" height="70%"}{: .align-center}
+![Penalty](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Football/Penalty/penalty3.png?raw=true){:width="90%" height="90%"}{: .align-center}
 
 사이먼 쿠퍼와 스테판 지만스키가 2009년 발간한 사커노믹스<Soccernomics>에 따르면, 2008년 맨체스터 유나이티드와의 챔피언스 리그 결승전을 앞둔 첼시가 승부차기 상황을 대비해 팔라시오스-푸에르타에게 조언을 구했다. 경기는 승부차기까지 이어졌고 가장 결정적인 페널티킥 대결은 첼시의 니콜라스 아넬카와 맨체스터 유나이티드의 골키퍼 에드윈 반 데 사르의 맞대결이었다. 아넬카가 킥을 시도하기 전, 반 데 사르는 손가락으로 자신의 왼쪽 방향을 가리켰다. 반 데 사르가 손으로 가리킨 방향은 팔라시오스-푸에르타가 첼시 선수들에게 노리라고 했던 바로 그 방향이었다. (반 데 사르는 주로 오른쪽으로 다이빙을 하고 첼시는 그 이전까지 6명의 키커 중 5명이 반 데 사르의 왼쪽으로 공을 찼다.) 반 데 사르의 돌발 행동에 당황한 아넬카는 반 데 사르의 오른쪽으로 공을 찼다. 반 데 사르는 자신의 오른쪽으로 오는 공을 막았고 유나이티드가 챔피언스 리그 트로피를 차지하게 되었다.
 
@@ -106,9 +106,6 @@ AT 마드리드의 2차례 페널티킥을 막은지 3주가 지났고 이번에
 세계 최고의 선수라 불리는 메시지만, 알베스를 꺾기 위해서는 완벽한 페널티킥 시도가 필요했다. 하지만 팔라시오스-푸에르타는 메시의 페널티킥 영상을 보고서는 "메시가 알베스의 왼쪽으로 공을 찼어야 했다." 라고 말했다.
 
 
-
-
-
 #### 출처
 
-1. [How to save a penalty : the truth about football's toughest shot](https://www.ft.com/penalties)
+[How to save a penalty : the truth about football's toughest shot](https://www.ft.com/penalties)
