@@ -57,7 +57,7 @@ Random Search의 경우 hyperparameter space에서 hyperparameter를 임의 조�
 
 함수 $$f(\lambda)$$ 에 대한 추정과 동시에 보다 효율적인 방식으로 hyperparameter space를 탐색한다는 점을 고려했을 때, 모델링 과정에서 Bayesian Optimization을 사용하는 것은 아주 바람직해 보인다.
 
-
+상기 내용에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Bayesian%20Optimization.ipynb)에서 확인 가능합니다.
 
 
 #### 참조 문헌
