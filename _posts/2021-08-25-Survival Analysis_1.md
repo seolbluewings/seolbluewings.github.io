@@ -59,14 +59,23 @@ $$ H(t) = \int_{0}^{t}h(u)du = \int_{0}^{t}\frac{ \frac{d}{du}(1-S(u)) }{ S(u) }
 
 #### 중도절단(censoring / censored)
 
+중도절단은 생존 데이터의 가장 큰 특징 중 하나라고 볼 수 있다. 중도 절단 데이터는 한정된 분석 기간 안에서 사건이 발생하지 않고 종료될 경우에 발생할 수 있고 분석의 대상이 되는 고객이 추적 불가능한 경우에도 발생할 수 있다.
+
+![Survival](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/Survival.png?raw=true){:width="100%" height="100%"}{: .aligncenter}
+
+그림처럼 20주 전부터 관찰을 시작해 현재까지의 사용자 생존시간을 추적할 수 있다. 사용자가 서비스를 사용하기 시작하면, 그 때부터 사용자의 수명이 시작된다. 관측 기간 내에 사용자가 서비스를 이탈한 경우, x자로 표기한다. 반면에 분석종료 시점까지 이탈하지 않거나(사용자 C) 도중에 사용자 추적이 불가능한 경우(사용자 A)가 중도 절단 케이스로 간주된다.
+
+생존 데이터에 대한 표본에 대해 중도 절단된 대상자 $$i$$에 대한 관측 중단 시점을 $$c_{i}$$ 로 표기한다. 사건 발생시간은 $$y_{i}$$ 로 표기하기로 하자. 만약 중도 절단 이후 사건이 발생한다면 $$c_{i} = y_{i} $$ 라고 볼 수 있다.
+
+따라서 생존 시간 $$t_{i}$$ 는 다음과 같이 표현할 수 있을 것이다.
+
+$$ t_{i} = \text{min}(y_{i},c_{i}) \quad \delta_{i} = \mathcal{I}(y_{i} < c_{i}) $$
 
 
-
-상기 내용에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Latent%20Dirichlet%20Allocation.ipynb)에서 확인 가능합니다.
 
 
 #### 참조 문헌
-1. [Gibbs Sampling for LDA](https://www.edwith.org/machinelearning2__17/lecture/10883?isDesc=false)
-2. [단단한 머신러닝](http://www.yes24.com/Product/Goods/88440860)
-3. [Collapsed Gibbs Sampler for LDA](https://lee-jaejoon.github.io/stat-collapsedGibbs/)
-4. [토픽 모델링, LDA Python 코드](https://donghwa-kim.github.io/lda_code.html)
+1. R을 이용한 생존분석 기초
+2. [생존 분석(Survival Analysis) 탐구 1편](https://velog.io/@jeromecheon/%EC%83%9D%EC%A1%B4-%EB%B6%84%EC%84%9D-Survival-Analysis-%ED%83%90%EA%B5%AC-1%ED%8E%B8)
+3. [The basics of survival analysis](https://sakai.unc.edu/access/content/group/2842013b-58f5-4453-aa8d-3e01bacbfc3d/public/Ecol562_Spring2012/docs/lectures/lecture27.htm)
+
