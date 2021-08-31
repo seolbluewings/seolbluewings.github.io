@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Survival Analysis (1)"
+title:  "Concept of Survival Analysis"
 date: 2021-08-25
 author: seolbluewings
 categories: Statistics
