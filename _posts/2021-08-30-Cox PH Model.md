@@ -26,7 +26,7 @@ categories: Statistics
 
 여기서 $$z_{i}(t)$$ 는 i번째 데이터에 대한 설명변수 vector로 설명변수가 총 p개 있다고 하면 다음과 같이 표현할 수 있을 것이다. 그리고 만약 j번째 설명변수가 시간에 의존하지 않는 변수라면 $$z_{ij}(t) = z_{ij} $$ 로도 표현 가능하다.
 
-$$ z_{i}(t) = (z_{i1}(t),...,z_{ip}t)^{T} $$
+$$ z_{i}(t) = (z_{i1}(t),...,z_{ip}(t))^{T} $$
 
 먼저 변수 $$z_{i}(t)$$가 시간 $$t$$에 의해 변하지 않는 변수(ex : 성별) 일 때만을 고려한 Cox PH Model을 고려해보자.
 
@@ -44,7 +44,7 @@ $$\beta = (\beta_{1},...,\beta_{p})$$ 는 회귀계수로 변수 $$z_{ik}$$ 가 
 Cox PH Model의 특징 중 하나는 로지스틱 회귀의 오즈비와 같이 개체간의 위험률의 비(hazard ratio)를 구할 수 있다는 것이다. 이 hazard ratio를 구하는 수식은 다음과 같다.
 
 $$
-\frac{h(t\vert z_{i})}{h(t\vert z_{j})} = \frac{ h_{0}(t)\text{exp}(z_{i}^{T}\beta) }{ h_{0}(t)\text{exp}(z_{j}^{T}\beta) } = \text{exp}\left(\sum_{k=1}^{p}(z_{ik}-z_{jk})\beta{k}\right)
+\frac{h(t\vert z_{i})}{h(t\vert z_{j})} = \frac{ h_{0}(t)\text{exp}(z_{i}^{T}\beta) }{ h_{0}(t)\text{exp}(z_{j}^{T}\beta) } = \text{exp}\left(\sum_{k=1}^{p}(z_{ik}-z_{jk})\beta_{k}\right)
 $$
 
 hazard ratio의 수식을 통해서 확인할 수 있듯이 개체간의 위험비는 시간에 의존하지 않는 값이다. 오로지 변수의 값에 의존해 변하게 되는데 이는 시간에 의존하지 않는 변수들만 사용한 Cox PH Model의 한계로 다가올 수도 있다.
