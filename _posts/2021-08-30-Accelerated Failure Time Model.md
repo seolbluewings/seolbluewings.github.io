@@ -54,7 +54,7 @@ $$
 
 생존함수에 적용되는 수식을 위험함수로 확장한다면 위험함수는 다음과 같이 표현될 수 있다.
 
-$$ h_{1}(t) = \text{exp}\left(\mathbf{x}\beta\right)h_{2}\left(\mathbf{x}\beta t\right) $$
+$$ h_{1}(t) = \text{exp}\left(\mathbf{x}\beta\right)h_{2}\left(\text{exp}(\mathbf{x}\beta) t\right) $$
 
 #### Weibull Accelerated Faiure Time Model
 
@@ -76,7 +76,33 @@ $$
 
 $$\log{h(t)} = \log{\kappa} + \kappa\log{\lambda} + (\kappa-1)\log{t}$$
 
-따라서 $$\kappa > 1$$인 경우 시간에 따라 위험함수가 증가하며 반대로 $$\kappa < 1$$인 경우에는 시간에 따라 위험함수가 감소한다고 볼 수 있다. 
+따라서 $$\kappa > 1$$인 경우 시간에 따라 위험함수가 증가하며 반대로 $$\kappa < 1$$인 경우에는 시간에 따라 위험함수가 감소한다고 볼 수 있다.
+
+변수가 1개인 상황에서 다음과 같은 관계를 가정하면
+
+$$\frac{1}{\lambda} = \text{exp}(\beta_{0}+\beta_{1}x)$$
+
+생존함수는 다음과 같이 표현할 수 있을 것이다.
+
+$$ S(t) = \text{exp}\left(-t^{\kappa}\{\text{exp}(-\beta_{0}-\beta_{1}x)\}^{\kappa} \right) $$
+
+그리고 이를 $$\mathbf{x} = (x_{1},...,x_{p})$$ 로 확장시킨다면 다음과 같이 표현이 가능할 것이다.
+
+$$ S(t\vert\mathbf{x}) = \text{exp}\left(-t^{\kappa}\{\text{exp}(-\mathbf{x}\beta)\}^{\kappa}\right) $$
+
+위험함수 $$h(t\vert\mathbf{x})$$ 는 $$ \kappa t^{\kappa-1}\{\text{exp}(-\mathbf{x}\beta)\}^{\kappa} $$ 이기 때문에 생존시간 t에 대한 pdf는 다음과 같이 표현 가능할 것이다.
+
+$$ f(t\vert\mathbf{x}) = h(t\vert\mathbf{x}) \times S(t\vert\mathbf{x}) $$
+
+생존함수, 위험함수, 생존시간 t에 대한 pdf를 구한 것 모두 $$\beta=(\beta_{1},...,\beta_{p})^{T}$$를 추정하기 위한 과정이다.
+
+AFT 모델의 fitting은 MLE 방식을 사용해 이루어진다. MLE를 구하기 위해서는 likelihood를 구할 수 있어야 한다.
+
+n개의 생존시간 $$t_{1},...,t_{n}$$ 이 관측되어 있다면 likelihood는 다음과 같이 표현 가능하다.
+
+$$ L = \prod_{i=1}^{n}\{f(t_{i})\}^{\delta_{i}}\{S(t_{i})\}^{1-\delta_{i}} $$
+
+이 수식의 partial likelihood를 구해 $$\beta$$를 추정할 수 있다. 구체적인 계산은 생존함수 패키지의 힘을 빌리는 것으로 하자.
 
 #### 참조 문헌
 1. R을 이용한 생존분석 기초
