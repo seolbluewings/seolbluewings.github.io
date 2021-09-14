@@ -73,6 +73,12 @@ $$ t_{i} = \text{min}(y_{i},c_{i}) \quad \delta_{i} = \mathcal{I}(y_{i} < c_{i})
 
 생존함수와 위험함수는 데이터를 통해 추정해야할 대상이다. 생존시간에 대한 분포가정을 할 수 있다면 parametric한 추정이 가능하다. 그러나 실제 데이터에 대해서는 parametric 가정을 할 수 없는 경우가 많다. 이러한 경우는 non-parametric 한 추정 방법을 고려해야 하는데 가장 대표적인 생존함수 추정 방법이 Kaplan-Meier 추정이다.
 
+
+![KM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/KM_Estimator.png?raw=true){:width="80%" height="80%"}{: .aligncenter}
+
+그림과 같이 Kaplan Meier 추정량에 대한 Plot을 확인할 수 있다. 시간 경과에 따라 그룹별 누적생존확률이 보여진다. 관측 시작부터 점차 누적 생존확률이 떨어지는 것을 확인할 수 있다. 이 Plot을 바탕으로 그룹별 생존 확률이 유의미한 차이가 있는 것으로 해석된다. 따라서 그룹을 표기하는 이 변수는 각 집단별 생존확률을 구분하는데 유의미한 변수일 것이라고 추측할 수 있게 된다.
+
+
 생존 데이터는 i번째 사용자에 대한 생존시간 $$y_{i}$$와 중도절단여부 $$\delta_{i}$$를 포함해 $$ \{(y_{i}, \delta_{i}), i=1,2,...,n \} $$ 을 표기한다. 중도절단 대상자의 관측중단 시점은 $$c_{i}$$ 로 표현한다.
 
 $$y_{i} < c_{i}$$ 인 경우는 $$y_{i}=t_{i}$$ 인데 그렇지 못한 경우는 $$c_{i} = t_{i}$$ 이다.
