@@ -6,8 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
-
 생존 분석의 목표는 사건이 발생하기까지의 시간을 예측하고 더불어 생존 확률을 추정하는 것에 있다. 기존의 회귀, 분류 문제에서 사용하는 알고리즘을 생존 데이터에 바로 적용하기 어려운 것은 생존 데이터에 중도 절단이란 개념이 포함되어 있기 때문이다. 중도절단과 사건발생 시간을 고려하지 않는 모델은 잘못된 결론을 도출할 수 있다.
 
 대표적인 생존분석 모델 중 하나가 AFT(Accelerated Failure Time) 모델이다. 이 모델은 생존분석에서 가장 널리 알려져있는 Cox PH 모델과 달리 parametric한 방식이다. 대신 parametric한 방법이기 때문에 생존시간 t에 대한 분포 가정이 필요하다는 것이 대표적인 차이라고 볼 수 있다.
@@ -104,8 +102,25 @@ $$ L = \prod_{i=1}^{n}\{f(t_{i})\}^{\delta_{i}}\{S(t_{i})\}^{1-\delta_{i}} $$
 
 이 수식의 partial likelihood를 구해 $$\beta$$를 추정할 수 있다. 구체적인 계산은 생존함수 패키지의 힘을 빌리는 것으로 하자.
 
+#### 예측
+
+모델을 사용하는 관점에서 가장 중요한 것은 적합한 모델의 결과를 바탕으로 중도절단 데이터들의 생존 확률을 구하는 것이다.
+
+중도절단 시점이 s인 대상이 t 시점 이후에도 생존할 확률은 $$ p(T > t \vert T > s) $$ 로 표현 가능할 것이다. 당연히 $$t \geq s$$일 것이다. 이는 조건부 확률의 특성을 이용해서 풀어서 쓸 경우, 다음과 같이 표현 가능하다.
+
+$$
+\begin{align}
+p(T > t \vert T > s) &= \frac{p(T > t, T > s)}{p(T > s)} \nonumber \\
+&= \frac{p(T > t)}{p(T > s)} = \frac{S(t)}{S(s)}
+\end{align}
+$$
+
+따라서 s시점 이전의 생존 확률을 모두 1의 값을 갖도록 변환시켜 중도절단 데이터의 t시점에서의 생존 확률을 구할 수 있게 된다.
+
+상기 내용에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Accelerated%20Failure%20Time%20Model.ipynb)에서 확인 가능합니다.
+
 #### 참조 문헌
 1. R을 이용한 생존분석 기초
-2. [생존 분석(Survival Analysis) 탐구 1편](https://velog.io/@jeromecheon/%EC%83%9D%EC%A1%B4-%EB%B6%84%EC%84%9D-Survival-Analysis-%ED%83%90%EA%B5%AC-1%ED%8E%B8)
-3. [The basics of survival analysis](https://sakai.unc.edu/access/content/group/2842013b-58f5-4453-aa8d-3e01bacbfc3d/public/Ecol562_Spring2012/docs/lectures/lecture27.htm)
+2. [생존 분석(Survival Analysis) 탐구 3편](https://hyperconnect.github.io/2019/10/03/survival-analysis-part3.html)
+3. [lifelines](https://lifelines.readthedocs.io/en/latest/Survival%20Regression.html#prediction-on-censored-subjects)
 
