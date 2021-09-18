@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Hideen Markov Model"
+title:  "Concept of Hidden Markov Model"
 date: 2021-09-17
 author: seolbluewings
 categories: Statistics
