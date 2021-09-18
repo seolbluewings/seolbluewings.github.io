@@ -32,9 +32,9 @@ $$ p(x_{1},x_{2},...,x_{N}) = p(x_{1})p(x_{2}\vert x_{1})  \prod_{n=3}^{N}p(x_{n
 
 이 모델은 $$z_{n}$$이 주어진 상태에서 $$z_{n-1}$$과 $$z_{n+1}$$이 독립이라는 conditional independence 을 만족한다.
 
-$$ z_{n+1} \indep z_{n-1} \vert  z_{n} $$
+$$ z_{n+1} \perp\!\!\!\perp z_{n-1} \vert  z_{n} $$
 
-![HMM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/HMM1.PNG?raw=true){:width="100%" height="100%"}{: .aligncenter}
+![HMM](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/HMM1.PNG?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
 그림에 표현된 형태의 모델은 다음과 같이 Factorization이 가능하다.
 
