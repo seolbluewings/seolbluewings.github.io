@@ -44,6 +44,23 @@ $$ p(x_{1},\cdots,x_{N},z_{1},\cdots,z_{N}) = p(z_{1})\left[\prod_{n=2}^{N}p(z_{
 
 #### Hidden Markov Model
 
+HMM에는 관측값 $$\mathbf{x}$$ 와 discrete한 형태의 latent variable $$\mathbf{z}$$ 이 있고 조건부 분포 $$p(z_{n} \vert z_{n-1})$$ 을 활용하여 $$z_{n}$$의 확률 분포가 직전의 latent variable $$z_{n-1}$$에 종속적임을 표현한다.
+
+discrete한 latent variable이 총 K차원이라 한다면, 우리는 $$\mathbf{z}$$의 상태가 n-1번째에서는 j이었다가 n번째에서는 k가 될 확률을 알아야만 한다. 그리고 이 확률을 $$A_{jk}$$ 로 표현하고 이를 전이 확률(transition probability)라고 표현한다.
+
+$$ A_{jk} = p(z_{n,k}=1 \vert z_{n-1,j}=1), \quad 0\leq A_{jk}\leq 1, \quad \sum_{K} A_{jk} = 1 $$
+
+각 transition probability $$A_{jk}$$를 모으면 이를 하나의 확률 Matrix로 표현가능하며 행렬 $$\mathbf{A}$$ 는 $$K(K-1)$$개의 확률 값을 갖게 된다.
+
+transition probability Matrix $$\mathbf{A}$$를 고려한 조건부 분포는 다음과 같이 표현 가능할 것이다.
+
+$$ p(z_{n}\vert z_{n-1},\mathbf{A}) = \prod_{k=1}^{K}\prod_{j=1}^{K}A_{jk}^{I(z_{n-1,j}=1)I(z_{n,k}=1)} $$
+
+그런데 최초 latent variable $$z_{1}$$의 경우는 영향을 미치는 또 다른 latent variable은 존재하지 않는다.
+
+
+
+
 [To be Continued...]
 
 
