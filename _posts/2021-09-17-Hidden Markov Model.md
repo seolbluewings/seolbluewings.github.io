@@ -48,15 +48,27 @@ HMM에는 관측값 $$\mathbf{x}$$ 와 discrete한 형태의 latent variable $$\
 
 discrete한 latent variable이 총 K차원이라 한다면, 우리는 $$\mathbf{z}$$의 상태가 n-1번째에서는 j이었다가 n번째에서는 k가 될 확률을 알아야만 한다. 그리고 이 확률을 $$A_{jk}$$ 로 표현하고 이를 전이 확률(transition probability)라고 표현한다.
 
-$$ A_{jk} = p(z_{n,k}=1 \vert z_{n-1,j}=1), \quad 0\leq A_{jk}\leq 1, \quad \sum_{K} A_{jk} = 1 $$
+$$ A_{jk} = p(z_{n}=k \vert z_{n-1,}=j), \quad 0\leq A_{jk}\leq 1, \quad \sum_{K} A_{jk} = 1 $$
 
 각 transition probability $$A_{jk}$$를 모으면 이를 하나의 확률 Matrix로 표현가능하며 행렬 $$\mathbf{A}$$ 는 $$K(K-1)$$개의 확률 값을 갖게 된다.
 
 transition probability Matrix $$\mathbf{A}$$를 고려한 조건부 분포는 다음과 같이 표현 가능할 것이다.
 
-$$ p(z_{n}\vert z_{n-1},\mathbf{A}) = \prod_{k=1}^{K}\prod_{j=1}^{K}A_{jk}^{I(z_{n-1,j}=1)I(z_{n,k}=1)} $$
+$$ p(z_{n}\vert z_{n-1},\mathbf{A}) = \prod_{k=1}^{K}\prod_{j=1}^{K}A_{jk}^{I(z_{n-1}=j)I(z_{n}=k)} $$
 
-그런데 최초 latent variable $$z_{1}$$의 경우는 영향을 미치는 또 다른 latent variable은 존재하지 않는다.
+그런데 최초 latent variable $$z_{1}$$의 경우는 영향을 미치는 또 다른 latent variable은 존재하지 않는다. 그렇다면, 우리는 $$z_{1}$$의 값을 결정짓는 분포를 가지고 있어야한다. 그 분포는 다음과 같이 결정 짓는다.
+
+$$ p(z_{1}\vert \pi) = \prod_{k=1}^K \pi_{k}^{I(z_{1}=k)} \quad \sum_{K}\pi_{k}=1 $$
+
+그렇다면 최종적으로 관측변수 $$\mathbf{x}$$ 와 latent variable $$\mathbf{z}$$의 joint distribution은 다음과 같이 표현할 수 있을 것이다. 이 수식에서 $$\theta = (\pi,\mathbf{A})$$ 를 의미한다.
+
+$$ p(\mathbf{x},\mathbf{z}\vert \theta) = p(z_{1}\vert\pi) \left[\prod_{n=2}^{N}p(z_{n}\vert z_{n-1},\mathbf{A})\right]\prod_{m=1}^{N}p(x_{m}\vert z_{m}) $$
+
+Gaussian Mixture Model(GMM)의 과정을 떠올리면, HMM을 이해하는 것이 한결 쉬워진다. GMM에서는 먼저 parameter인 확률 $$\pi_{k}$$ 를 통해 latent variabled의 class를 결정 짓는다. 그 이후에는 결정된 class의 가우시안 분포로부터 데이터 $$x_{i}$$ 를 생성해냈다. 이러한 과정을 N번 반복해서 N개의 독립된 데이터 집합을 생성한다.
+
+HMM의 경우는 살짝 다르다. 먼저 parameter인 확률 $$\pi_{k}$$에 의해 초기 latent variable $$z_{1}$$의 class를 결정 짓는다. 그리고 $$z_{1}$$ given인 상태에서의 $$x_{1}$$에 대한 sample을 추출한다. 이후 transition probability $$p(z_{2}\vert z_{1},\mathbf{A})$$에 의해 $$z_{2}$$의 class를 선택한다. $$z_{2}$$ 정보에 의해 $$x_{2}$$를 sampling하고 이러한 과정을 반복 수행한다.
+
+
 
 
 
