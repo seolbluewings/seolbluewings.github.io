@@ -58,20 +58,60 @@ $$ p(z_{n}\vert z_{n-1},\mathbf{A}) = \prod_{k=1}^{K}\prod_{j=1}^{K}A_{jk}^{I(z_
 
 그런데 최초 latent variable $$z_{1}$$의 경우는 영향을 미치는 또 다른 latent variable은 존재하지 않는다. 그렇다면, 우리는 $$z_{1}$$의 값을 결정짓는 분포를 가지고 있어야한다. 그 분포는 다음과 같이 결정 짓는다.
 
-$$ p(z_{1}\vert \pi) = \prod_{k=1}^K \pi_{k}^{I(z_{1}=k)} \quad \sum_{K}\pi_{k}=1 $$
+$$ p(z_{1}\vert \pi) = \prod_{k=1}^K \pi_{k}^{I(z_{1}=k)}, \quad \sum_{K}\pi_{k}=1 $$
 
-그렇다면 최종적으로 관측변수 $$\mathbf{x}$$ 와 latent variable $$\mathbf{z}$$의 joint distribution은 다음과 같이 표현할 수 있을 것이다. 이 수식에서 $$\theta = (\pi,\mathbf{A})$$ 를 의미한다.
+그렇다면 최종적으로 관측변수 $$\mathbf{x}$$ 와 latent variable $$\mathbf{z}$$의 joint distribution은 다음과 같이 표현할 수 있을 것이다. 이 수식에서 $$\theta = (\pi,\mathbf{A},\phi)$$ 를 의미한다. 여기서 $$\phi$$는 $$\mathbf{x}$$ 를 생성하기 위한 분포에서 사용할 parameter이다.
 
-$$ p(\mathbf{x},\mathbf{z}\vert \theta) = p(z_{1}\vert\pi) \left[\prod_{n=2}^{N}p(z_{n}\vert z_{n-1},\mathbf{A})\right]\prod_{m=1}^{N}p(x_{m}\vert z_{m}) $$
+$$ p(\mathbf{x},\mathbf{z}\vert \theta) = p(z_{1}\vert\pi) \left[\prod_{n=2}^{N}p(z_{n}\vert z_{n-1},\mathbf{A})\right]\prod_{m=1}^{N}p(x_{m}\vert z_{m},\phi_{m}) $$
 
 Gaussian Mixture Model(GMM)의 과정을 떠올리면, HMM을 이해하는 것이 한결 쉬워진다. GMM에서는 먼저 parameter인 확률 $$\pi_{k}$$ 를 통해 latent variabled의 class를 결정 짓는다. 그 이후에는 결정된 class의 가우시안 분포로부터 데이터 $$x_{i}$$ 를 생성해냈다. 이러한 과정을 N번 반복해서 N개의 독립된 데이터 집합을 생성한다.
 
 HMM의 경우는 살짝 다르다. 먼저 parameter인 확률 $$\pi_{k}$$에 의해 초기 latent variable $$z_{1}$$의 class를 결정 짓는다. 그리고 $$z_{1}$$ given인 상태에서의 $$x_{1}$$에 대한 sample을 추출한다. 이후 transition probability $$p(z_{2}\vert z_{1},\mathbf{A})$$에 의해 $$z_{2}$$의 class를 선택한다. $$z_{2}$$ 정보에 의해 $$x_{2}$$를 sampling하고 이러한 과정을 반복 수행한다.
 
+#### HMM의 parameter 추정 방식
 
+기본적으로 $$\mathbf{x} = \{x_{1},...,x_{N}\}$$ 이 존재한다면, MLE 방식을 통해 HMM의 parameter를 추정할 수 있을 것이다. 분포 $$p(\mathbf{x},\mathbf{z}\vert \theta)$$의 분포를 marginalized하여 $$p(\mathbf{x}\vert\theta)$$ 를 구할 수 있다.
 
+$$ p(\mathbf{x}\vert\theta) = \sum_{\mathbf{z}}p(\mathbf{x},\mathbf{z}\vert\theta) $$
 
+그러나 각 $$z_{n}$$이 서로 독립적인 관계가 아니라는 것이 marginalized 과정에서의 문제가 되는데 이 HMM 모델의 likelihood를 가장 효율적으로 최대화하는 방식인 EM 알고리즘을 활용하여 parameter를 추정할 수 있다.
 
+EM알고리즘의 Q function은 다음과 같이 표현될 수 있다.
+
+$$ Q(\theta\vert \theta^{(t)}) = \sum_{\mathbf{z}}p(\mathbf{z}\vert \mathbf{x},\theta^{(t)})\log{p(\mathbf{x},\mathbf{z}\vert\theta)} $$
+
+여기서 다음과 같은 2가지 notation을 정의하자.
+
+$$
+\begin{align}
+\gamma(z_{n}) &= p(z_{n}\vert \mathbf{x},\theta^{(t)}) \nonumber \\
+\xi(z_{n-1},z_{n}) &= p(z_{n-1},z_{n}\vert \mathbf{x},\theta^{(t)}) \nonumber
+\end{align}
+$$
+
+$$I(z_{n}=k)$$ 의 conditional probability는 $$\gamma(z_{n})$$이다. 각 latent variable이 전체 K개 중 어떤 class에 해당하는가? 라는 질문에 대한 기대값은 다음과 같이 표현할 수 있을 것이다.
+
+$$
+\begin{align}
+\gamma(z_{n}=k) &= \mathbb{E}(z_{n}=k) = \sum_{\mathbf{z}}\gamma(\mathbf{z})I(z_{n}=k) \nonumber \\
+\xi(z_{n-1}=j,z_{n}=k) &= \mathbb{E}(z_{n-1}=j,z_{n}=k) = \sum_{\mathbf{z}}\gamma(\mathbf{z})I(z_{n-1}=j)I(z_{n}=k)
+\end{align}
+$$
+
+이러한 새로운 표현법을 기존의 Q function에 적용하면 Q function을 다음과 같이 바꾸어 표현 가능하다.
+
+$$ Q(\theta\vert\theta^{(t)}) = \sum_{k=1}^{K}\gamma(z_{1}=k)\log{\pi_{k}}+ \sum_{n=2}^{N}\sum_{j=1}^{K}\sum_{k=1}^{K}\xi(z_{n-1}=j,z_{n}=k)\log{A_{jk}} + \sum_{n=1}^{N}\sum_{k=1}^{K}\gamma(z_{n}=k)\log{p(x_{n}\vert \phi_{k})} $$
+
+$$\gamma(z_{n})$$과 $$\xi(z_{n-1},z_{n})$$의 값을 계산해야하는데 이에 대한 계산 방법은 다음의 포스팅에서 소개하기로 한다.
+
+M Step에서는 Q(\theta\vert\theta^{(t)})를 각 $$\theta = (\pi,\mathbf{A},\phi)$$에 대해서 최대화시키며, 이 과정에서 $$\gamma(z_{n}), \xi(z_{n-1},z_{n})$$은 상수 취급하며 $$\pi, \mathbf{A}$$의 최대화는 Lagrange Multiplier를 활용하여 다음과 같은 결과를 얻을 수 있다.
+
+$$
+\begin{align}
+\pi_{k} &= \frac{ \gamma(z_{1}=k) }{\sum_{j=1}^{K}\gamma(z_{1}=j)} \nonumber \\
+A_{jk} &= \frac{ \sum_{n=2}^{N}\xi(z_{n-1}=j,z_{n}=k) }{ \sum_{l=1}^{K}\sum_{n=2}^{N}\xi(z_{n-1}=j,z_{n}=l)} \nonumber
+\end{align}
+$$
 
 [To be Continued...]
 
