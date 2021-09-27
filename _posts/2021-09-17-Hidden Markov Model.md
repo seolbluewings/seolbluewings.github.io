@@ -6,7 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
 
 데이터에 대한 분포 가정을 하는 과정에서 우리는 빈번하게 독립적이고 동일한 분포(iid condition)에서 생성된 데이터 집합에 초점을 둔다. 이 iid condition으로 인해 likelihood 값을 각 데이터 포인트에서 계산된 확률의 곱으로 표현이 가능하다.
 
@@ -113,8 +112,7 @@ A_{jk} &= \frac{ \sum_{n=2}^{N}\xi(z_{n-1}=j,z_{n}=k) }{ \sum_{l=1}^{K}\sum_{n=2
 \end{align}
 $$
 
-[To be Continued...]
-
+M Step에서는 $$Q(\theta\vert\theta^{(t)}$$ 를 또 다른 parameter인 $$\phi$$에 대해 최대화시켜야 하는데 이 Q function은 오로지 마지막 항에만 $$\phi$$란 parameter가 존재하여 앞의 항을 무시하고 마지막 항에 대해서만 최대화를 진행시키면 된다. 이는 i.i.d. 조건을 만족하는 데이터에 대한 Mixture Model에서 보았던 방식과 동일하다고 볼 수 있다.
 
 
 #### 참조 문헌
