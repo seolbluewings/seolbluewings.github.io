@@ -38,8 +38,8 @@ $$
 &= p(x_{n}\vert z_{n})p(x_{1},...,x_{n-1}\vert z_{n})p(z_{n}) \nonumber \\
 &= p(x_{n}\vert z_{n})p(x_{1},...,x_{n-1},z_{n}) \nonumber \\
 &= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1},z_{n-1},z_{n}) \nonumber \\
-&= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1},z_{n} \vert z_{n-1})p(z_{n-1}) \nonumber
-&= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1}\vert z_{n-1})p(z_{n}\vert z_{n-1})p(z_{n-1}) \nonumber
+&= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1},z_{n} \vert z_{n-1})p(z_{n-1}) \nonumber \\
+&= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1}\vert z_{n-1})p(z_{n}\vert z_{n-1})p(z_{n-1}) \nonumber \\
 &= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1},z_{n-1})p(z_{n}\vert z_{n-1})
 \end{align}
 $$
