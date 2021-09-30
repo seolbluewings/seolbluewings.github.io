@@ -38,9 +38,46 @@ $$
 &= p(x_{n}\vert z_{n})p(x_{1},...,x_{n-1}\vert z_{n})p(z_{n}) \nonumber \\
 &= p(x_{n}\vert z_{n})p(x_{1},...,x_{n-1},z_{n}) \nonumber \\
 &= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1},z_{n-1},z_{n}) \nonumber \\
-&= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1},z_{n} \vert z_{n-1})p(z_{n-1})
+&= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1},z_{n} \vert z_{n-1})p(z_{n-1}) \nonumber
+&= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1}\vert z_{n-1})p(z_{n}\vert z_{n-1})p(z_{n-1}) \nonumber
+&= p(x_{n}\vert z_{n})\sum_{z_{n-1}}p(x_{1},...,x_{n-1},z_{n-1})p(z_{n}\vert z_{n-1})
 \end{align}
 $$
+
+식의 마지막 형태를 보면, $$\alpha(z_{n-1})$$로 표현 가능한 부분이 보이게 된다. 따라서 $$\alpha(z_{n})$$에서는 다음과 같은 재귀적인 수식 표현이 가능하다. 이는 이전 상태의 $$\alpha$$ 값을 통해 다음 $$\alpha$$의 값을 구하는 forward 형식이다.
+
+$$ \alpha(z_{n}) = p(x_{n}\vert z_{n})\sum_{z_{n-1}}\alpha(z_{n-1})p(z_{n}\vert z_{n-1}) $$
+
+그렇다면 모든 것의 출발이 되는 포인트는 $$\alpha(z_{1})$$이 되겠다. 이 $$\alpha(z_{1})$$는 다음과 같이 계산할 수 있다.
+
+$$ \alpha(z_{1}) = p(x_{1},z_{1}) = p(x_{1}\vert z_{1})p(z_{1}) = \prod_{k=1}^{K}\left\{\pi_{k}p(x_{1}\vert \phi_{k})  \right\}^{I(z_{1}=k)} $$
+
+Chain 구조에서 첫번째 latent variable node부터 시작하여 각각의 latent variable node에 대해 $$\alpha(z_{n})$$ 계산이 가능해진다.
+
+$$\beta(z_{n})$$ 에 대해서도 마찬가지다. 대신 $$\beta(z_{n})$$에 대해서는 $$\beta(z_{n+1})$$을 바탕으로 $$\beta(z_{n})$$을 계산하는 backward 방식이다.
+
+$$
+\begin{align}
+\beta(z_{n}) &= p(x_{n+1},...,x_{N}\vert z_{n}) \nonumber \\
+&= \sum_{z_{n+1}}p(x_{n+1},...,x_{N},z_{n+1}\vert z_{n}) \nonumber \\
+&= \sum_{z_{n+1}}p(x_{n+1},...,x_{N}\vert z_{n+1})p(z_{n+1}\vert z_{n}) \nonumber \\
+&= \sum_{z_{n+1}}p(x_{n+2},...,x_{N}\vert z_{n+1})p(x_{n+1}\vert z_{n+1})p(z_{n+1}\vert z_{n}) \nonumber \\
+&= \sum_{z_{n+1}}\beta(z_{n+1})p(x_{n+1}\vert z_{n+1})p(z_{n+1}\vert z_{n}) \nonumber
+\end{align}
+$$
+
+forward 방식이 최초 latent variable $$z_{1}$$에서 출발했다면, backward 방식은 최종 latent variable $$z_{N}$$으로부터 출발하게 된다.
+
+$$n=N$$으로 설정하면 $$\beta(z_{N})$$에 대해서는 구하기 용이하다. 아래의 식을 고려한다면, $$\beta(z_{N})$$은 K개의 1로 구성된 벡터라는 사실을 알 수 있다.
+
+$$ p(z_{N}\vert \mathbf{x}) = \frac{p(\mathbf{x},z_{N})\beta(z_{N})}{p(\mathbf{x})} $$
+
+그리고 $$\beta(z_{N})$$은 K개의 1로 구성된 벡터라는 사실을 통해서 $$\mathbf{x}$$ 에 대한 likelihood 역시 간소화시킬 수 있다.
+
+$$ p(\mathbf{x}) = \sum_{z_{n}}\alpha(z_{n})\beta(z_{n}) = \sum_{z_{N}}\alpha(z_{N}) $$
+
+
+
 
 [to be continued...]
 
