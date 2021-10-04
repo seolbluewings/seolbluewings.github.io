@@ -1,12 +1,11 @@
 ---
 layout: post
 title:  "Concept of Hidden Markov Model 2"
-date: 2021-09-17
+date: 2021-09-27
 author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
 
 앞선 포스팅에서는 HMM 모델에서 추정하게 될 항목들을 계산하기 위해서 EM 알고리즘을 활용하게 되며, E Step에서 정의한 notation을 계산하는 방법에 대해 추가적인 논의가 필요하다고 소개하였다.
 
@@ -76,10 +75,38 @@ $$ p(z_{N}\vert \mathbf{x}) = \frac{p(\mathbf{x},z_{N})\beta(z_{N})}{p(\mathbf{x
 
 $$ p(\mathbf{x}) = \sum_{z_{n}}\alpha(z_{n})\beta(z_{n}) = \sum_{z_{N}}\alpha(z_{N}) $$
 
+$$\xi(z_{n-1},z_{n})$$ 에 대해 계산하는 것도 마찬가지 방식이다. $$\xi$$는 $$K \times K$$ 크기의 $$(z_{n-1},z_{n})$$에 대한 조건부 분포일 뿐이다.
 
+$$
+\begin{align}
+\xi(z_{n-1},z_{n}) &= p(z_{n-1},z_{n}\vert\mathbf{x}) \nonumber \\
+&= \frac{p(\mathbf{x}\vert z_{n-1},z_{n})p(z_{n-1},z_{n})}{p(\mathbf{x})} \nonumber \\
+&= \frac{ p(x_{1},...,x_{n-1}\vert z_{n-1})p(x_{n}\vert z_{n})p(x_{n+1},...,x_{N}\vert z_{n})p(z_{n}\vert z_{n-1})p(z_{n-1})}{ p(\mathbf{x})} \nonumber \\
+&= \frac{\alpha(z_{n-1})p(x_{n}\vert z_{n})p(z_{n}\vert z_{n-1})\beta(z_{n})}{p(\mathbf{x})} \nonumber
+\end{align}
+$$
 
+이러한 결과에 따라 $$\alpha,\beta$$만 구할 수 있다면, $$\xi$$에 대한 계산이 가능해진다.
 
-[to be continued...]
+EM 알고리즘을 이용해 HMM 모델을 학습시키는 과정을 표현하면 다음과 같을 것이다.
+
+1. $$\theta = (\pi,\mathbf{A},\phi)$$ 에 대해 초기값 $$\theta^{(1)}$$ 선택한다.
+2. $$\alpha$$에 대한 forward recursive, $$\beta$$에 대한 backward recursive 계산을 수행하여 $$\gamma(z_{n}), \xi(z_{n-1},z_{n})$$ 을 계산하며, likelihood 역시 계산한다. 이 과정이 E Step 이다.
+3. M Step에서는 E Step의 결과 바탕으로 $$\theta^{(2)}$$ 값을 구하게 되며, 이 과정을 적절한 수렴 기준이 만족될 때까지 반복한다.
+
+HMM 모델을 학습한 다음에 가장 필요한 것은 새로운 데이터 $$x_{N+1}$$ 에 대한 예측 분포일 것이다. 기존 데이터 $$\mathbf{x} = \{x_{1},...,x_{N}\}$$이 주어진 상태에서 새로운 데이터 $$x_{N+1}$$ 의 값을 예측하기 위한 분포는 다음과 같이 구할 수 있다.
+
+$$
+\begin{align}
+p(x_{N+1}\vert \mathbf{x}) &= \sum_{z_{N+1}}p(x_{N+1},z_{N+1}\vert \mathbf{x}) \nonumber \\
+&= \sum_{z_{N+1}}p(x_{N+1}\vert z_{N+1})p(Z_{N+1}\vert\mathbf{x}) \nonumber \\
+&= \sum_{z_{N+1}}p(x_{N+1}\vert z_{N+1})\sum_{z_{N}}p(z_{N+1},z_{N}\vert \mathbf{x}) \nonumber \\
+&= \sum_{z_{N+1}}p(x_{N+1}\vert z_{N+1})\sum_{z_{N}}p(z_{N+1}\vert z_{N})p(z_{N} \vert \mathbf{x}) \nonumber \\
+&= \sum_{z_{N+1}}p(x_{N+1}\vert z_{N+1})\sum_{z_{N}}p(z_{N+1}\vert z_{N})\frac{p(z_{N},\mathbf{x})}{p(\mathbf{x})} \nonumber \\
+&= \frac{1}{p(\mathbf{x})}\sum_{z_{N+1}}p(x_{N+1}\vert z_{N+1})\sum_{z_{N}}p(z_{N+1}\vert z_{N})\alpha(z_{N})
+\end{align}
+$$
+
 
 #### 참조 문헌
 1. [PRML](https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf)
