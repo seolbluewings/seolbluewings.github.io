@@ -34,15 +34,52 @@ $$ V(\mathcal{T},\mathbf{y}) \equiv \sum_{k=0}^{K}c(y_{t_{k}:t_{k+1}}) $$
 
 분석 이전 Change Point의 개수 $$K$$에 대한 사전 정보 유무에 따라 objective function $$V(\mathcal{T},\mathbf{y})$$ 를 최소화하는 방법은 2가지로 나뉜다.
 
-1. $$K$$의 값을 알 때,
+- $$K$$의 값을 알 때,
 
-$$ \text{min}_{\vert\mathcal{T}\vert = K} V(\mathcal{T},\mathbf{y}) $$
+$$ \text{min}_{\mathcal{T}} V(\mathcal{T},\mathbf{y}) \quad \text{s.t.} \quad \vert\mathcal{T}\vert = K $$
 
-2. $$K$$의 값을 모를 때,
+- $$K$$의 값을 모를 때,
 
 $$ \text{min}_{\mathcal{T}} V(\mathcal{T},\mathbf{y}) + \text{pen}(\mathcal{T}) $$
 
 여기서 $$\text{pen}(\mathcal{T})$$ 는 segmentation $$\mathcal{T}$$의 complexity를 측정한 값이다.
+
+CPD를 수행하기 위해서는 Cost Function과 Search Method에 대해 알아야 한다.
+
+#### Cost Function
+
+먼저 Cost Function은 데이터의 subset $$y_{a:b}$$ 가 얼마나 동질적(homogenous)인가? 를 보여주는 수치라고 할 수 있다. 데이터의 subset $$y_{a:b}$$가 동질적이라는 것은 해당 subset에서의 Change Point가 존재하지 않는다는 걸 의미한다.
+
+대표적인 방식은 MLE(Maximum Likelihood Estimation) 이다. MLE 방식을 선택할 때, $$\mathbf{y} = \left\{y_{t}  \right\}^{T}_{t=1}$$ 를 각각 independent한 random variable로 간주한다.
+
+각 Change Point 시점 $$\mathcal{T} = \{t_{1},...,t_{K}\}$$ 별로 시점 $$t_{k}$$에 상응하는 parameter $$\theta_{k}$$ 가 존재하며 objective function $$V(\mathcal{T},\mathbf{y})$$ 를 negative log-likelihood로 정의하였을 때, CPD는 이에 대한 MLE를 취하는 것과 동등해진다.
+
+$$ c(y_{a:b}) = - \text{Sup}_{\theta}\sum_{t=a+1}^{b}\log{f(y_{t}\vert \theta)} $$
+
+그런데 분포를 가정하는 것에서부터 이 방식은 데이터에 대한 사전 지식(prior knowledge)이 필요하다고 볼 수 있다.
+
+이에 대한 대안으로 Mean-Shift 방식이 있다. 이는 데이터 포인트 $$y_{t}$$ 에서 Segmentation 시점마다의 가우시안 분포의 평균을 뺀 것의 L2 norm을 구하는 것이다. $$\var{y}_{a:b}$$ 는 empirical 하게 $$y_{a:b}$$의 평균으로 대체 가능하다.
+
+이 방식은 패키지의 옵션으로도 만들어져있고 현실적으로 이 방법을 사용하는 것이 바람직해 보인다.
+
+$$ c(y_{a:b}) = \sum_{t=a+1}^{b} \vert\vert y_{t}-\bar{y}_{a:b}\vert\vert^{2}_{2} $$
+
+#### Search Method
+
+Cost Function은 이미 Segmentation이 정해진 상태에서 Cost를 최소화하는 방식을 알아본 것이다. 따라서 이번에는 주어진 Signal(time-series) 데이터의 적절한 Segmentation을 찾는 방법을 알아보고자 한다.
+
+가장 대표적인 Segmentation 방법은 Binary Segmentation이다. 이는 hyperparameter tuning에서의 greed search와 비슷한 느낌을 주는 방식이다.
+
+최초의 Segmentation 지점을 $$\hat{t}_{1}$$ 이라 하면, 다음과 같은 방식으로 그 지점을 찾는다.
+
+$$ \hat{t}_{1} \equiv \text{argmin}_{1\leq t \leq T-1} c(y_{0:t}) + c(y_{t:T}) $$
+
+Cost Function의 합이 가장 작아지는 지점을 계속 찾는 방법이기 때문에 greedy한 방법이라 표현하는 것은 아주 합리적이다. t시점 전후로 데이터를 나누어 Cost Function의 합이 최소화되는 지점을 찾게 되며 이를 그림으로 표현하면 아래와 같을 것이다.
+
+![CPD](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CPD2.png?raw=true){:width="60%" height="60%"}{: .aligncenter}
+
+먼저 중앙 지점에서 Segmentation이 이루어지며 그 이후에는 첫번째 Subset 내에서 다시 추가적인 Segmentation이 진행된다. 
+
 
 [to be continued...]
 
