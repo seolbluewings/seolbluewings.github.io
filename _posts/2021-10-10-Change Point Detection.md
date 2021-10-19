@@ -14,7 +14,7 @@ CPD는 앞으로 데이터 변화가 일어날지 탐지하기 위한 예측 목
 
 CPD의 목적은 아래와 같은 데이터가 주어졌을 때, 250이란 지점에서 데이터의 분포가 급격하게 변하게 되었음을 탐지하기 위함이다.
 
-![CPD](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CPD.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
+![CPD](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CPD.png?raw=true){:width="80%" height="80%"}{: .aligncenter}
 
 CPD에 대한 논의를 이어가기 위해서 몇가지 notation에 대한 정의를 내려야 한다.
 
@@ -58,7 +58,7 @@ $$ c(y_{a:b}) = - \text{Sup}_{\theta}\sum_{t=a+1}^{b}\log{f(y_{t}\vert \theta)} 
 
 그런데 분포를 가정하는 것에서부터 이 방식은 데이터에 대한 사전 지식(prior knowledge)이 필요하다고 볼 수 있다.
 
-이에 대한 대안으로 Mean-Shift 방식이 있다. 이는 데이터 포인트 $$y_{t}$$ 에서 Segmentation 시점마다의 가우시안 분포의 평균을 뺀 것의 L2 norm을 구하는 것이다. $$\var{y}_{a:b}$$ 는 empirical 하게 $$y_{a:b}$$의 평균으로 대체 가능하다.
+이에 대한 대안으로 Mean-Shift 방식이 있다. 이는 데이터 포인트 $$y_{t}$$ 에서 Segmentation 시점마다의 가우시안 분포의 평균을 뺀 것의 L2 norm을 구하는 것이다. $$\bar{y}_{a:b}$$ 는 empirical 하게 $$y_{a:b}$$의 평균으로 대체 가능하다.
 
 이 방식은 패키지의 옵션으로도 만들어져있고 현실적으로 이 방법을 사용하는 것이 바람직해 보인다.
 
@@ -76,7 +76,7 @@ $$ \hat{t}_{1} \equiv \text{argmin}_{1\leq t \leq T-1} c(y_{0:t}) + c(y_{t:T}) $
 
 Cost Function의 합이 가장 작아지는 지점을 계속 찾는 방법이기 때문에 greedy한 방법이라 표현하는 것은 아주 합리적이다. t시점 전후로 데이터를 나누어 Cost Function의 합이 최소화되는 지점을 찾게 되며 이를 그림으로 표현하면 아래와 같을 것이다.
 
-![CPD](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CPD2.png?raw=true){:width="60%" height="60%"}{: .aligncenter}
+![CPD](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/CPD2.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
 먼저 중앙 지점에서 Segmentation이 이루어지며 그 이후에는 첫번째 Subset 내에서 다시 추가적인 Segmentation이 진행된다. 
 
