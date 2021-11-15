@@ -65,10 +65,24 @@ df.loc[df['Hits']>= 200,:]
 df.loc[(df['Hits']>= 200) & (df['HmRun'] > 10),:]
 ```
 
-- OR 조건이면 | 으로 이어주면 되고 AND 조건이면 &로 이어주면 됨
+- OR 조건이면 \| 으로 이어주면 되고 AND 조건이면 &로 이어주면 됨
 - 다만 각 조건은 ()로 묶어서 표현해주어야 함
 
 #### 결측값/중복 데이터 처리
+
+```python
+df.dropna(axis = 0, how = 'any')
+df.dropna(subset = ['Hits','HmRun'])
+df.fillna({'Salary' : 10})
+df.fillna(df['Salary'].mean())
+df.fillna(method = 'ffill'), df.fillna(method = 'bfill')
+```
+
+- df.dropna()의 default 옵션은 axis = 0, how = 'any' 이다. 중복 데이터가 존재하는 행(axis = 0)을 제거하고 하나의 Column 이라도 Null이 존재하면 제거
+- subset은 특정 Column에서만 Null 데이터를 찾고자할 때 사용한다.
+- df.fillna() 함수는 {} 형태로 Column : Value 형태로 입력해주면 된다.
+- mean(), median() 등과 같은 값으로도 Null 값 대체 가능
+- 바로 직전 데이터로 대체 ffill, 바로 다음 데이터로 대체 bfill
 
 
 #### 데이터 순서정렬
