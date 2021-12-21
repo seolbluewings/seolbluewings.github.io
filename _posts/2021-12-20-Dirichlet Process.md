@@ -24,7 +24,37 @@ $$ p(\theta \vert \alpha) = \frac{\Gamma\left(\sum_{i=1}^{K}\alpha_{i}\right)}{\
 
 Dirichlet Distribution으로 얻을 수 있는 결과 $$\theta = (\theta_{1},...,\theta_{K})$$ 가 Probability의 공리 조건들을 만족하기 때문에 우리는 Dirichlet Distribution의 확률 변수를 Multinomial Distribution의 parameter로 활용할 수 있다.
 
-이 2개의 분포는 서로 Conjugate한 관계를 지니고 있는데 
+이 2개의 분포는 서로 Conjugate한 관계를 지니고 있고 Dirichlet Distribution이 Prior로서의 역할, Multinomial Distribution이 Likelihood로의 역할을 하여 Dirichlet Distribution 형태의 Posterior가 도출된다.
+
+$$
+\begin{align}
+p(\theta \vert \mathbf{x},\alpha) &\propto p(\theta\vert\alpha)p(\mathbf{x}\vert\theta) \nonumber \\
+&\propto \frac{\Gamma\left(\sum_{i=1}^{K}\alpha_{i}\right)}{\prod_{i=1}^{K}\Gamma(\alpha_{i})} \prod_{i=1}^{K}\theta_{i}^{\alpha_{i}-1} \times \frac{N!}{\prod_{i=1}^{M}x_{i}!}\prod_{i=1}^{M}\theta_{i}^{x_{i}} \nonumber \\
+&\propto \frac{\Gamma\left(\sum_{i=1}^{K}\alpha_{i}+x_{i}\right)}{\prod_{i=1}^{K}\Gamma(\alpha_{i}+x_{i})} \prod_{i=1}^{K}\theta_{i}^{\alpha_{i}+x_{i}-1} \nonumber
+\end{align}
+$$
+
+이러한 관계에 따라 Dirichlet Distribution이 Prior로 Multinomial Distribution에 영향을 미치고 이 때, 데이터가 하나 Sampling 된다면 이 결과는 Posterior에 반영되어 Dirichlet Distribution을 업데이트하는 것으로 받아들일 수 있다.
+
+
+#### Definition of Dirichlet Process
+
+Dirichlet Process(이하 DP)는 discrete한 probability measure $$G$$에 대한 distribution이라 볼 수 있다. probability measure는 확률이 정의되는 공간으로 해석하면 받아들이기 편한 것 같다. Dirichlet Distribution은 다음과 같이 표현할 수 있다.
+
+$$
+\begin{align}
+G\vert\alpha,H &\sim DP(\alpha, H) \nonumber \\
+\left(G(A_{1}),...,G(A_{r})\right)\vert\alpha,H &\sim \text{Dirichlet}\left(\alpha H(A_{1}),...,\alpha H(A_{r})\right) \nonumber
+\end{align}
+$$
+
+여기서 $$\alpha$$는 기존 Dirichlet Distribution에서 사용했던 parameter이며, H는 base distribution으로 DP는 기존의 Dirichlet Distribution의 parameter에 pdf를 곱해준 것이라 볼 수 있다.
+
+
+
+
+
+
 
 
 포스팅 내용에 대한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/cheating%20sheet/pandas%20cheating%20sheet.ipynb)에서 확인 가능합니다.
