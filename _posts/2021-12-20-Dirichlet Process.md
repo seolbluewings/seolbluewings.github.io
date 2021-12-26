@@ -39,7 +39,18 @@ $$
 
 #### Definition of Dirichlet Process
 
-Dirichlet Process(이하 DP)는 discrete한 probability measure $$G$$에 대한 distribution이라 볼 수 있다. probability measure는 확률이 정의되는 공간으로 해석하면 받아들이기 편한 것 같다. Dirichlet Distribution은 다음과 같이 표현할 수 있다.
+Dirichlet Process(이하 DP)는 discrete한 distribution $$G$$에 대한 flexible한 probability distribution이라 볼 수 있다. 이 probability distribution $$G$$는 다음의 조건을 만족시키는 probability measure $$\Omega$$에서 discrete 형태로 정의된다.
+
+$$
+\begin{align}
+\Omega &= S_{1} \cup S_{2} \cup \cdots \cup S_{r} \nonumber \\
+\phi &= S_{1} \cap S_{2} \cap \codts \cap S_{r} \nonumber
+\end{align}
+$$
+
+$$\Omega$$는 확률이 정의되는 Space로 인식하는 것이 이해하는데 직관적이며 확률이 정의되는 공간이 서로 겹치지 않는 상태로 r개의 공간으로 완전하게 나뉘어진다고 한다.
+
+이러한 상황에서 Dirichlet Distribution은 다음과 같이 표현할 수 있다.
 
 $$
 \begin{align}
@@ -48,11 +59,26 @@ G\vert\alpha,H &\sim DP(\alpha, H) \nonumber \\
 \end{align}
 $$
 
-여기서 $$\alpha$$는 기존 Dirichlet Distribution에서 사용했던 parameter이며, H는 base distribution으로 DP는 기존의 Dirichlet Distribution의 parameter에 pdf를 곱해준 것이라 볼 수 있다.
+여기서 $$\alpha$$는 기존 Dirichlet Distribution에서 사용했던 parameter이며, H는 $$\Omega$$의 공간에서의 base distribution으로 DP는 기존의 Dirichlet Distribution의 parameter에 pdf를 곱해준 것이라 볼 수 있다.
 
+DP를 통해 생성되는 $$\theta_{1},...,\theta_{n}$$ 도 DP를 따르며 아래와 같은 방식으로 표현할 수 있다.
 
+$$ G\vert\theta_{1},...,\theta_{n} \sim DP\left(\alpha + n, \frac{\alpha}{\alpha+n}H + \frac{1}{\alpha+n}\sum_{i=1}^{n}\delta_{\theta_{i}}(S)\right) $$
 
+새로운 observation인 $$\theta \vert \theta_{1},...,\theta_{n}$$ 에 대한 posterior predictive distribution은 기존의 base function H와 관측값이 결합된 형태이다
 
+이는 앞서 소개했던 Multinomial Distribution와 Dirichlet Distribution의 Conjugate 성질을 고려하면 받아들일 수 있는 구조이다.
+
+여기서 $$\delta$$ func은 DP에서 sampling된 $$\theta_{i}$$ 가 Space $$S$$에 포함되어 있는지 여부에 따라 값이 결정되는 함수이다.
+
+$$
+\delta_{\theta_{i}}(S) = \begin{cases}
+1 \quad \text{if} \quad \theta_{i} \in S \\
+0 \quad \text{if} \quad \theta_{i} \notin S
+\end{cases}
+$$
+
+probability measure $$\Omega$$가 r개의 구역으로 나뉘어지는데 $$\theta_{i}$$가 r개의 구역 중 어느 한 곳에 속하는가를 표현하는 것으로 보면 되고 DP는 이 r이란 값을 무한대로 늘리는 과정까지 포함한다. 
 
 
 
