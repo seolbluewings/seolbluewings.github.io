@@ -44,7 +44,7 @@ Dirichlet Process(이하 DP)는 discrete한 distribution $$G$$에 대한 flexibl
 $$
 \begin{align}
 \Omega &= S_{1} \cup S_{2} \cup \cdots \cup S_{r} \nonumber \\
-\phi &= S_{1} \cap S_{2} \cap \codts \cap S_{r} \nonumber
+\phi &= S_{1} \cap S_{2} \cap \cdots \cap S_{r} \nonumber
 \end{align}
 $$
 
@@ -78,9 +78,17 @@ $$
 \end{cases}
 $$
 
-probability measure $$\Omega$$가 r개의 구역으로 나뉘어지는데 $$\theta_{i}$$가 r개의 구역 중 어느 한 곳에 속하는가를 표현하는 것으로 보면 되고 DP는 이 r이란 값을 무한대로 늘리는 과정까지 포함한다. 
+probability measure $$\Omega$$가 r개의 구역으로 나뉘어지는데 $$\theta_{i}$$가 r개의 구역 중 어느 한 곳에 속하는가를 표현하는 것으로 보면 되고 DP는 이 r이란 값을 무한대로 늘리는 과정까지 포함한다.
 
+Probability Measure Space $$\Omega$$를 r개로 나누었는데 이를 $$r \to \infty$$ 로 확장시켜보자. 이는 $$\Omega$$를 r개의 disjoint한 공간으로 분할시키는 것으로 이해할 수 있다.
 
+$$\pi_{r}$$은 r번째 공간에 분류될 확률이며 $$\sum_{r=1}^{\infty}\pi_{r} = 1$$ 이 성립한다. $$\theta_{r}$$은 r번째 공간의 평균값으로 받아들일 수 있어 DP는 다음과 같이도 표현할 수 있다.
+
+$$ G(S) = \sum_{r=1}^{\infty}\pi_{r}\delta_{\theta_{r}}(S) $$
+
+DP를 통한 Sampling을 실질적으로 수행하기 위해서는 무한대 차원에서 $$\pi_{r},\theta_{r}$$를 만들어낼 방법이 먼저 필요하다고 볼 수 있다. 이에 대한 이론적 배경으로는 Stick Breaking Process, Poly-Urn Scheme, Chinese Restaurant Process가 있다.
+
+#### Stick Breaking Process
 
 
 포스팅 내용에 대한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/cheating%20sheet/pandas%20cheating%20sheet.ipynb)에서 확인 가능합니다.
