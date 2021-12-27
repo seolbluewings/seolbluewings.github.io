@@ -101,7 +101,7 @@ v_{k}\vert\alpha &\sim \text{Beta}(1,\alpha) \nonumber \\
 \end{align}
 $$
 
-이 수식은 아래와 같은 길이가 1인 막대가 있다고 가정했을 때 이해가 한결 쉬워진다. 
+이 수식은 아래와 같은 길이가 1인 막대가 있다고 가정했을 때 이해가 한결 쉬워진다.
 
 ![DP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DP2.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
