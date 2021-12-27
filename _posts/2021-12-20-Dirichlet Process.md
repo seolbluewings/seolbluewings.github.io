@@ -90,5 +90,22 @@ DP를 통한 Sampling을 실질적으로 수행하기 위해서는 무한대 차
 
 #### Stick Breaking Process
 
+Stick Breaking Process 무한대 차원에서의 Probability Distribution을 정의하기 위해 사용되는 방법이다. 이 과정을 통해 우리는 $$\pi_{k}$$와 $$\theta_{k}$$ 에 대한 생성을 그림 그릴 수 있다.
+
+$$k=1,2,...,\infty$$ 인 상황에서 $$v_{k}$$가 다음의 Beta분포를 따르며 $$\pi_{k}$$가 $$v_{k}$$ 로 인해 정의된다고 하자.
+
+$$
+\begin{align}
+v_{k}\vert\alpha &\sim \text{Beta}(1,\alpha) \nonumber \\
+\pi_{k} &= v_{k}\prod_{i=1}^{k-1}(1-v_{i}) \nonumber \\
+\end{align}
+$$
+
+이 수식은 아래와 같은 길이가 1인 막대가 있다고 가정했을 때 이해가 한결 쉬워진다. 
+
+![DP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DP2.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
+
+
+
 
 포스팅 내용에 대한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/cheating%20sheet/pandas%20cheating%20sheet.ipynb)에서 확인 가능합니다.
