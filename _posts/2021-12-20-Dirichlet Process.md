@@ -63,7 +63,7 @@ $$
 
 DP를 통해 생성되는 $$\theta_{1},...,\theta_{n}$$ 도 DP를 따르며 아래와 같은 방식으로 표현할 수 있다.
 
-$$ G\vert\theta_{1},...,\theta_{n} \sim DP\left(\alpha + n, \frac{\alpha}{\alpha+n}H + \frac{1}{\alpha+n}\sum_{i=1}^{n}\delta_{\theta_{i}}(S)\right) $$
+$$ G\vert\theta_{1},...,\theta_{n} \sim DP\left(\alpha + n, \frac{\alpha}{\alpha+n}H + \frac{1}{\alpha+n}\sum_{i=1}^{n}\delta_{\theta_{i}}\right) $$
 
 새로운 observation인 $$\theta \vert \theta_{1},...,\theta_{n}$$ 에 대한 posterior predictive distribution은 기존의 base function H와 관측값이 결합된 형태이다
 
@@ -90,20 +90,37 @@ DP를 통한 Sampling을 실질적으로 수행하기 위해서는 무한대 차
 
 #### Stick Breaking Process
 
-Stick Breaking Process 무한대 차원에서의 Probability Distribution을 정의하기 위해 사용되는 방법이다. 이 과정을 통해 우리는 $$\pi_{k}$$와 $$\theta_{k}$$ 에 대한 생성을 그림 그릴 수 있다.
+Stick Breaking Process 무한대 차원에서의 Probability Distribution을 Construct하기 위해 사용되는 방법이다. 이 과정을 통해 우리는 $$\pi_{k}$$와 $$\theta_{k}$$ 에 대한 생성을 그림 그릴 수 있다.
 
 $$k=1,2,...,\infty$$ 인 상황에서 $$v_{k}$$가 다음의 Beta분포를 따르며 $$\pi_{k}$$가 $$v_{k}$$ 로 인해 정의된다고 하자.
 
 $$
 \begin{align}
-v_{k}\vert\alpha &\sim \text{Beta}(1,\alpha) \nonumber \\
-\pi_{k} &= v_{k}\prod_{i=1}^{k-1}(1-v_{i}) \nonumber \\
+\beta_{k}\vert\alpha &\sim \text{Beta}(1,\alpha) \nonumber \\
+\pi_{k} &= \beta_{k}\prod_{i=1}^{k-1}(1-\beta_{i}) \nonumber \\
 \end{align}
 $$
 
 이 수식은 아래와 같은 길이가 1인 막대가 있다고 가정했을 때 이해가 한결 쉬워진다.
 
 ![DP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DP2.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
+
+$$\sum_{i=1}^{\infty}\pi_{i}=1$$인 상황에서 각 $$\pi_{i}$$는 길이가 1인 막대에서 차지하고 있는 길이의 비중으로 해석할 수 있고 이는 확률의 형태와도 같다.
+
+길이가 1인 Stick을 2개의 부분으로 나눈다고할 때, 첫번째 파트는 $$\beta_{1}=\pi_{1}$$만큼의 크기를 갖는다고 하자. 그러면 남은 부분의 크기는 $$1-\beta_{1}$$이 된다. 그 다음 $$1-\beta_{1}$$ 부분을 다시 나눈다고 했을 때, 이 때 $$\beta_{2}(1-\beta_{1})$$과 $$(1-\beta_{2})(1-\beta_{1})$$ 으로 나뉘는데 $$\beta_{2}(1-\beta_{1})$$을 $$\pi_{2}$$라 한다. 그리고 이 과정을 무한하게 반복하면 앞서 언급한 식과 같이 표현할 수 있다.
+
+$$\delta_{\theta_{k}}$$ 는 k번째 broken stick을 선택하는 경우를 의미하며 각각 broken stick의 길이 $$\pi_{k}$$ 들은 선택될 확률로서의 역할을 한다.
+
+$$ G = \sum_{r=1}^{\infty}\pi_{r}\delta_{\theta_{r}} $$
+
+$$\alpha$$ parameter를 결정하는 것에 의해 확률로서의 역할을 하는 $$\pi$$가 결정되며 그에 따라 Cluster 구성에 영향을 미치게 된다. DP는 기존의 Clustering과 달리 명시적으로 Cluster의 개수 k를 명시하게 입력하지는 않으나 $$\alpha$$란 값을 통해 여전히 사람의 handling이 필요한 방식이라 볼 수 있다.
+
+#### Chinese Restaurant Process
+
+Stick Breaking Process가 DP에 대한 distribution construction에 초점을 둔 방식이었다면, Chinese Restaurant Process는 DP를 통한 데이터 Sampling에 초점을 둔 방식이다. CRP는 Polya-Urn Scheme와 유사하다.
+
+$$ G\vert\theta_{1},...,\theta_{n},\alpha,H \sim \text{DP}\left(\alpha+n, \frac{\alpha}{\alpha+n}H + \frac{1}{\alpha+n}\sum_{i=1}^{n}\delta_{\theta_{i}}\right) $$
+
 
 
 
