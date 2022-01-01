@@ -121,7 +121,34 @@ Stick Breaking Process가 DP에 대한 distribution construction에 초점을 �
 
 $$ G\vert\theta_{1},...,\theta_{n},\alpha,H \sim \text{DP}\left(\alpha+n, \frac{\alpha}{\alpha+n}H + \frac{1}{\alpha+n}\sum_{i=1}^{n}\delta_{\theta_{i}}\right) $$
 
+$$\theta_{1},...,\theta_{n-1},\alpha,H$$가 주어진 조건에서 $$\theta_{n}$$에 대한 Sampling을 진행한다면, 이 상황에 대한 DP는 다음과 같이 표현될 수 있다.
 
+$$
+\begin{align}
+\theta_{n}\vert\theta_{1},...,\theta_{n-1},\alpha,H &\sim \text{DP}\left(\alpha+n-1, \frac{\alpha}{\alpha+n-1}H + \frac{1}{\alpha+n-1}\sum_{i=1}^{n-1}\delta_{\theta_{i}}\right) \nonumber \\
+\mathbb{E}[\theta_{n}\vert\theta_{1},...,\theta_{n-1},\alpha,H] &\sim  \frac{\alpha}{\alpha+n-1}H + \frac{1}{\alpha+n-1}\sum_{i=1}^{n-1}\delta_{\theta_{i}} \nonumber \\
+&\sim \frac{\alpha}{\alpha+n-1}H + \frac{1}{\alpha+n-1}\sum_{k=1}^{K}\delta_{\theta_{k}}
+\end{align}
+$$
+
+각각의 $$n-1$$개의 데이터 포인트가 k번째 broken stick을 결정했는지 여부만을 1,0으로 변환하여 더하는 것이기 때문에 두 수식은 동일하다고 볼 수 있다.
+
+이로 인해 $$\theta_{n}\vert\theta_{1},...,\theta_{n-1},\alpha$$ 를 구할 수 있다.
+
+$$
+p(\theta_{n}\vert\theta_{1},...,\theta_{n-1},\alpha) = \begin{cases}
+\frac{N_{k}}{\alpha+n-1} \quad \text{k번재 cluster로 assign할 확률} \\
+\frac{\alpha}{\alpha+n-1} \quad \text{새로운 cluster를 만들어낼 확률}
+\end{cases}
+$$
+
+이를 보다 직관적으로 이해하기 위해 다음과 같은 상황을 가정해보자. 무한개의 테이블이 설치 가능한 식당이 있고 총 n명의 손님이 순차적으로 입장한다고 하자. 입장한 손님은 테이블을 하나 선택하게 되며 첫번째 입장 손님이 선택한 테이블이 첫번째 테이블이 된다. 두번째 손님은 첫번째 손님이 선택한 테이블을 선택할 수 있고 새로운 테이블을 선택할 수도 있다.
+
+이를 데이터 관점에서 표현하자면, 첫번째 데이터에 대해 Cluster가 부여되며, 두번째 데이터부터는 기존의 Cluster에 할당되거나 새로운 Cluster를 생성해낼 수 있다는 것이다.
+
+8명의 손님이 아래의 그림과 같이 존재하는 상황에서 9번째 손님이 입장한다고 하자. 9번째 손님이 테이블을 선택할 확률은 아래와 같다. \alpha값에 따라 새로운 Cluster를 만들게 될 확률이 조정될 것이라 볼 수 있고 기존 데이터의 Cluster 할당이 새로운 데이터의 Cluster 할당에 영향을 미치기 때문에 값이 유의미하게 Assign 된 Cluster(테이블)은 최적으로 유한할 것이라 볼 수 있다.
+
+![DP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DP3.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
 
 
