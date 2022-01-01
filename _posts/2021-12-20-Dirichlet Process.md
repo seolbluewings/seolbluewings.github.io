@@ -1,12 +1,11 @@
 ---
 layout: post
-title:  "Dirichlet Process"
+title:  "Concept of Dirichlet Process"
 date: 2021-12-20
 author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
 
 Dirichlet Process는 Dirichlet Distribution을 따르는 Random Process로 Unsupervised Learning에 자주 활용된다. 기존에 학습했던 Unsupervised Learning은 GMM, K-Means와 같은 Clustering 문제였다. 기존 GMM, K-Means 문제에서는 cluster의 개수 k를 분석가가 명시적으로 지정해야하는, 사람이 개입해야하는 이슈가 있었다. 이러한 문제에서 조금 더 자유로워지고자 할 때, cluster의 개수 k를 사람이 명시적으로 지정하지 않는 방식을 취하고자 할 때 선택할 수 있는 옵션이 Dirichlet Process라고 할 수 있다.
 
@@ -137,8 +136,8 @@ $$
 
 $$
 p(\theta_{n}\vert\theta_{1},...,\theta_{n-1},\alpha) = \begin{cases}
-\frac{N_{k}}{\alpha+n-1} \quad \text{k번재 cluster로 assign할 확률} \\
-\frac{\alpha}{\alpha+n-1} \quad \text{새로운 cluster를 만들어낼 확률}
+\frac{N_{k}}{\alpha+n-1} \quad \text{prob of assign k-th cluster} \\
+\frac{\alpha}{\alpha+n-1} \quad \text{prob of assign new cluster}
 \end{cases}
 $$
 
@@ -146,10 +145,13 @@ $$
 
 이를 데이터 관점에서 표현하자면, 첫번째 데이터에 대해 Cluster가 부여되며, 두번째 데이터부터는 기존의 Cluster에 할당되거나 새로운 Cluster를 생성해낼 수 있다는 것이다.
 
-8명의 손님이 아래의 그림과 같이 존재하는 상황에서 9번째 손님이 입장한다고 하자. 9번째 손님이 테이블을 선택할 확률은 아래와 같다. \alpha값에 따라 새로운 Cluster를 만들게 될 확률이 조정될 것이라 볼 수 있고 기존 데이터의 Cluster 할당이 새로운 데이터의 Cluster 할당에 영향을 미치기 때문에 값이 유의미하게 Assign 된 Cluster(테이블)은 최적으로 유한할 것이라 볼 수 있다.
 
 ![DP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DP3.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
 
+8명의 손님이 위의 그림과 같이 존재하는 상황에서 9번째 손님이 입장한다고 하자. 9번째 손님이 테이블을 선택할 확률은 아래와 같다. \alpha값에 따라 새로운 Cluster를 만들게 될 확률이 조정될 것이라 볼 수 있고 기존 데이터의 Cluster 할당이 새로운 데이터의 Cluster 할당에 영향을 미치기 때문에 값이 유의미하게 Assign 된 Cluster(테이블)은 최적으로 유한할 것이라 볼 수 있다.
 
-포스팅 내용에 대한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/cheating%20sheet/pandas%20cheating%20sheet.ipynb)에서 확인 가능합니다.
+#### 참고문헌
+
+1. [인공지능 및 기계학습심화](https://www.edwith.org/aiml-adv/joinLectures/14705)
+2. [Density Estimation with Dirichlet Process Mixtures using PyMC3](https://austinrochford.com/posts/2016-02-25-density-estimation-dpm.html)
