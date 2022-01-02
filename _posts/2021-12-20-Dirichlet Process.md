@@ -149,7 +149,7 @@ $$
 ![DP](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/DP3.png?raw=true){:width="70%" height="70%"}{: .aligncenter}
 
 
-8명의 손님이 위의 그림과 같이 존재하는 상황에서 9번째 손님이 입장한다고 하자. 9번째 손님이 테이블을 선택할 확률은 아래와 같다. \alpha값에 따라 새로운 Cluster를 만들게 될 확률이 조정될 것이라 볼 수 있고 기존 데이터의 Cluster 할당이 새로운 데이터의 Cluster 할당에 영향을 미치기 때문에 값이 유의미하게 Assign 된 Cluster(테이블)은 최적으로 유한할 것이라 볼 수 있다.
+8명의 손님이 위의 그림과 같이 존재하는 상황에서 9번째 손님이 입장한다고 하자. 9번째 손님이 테이블을 선택할 확률은 아래와 같다. $$\alpha$$값에 따라 새로운 Cluster를 만들게 될 확률이 조정될 것이라 볼 수 있고 기존 데이터의 Cluster 할당이 새로운 데이터의 Cluster 할당에 영향을 미치기 때문에 값이 유의미하게 Assign 된 Cluster(테이블)은 최적으로 유한할 것이라 볼 수 있다.
 
 #### 참고문헌
 
