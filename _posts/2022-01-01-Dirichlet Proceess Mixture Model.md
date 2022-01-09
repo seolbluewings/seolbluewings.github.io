@@ -6,8 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
-
 Mixture Model에서 Dirichlet Distribution을 사용하는 일반적인 방식은 parameter의 차원이 k로 고정되어 있고 이 k차원의 parameter에 대한 prior로 활용하는 것이었다. GMM에서 cluster의 개수는 정해져 있었고 k번째 cluster로 할당될 latent variable $$z_{k}$$를 정의하고 $$p(z_{k}=1) = \pi_{k}$$ 에서의 $$\pi_{k}$$에 대한 prior로 Dirichlet Distribution을 활용했다.
 
 그러나 Dirichlet Process Mixture Model(DPMM)은 k를 특정 차원으로 한정짓지 않고 $$k \to \infty$$ 인 경우에 대해 논의하며 $$k \to \infty$$ 처리로 인해 DP를 활용하게 된다.
@@ -38,6 +36,8 @@ DPMM을 통한 Sampling Based Inference를 위해선 다음과 같은 절차를 
 	- Posterior $$\theta_{i}\vert x_{i}$$를 계산하고 Posterior 활용하여 $$x_{i}$$에 대한 Cluster를 재할당 수행한다.
 	- 새롭게 할당된 데이터를 바탕으로 Cluster의 parameter 정보를 Update 한다
 
+
+상기 내용에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Dirichlet%20Process%20Mixture%20Model.ipynb)에서 확인 가능합니다.
 
 
 #### 참고문헌
