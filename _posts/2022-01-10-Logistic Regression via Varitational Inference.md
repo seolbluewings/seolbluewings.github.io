@@ -29,14 +29,52 @@ $$
 p(y\vert\beta) = \sigma(a)^{y}\{1-\sigma(a)\}^{1-y} = \text{exp}(ay)\sigma(-a)
 $$
 
-따라서 이러한 상황에서 $$p(\mahtbf{y})$$의 lower bound를 구하기 위해서는 sigmoid function $$\simga(\cdot)$$ 에 대한 variational transform이 필요하며 sigmoid function에 대한 lower bound는 다음과 같다.
+따라서 이러한 상황에서 $$p(\mathbf{y})$$의 lower bound를 구하기 위해서는 sigmoid function $$\sigma(\cdot)$$ 에 대한 variational transform이 필요하며 sigmoid function에 대한 lower bound는 다음과 같다.
 
 $$
 \begin{align}
 \sigma(z) &\geq \sigma(\xi)\text{exp}\{(z-\xi)/2-\lambda(\xi)(z^{2}-\xi^{2})\} \nonumber \\
-\lambda(\xi) = \frac{1}{2\xi}\left[\sigma(\xi)-\frac{1}{2}\right] \nonumber
+\lambda(\xi) &= \frac{1}{2\xi}\left[\sigma(\xi)-\frac{1}{2}\right] \nonumber
 \end{align}
 $$
+
+따라서 $$p(\mathbf{y}\vert\beta)$$ 는 다음과 같은 lower bound를 갖는다.
+
+$$ p(\mathbf{y}\vert\beta) = \text{exp}(a\mathbf{y})\sigma(-a) \geq \text{exp}(a\mathbf{y})\text{exp}\{(-a+\xi)/2-\lambda(\xi)(a^{2}-\xi^{2})\} $$
+
+그런데 이 수식은 Variational Inference의 가장 대표적인 Mean-Field 가정에 의해 각각의 관측 데이터 $$(x_{n},y_{n})$$ 에 대해서도 적용 가능하며 그 때마다의 데이터 포인트 $$\xi_{n}$$ 역시 존재한다.
+
+$$
+\begin{align}
+p(\mathbf{y}\vert\beta)p(\beta) &\geq h(\beta,\mathbf{\xi})p(\beta) \nonumber \\
+h(\beta,\mathbf{\xi}) &= \prod_{n=1}^{N}\sigma(\xi_{n})\text{exp}\left\{x_{n}^{T}\beta y_{n} - (x_{n}^{T}\beta+\xi_{n})/2 -\lambda(\xi_{n})([\x_{n}^{T}\beta]^{2}-\xi_{n}}^{2}) \right\}
+\end{align}
+$$
+
+타겟 $$\matbhf{y}$$ 와 $$\beta$$의 joint distribution의 closed form 계산이 어려운 관계로 대신 우측의 식을 사용하여 $$q(\beta)$$ 분포를 근사하게 된다.
+
+로그를 취해도 부등호 방향은 변하지 않기 때문에 위의 수식은 다음과 같이 변할수 있다.
+
+$$
+\begin{align}
+\log{p(\mathbf{y}\vert\beta)p(\beta)} &\geq \log{p(\beta)} + \sum_{n=1}^{N}\left\{\log{\sigma(\xi_{n})} + \x_{n}^{T}\beta y_{n} - (x_{n}^{T}\beta+\xi_{n})/2 - \lambda(\xi_{n})([x_{n}^{T}\beta]^{2}-\xi_{n}^{2}) \right\} \nonumber \\
+&\geq -\frac{1}{2}(\beta-\mu_{0})^{T}\Sigma_{0}^{-1}(\beta-\mu_{0}) + \sum_{n=1}^{N}\left\{x_{n}^{T}\beta(y_{n}-1/2)-\lambda(\xi_{n})\beta(x_{n}x_{n}^{T})\beta^{T}\right\} + C
+\end{align}
+$$
+
+따라서 $$$p(\mathbf{y},\beta)$$ 의 lower-bound 에 대한 분포는 $$\beta$$ 에 대한 2차 함수 형태를 가지므로 $$q(\beta)$$를 가우시안 분포 형태로 구할 수 있게 된다.
+
+$$
+\begin{align}
+q(\beta) &\sim \mathcal{N}(\beta \vert \mu_{N},\Sigma_{N}) \nonumber \\
+\Sigma^{-1}_{N} &= \Sigma^{-1}_{0} + 2\sum_{n=1}^{N}\lambda(\xi_{n})x_{n}x_{n}^{T} \nonumber \\
+\mu_{N} &= \Sigma_{N}\left(\Sigma_{0}^{-1}\mu_{0} + \sum_{n=1}^{N}(y_{n}-1/2)x_{n}\right)
+\end{align}
+$$
+
+Variational Family 분포를 결정하였으니 새로운 데이터가 추가되었을 때의 Predictive Distribution을 계산할 수 있어야 한다. 
+
+
 
 
 
