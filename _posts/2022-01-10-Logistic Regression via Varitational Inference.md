@@ -47,22 +47,22 @@ $$ p(\mathbf{y}\vert\beta) = \text{exp}(a\mathbf{y})\sigma(-a) \geq \text{exp}(a
 $$
 \begin{align}
 p(\mathbf{y}\vert\beta)p(\beta) &\geq h(\beta,\mathbf{\xi})p(\beta) \nonumber \\
-h(\beta,\mathbf{\xi}) &= \prod_{n=1}^{N}\sigma(\xi_{n})\text{exp}\left\{x_{n}^{T}\beta y_{n} - (x_{n}^{T}\beta+\xi_{n})/2 -\lambda(\xi_{n})([\x_{n}^{T}\beta]^{2}-\xi_{n}}^{2}) \right\}
+h(\beta,\mathbf{\xi}) &= \prod_{n=1}^{N}\sigma(\xi_{n})\text{exp} \left\{ x_{n}^{T}\beta y_{n} - (x_{n}^{T}\beta+\xi_{n})/2 -\lambda(\xi_{n})([\x_{n}^{T}\beta]^{2}-\xi_{n}^{2}) \right\}
 \end{align}
 $$
 
-타겟 $$\matbhf{y}$$ 와 $$\beta$$의 joint distribution의 closed form 계산이 어려운 관계로 대신 우측의 식을 사용하여 $$q(\beta)$$ 분포를 근사하게 된다.
+타겟 $$\mathbf{y}$$ 와 $$\beta$$의 joint distribution의 closed form 계산이 어려운 관계로 대신 우측의 식을 사용하여 $$q(\beta)$$ 분포를 근사하게 된다.
 
 로그를 취해도 부등호 방향은 변하지 않기 때문에 위의 수식은 다음과 같이 변할수 있다.
 
 $$
 \begin{align}
-\log{p(\mathbf{y}\vert\beta)p(\beta)} &\geq \log{p(\beta)} + \sum_{n=1}^{N}\left\{\log{\sigma(\xi_{n})} + \x_{n}^{T}\beta y_{n} - (x_{n}^{T}\beta+\xi_{n})/2 - \lambda(\xi_{n})([x_{n}^{T}\beta]^{2}-\xi_{n}^{2}) \right\} \nonumber \\
+\log{p(\mathbf{y}\vert\beta)p(\beta)} &\geq \log{p(\beta)} + \sum_{n=1}^{N}\left\{\log{\sigma(\xi_{n})} + x_{n}^{T}\beta y_{n} - (x_{n}^{T}\beta+\xi_{n})/2 - \lambda(\xi_{n})([x_{n}^{T}\beta]^{2}-\xi_{n}^{2}) \right\} \nonumber \\
 &\geq -\frac{1}{2}(\beta-\mu_{0})^{T}\Sigma_{0}^{-1}(\beta-\mu_{0}) + \sum_{n=1}^{N}\left\{x_{n}^{T}\beta(y_{n}-1/2)-\lambda(\xi_{n})\beta(x_{n}x_{n}^{T})\beta^{T}\right\} + C
 \end{align}
 $$
 
-따라서 $$$p(\mathbf{y},\beta)$$ 의 lower-bound 에 대한 분포는 $$\beta$$ 에 대한 2차 함수 형태를 가지므로 $$q(\beta)$$를 가우시안 분포 형태로 구할 수 있게 된다.
+따라서 $$p(\mathbf{y},\beta)$$ 의 lower-bound 에 대한 분포는 $$\beta$$ 에 대한 2차 함수 형태를 가지므로 $$q(\beta)$$를 가우시안 분포 형태로 구할 수 있게 된다.
 
 $$
 \begin{align}
@@ -72,7 +72,7 @@ q(\beta) &\sim \mathcal{N}(\beta \vert \mu_{N},\Sigma_{N}) \nonumber \\
 \end{align}
 $$
 
-Variational Family 분포를 결정하였으니 새로운 데이터가 추가되었을 때의 Predictive Distribution을 계산할 수 있어야 한다. 
+Variational Family 분포를 결정하였으니 새로운 데이터가 추가되었을 때의 Predictive Distribution을 계산할 수 있어야 한다.
 
 
 
