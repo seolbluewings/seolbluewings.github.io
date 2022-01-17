@@ -10,7 +10,7 @@ Bayesian Neural Network는 모델 학습 과정에서 weight $$\mathbf{w}$$가 d
 
 그렇다면 Bayesian Neural Network(이하 BNN)는 기존의 Neural Network(이하 NN)와 무슨 포인트에서 차별성을 갖는지? 어떠한 방식으로 weight와 output에 대한 uncertainty를 도출하는지를 알아볼 필요가 있다.
 
-![BNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/BNN1.PNG?raw=true){:width="70%" height="30%"}{: .aligncenter}
+![BNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/BNN1.png?raw=true){:width="70%" height="30%"}{: .aligncenter}
 
 이 그림은 BNN을 설명하는 대표적인 이미지라 할 수 있다. 기존 NN의 weight는 -0.1,0.6과 같이 하나로 딱 떨어지는 determinstic한 값을 가지고 있었지만, BNN에서는 각 weight마다의 분포가 존재하게 된다. weight에 대한 분포라는 방식의 uncertainty가 부여가 되면 그 weight을 이용해 추정한 output 값에도 uncertainty가 부여되는 것은 지극히 합리적이다.
 
@@ -30,9 +30,9 @@ $$p(\mathbf{w}\vert\mathcal{D})$$에 가장 잘 근사하는 Variational 분포 
 
 $$
 \begin{align}
-\theta^{*} &= \text{argmin}_{\theta}\text{KL}\left[q(\mathbf{w}\vert\theta)\vert p(\mathbf{w}\vert\mathcal{D})  \right] \nonumber \\
+\theta^{*} &= \text{argmin}_{\theta}KL\left[q(\mathbf{w}\vert\theta)\vert p(\mathbf{w}\vert\mathcal{D})  \right] \nonumber \\
 &= \text{argmin}_{\theta}\int q(\mathbf{w}\vert\theta)\log{\frac{q(\mathbf{w}\vert\theta)}{p(\mathbf{w})p(\mathcal{D}\vert\mathbf{w})}}d\mathbf{w} \nonumber \\
-&= \text{argmin}_{\theta}\text{KL}\left[q(\mathbf{w}\vert\theta)\vert p(\mathbf{w})  \right] - \mathbb{E}_{q(\mathbf{w}\vert\theta)}\left[\log{p(\mathcal{D}\vert\mathbf{w})}\right] \nonumber
+&= \text{argmin}_{\theta}KL\left[q(\mathbf{w}\vert\theta)\vert p(\mathbf{w})  \right] - \mathbb{E}_{q(\mathbf{w}\vert\theta)}\left[\log{p(\mathcal{D}\vert\mathbf{w})}\right] \nonumber
 \end{align}
 $$
 
