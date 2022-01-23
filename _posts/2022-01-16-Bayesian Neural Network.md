@@ -42,8 +42,8 @@ $$
 
 $$
 \begin{align}
-#\mathcal{F}(\mathcal{D},\theta) &= KL\left[q(\mathbf{w}\vert\theta)\vert p(\mathbf{w})  \right] - \mathbb{E}_{q(\mathbf{w}\vert\theta)}\left[\log{p(\mathcal{D}\vert\mathbf{w})}\right] \nonumber \\
-&= \int q(\mathbf{w}\vert\theta}\log{\frac{q(\mathbf{w}\vert\theta)}{p(\mathbf{w})}}d\mathbf{w} - \int q(\mathbf{w}\vert\theta)\log{p(\mathcal{D}\vert\mathbf{w})}d\mathbf{w} \nonumber \\
+\mathcal{F}(\mathcal{D},\theta) &= KL\left[q(\mathbf{w}\vert\theta)\vert p(\mathbf{w})  \right] - \mathbb{E}_{q(\mathbf{w}\vert\theta)}\left[\log{p(\mathcal{D}\vert\mathbf{w})}\right] \nonumber \\
+&= \int q(\mathbf{w}\vert\theta)\log{\frac{q(\mathbf{w}\vert\theta)}{p(\mathbf{w})}}d\mathbf{w} - \int q(\mathbf{w}\vert\theta)\log{p(\mathcal{D}\vert\mathbf{w})}d\mathbf{w} \nonumber \\
 &= \int q(\mathbf{w}\vert\theta)\left[\log{q(\mathbf{w}\vert\theta)}-\log{p(\mathbf{w})}-\log{p(\mathcal{D}\vert\mathbf{w})}  \right]d\mathbf{w}
 \end{align}
 $$
