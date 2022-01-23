@@ -1,10 +1,12 @@
 ---
 layout: post
-title:  "Bayesian Neural Network"
+title:  "Bayes by Backprop"
 date: 2022-01-16
 author: seolbluewings
 categories: Statistics
 ---
+
+[작성중...]
 
 Bayesian Neural Network는 모델 학습 과정에서 weight $$\mathbf{w}$$가 determinstic한 값을 갖는 것으로 간주하는 기존의 [Neural Network](https://seolbluewings.github.io/statistics/2020/09/28/Neural-Network-copy.html)와 달리 weight $$\mathbf{w}$$에 대한 확률 분포를 설정함으로써 weight $$\mathbf{w}$$와 output $$\mathbf{y}$$ 에 대한 분포를 제공하여 모델의 불확실성(uncertainty) 까지도 제공하는 모델이라 할 수 있다.
 
@@ -36,10 +38,38 @@ $$
 \end{align}
 $$
 
+이 수식에서 $$KL\left[q(\mathbf{w}\vert\theta)\vert p(\mathbf{w})  \right] - \mathbb{E}_{q(\mathbf{w}\vert\theta)}\left[\log{p(\mathcal{D}\vert\mathbf{w})}\right]$$ 만 따로 떼어내서 볼 필요가 있다.
+
+$$
+\begin{align}
+\mathcal{F}(\mathcal{D},\theta) &= KL\left[q(\mathbf{w}\vert\theta)\vert p(\mathbf{w})  \right] - \mathbb{E}_{q(\mathbf{w}\vert\theta)}\left[\log{p(\mathcal{D}\vert\mathbf{w})}\right] \nonumber \\
+&= \int q(\mathbf{w}\vert\theta}\log{\frac{q(\mathbf{w}\vert\theta)}{p(\mathbf{w})}}d\mathbf{w} - \int q(\mathbf{w}\vert\theta)\log{p(\mathcal{D}\vert\mathbf{w})}d\mathbf{w} \nonumber \\
+&= \int q(\mathbf{w}\vert\theta)\left[\log{q(\mathbf{w}\vert\theta)}-\log{p(\mathbf{w})}-\log{p(\mathcal{D}\vert\mathbf{w})}  \right]d\mathbf{w}
+\end{align}
+$$
+
+그렇다면 기존의 수식은 다음과 같이 변경될 수 있을 것이다.
+
+$$
+\theta^{*} = \text{argmin}_{\theta}\int q(\mathbf{w}\vert\theta)\left[\log{q(\mathbf{w}\vert\theta)}-\log{p(\mathbf{w})}-\log{p(\mathcal{D}\vert\mathbf{w})}  \right]d\mathbf{w}
+$$
+
+이 수식은 대괄호 안의 수식을 $$\mathbf{w}$$에 대한 conditional expectation 취한 것과 같다. 이는 $$\mathbf{w} \sim q(\mathbf{w}\vert\theta)$$ 에서 Sampling된 $$\mathbf{w}$$ 값에 대한 평균값과 동일하다. 따라서 대괄호 안의 값에 대해서만 최적화가 중요한 것으로 판단할 수 있어 minimize해야할 objective function은 다음과 같이 간소화시킬 수 있다.
+
+$$ \mathcal{F}(\mathcal{D},\theta) \simeq \log{q(\mathbf{w}\vert\theta)} - \log{p(\mathbf{w})} - \log{p(\mathcal{D}\vert\mathbf{w})} \quad \text{where} \quad \mathbf{w} \sim q(\mathbf{w}\vert\theta) $$
+
+Neural Network 학습은 이 objective function을 최소화시킬 수 있는 parameter $$\theta$$를 찾는 방향으로 이루어지며 그 결과로 $$\mathbf{w}$$를 Sampling 할 수 있다.
+
+$$\mathbf{w}$$에 대한 Sampling이 이루어지기 때문에 동일 input $$\mathbf{x}$$에 대해서도 $$\mathbf{y}$$ 값이 다르게 출력될 수 있다. 따라서 여러번 Sampling 시행 후, $$\hat{\mathbf{y}}$$ 값은 반복 수행한 결과의 평균값으로 출력한다.
+
+이러한 방법으로 인해 우리는 예측값의 Uncertainty를 구할 수 있으며, $$\hat{\mathbf{y}}$$ 에 대한 분산을 예측값에 대한 Uncertainty로 활용할 수 있다.
+
+
+
 
 
 
 #### 참고문헌
 
-1. [인공지능 및 기계학습심화](https://www.edwith.org/aiml-adv/joinLectures/14705)
-2. [Density Estimation with Dirichlet Process Mixtures using PyMC3](https://austinrochford.com/posts/2016-02-25-density-estimation-dpm.html)
+1. [Bayesian Deep Learning](https://www.edwith.org/bayesiandeeplearning/joinLectures/14426)
+2. [Weight Uncertainty in Neural Networks](https://arxiv.org/abs/1505.05424)
