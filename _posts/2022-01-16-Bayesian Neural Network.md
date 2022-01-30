@@ -6,8 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
-
 Bayesian Neural Network는 모델 학습 과정에서 weight $$\mathbf{w}$$가 determinstic한 값을 갖는 것으로 간주하는 기존의 [Neural Network](https://seolbluewings.github.io/statistics/2020/09/28/Neural-Network-copy.html)와 달리 weight $$\mathbf{w}$$에 대한 확률 분포를 설정함으로써 weight $$\mathbf{w}$$와 output $$\mathbf{y}$$ 에 대한 분포를 제공하여 모델의 불확실성(uncertainty) 까지도 제공하는 모델이라 할 수 있다.
 
 그렇다면 Bayesian Neural Network(이하 BNN)는 기존의 Neural Network(이하 NN)와 무슨 포인트에서 차별성을 갖는지? 어떠한 방식으로 weight와 output에 대한 uncertainty를 도출하는지를 알아볼 필요가 있다.
@@ -65,6 +63,7 @@ $$\mathbf{w}$$에 대한 Sampling이 이루어지기 때문에 동일 input $$\m
 이러한 방법으로 인해 우리는 예측값의 Uncertainty를 구할 수 있으며, $$\hat{\mathbf{y}}$$ 에 대한 분산을 예측값에 대한 Uncertainty로 활용할 수 있다.
 
 
+상기 내용에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Bayesian%20Neural%20Network.ipynb)에서 확인 가능합니다.
 
 
 
@@ -73,3 +72,4 @@ $$\mathbf{w}$$에 대한 Sampling이 이루어지기 때문에 동일 input $$\m
 
 1. [Bayesian Deep Learning](https://www.edwith.org/bayesiandeeplearning/joinLectures/14426)
 2. [Weight Uncertainty in Neural Networks](https://arxiv.org/abs/1505.05424)
+3. [PyMC3 Example Notebooks](https://docs.pymc.io/en/v3/nb_examples/index.html)
