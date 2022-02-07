@@ -45,6 +45,43 @@ Unit 클래스로 만들어진 marine1, marine2 라는 별개의 인스턴스는
 
 그리고 self의 경우는 클래스를 가지고 인스턴스를 생성했을 때, Class 내부에서 이를 지칭하기 위해 사용되는 변수이다. 상단의 Unit 클래스를 활용해 생성한 marine1,marine2 인스턴스에서 각각 marine1이 self가 되고 marine2가 self가 되는 것으로 볼 수 있다.
 
+#### Method
+
+클래스 안에서 정의되는 함수를 Method(메소드)라고 부른다.
+
+가장 빈번하게 활용되는 메소드는 인스턴스 메소드(instance Method)로 첫번째 parameter를 항상 객체 자신을 의미하는 self로 받는 메소드이다.
+
+그 외 정적 메소드(static Method)와 클래스 메소드(Class Method)가 있는데 정적 메소드는 self가 쓰이지 않는 메소드로 객체와 독립적이며 클래스 로직 상 내부에서 써야하는 메소드일 때 활용하는 메소드이다.
+
+클래스 메소드는 self 대신 cls라는 클래스를 의미하는 parameter를 전달한다. 따라서 cls parameter를 통해 클래스 변수를 접근할 수 있다. 
+
+```
+class AttackUnit:
+    count = 0
+        
+    def __init__(self, name, hp, damage) :
+        self.name = name
+        self.hp = hp
+        self.damage = damage
+        AttackUnit.count += 1
+    
+    @classmethod
+    def unit_count(cls) :
+        print("유닛이 {}개 생성되었습니다".format(cls.count))
+    
+    def attack(self, location) :
+        print("{0} : {1} 방향으로 적군을 공격 합니다. [공격력 {2}]".format(self.name, location, self.damage))
+    
+    def damaged(self, damage) :
+        print("{0} : {1} 데미지를 입었습니다.".format(self.name, damage))
+        self.hp -= damage
+        print("{0} : 현재 체력은 {1} 입니다.".format(self.name, self.hp))
+        if self.hp <= 0 :
+            print("{0} : 유닛이 파괴되었습니다.".format(self.name))
+```
+
+
+
 .....
 
 
