@@ -28,14 +28,34 @@ $$ \hat{y}(\mathbf{x}) = w_{0} + \sum_{i=1}^{n}w_{i}x_{i} + \sum_{i=1}^{n}\sum_{
 
 여기서 $$x_{i}$$는 $$\mathbf{x}$$에 대한 하나의 행 벡터이다.
 
-FM 모델은 bias term($$\w_{0}$$)과 각 변수에 대한 term, 변수들 간의 interaction에 대한 term으로 구분된다.
+FM 모델은 bias term($$w_{0}$$)과 각 변수에 대한 term, 변수들 간의 interaction에 대한 term으로 구분된다. 데이터가 sparse한 환경에서 변수간 interaction을 직접적이며 독립적으로 추정하는 것은 어려운 일이다. 그러나 k개의 latent vector로 interaction을 표현함으로써 sparse한 경우에도 변수 간 interaction 추정이 가능해진다.
 
-(이어서 작성...)
+$$ <v_{i},v_{j}> = \sum_{f=1}^{k}v_{i,f}v_{j,f} $$
 
-.....
+변수의 interaction을 의미하는 $$\mathbf{W}$$는 positive definite일 때 $$\mathbf{W} = \mathbf{V}\mathbf{V}^{T}$$로 표현할 수 있는 $$\mathbf{V}$$가 항상 존재한다. 충분한 크기의 latent space dimension이 정의되었을 때, FM 모델은 어떠한 interaction term $$\mathbf{W}$$도 표현 가능하다.
 
+FM의 장점 중 하나는 이 interaction term을 linear한 형태로 변경시킬 수 있다는 것이다.
 
+$$
+\begin{align}
+\sum_{i=1}^{n}\sum_{j=i+1}^{n}<v_{i},v_{j}>x_{i}x_{j} &= \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}< v_{i},v_{j}>x_{i}x_{j} - \frac{1}{2}\sum_{i=1}^{n}<v_{i},v_{i}>x_{i}x_{i} \nonumber \\
+&= \frac{1}{2}\left(\sum_{i=1}^{n}\sum_{j=1}^{n}\sum_{f=1}^{k}v_{i,f}v_{j,f}x_{i}x_{j} - \sum_{i=1}^{n}\sum_{f=1}^{k}v_{i,f}v_{i,f}x_{i}x_{i}   \right) \nonumber \\
+&= \frac{1}{2}\sum_{f=1}^{k}\left(\left(\sum_{i=1}^{n}v_{i,f}x_{i}  \right)\left(\sum_{j=1}^{n}v_{j,f}x_{j}\right)-\sum_{i=1}^{n}v_{i,f}^{2}x_{i}^{2} \right) \nonumber \\
+&= \frac{1}{2}\sum_{f=1}^{k}\left(\left(\sum_{i=1}^{n}v_{i,f}x_{i}  \right)^{2}-\sum_{i=1}^{n}v_{i,f}^{2}x_{i}^{2} \right)
+\end{align}
+$$
 
+따라서 FM 모델은 계산의 복잡성이 $$mathcal{O}(kn^{2})$$에서 $$\mathcal{O}(kn)$$ 으로 줄어든다.
+
+이 결과 FM 모델은 SGD와 같은 방식으로 쉽게 계산이 가능해진다.
+
+$$
+\frac{\partial}{\partial \theta}\hat{y}(\mathbf{x}) = \begin{cases}
+1 \quad \theta = w_{0} \\
+x_{i} \quad \\
+x_{i}\sum_{j=1}^{n}v_{j,f}x_{j}-v_{i,f}x_{i}^{2} \quad \theta = v_{i,f}
+\end{cases}
+$$
 
 
 
@@ -44,5 +64,5 @@ FM 모델은 bias term($$\w_{0}$$)과 각 변수에 대한 term, 변수들 간�
 
 #### 참고문헌
 
-1. [나도 코딩 유투브 강의](https://www.youtube.com/watch?v=kWiCuklohdY)
-2. [점프 투 파이썬](https://wikidocs.net/book/1)
+1. [Factorization Machines](https://www.csie.ntu.edu.tw/~b97053/paper/Rendle2010FM.pdf)
+2. [Factorization Machines (FM) 설명 및 Tensorflow 구현](https://greeksharifa.github.io/machine_learning/2019/12/21/FM/)
