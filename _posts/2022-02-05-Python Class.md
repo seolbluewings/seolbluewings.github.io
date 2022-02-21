@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python Class"
+title:  "Concept of Python's Class"
 date: 2022-01-16
 author: seolbluewings
 categories: Data
@@ -80,6 +80,29 @@ class AttackUnit:
             print("{0} : 유닛이 파괴되었습니다.".format(self.name))
 ```
 
+#### 상속
+
+새로운 Class를 생성하는 과정에서 앞서 생성한 Class를 활용하는 경우, 이를 Class를 상속받는다 라고 표현한다. 하나의 Class 선언 시, 2개 이상의 Class를 상속 받으면 이를 다중 상속이라 표현하며 콤마(,)를 사용해서 상속받는 Class를 구분해준다.
+
+```
+# 비행 기능에 대한 Class 선언
+class Flyable :
+    def __init__(self, flying_speed) :
+        self.flying_speed = flying_speed
+    
+    def fly(self, name, location) :
+         print("{0} : {1} 방향으로 날아갑니다합니다. [속도 {2}]"\
+             .format(self.name, location, self.flying_speed))
+
+# 공중 공격 유닛 Class 선언 (Wraith 등...)
+# 다중상속 시, 콤마(,)로 구분
+class Flyable_AttackUnit(AttackUnit, Flyable) :
+    def __init__(self, name, hp, damage, flying_speed) :
+        AttackUnit.__init__(self, name, hp, damage)
+        Flyable.__init__(self,flying_speed)
+```
+
+이렇게 상속을 받아 새로운 Class를 생성했을 때, 부모 Class에서 정의한 Method를 자식 Class에서 동일 명칭이지만 기능은 다르게 만들고 싶다면 자식 Class 내에서 Method를 생성하면 된다. 이를 Method Overriding 이라 한다.
 
 
 .....
