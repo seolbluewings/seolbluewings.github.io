@@ -6,7 +6,6 @@ author: seolbluewings
 categories: Data
 ---
 
-[작성중... ]
 
 클래스(Class)는 객체 지향형 언어에서 볼 수 있는 개념으로 이번 포스팅에서는 Python에서의 클래스에 대해 알아보고자 한다. 클래스는 인스턴스(instance)를 만드는데 활용되는 설계도로 인스턴스는 Class에 의해 생성된 객체라고 보면 된다.
 
@@ -103,11 +102,6 @@ class Flyable_AttackUnit(AttackUnit, Flyable) :
 ```
 
 이렇게 상속을 받아 새로운 Class를 생성했을 때, 부모 Class에서 정의한 Method를 자식 Class에서 동일 명칭이지만 기능은 다르게 만들고 싶다면 자식 Class 내에서 Method를 생성하면 된다. 이를 Method Overriding 이라 한다.
-
-
-.....
-
-
 
 
 
