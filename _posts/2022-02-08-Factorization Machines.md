@@ -6,7 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중... ]
 
 Factorization Machines(이하 FM)은 실수값으로 이루어진 input 벡터에 대해 범용적으로 적용할 수 있는 모델이다. FM 모델은 데이터가 sparse한 상태에서 SVM이 적절한 비선형 hyper-plane을 만들지 못하는 단점을 보완하기 위해 생성된 모델로 Factorization을 통한 데이터 Sparsity 이슈를 해결한다.
 
@@ -65,16 +64,13 @@ A라는 변수와 B,C 변수 사이의 latent effect를 추정하기 위해서 l
 
 따라서 FFM에서는 각 feature 마다 latent vector가 여러개 생성될 수 있고 feature 간의 interaction term $$\phi(\mathbf{w},\mathbf{x})$$ 는 다음과 같이 표현 가능하다.
 
-$$ \phi(\mathbf{w},\mathbf{x}) = \sum_{j_{1}=1}^{n}\sum_{j_{2}=j_{1}+1}^{n}<w_{j_{1},f_{2}}, w_{j_{2},f_{1}}> x_{j_{1}}x__{j_{2}} $$
+$$ \phi(\mathbf{w},\mathbf{x}) = \sum_{j_{1}=1}^{n}\sum_{j_{2}=j_{1}+1}^{n}<w_{j_{1},f_{2}}, w_{j_{2},f_{1}}> x_{j_{1}}x_{j_{2}} $$
 
 여기서 $$j$$는 개별 변수를 의마하고 $$f$$는 latent space 크기를 의미한다.
 
 FFM은 FM에서 interaction을 구하는 부분이 달라진 것이며 이에 따라 계산량은 증가할 수 밖에 없다. 그러나 일반적으로 FFM이 FM보다 더 좋은 성능을 보이는 것으로 알려진다.
 
 각 변수에 대응하는 parameter에 대한 update는 FM과 마찬가지로 SGD를 활용한다. 이 방식에 대한 실질적 활용은 xlearn 과 같은 라이브러리를 이용해서 이루어질 것이니 구체적인 수식은 생략하기로 한다.
-
-
-포스팅 관련된 코드는 다음의 [링크](https://github.com/seolbluewings/Python/blob/master/Python%20Class.ipynb)에서 확인 가능합니다.
 
 
 #### 참고문헌
