@@ -70,7 +70,7 @@ $$ \sum\left(y_{i}-f(x_{i})\right)^{2} + \lambda\int f^{''}(t)^{2}dt $$
 
 Regression Spline에 대해 설명하는 수많은 글들은 전부 데이터 $$\mathbf{x}$$가 1차원인 상황에 대해서 설명한다. 현실의 모델링 상황에서 $$\mathbf{x}$$가 1차원인 경우는 없다고 봐야한다. 따라서 Regression Spline의 다차원 확장에 대해서도 알아야만 했다. Multivariate Adaptive Regression Spline(MARS)는 Regression Spline처럼 piecewise linear Model을 모아 non-linearity를 만들어내는 방식이다.
 
-non-linearity를 만들기 위해서 앞서 소개했던 truncated power basis function을 사용하게 되며 이를 다변량 변수에 대해 각각 적용한다.
+non-linearity를 만들기 위해서 앞서 소개했던 truncated power basis function을 사용하게 되며 이를 다변량 변수에 대해 각각 적용한다. 기존의 Spline에서는 $$\mathbf{x}$$에 대한 1차,2차,...n차 제곱항까지 추가했으나 MARS에서는 그런 Term은 이용하지 않는다. 단지 다음과 같은 truncated power basis function을 이용한다.
 
 $$
 (x-\xi)_{+} = \begin{cases}
@@ -86,7 +86,9 @@ $$
 \end{cases}
 $$
 
+서로 다른 변수간의 truncated power basis function을 곱하면, 이는 변수들 간의 상호작용을 표현하는 수식으로 활용할 수 있다는 장점이 있다.
 
+MARS는 모델을 구축하는 과정에서 중요한 변수를 선택하는 fowrard/backward step이 이루어지며, 이러한 단계가 존재한다는 것이 MARS의 가장 대표적인 특징 중 하나라고 볼 수 있다. foward/backward step에 대해서는 다음의 [링크](https://asbates.rbind.io/2019/03/02/multivariate-adaptive-regression-splines/)를 참조하면 좋을 것 같다.
 
 
 
@@ -95,3 +97,4 @@ $$
 1. [The Elements of Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
 2. [Regression Splines](https://cdm98.tistory.com/26)
 3. [Smoothing Splines](https://cdm98.tistory.com/27?category=749235)
+4. [Multivariate Adaptive Regression Spline](https://asbates.rbind.io/2019/03/02/multivariate-adaptive-regression-splines/)
