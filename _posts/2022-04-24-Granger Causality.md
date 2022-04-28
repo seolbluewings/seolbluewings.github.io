@@ -21,7 +21,7 @@ categories: Statistics
 
 구체적인 Granger Causality 검증(test) 방안은 다음과 같다.
 
-먼저 두개 이상의 시계열 데이터가 정상 시계열인지 확인해야 한다. 만약 시계열 데이터가 비정상 시계열이라면, 1차 이상의 차분을 수행한다.
+먼저 두개 이상의 시계열 데이터가 정상 시계열인지 확인해야 한다. 만약 시계열 데이터가 비정상 시계열이라면, 1차 이상의 차분을 수행한다. 정상 시계열은 Granger Causality 검증을 위한 전제 조건이다. 
 
 '검증'인 만큼 통계에서 자주 사용되는 null hypothesis, alternative hypothesis가 셋팅되어야 한다.
 
@@ -33,9 +33,11 @@ alternative hypothesis는 $$x$$에 대한 과거 데이터가 수식에 추가�
 
 $$ y_{t} = a_{0}+a_{1}y_{t-1}+\cdots+a_{k}y_{t-k} + b_{p}x_{t-p} + \cdots +b_{q}x_{t-q} + e_{t}  $$
 
+검증은 일반적인 linear regression 처럼 유의성 검정(F-test)을 진행하게 되며, $$x$$의 과거 시점 데이터가 단 하나도 수식에 포함되지 않는 경우 $$x,y$$가 Granger-Cause 관계가 아니라는 null-hypothesis를 채택한다. 즉 $$y$$를 예측하는데 있어서 $$x$$의 여러 lag 데이터들 중 적어도 하나가 $$y$$를 예측하는데 유의(significant)해야한다는 것이다.
+
+테스트 방향은 $$x \to y$$ 방향의 인과영향, $$y \to x$$ 방향의 인과영향을 체크하는 것으로 2번 수행하는 것이 이치에 맞지만, 논리적으로 확실하게 한쪽 방향의 인과성은 말이 안되는 경우 생략이 가능하다.
+ 
 #### 참고문헌
 
-1. [The Elements of Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
-2. [Regression Splines](https://cdm98.tistory.com/26)
-3. [Smoothing Splines](https://cdm98.tistory.com/27?category=749235)
-4. [Multivariate Adaptive Regression Spline](https://asbates.rbind.io/2019/03/02/multivariate-adaptive-regression-splines/)
+1. [Granger Causality](https://en.wikipedia.org/wiki/Granger_causality)
+2. [그레인저 인과관계-Granger Causality](https://intothedata.com/02.scholar_category/timeseries_analysis/granger_causality/)
