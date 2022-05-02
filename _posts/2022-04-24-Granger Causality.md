@@ -6,8 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
-
 서로 시차가 존재하는 데이터간의 선/후행을 따져 인과관계를 알아보고자 할 때, 사용할 수 있는 방법 중 하나가 Granger Causality이다.
 
 다음과 같이 시계열 데이터 $$\{x_{t}\}_{t=1}^{T}$$와 $$\{y_{t}\}^{T}_{t=1}$$ 가 존재할 때, $$y_{t}$$가 $$x_{t}$$의 과거 데이터 linear regression 형태로 적합되며 이 linear regression이 통계적으로 유의미할 때, $$\{x_{t}\}_{t=1}^{T}$$와 $$\{y_{t}\}^{T}_{t=1}$$는 Granger Causality 관계에 있다고 말한다.
