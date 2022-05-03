@@ -24,6 +24,15 @@ $$ \frac{h(t\vert x_{1})}{h(t\vert x_{2})} = \frac{h_{0}(t)\text{exp}(x_{1}^{T}\
 
 따라서 모델 학습 과정에서는 baseline hazard function은 무시하고 partial likelihood function을 이용하여 $$\beta$$에 대한 학습이 이루어진다.
 
+$$\beta$$에 대한 추정이 이루어지면, 이를 바탕으로 prediction 수행이 가능해진다. 기존 linear regression 에서 MSE와 같은 평가 지표가 사용된 것처럼 Survival Analysis에서도 Survival Data에 맞는 평가 지표 설정이 필요하다.
+
+Survival Analysis에서 가장 대표적인 지표는 Concordance Index(C-Index)로 대상에 대한 정확한 잔존시간을 예측하는 것보다 여러 대상의 잔존 시간을 상대적으로 비교한다. 추정하는 여러 대상의 이탈 순서를 잘 예측하는지에 보다 초점을 둔 지표라고 할 수 있다.
+
+대상 i에 대해서 $$y_{i}$$가 실제 이탈이 발생한 시간이고 $$\hat{y_{i}}$$가 모델이 예측한 시간이라 한다면, Concordance probability는 $$p\left(\hat{y_{j}}>\hat{y_{i}}\vert y_{j}>y_{i} \right)$$ 를 의미한다.
+
+고객 i에 대해서 비교평가 가능한 set이 있을 것이고 고객 i보다 오래 잔존한 고객 j의 생존함수를 더 크게 예측한 경우가 목적에 맞는 결과를 반환한 것이 될 것이다. C-Index 값은 0에서 1사이 값을 갖게 되며, 대소를 비교하는 것이기 때문에 random한 결과는 0.5를 반환할 것으로 기대할 수 있다. 따라서 상식적으로 모델 결과는 0.5에서 1사이의 값이 나와야하며 1에 가까울수록 모델의 성능이 더 우수한 것으로 판단할 수 있다. 
+
+
 [to be continued...
 ]
 
@@ -51,5 +60,5 @@ $$ y_{t} = a_{0}+a_{1}y_{t-1}+\cdots+a_{k}y_{t-k} + b_{p}x_{t-p} + \cdots +b_{q}
  
 #### 참고문헌
 
-1. [Granger Causality](https://en.wikipedia.org/wiki/Granger_causality)
+1. [Survival Analysis](https://hyperconnect.github.io/2019/10/03/survival-analysis-part3.html)
 2. [그레인저 인과관계-Granger Causality](https://intothedata.com/02.scholar_category/timeseries_analysis/granger_causality/)
