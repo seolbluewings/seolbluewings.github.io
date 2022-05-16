@@ -13,7 +13,7 @@ categories: Data
 정규표현식에서 자주 사용하는 문자는 다음과 같다.
 
 |문자|의미|
-|:---:|:---|
+|:-:|:----|
 |^| <span style="font-size:80%">^뒤에 있는 문자로 문자열이 시작되는 경우 추출</span>|
 |\$| <span style="font-size:80%">\$ 앞에 있는 문자로 문자열이 끝나는 경우 추출</span>|
 |.| <span style="font-size:80%">어떠한 문자가 들어가도 상관 없다(wild-card)</span>|
