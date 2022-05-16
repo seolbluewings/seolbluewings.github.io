@@ -14,7 +14,7 @@ categories: Data
 
 |문자|의미|
 |:---:|:---|
-|^| ^뒤에 있는 문자로 문자열이 시작되는 경우 추출|
+|<span style="font-size 70%"'>^</span>| <span style="ont-size 70%">^뒤에 있는 문자로 문자열이 시작되는 경우 추출</span>|
 |\$| \$ 앞에 있는 문자로 문자열이 끝나는 경우 추출|
 |.| 어떠한 문자가 들어가도 상관 없다(wild-card)|
 |\s| 공백(whitespace)을 의미|
