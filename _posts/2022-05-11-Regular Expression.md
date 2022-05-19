@@ -8,9 +8,9 @@ categories: Data
 
 (작성중...)
 
-정규표현식은 프로그래밍 과정에서 문자열을 다룰 때, 문자열의 일정한 패턴을 표현하는 형식 언어이다. 본격적인 웹 스크래핑/크롤링에 앞서 스크래핑/크롤링 시 찾고자하는 문자를 더욱 쉽게 찾게 해줄 정규표현식을 정리해보고자 한다.
+정규표현식은 프로그래밍 과정에서 문자열을 다룰 때, 문자열의 일정한 패턴을 표현하는 형식 언어이다. 본격적인 웹 스크래핑/크롤링에 앞서 스크래핑/크롤링 시 찾고자하는 문자를 더욱 쉽게 찾게 해줄 정규표현식을 정리해보고자 한다. 정규 표현식은 Python의 고유문법이 아니고 문자열을 처리하는 모든 Tool에서 사용가능하다.
 
-정규표현식에서 자주 사용하는 문자는 다음과 같다.
+정규표현식에서 자주 사용하는 메타 문자(meta characters)는 다음과 같다. 메타 문자는 문자 본래의 의미가 아닌 특별한 용도로 활용되는 문자라는 의미를 갖는다.
 
 |문자|의미|
 |:-:|:----|
@@ -19,6 +19,11 @@ categories: Data
 |.| <span style="font-size:80%">어떠한 문자가 들어가도 상관 없다(wild-card)</span>|
 |\s| <span style="font-size:80%">공백(whitespace)을 의미</span>|
 |\S| <span style="font-size:80%">공백을 허용하지 않음(non-whitespace)</span>|
+|\d| <span style="font-size:80%">숫자와 매칭, [0-9]와 동일한 표현</span>|
+|\D| <span style="font-size:80%">숫자가 아닌 것과 매칭 [^0-9]와 동일한 표현(non-whitespace)</span>|
+|\w| <span style="font-size:80%">문자+숫자와 매치 [a-zA-Z0-9]와 동일</span>|
+|\W| <span style="font-size:80%">문자+숫자가 아닌 문자와 매치 [^a-zA-Z0-9]와 동일</span>|
+|\{m,n}| <span style="font-size:80%">m~n번 반복, m을 생략하면 0과 동일, n을 생략하면 $$\infty$$와 동일</span>|
 |*| <span style="font-size:80%">* 앞에 있는 문자가 몇개가 존재하든(0개 포함) 추출</span>|
 |?*| <span style="font-size:80%">* 앞에 있는 문자가 0번 또는 1번 존재하는 경우 추출</span>|
 |+| <span style="font-size:80%">+ 앞에 있는 문자가 최소 1회 이상 반복되어야 추출</span>|
@@ -32,6 +37,7 @@ categories: Data
 위의 정규표현식을 이용해 패턴을 추출하는 방식은 다음과 같다.
 
 - 패턴 추출하기 : [0-9+] 한자리 이상의 숫자 추출
+
 ```
 import re
 x = 'Suwon Bluewings won th K League in 2004 and 2008'
