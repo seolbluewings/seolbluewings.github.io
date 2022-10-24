@@ -36,10 +36,29 @@ Binomial Distribution은 n번의 시도 중 성공한 횟수를 나타내는 분
 
 $$
 \begin{align}
-x &\sim \text{Bin}(n,p) \nonumber \\
-p(x) = {n \choose x} p^{x}(1-p)^{1-x} \nonumber
+x &\sim \text{Bin}(n,\pi) \nonumber \\
+p(x) &= {n \choose x} \pi^{x}(1-\pi)^{1-x} \nonumber
 \end{align}
 $$
+
+여기서의 $$\pi$$는 반응률로 우리의 관심 parameter라고 할 수 있다. 그렇다면, Bayesian 방식을 적용하기 위해서는 이 parameter $$\pi$$에 대한 Prior 분포를 설정해야 한다. 확률 $$\pi$$는 [0,1] 사이에서 정의되어야하므로 Binomial Distribution의 conjugate prior이면서 (0,1)사이에서 정의되는 Beta Distribution을 Prior로 설정한다.
+
+$$
+\begin{align}
+\pi &\sim \text{Beta}(\alpha,\beta) \nonumber \\
+p(\pi) &= \frac{Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} \pi^{\alpha-1}(1-\pi)^{\beta-1} \quad \text{where} \; \pi \in (0,1) \nonumber
+\end{align}
+$$
+
+Prior는 분석가의 주관에 따라 좌우되는 단점이 있다. 반응률 p에 대한 어떠한 사전지식도 없다고할 때, 단지 반응률이 (0,1) 사이에서 랜덤한 값을 가질 것이라는 무정보적인 사전 분포(non-informative prior)를 부여해야한다. Beta(1,1)의 경우 Uniform(0,1)과 동일하여 Beta(1,1)을 사용하면 된다.
+
+이 둘을 활용하여 구할 수 있는 $$\pi$$에 대한 Posterior 분포는 Beta형태의 분포로 다음과 같다.
+
+$$
+p(\pi\vert x) \sim \text{Beta}(\alpha+x, \beta+n-x) \prop \pi^{x+\alpha-1}(1-\pi)^{n-x+\beta-1}
+$$
+
+A,B 각 방법론의 마케팅 시행고객 수(n)과 반응 고객수(x)를 활용하여 Beta Posterior 분포를 생성하고 각 Posterior 분포에서 난수를 생성하여 평균을 구하면 각각의 반응률 평균치를 구할 수 있다. 
 
 
 
