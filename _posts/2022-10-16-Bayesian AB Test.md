@@ -6,8 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
-
 A/B 테스트는 온라인 서비스 적용, 대고객 마케팅 캠페인 등에서 자주 사용되는 개념으로, 서로 다른 A/B방법 중 어느 방법이 더 효과적인 방법인지 알아보기 위해 활용된다. A/B Test를 바탕으로 우리는 각 방식에 따라 관심지표(CTR 또는 반응률)가 어떠한 영향을 받는지 인과성을 유추해볼 수 있다.
 
 
@@ -46,7 +44,7 @@ $$
 $$
 \begin{align}
 \pi &\sim \text{Beta}(\alpha,\beta) \nonumber \\
-p(\pi) &= \frac{Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} \pi^{\alpha-1}(1-\pi)^{\beta-1} \quad \text{where} \; \pi \in (0,1) \nonumber
+p(\pi) &= \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} \pi^{\alpha-1}(1-\pi)^{\beta-1} \quad \text{where} \; \pi \in (0,1) \nonumber
 \end{align}
 $$
 
@@ -55,19 +53,32 @@ Prior는 분석가의 주관에 따라 좌우되는 단점이 있다. 반응률 
 이 둘을 활용하여 구할 수 있는 $$\pi$$에 대한 Posterior 분포는 Beta형태의 분포로 다음과 같다.
 
 $$
-p(\pi\vert x) \sim \text{Beta}(\alpha+x, \beta+n-x) \prop \pi^{x+\alpha-1}(1-\pi)^{n-x+\beta-1}
+p(\pi\vert x) \sim \text{Beta}(\alpha+x, \beta+n-x) \propto \pi^{x+\alpha-1}(1-\pi)^{n-x+\beta-1}
 $$
 
-A,B 각 방법론의 마케팅 시행고객 수(n)과 반응 고객수(x)를 활용하여 Beta Posterior 분포를 생성하고 각 Posterior 분포에서 난수를 생성하여 평균을 구하면 각각의 반응률 평균치를 구할 수 있다. 
+A,B 각 방법론의 마케팅 시행고객 수(n)과 반응 고객수(x)를 활용하여 Beta Posterior 분포를 생성하고 각 Posterior 분포에서 난수를 생성하여 평균을 구하면 각각의 반응률 평균치를 구할 수 있다.
+
+동일한 기준의 캠페인인데 방식A는 57,314명을 대상으로 시행되어 3,709명이 반응했고 방식B는 38,342명을 대상으로 시행되어 2,632명이 반응했다면 Bayesian A/B Test의 결과는 다음과 같을 것이다.
+
+캠페인 A의 경우는 난수 추출이 $$ \text{Beta}(3710,53606) $$ 분포에서 시행되고 캠페인 B의 경우는 난수 추출이 $$ \text{Beta}(2633,35711) $$ 분포에서 시행된다. 약 10만번의 난수추출을 시행하여 각각의 histogram을 그려보면 다음과 같을 것이다.
+
+캠페인 A가 B보다 나을 확률은 총 10만번의 난수추출 중에서 A에서 추출된 난수가 B에서 추출된 난수보다 큰 경우로 표현할 수 있다.
+
+![ABTEST](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/ab_test2.png?raw=true){:width="70%" height="30%"}{: .aligncenter}
+
+그림과 같이 histogram을 비교해보면 B의 방식이 A보다 좋다는 것을 시각적으로 확인 가능하다. A에서의 난수가 B에서 추출한 난수보다 더 클 확률은 0.83\%로 이는 A방식이 B방식보다 더 좋을 확률이 단 0.83\%에 불과하다는 의미한다. 압도적인 확률로 B가 낫다고 볼 수 있다.
 
 
 
 
 
 
-신세계 L\&B의 와인 정보를 Crawling하는 코드는 다음의 [링크](https://github.com/seolbluewings/python_study/blob/master/01.study/web_crawling.py)에서 확인 가능하다.
+
+
+
+Bayesian A/B Test에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/python_study/blob/master/01.study/bayesian_AB_test.py)에서 확인 가능하다.
 
 
 #### 참조 문헌
-1. [파이썬을 이용한 웹 스크래핑](https://www.boostcourse.org/cs201/joinLectures/179628) <br>
-2. 데이터분석 실무 with 파이썬
+1. [Bayesian AB Test](https://assaeunji.github.io/bayesian/2020-03-02-abtest/) <br>
+2. [Bayesian A/B Testing with Expected Loss](https://miistillery.me/bayesian-ab-testing/)
