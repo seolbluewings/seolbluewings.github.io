@@ -6,7 +6,6 @@ author: seolbluewings
 categories: Statistics
 ---
 
-[작성중...]
 
 Multi-Armed Bandit(이하 MAB) 문제는 A/B 테스트의 확장 형태라고 볼 수 있고 소비자에게 여러개의 제품 중 어떤 것을 노출시킬 것인가? 등의 문제를 해결하기 위한 알고리즘으로 활용된다.
 
@@ -41,26 +40,26 @@ Thompson's Sampling이란 과거의 데이터를 이용하여 슬롯머신에서
 
 총 K개의 배너가 있고 이중 k번째 배너는 $$\pi_{k}$$의 확률로 클릭이 발생한다고 가정한다. $$X_{k}$$를 k번째 배너를 클릭하는 사건에 대한 확률변수라 정의 한다면, 이 확률변수는 확률 $$\pi_{k}$$를 parameter로 갖는 베르누이 분포를 따른다고 $$X_{k} \sim \text{Ber}(\pi_{k})$$ 볼 수 있다.
 
-또한 parameter $$\pi_{k}$$ 에 대한 사전분포로는 $$\pi_{k} \sim \Beta(\alpha_{k},\beta_{k})$$ 로 Beta 분포를 설정한다. 이 때, $$\alpha,\beta$$를 각각 1로 설정하면, uniform 분포와 동일해져 non-informative prior로 설정을 할 수가 있다.
+또한 parameter $$\pi_{k}$$ 에 대한 사전분포로는 $$\pi_{k} \sim \text{Beta}(\alpha_{k},\beta_{k})$$ 로 Beta 분포를 설정한다. 이 때, $$\alpha,\beta$$를 각각 1로 설정하면, uniform 분포와 동일해져 non-informative prior로 설정을 할 수가 있다.
+
+$$
+\begin{align}
+p(\pi_{k}\vert X_{k}=x_{k}) &\prop p(\pi_{k})\times p(X_{k}=x_{k}\vert \pi_{k}) \nonumber \\
+&\prop \pi_{k}^{x_{k}}(1-\pi_{k})^{1-x_{k}}\pi_{k}^{\alpha_{k}-1}(1-\pi_{k})^{\beta_{k}-1} \nonumber
+\end{align}
+$$
+
+따라서 $$\pi_{k}$$에 대한 사후분포는 다음과 같이 베타분포로 정의될 수 있다.
+
+$$ \pi_{k}\vert X_{k}=x_{k} \sim \text{Beta}(x_{k}+\alpha_{k}, \beta_{k}+1-x_{k}) $$
+
+k번째 배너가 선택되는 경우는 Beta분포가 $$ \text{Beta}(\alpha_{k}+1,\beta_{k}) $$로, 선택되지 않는 경우는 $$ \text{Beta}(\alpha_{k},\beta_{k}+1) $$ 로 변하게 된다. 이 과정을 일정 반복횟수 이상 시행하여 최적의 배너를 결정한다.
+
+Thompson's Sampling은 위의 설명처럼 확률적 알고리즘으로 새로 추가되는 데이터를 반영하여 확률 분포에 대한 피드백을 줄 수 있고 일반적으로 $$\epsilon$$-Greedy 방법론, UCB 방법론보다 더 성능이 우수한 것으로 알려져있다.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bayesian A/B Test에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/python_study/blob/master/01.study/bayesian_AB_test.py)에서 확인 가능하다.
 
 
 #### 참조 문헌
-1. [Bayesian AB Test](https://assaeunji.github.io/bayesian/2020-03-02-abtest/) <br>
-2. [Bayesian A/B Testing with Expected Loss](https://miistillery.me/bayesian-ab-testing/)
+1. [톰슨 샘플링 for Bandits](https://brunch.co.kr/@chris-song/66) <br>
+2. [A/B 테스트의 확장판, MAB (Multi-Armed Bandits) 알고리즘](https://assaeunji.github.io/bayesian/2021-01-30-mab/)
