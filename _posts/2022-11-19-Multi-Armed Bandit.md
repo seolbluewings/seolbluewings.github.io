@@ -57,7 +57,7 @@ k번째 배너가 선택되는 경우는 Beta분포가 $$ \text{Beta}(\alpha_{k}
 
 Thompson's Sampling은 위의 설명처럼 확률적 알고리즘으로 새로 추가되는 데이터를 반영하여 확률 분포에 대한 피드백을 줄 수 있고 일반적으로 $$\epsilon$$-Greedy 방법론, UCB 방법론보다 더 성능이 우수한 것으로 알려져있다.
 
-
+MAB에 대한 간략한 코드는 다음의 [링크](https://github.com/seolbluewings/python_study/blob/master/01.study/MAB.py)에서 확인 가능합니다.
 
 
 #### 참조 문헌
