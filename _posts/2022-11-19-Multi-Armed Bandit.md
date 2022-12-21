@@ -44,8 +44,8 @@ Thompson's Sampling이란 과거의 데이터를 이용하여 슬롯머신에서
 
 $$
 \begin{align}
-p(\pi_{k}\vert X_{k}=x_{k}) &\prop p(\pi_{k})\times p(X_{k}=x_{k}\vert \pi_{k}) \nonumber \\
-&\prop \pi_{k}^{x_{k}}(1-\pi_{k})^{1-x_{k}}\pi_{k}^{\alpha_{k}-1}(1-\pi_{k})^{\beta_{k}-1} \nonumber
+p(\pi_{k}\vert X_{k}=x_{k}) &\propto p(\pi_{k})\times p(X_{k}=x_{k}\vert \pi_{k}) \nonumber \\
+&\propto \pi_{k}^{x_{k}}(1-\pi_{k})^{1-x_{k}}\pi_{k}^{\alpha_{k}-1}(1-\pi_{k})^{\beta_{k}-1} \nonumber
 \end{align}
 $$
 
