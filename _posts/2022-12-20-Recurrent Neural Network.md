@@ -32,10 +32,21 @@ RNN도 신경망 문제로 weight parameter를 정확하게 계산하기 위해 
 
 순전파는 계속 이어지게 구성하고 역전파는 적정선에서 절단하는 것은 2가지 의미가 있다. 하나는 순전파가 지속적으로 이어지기 때문에 RNN에서는 데이터를 순서대로(sequential) 입력해야한다는 것이며 역전파의 연결을 잘라버리기 때문에 분석 과정에서 지나친 먼 미래의 데이터에 대해서는 고려하지 않아도 된다. Backpropagation에 대해서는 다음의 [링크](https://towardsdatascience.com/backpropagation-in-rnn-explained-bdf853b4e1c2)에서 수식 등 참고하면 좋을 것이다.
 
+이처럼 RNN은 순환 경로를 통해 과거의 정보를 기억하여 앞으로의 미래를 예측하는데 시간적 장기(long-term) 의존 관계는 잘 학습하지 못한다는 단점이 있다. 기본적인 RNN이 성능이 떨어지는건 Backpropagation 과정에서 기울기 소실/폭발이 발생하기 때문이다.
 
+RNN에 사용하는 $$\text{tanh}$$ 함수는 Backpropagation이 진행될수록 기울기가 작아지는 구조적 한계, $$\mathbf{W}_{h}$$을 활용하는 행렬곱은 행렬 $$\mathbf{W}_{h}$$ 을 구성하는 값에 따라 기울기가 지수적으로 증가하거나 감소한다.
 
+따라서 구조적인 한계가 있는 기본적인 형태의 RNN보다는 신경망의 아키텍쳐 자체를 고친 LSTM, GRU라 불리는 모델을 활용한다.
 
+#### LSTM
 
+LSTM과 GRU에는 각 층마다 gate라는 구조가 추가되어 시계열 데이터의 장기 의존성을 학습한다. gate라는 구조를 통해 기울기 소실(폭발)을 발생하기 어렵게 만든다.
+
+![RNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/rnn_2.jpg?raw=true){:width="90%" height="80%"}{: .aligncenter}
+
+위의 이미지가 기본적인 RNN, 아래가 LSTM의 아키텍처인데 LSTM은 계층간 인터페이스에 $$\mathbf{c}$$ 라는 경로가 추가도니다. 이 $$\mathbf{c}$$를 기억 셀(memory cell)이라 부르며 LSTM만이 가지는 기억 매커니즘이다. 기억 셀은 LSTM 계층 내에서만 연결되고 $$\mathbf{h}$$와 달리 다른 계층으로 출력되지 않는 특징이 있다.
+
+(계속...)
 
 
 
