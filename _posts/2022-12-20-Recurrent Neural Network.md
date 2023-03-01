@@ -40,11 +40,38 @@ RNN에 사용하는 $$\text{tanh}$$ 함수는 Backpropagation이 진행될수록
 
 #### LSTM
 
-LSTM과 GRU에는 각 층마다 gate라는 구조가 추가되어 시계열 데이터의 장기 의존성을 학습한다. gate라는 구조를 통해 기울기 소실(폭발)을 발생하기 어렵게 만든다.
+LSTM과 GRU에는 각 층마다 Gate라는 구조가 추가되어 시계열 데이터의 장기 의존성을 학습한다. Gate라는 구조를 통해 기울기 소실(폭발)을 발생하기 어렵게 만든다.
 
 ![RNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/rnn_2.jpg?raw=true){:width="90%" height="80%"}{: .aligncenter}
 
 위의 이미지가 기본적인 RNN, 아래가 LSTM의 아키텍처인데 LSTM은 계층간 인터페이스에 $$\mathbf{c}$$ 라는 경로가 추가도니다. 이 $$\mathbf{c}$$를 기억 셀(memory cell)이라 부르며 LSTM만이 가지는 기억 매커니즘이다. 기억 셀은 LSTM 계층 내에서만 연결되고 $$\mathbf{h}$$와 달리 다른 계층으로 출력되지 않는 특징이 있다.
+
+기억셀 $$\mathbf{c}_{t}$$에는 과거로부터 시점 t까지 필요한 모든 정보가 저장되어 있다고 가정하고 $$\mathbf{c}_{t}$$를 이용하여 은닉상태 $$\mathbf{h}_{t}$$를 계산한다. LSTM은 아래의 이미지와 같이 OOO Gate라는 구조가 있는데 이 Gate는 다음 단계로 어느 정도의 비율로 데이터를 전달할 것인가?를 결정짓는 가중치의 역할을 한다고 볼 수 있다.
+
+![RNN](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/rnn_3.png?raw=true){:width="90%" height="80%"}{: .aligncenter}
+
+각 Gate의 구성 방식을 하나씩 살펴보자면
+
+먼저 은닉 상태 $$\mathbf{h}_{t}$$의 출력을 담당하는 게이트(Output Gate)는 기억 셀 $$\mathbf{c}_{t}$$가 은닉 상태 $$\mathbf{h}_{t}$$를 결정할 때 얼마나 중요한가?를 결정짓는 가중치로 사용된다. 이 가중치 $$\mathbf{o}$$는 아래와 같이 구하며 이 $$\mathbf{o}$$ 값이 Output Gate의 열고 닫힘 정도를 결정 짓는다.
+
+$$ \mathbf{o} = \sig(\mathbf{x}_{t}\mathbf{W}_{x}^{o}+\mathbf{h}_{t-1}\mathbf{W}_{h}^{o}+b^{o}) $$
+
+은닉상태 $$\mathbf{h}_{t}$$는 $$\mathbf{o}$$와 $$\text{tanh}(\mathbf{c}_{t})$$의 아다마르 곱으로 결정된다.
+
+$$ \mathbf{h}_{t} = \mathbf{o}\odot\text{tanh}(\mathbf{c}_{t})$$
+
+한편 기억 셀에서는 과거 데이터를 어느 정도 수준에서만큼 잊게 만들기도 해야한다. $$\mathbf{c}_{t-1}$$ 시점 데이터를 바탕으로 현재 활용할 $$\mathbf{c}_{t}$$를 update하는데 이를 Forget Gate라 부른다. Forget Gate의 가중치값($$\mathbf{f}$$)은 아래와 같이 구하며, $$\mathbf{c}_{t}$$ 값은 $$\mathbf{f}$$와 $$\mathbf{c}_{t-1}$$의 아다마르 곱으로 구할 수 있다.
+
+$$
+\begin{align}
+\mathbf{f} &= \sig(\mathbf{x}_{t}\mathbf{W}_{x}^{f}+\mathbf{h}_{t-1}\mathbf{W}_{h}^{f}+b^{f}) \nonumber \\
+\mathbf{c}_{t} = \mathbf{f}\odot\mathbf{c}_{t-1} \nonumber
+\end{align}
+$$
+
+
+
+
 
 (계속...)
 
