@@ -54,21 +54,33 @@ LSTM과 GRU에는 각 층마다 Gate라는 구조가 추가되어 시계열 데�
 
 먼저 은닉 상태 $$\mathbf{h}_{t}$$의 출력을 담당하는 게이트(Output Gate)는 기억 셀 $$\mathbf{c}_{t}$$가 은닉 상태 $$\mathbf{h}_{t}$$를 결정할 때 얼마나 중요한가?를 결정짓는 가중치로 사용된다. 이 가중치 $$\mathbf{o}$$는 아래와 같이 구하며 이 $$\mathbf{o}$$ 값이 Output Gate의 열고 닫힘 정도를 결정 짓는다.
 
-$$ \mathbf{o} = \sig(\mathbf{x}_{t}\mathbf{W}_{x}^{o}+\mathbf{h}_{t-1}\mathbf{W}_{h}^{o}+b^{o}) $$
+$$ \mathbf{o} = \sigma(\mathbf{x}_{t}\mathbf{W}_{x}^{o}+\mathbf{h}_{t-1}\mathbf{W}_{h}^{o}+b^{o}) $$
 
-은닉상태 $$\mathbf{h}_{t}$$는 $$\mathbf{o}$$와 $$\text{tanh}(\mathbf{c}_{t})$$의 아다마르 곱으로 결정된다.
+은닉상태 $$\mathbf{h}_{t}$$는 $$\mathbf{o}$$와 $$\text{tanh}(\mathbf{c}_{t})$$의 아마다르 곱으로 결정된다.
 
 $$ \mathbf{h}_{t} = \mathbf{o}\odot\text{tanh}(\mathbf{c}_{t})$$
 
-한편 기억 셀에서는 과거 데이터를 어느 정도 수준에서만큼 잊게 만들기도 해야한다. $$\mathbf{c}_{t-1}$$ 시점 데이터를 바탕으로 현재 활용할 $$\mathbf{c}_{t}$$를 update하는데 이를 Forget Gate라 부른다. Forget Gate의 가중치값($$\mathbf{f}$$)은 아래와 같이 구하며, $$\mathbf{c}_{t}$$ 값은 $$\mathbf{f}$$와 $$\mathbf{c}_{t-1}$$의 아다마르 곱으로 구할 수 있다.
+한편 기억 셀에서는 과거 데이터를 어느 정도 수준에서만큼 잊게 만들기도 해야한다. $$\mathbf{c}_{t-1}$$ 시점 데이터를 바탕으로 현재 활용할 $$\mathbf{c}_{t}$$를 update하는데 이를 Forget Gate라 부른다. Forget Gate의 가중치값($$\mathbf{f}$$)은 아래와 같이 구한다.
 
 $$
-\begin{align}
-\mathbf{f} &= \sig(\mathbf{x}_{t}\mathbf{W}_{x}^{f}+\mathbf{h}_{t-1}\mathbf{W}_{h}^{f}+b^{f}) \nonumber \\
-\mathbf{c}_{t} = \mathbf{f}\odot\mathbf{c}_{t-1} \nonumber
-\end{align}
+\mathbf{f} = \sigma(\mathbf{x}_{t}\mathbf{W}_{x}^{f}+\mathbf{h}_{t-1}\mathbf{W}_{h}^{f}+b^{f})
 $$
 
+과거의 데이터를 잊는다면 새롭게 기억해야할 정보를 추가하는 기능도 있어야한다. 기억셀에 새로운 정보를 추가하기 위한 값 $$\mathbf{g}$$는 Input Gate와 함께 새로운 기억 셀 $$\mathbf{c}_{t}$$를 생성하는데 활용 된다.
+
+$$ \mathbf{g} = \text{tanh}(\mathbf{x}_{t}\mathbf{W}_{x}^{g}+\mathbf{h}_{t-1}\mathbf{W}_{g}^{f}+b^{g}) $$
+
+Input Gate는 $$\mathbf{g}$$의 각 원소가 새롭게 추가되는 정보로서의 가치가 얼마나 큰지 판단하는 역할을 수행한다.
+
+$$ \mathbf{i} = \sigma(\mathbf{x}_{t}\mathbf{W}_{x}^{i}+\mathbf{h}_{t-1}\mathbf{W}_{i}^{f}+b^{i}) $$
+
+기억 셀 $$\mathbf{c}_{t}$$는 Forget Gate와 Input Gate를 통해 다음과 같이 결정되며
+
+$$ \mathbf{c}_{t} = \mathbf{f}\odot\mathbf{c}_{t-1} + \mathbf{g}\odot\mathbf{i} $$
+
+은닉 상태 $$\mathbf{h}_{t}$$는 $$\mathbf{o}$$와 $$\text{tanh}(\mathbf{c}_{t})$$의 아마다르 곱으로 결정된다.
+
+LSTM의 구조가 Backpropagation 시 기울기 손실/폭발이 발생하지 않는 것으로 판단되는 것은 기본적인 RNN과 달리 행렬곱이 아닌 아마다르 곱을 활용하기 때문이며 Forget Gate가 잊어야할 것은 잊도록, 잊지 말아야할 것은 잊지 않도록 설정하는 것이 기대되기 때문이다.
 
 
 
