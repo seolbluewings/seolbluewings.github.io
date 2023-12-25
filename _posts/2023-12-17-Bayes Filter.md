@@ -20,13 +20,14 @@ $$ \text{bel}(x_{t}) = p(x_{t}\vert z_{1:t},u_{1:t}) $$
 
 Bayes Filter의 알고리즘은 다음의 프로세스를 따른다.
 
-```
-\text{for all} $$x_{t}$$ do :
-	\bar{\text{bel}}(x_{t}) = \int p(x_{t}\vert u_{t},x_{t-1})\text{bel}(x_{t-1})dx
-    \text{bel}(x_{t}) = \eta p(z_{t}\vert x_{t})\bar{\text{bel}}(x_{t})
-\text{end for}
-\text{return} \text{bel}(x_{t})
-```
+
+> \text{for all} $$x_{t}$$ do :
+>> \bar{\text{bel}}(x_{t}) = \int p(x_{t}\vert u_{t},x_{t-1})\text{bel}(x_{t-1})dx
+>> \text{bel}(x_{t}) = \eta p(z_{t}\vert x_{t})\bar{\text{bel}}(x_{t})
+
+>\text{end for}
+> \text{return} \text{bel}(x_{t})
+
 
 이 Bayes Filter 프로세스는 다음과 같이 해석할 수 있다.
 
