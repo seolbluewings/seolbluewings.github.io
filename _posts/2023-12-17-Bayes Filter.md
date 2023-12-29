@@ -21,45 +21,44 @@ $$ \text{bel}(x_{t}) = p(x_{t}\vert z_{1:t},u_{1:t}) $$
 Bayes Filter의 알고리즘은 다음의 프로세스를 따른다.
 
 
-> \text{for all} $$x_{t}$$ do :
->> \bar{\text{bel}}(x_{t}) = \int p(x_{t}\vert u_{t},x_{t-1})\text{bel}(x_{t-1})dx
->> \text{bel}(x_{t}) = \eta p(z_{t}\vert x_{t})\bar{\text{bel}}(x_{t})
+> $$\text{for all} x_{t}$$ do :
+>> $$\bar{\text{bel}}(x_{t}) = \int p(x_{t}\vert u_{t},x_{t-1})\text{bel}(x_{t-1})dx $$
+>> $$ \text{bel}(x_{t}) = \eta p(z_{t}\vert x_{t})\bar{\text{bel}}(x_{t}) $$
 
->\text{end for}
-> \text{return} \text{bel}(x_{t})
+> $$\text{end for} $$
+> $$ \text{return} \text{bel}(x_{t}) $$
 
 
 이 Bayes Filter 프로세스는 다음과 같이 해석할 수 있다.
 
 우선 첫번째 줄은 제어 업데이트(control update) 또는 예측(prediction)이라 불리는 단계로 제어값을 활용하여 상태값을 업데이트하는 작업이다. $$\text{bel}(x_{t-1})$$은 t-1시점의 상태값을 의미하며 $$p(x_{t}\vert u_{t},x_{t-1})$$ 값은 t-1시점의 상태값과 t시점의 제어값이 주어진 상황에서의 현재 t시점의 상태값의 확률 분포로 이 2가지 값을 활용하여 현재의 상태값을 예측하는 행위라 볼 수 있다.
 
-
-
-
 두번째 줄은 측정 업데이트(measurement update) 또는 보정(correction)으로 불리며 이 작업은 센서값을 통해 측정한 값을 활용하여 prediction한 값을 보정한다.
 
+이 2가지 제어/측정 업데이트 프로세스는 다음의 이유로 만족된다. 먼저 제어 업데이트 단계의 로직은 이러하다.
 
-
-
-
-
-
-Bayes Filter는 2가지 가정을 따른다.
-1. 직전 시점의 상태값과 제어값을 이용해서 현재의 상태를 예측함
-2. 측정값 $$\mathbf{z}_{t}$$는 상태변수 $$\mathbf{x}_{t}$$에만 의존함
-
-이 2가지 가정으로 인해 다음의 식이 Bayes Filter 프로세스를 정의하는 과정에서 활용될 수 있다.
+$$\bar{\text{bel}}(x_{t})$$값은 현재 t시점에 센서값 $$z_{t}$$ 없이 현재 상태를 추정한 것으로 $$\bar{\text{bel}}(x_{t}) = p(x_{t} \vert z_{1:t-1},u_{1:t})$$ 식이 성립된다.
 
 $$
 \begin{align}
-p(x_{t}\vert x_{1:t-1},z_{1:t},u_{1:t}) &= p(x_{t}\vert x_{t-1},u_{t-1}) \\ \newline
-p(z_{t}\vert x_{1:t},z_{1:t-1},u_{1:t}) &= p(z_{t}\vert x_{t})
+\bar{\text{bel}}(x_{t}) &= p(x_{t} \vert z_{1:t-1},u_{1:t}) \\ \newline
+&= \int p(x_{t}\vert x_{t-1},z_{1:t-1},u_{1:t})p(x_{t-1}\vert z_{1:t-1},u_{1:t})dx_{t-1}
 \end{align}
 $$
 
+이 때, 조건부 $$x_{t-1}$$는 $$z_{1:t-1},u_{1:t-1}$$ 값을 포함한다는 Markov Assumption과 모든 $$\mathbf{u}$$와 $$\mathbf{z}$$는 독립적이라는 가정으로 인해 $$p(x_{t}\vert x_{t-1},z_{1:t-1},u_{1:t}) = p(x_{t}\vert x_{t-1},u_{t})$$ 를 만족하고 $$p(x_{t-1}\vert z_{1:t-1},u_{1:t})$$의 경우는 t-1시점에 $$u_{t}$$값이 존재할 수 없으므로 $$p(x_{t-1}\vert z_{1:t-1},u_{1:t-1})$$과 동일하며 이것은 $$\bar{\text{bel}}(x_{t-1})$$이라 표현할 수 있다. 따라서 제어 업데이트의 수식이 구성되는 것이다. 
 
+$$\text{bel}(x_{t}) = p(x_{t}\vert z_{1:t},u_{1:t})$$를 구하는 측정 업데이트 단계의 로직은 다음과 같다. 
 
+$$
+\begin{align}
+p(x_{t}\vert z_{1:t},u_{1:t}) &= \frac{p(z_{t}\vert x_{t},z_{1:t-1},u_{1:t})p(x_{t}\vert z_{1:t-1},u_{1:t})}{p(z_{t}\vert z_{1:t-1},u_{1:t})} \\ \newline
+&= \eta p(z_{t}\vert x_{t},z_{1:t-1},u_{1:t})p(x_{t}\vert z_{1:t-1},u_{1:t}) \\ \newline
+&= \eta p(z_{t}\vert x_{t})p(x_{t}\vert z_{1:t-1},u_{1:t})
+\end{align}
+$$
 
+$$p(x_{t}\vert z_{1:t-1},u_{1:t})$$ 값은 제어 업데이트 단계에서 구하는 $$\bar{\text{bel}}(x_{t})$$ 값과 동일하며 Markov Assumption으로 인해 $$x_{t}$$가 $$z_{1:t-1},u_{1:t}$$를 포함하고 있어 2번째 줄에서 3번째 줄로 넘어갈 수 있는 것이 가능하다. 이렇게 계산된 $$\text{bel}(x_{t})$$ 값은 그 다음 $$t+1$$시점에서 이전시점의 상태값으로 역할을 한다.
 
 
 
