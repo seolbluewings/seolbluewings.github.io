@@ -21,7 +21,7 @@ $$ \text{bel}(x_{t}) = p(x_{t}\vert z_{1:t},u_{1:t}) $$
 Bayes Filter의 알고리즘은 다음의 프로세스를 따른다.
 
 
-> $$\text{for all} x_{t} \quad$$ do :   
+> $$\text{for all} \quad x_{t} \quad$$ do :   
 >> $$\overline{\text{bel}}(x_{t}) = \int p(x_{t}\vert u_{t},x_{t-1})\text{bel}(x_{t-1})dx $$   
 >> $$ \text{bel}(x_{t}) = \eta p(z_{t}\vert x_{t})\overline{\text{bel}}(x_{t}) $$   
 
@@ -67,6 +67,8 @@ $$p(x_{t}\vert z_{1:t-1},u_{1:t})$$ 값은 제어 업데이트 단계에서 구�
 
 첫째, 적분이 가능한 정규분포만 사용하는 것으로 이 경우 Bayes Filter를 Kalman Filter라고 부른다.
 둘째, 적분 대신 Monte Carlo Integration이라는 Sampling 기반으로 근사값을 추론하게 되는데 이를 Particle Filter라고 부른다.
+
+베이즈 필터에 대한 간략한 python 코드 예시는 다음의 [링크](https://github.com/seolbluewings/python_study/blob/master/01.study/bayes_filter.py)에서 확인할 수 있다.
 
 
 #### 참조 문헌
