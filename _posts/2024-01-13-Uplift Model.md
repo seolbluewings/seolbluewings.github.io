@@ -31,7 +31,7 @@ __잡은 물고기__ : 마케팅 여부에 관계없이 CV가 발생하는 고�
 
 Uplift Model을 실제 서비스에 적용하는 과정은 다음과 같다.
 
-![label](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/uplift.png?raw=true){:width="90%" height="80%"}{: .aligncenter}
+![label](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/uplift.png?raw=true){:width="100%" height="100%"}{: .aligncenter}
 
 __1__ : 실험하려는 개입(마케팅)을 설계하고 실험군/대조군에 각각 어떠한 행위를 실행할지 결정한다.   
 __2__ : 일부 고객을 대상으로 무작위 대조 실험을 실시한다.   
@@ -60,6 +60,12 @@ AUUC 계산을 위해서는 lift라는 지표를 사용하는데 lift는 특정 
 
 실제 서비스 운영에서는 이 AUUC 값을 바탕으로 개입 여부를 결정해야한다. 이 그래프에서는 Uplift Model 스코어 기준으로 상위 55% 값을 가지는 사람까지 개입하면 되는 것으로 판단내릴 수 있다.
 
+또 다른 지표로는 Qini Curve를 활용할 수 있는데 Qini Curve는 누적 이익 곡선(Cumulative Gain Curve)와 관련있다. 누적 이익 곡선은 모델이 정렬된 예측 점수에 따라 얼마나 잘 예측하고 있는지를 보여주는 그래프로 x축에는 예측된 Sample의 수가 정렬된 순서대로 나타나며 y축에는 해당 순서까지의 누적된 이익(CV 전환수)가 표시된다.
+
+Qini Curve란 모델의 결과를 사용한 누적 이익 곡선과 모델없이 무작위로 Sample을 선택하였을 때 그릴 수 있는 누적 이익 곡선 간의 차이로 이 결과를 바탕으로 모델의 성능을 비교/확인할 수 있다. Qini Curve는 기준선보다 높을수록 모델의 성능이 더 좋다고 판단할 수 있다. 또한 Qini Curve를 통해서 모델이 얼마나 유용한 예측을 하는지, 특히 상위 예측에 더 집중하는지는 곡선의 상위부분에서 기울기가 급격하게 상승하는지를 바탕으로 상위 예측에서 효과적으로 성과를 내고 있는지 해석할 수 있다.
+
+일반적으로 AUUC Curve는 모델의 종합적 성능을 수치적으로 측정하고자 할 때 사용하며, Qini Curve의 경우는 주로 모델 예측 품질을 직관적으로 시각화하고자 할 때 사용한다고 한다.
+
 __7__ : 전체 고객을 대상으로 Uplift-Model을 적용한 점수를 예측한다. (__실제 서비스에 적용하는 단계__)    
 __8__ : 예측한 점수를 바탕으로 개입할 고객군을 설정한다.   
 __9__ : 선정한 고객 중 일부는 개입하지 않는 대조군으로 설정하고 그 외 나머지를 실험군으로 설정한다.   
@@ -68,11 +74,11 @@ __11__ : 실험군과 대조군의 CV를 비교해 개입의 효과를 측정한
 
 
 
-
-베이즈 필터에 대한 간략한 python 코드 예시는 다음의 [링크](https://github.com/seolbluewings/python_study/blob/master/01.study/bayes_filter.py)에서 확인할 수 있다.
+Uplift Model에 대한 간략한 python 코드 예시는 다음의 [링크](https://github.com/seolbluewings/python_study/blob/master/01.study/uplift_model.py)에서 확인할 수 있다.
 
 
 #### 참조 문헌
-1. [베이즈 필터 (Bayes Filter)](https://gaussian37.github.io/autodrive-ose-bayes_filter/) <br>
-2. [SLAM - 베이즈 필터 알고리즘 (Bayes Filter Algorithm)](https://blog.naver.com/PostView.nhn?blogId=junghs1040&logNo=222345147315)
-
+1. [업리프트 모델링을 통해 게임 광고 전환율 향상시키기](https://www.intelligencelabs.tech/5e047ef8-f811-47a8-9058-e6dfb2d5f8aa) <br/>
+2. [모델의 평가 AUUC & Qini Measure](https://jaysung00.github.io/2020/12/24/Evaluation/) <br/>
+3. [파이썬으로 업리프트 모델링](https://partrita.github.io/posts/python-uplift/) <br/>
+4. [머신러닝 실무 프로젝트 10장 : 업리프트 모델링을 이용한 마케팅 리소스 효율화](https://product.kyobobook.co.kr/detail/S000001810489)
