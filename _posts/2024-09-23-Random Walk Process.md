@@ -21,7 +21,7 @@ $$ y_{t} = y_{t-1} + C + \epsilon_{t}, \quad \epsilon_{t} \sim \mathcal{N}(0,1) 
 
 현재시점의 값($$y_{t}$$)은 이전 시점의 값($$y_{t-1}$$)과 난수($$\epsilon_{t}$$), 상수 $$C$$ 의 선형 결합이다.
 
-![random_walk](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/random_walk_1.PNG?raw=true){:width="90%" height="80%"}{: .aligncenter}
+![random_walk](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/random_walk_1.png?raw=true){:width="90%" height="80%"}{: .aligncenter}
 
 위의 그림과 같은 시계열 데이터는 데이터가 증가/감소를 무작위로 반복하는데 이렇게 데이터의 증감이 무작위로 발생하는 경우, 이 데이터가 확률 보행이라고 볼 수 있다. 
 
@@ -29,7 +29,7 @@ $$ y_{t} = y_{t-1} + C + \epsilon_{t}, \quad \epsilon_{t} \sim \mathcal{N}(0,1) 
 
 차분은 시점 t와 시점 t-1의 데이터 값의 변화를 계산하는 것으로 $$ y_{t}^{'} = y_{t}-y_{t-1} $$ 의 계산을 통해 생성된 데이터를 의미한다. 이 계산을 1번 수행하는 것을 1차 차분된 데이터라고 하며 n번 시행하면 n차 차분한 데이터라고 말한다. 차분된 데이터는 두 시점간의 데이터 차이를 계산하여 생성된 데이터이므로 데이터 개수의 손실이 발생한다. 차분을 진행하는 이유는 이 작업을 통해서 시계열 데이터의 평균값을 안정시킬 수 있기 때문이다.
 
-![random_walk](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/random_walk_3.PNG?raw=true){:width="90%" height="80%"}{: .aligncenter}
+![random_walk](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/random_walk_3.png?raw=true){:width="90%" height="80%"}{: .aligncenter}
 
 이 그림은 앞서 그린 확률 보행 데이터를 1차 차분한 것으로 차분된 시계열 데이터가 평균,분산이 이전의 원본 데이터에 비해서 안정적으로 변한 것을 확인할 수 있다.
 
@@ -46,7 +46,7 @@ print(f"== p-value : {adf_result[1]}")
 
 자기상관관계(Autocorrelation)는 시계열 데이터의 선행값($$y_{t-1}$$)과 후행값($$y_{t}$$) 사이의 선형 관계를 측정한 결과를 의미한다. 시계열 데이터의 자기상관관계 존재 여부에 대해서는 일반적으로 자기상관함수(ACF)를 그려 시점 차이(lag)마다의 상관관계 값의 변화를 본다. 일반적으로 lag가 커지면서 자기상관관계 값이 선형적으로 감소하는데 lag가 작은 숫자인 부분에서 자기상관관계가 0에 가까운 값을 가져야 한다. 
 
-![random_walk](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/random_walk_2.PNG?raw=true){:width="90%" height="80%"}{: .aligncenter}
+![random_walk](https://github.com/seolbluewings/seolbluewings.github.io/blob/master/assets/random_walk_2.png?raw=true){:width="90%" height="80%"}{: .aligncenter}
 
 위 ACF plot은 각 lag마다의 자기상관계수를 표현하는데 음영처리 된 부분은 해당 lag에서의 자기상관계수값에 대한 confidence interval로 이 음영 영역 내에 값이 존재하는 경우, 해당 lag에서의 값을 0으로 간주할 수 있다. 이 그래프를 통해서 자기상관관계가 없다고 판단 된다면, 이 데이터가 확률 보행 데이터라고 볼 수 있다.
 
