@@ -17,7 +17,7 @@ categories: Statistics
 
 우선 확률 보행에 대해서 정의를 하면, <strong> 1차 차분이 정상적(stationary)이고 전후 데이터 간의 상관관계가 없는 시계열 </strong> 로 데이터가 무작위로 변화하여 시계열 데이터가 향후 무작위로 상승/하락 발생 확률이 동일한 프로세스를 의미한다. 이를 수식으로 표현하면 아래와 같다.
 
-$$ y_{t} = y_{t-1} + C + \epsilon_{t}, \quad \epsilon_{t} \sim mathcal{N}(0,1) $$
+$$ y_{t} = y_{t-1} + C + \epsilon_{t}, \quad \epsilon_{t} \sim \mathcal{N}(0,1) $$
 
 현재시점의 값($$y_{t}$$)은 이전 시점의 값($$y_{t-1}$$)과 난수($$\epsilon_{t}$$), 상수 $$C$$ 의 선형 결합이다.
 
